@@ -30500,9 +30500,10 @@ var ICOSubscribe = function () {
                 }
 
                 // Check if user has account_opening_reason
-                if (!State.getResponse('get_settings.account_opening_reason') && !Client.isAccountOfType('virtual')) {
-                    askForAccountOpeningReason();
-                }
+                // if(!State.getResponse('get_settings.account_opening_reason')
+                //     && !Client.isAccountOfType('virtual')) {
+                //     askForAccountOpeningReason();
+                // }
 
                 // Show message to client.
                 document.getElementById(message_show).setVisibility(1);
@@ -30588,10 +30589,10 @@ var ICOSubscribe = function () {
         return req;
     };
 
-    var askForAccountOpeningReason = function askForAccountOpeningReason() {
-        var el_to_show = document.getElementById('row_account_opening_reason');
-        el_to_show.setVisibility(1);
-    };
+    // const askForAccountOpeningReason = () => {
+    //     const el_to_show = document.getElementById('row_account_opening_reason');
+    //     el_to_show.setVisibility(1);
+    // };
 
     var updateMinimumBid = function updateMinimumBid(ico_status) {
         var status = ico_status.ico_status || {};
