@@ -1072,9 +1072,12 @@ var Client = function () {
         });
     };
 
+    // const canOpenICO = () =>
+    //     /malta|iom/.test(State.getResponse('landing_company.financial_company.shortcode')) ||
+    //     /malta|iom/.test(State.getResponse('landing_company.gaming_company.shortcode'));
+
     var canOpenICO = function canOpenICO() {
-        return (/malta|iom/.test(State.getResponse('landing_company.financial_company.shortcode')) || /malta|iom/.test(State.getResponse('landing_company.gaming_company.shortcode'))
-        );
+        return false;
     };
 
     var canRequestProfessional = function canRequestProfessional() {
