@@ -1072,12 +1072,9 @@ var Client = function () {
         });
     };
 
-    // const canOpenICO = () =>
-    //     /malta|iom/.test(State.getResponse('landing_company.financial_company.shortcode')) ||
-    //     /malta|iom/.test(State.getResponse('landing_company.gaming_company.shortcode'));
-
     var canOpenICO = function canOpenICO() {
-        return false;
+        return (/malta|iom/.test(State.getResponse('landing_company.financial_company.shortcode')) || /malta|iom/.test(State.getResponse('landing_company.gaming_company.shortcode'))
+        );
     };
 
     var canRequestProfessional = function canRequestProfessional() {
@@ -31151,7 +31148,7 @@ var AccountType = function () {
             url_real = urlFor(Client.getUpgradeInfo(response_lc).upgrade_link);
             container = document.getElementById('account_type_container');
 
-            if (Client.canOpenICO() && container) {
+            if (false) {
                 container.setVisibility(1);
                 onSubmit();
             } else {
