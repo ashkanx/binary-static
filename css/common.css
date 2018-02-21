@@ -163,13 +163,13 @@ button::-moz-focus-inner, input[type='submit']::-moz-focus-inner {
   border: 0;
 }
 
-a.button:hover {
+a.button:hover, a.button-white:hover {
   text-decoration: none;
 }
 
 button.full-width, button.full-width span, .button.full-width, .button.full-width span {
   display: block;
-  width: 100%;
+  width: auto;
 }
 button.full-width .barspinner, .button.full-width .barspinner {
   display: inline-block;
@@ -207,15 +207,29 @@ fieldset legend {
   font-weight: bold;
   text-transform: capitalize;
 }
+fieldset legend + .hint {
+  padding-left: 1em;
+}
 fieldset .text-display {
   /* TODO: replace all occurrences of id with the class */
   line-height: 25px;
+}
+fieldset #geocode_error {
+  margin: 5px 15px;
 }
 
 .error-msg {
   width: 100%;
   text-align: left;
   margin-top: 5px;
+}
+
+.secondary-bg-color .error-msg {
+  color: #fff;
+}
+
+.white-bg-color {
+  background-color: #fff;
 }
 
 textarea {
@@ -383,6 +397,7 @@ _:-ms-fullscreen, :root #content-holder {
 
 input[type=checkbox] {
   margin-top: -5px;
+  margin-right: 5px;
 }
 input[type=checkbox]#email_consent {
   margin-top: 5px;
@@ -504,9 +519,6 @@ button .barspinner.white {
   text-decoration: none;
 }
 
-.static_full {
-  margin-top: 40px;
-}
 .static_full .section:first-child {
   padding-bottom: 50px;
 }
@@ -582,6 +594,7 @@ ul.bullet.gr-row > li {
 }
 
 #content {
+  margin-top: 40px;
   margin-bottom: 20px;
 }
 #content .light .tab-menu-wrap {
@@ -629,13 +642,69 @@ ul.bullet.gr-row > li {
           flex: 1;
 }
 
-#content .content-tab-container.light .tab-menu-wrap ul.tm-ul li.tm-li {
-  font-size: 1.3225rem;
-}
-
 .foot-note {
   font-size: 0.7561436673rem;
   color: #c2c2c2;
+}
+
+.button + .button {
+  margin-left: 10px;
+}
+
+li strong.margin-right {
+  margin-right: 5px;
+}
+
+.button-white {
+  cursor: pointer;
+  margin-bottom: 0.5em;
+}
+.button-white span {
+  color: #fff;
+  text-align: center;
+  background: #2e8836;
+  border-radius: 3px;
+  text-transform: capitalize;
+  padding: 10px 25px;
+  display: inline-block;
+  letter-spacing: 0.75px;
+  overflow: visible;
+  border: 1px solid #dedede;
+  color: #000;
+  background: #fff;
+  font-weight: 400;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  letter-spacing: 0;
+}
+.button-white span:visited {
+  color: #fff;
+}
+.button-white span:hover, .button-white span:active {
+  text-decoration: none;
+  background-color: #14602b;
+}
+.button-white span:hover {
+  text-decoration: none;
+  background: #dedede;
+}
+.button-white span.icon-google:before {
+  margin-right: 10px;
+}
+
+.icon-google:before {
+  content: url("../images/pages/applications/icon-google.svg");
+}
+
+.section-divider .circle {
+  padding: 7px 5px !important;
 }
 
 /* main style */
@@ -735,7 +804,7 @@ ul.bullet.gr-row > li {
 #footer #footer-regulatory #site-status-message {
   z-index: 9999;
 }
-#footer #footer-last .gambling {
+#footer #footer-last .gambling, #footer #footer-last .gambling a {
   text-align: justify;
   font-size: 0.7561436673rem;
   font-weight: 400;
@@ -824,6 +893,36 @@ body #topbar .upgrademessage a:hover, body #topbar .upgrademessage a:active, .la
   padding: 0 10px;
   word-wrap: break-word;
 }
+#header #menu-top.top-nav-menu {
+  display: block;
+}
+#header #menu-top.top-nav-menu .nav-caret {
+  margin-left: 5px;
+}
+#header #menu-top.top-nav-menu > li {
+  float: none;
+}
+#header #menu-top.top-nav-menu > li ul {
+  z-index: 2;
+}
+#header #menu-top.top-nav-menu > li ul li {
+  display: block;
+}
+#header #menu-top.top-nav-menu > li ul li a {
+  padding: 10px 30px;
+  display: block;
+  height: auto;
+  max-width: none;
+}
+#header #menu-top.top-nav-menu > li ul li a:hover {
+  opacity: 1;
+}
+#header #menu-top.top-nav-menu > li ul li.active a:hover {
+  color: #fff;
+}
+#header #menu-top .active-parent > a {
+  color: #e98024;
+}
 #header .topMenuBalance {
   visibility: hidden;
 }
@@ -845,13 +944,8 @@ body #topbar .upgrademessage a:hover, body #topbar .upgrademessage a:active, .la
 #header #main-logout #all-accounts .create_new_account li.topMenuAccounts:hover {
   background-color: initial;
 }
-
-#main-menu {
-  margin-bottom: 40px;
-  color: #dedede;
-}
-#main-menu .items li a {
-  white-space: nowrap;
+#header .container {
+  max-width: 1200px;
 }
 
 /* mobile menu overrides */
@@ -968,6 +1062,9 @@ table td {
 .table-container td[data-balloon] {
   border-bottom: 3px solid #f2f2f2;
 }
+.table-container .w-80 {
+  width: 80px;
+}
 @media (max-width: 600px) {
   .table-container td {
     padding-left: 5px !important;
@@ -1075,8 +1172,9 @@ body ul.checked > li {
 body .app-store-badge, body .google-play-badge {
   background-repeat: no-repeat;
   width: 140px;
-  height: 40px;
+  height: 38px;
   display: inline-block;
+  background-size: contain;
 }
 
 body.EN .calls_recording {
@@ -1094,9 +1192,6 @@ body.JA #header #menu-top li {
 }
 body.JA #profit-table .buy-price, body.JA #profit-table .sell-price, body.JA #profit-table .payout, body.JA #profit-table .pl.loss, body.JA #profit-table .act, body.JA #statement-table .buy-price, body.JA #statement-table .sell-price, body.JA #statement-table .payout, body.JA #statement-table .pl.loss, body.JA #statement-table .act {
   white-space: nowrap;
-}
-body.JA #main-menu {
-  margin-bottom: 30px;
 }
 body.JA #email_consent_label {
   font-size: 0.7561436673rem;
@@ -1136,9 +1231,6 @@ body.VI #trading_socket_container #contract_form_name_nav {
 }
 body.VI #trading_socket_container #contract_form_name_nav > li a.tm-a {
   font-size: 0.6575162324rem;
-}
-body.VI #trading_socket_container_beta #contract_symbol_container {
-  font-size: 1rem;
 }
 
 /*French Language */
@@ -1371,6 +1463,10 @@ body.ZH_TW .google-play-badge {
   .table-container {
     overflow-x: auto;
   }
+
+  .no-padding-m {
+    padding: 0 !important;
+  }
 }
 @media screen and (max-width: 480px) {
   #sell_popup_container {
@@ -1397,6 +1493,14 @@ body.ZH_TW .google-play-badge {
 
   .home-jp-content #banner {
     background-position-x: 15%;
+  }
+
+  #content .content-tab-container.light .tab-menu-wrap ul.tm-ul li.tm-li a {
+    font-size: 0.8695652174rem;
+  }
+
+  #content .light .tab-menu-wrap ul.tm-ul li.tm-li.tab-selector {
+    top: 30px;
   }
 }
 @media print {
