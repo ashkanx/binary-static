@@ -18946,7 +18946,7 @@ var getElementById = __webpack_require__(3).getElementById;
 
 var Contents = function () {
     var onLoad = function onLoad() {
-        Client.activateByClientType('header');
+        Client.activateByClientType();
         // This is required for our css to work.
         getElementById('content').className = getElementById('content_class').textContent;
     };
