@@ -1439,11 +1439,12 @@ body.ZH_TW .google-play-badge {
     font-size: 0.8695652174rem;
   }
 }
-@media screen and (max-width: 959px) {
+@media screen and (max-width: 1050px) {
   #header ul#menu-top.smaller-font a {
     font-size: 0.7561436673rem;
   }
-
+}
+@media screen and (max-width: 959px) {
   .home-jp-content #banner {
     background-position-x: 0;
   }
