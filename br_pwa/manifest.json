@@ -2,28 +2,29 @@
   "name": "Binary.com",
   "short_name": "Binary.com",
   "description":"Binary.com gives everyone an easy way to participate in the financial markets.",
-  "gcm_sender_id": "537217001441",
+  "start_url": "/?utm_source=homescreen",
   "display": "standalone",
-  "gcm_user_visible_only": true,
+  
   "icons": [
     {
-      "src": "launcher-icon-1x.png",
+      "src": "https://www.binary.com/images/favicons/apple-touch-icon-57x57.png",
       "type": "image/png",
-      "sizes": "48x48"
+      "sizes": "57x57"
     },
     {
-      "src": "launcher-icon-2x.png",
+      "src": "https://www.binary.com/images/favicons/apple-touch-icon-72x72.png",
       "type": "image/png",
-      "sizes": "96x96"
+      "sizes": "72x72"
     },
     {
-      "src": "launcher-icon-4x.png",
+      "src": "https://www.binary.com/images/favicons/apple-touch-icon-180x180.png",
       "type": "image/png",
-      "sizes": "192x192"
+      "sizes": "180x180"
     }
   ],
   "background_color": "#2a3052",
   "theme_color": "#2a3052",
   "prefer_related_applications": false,
-  "start_url": "/"
+  "gcm_user_visible_only": true,
+  "gcm_sender_id": "537217001441"
 }
