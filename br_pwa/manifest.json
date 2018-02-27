@@ -4,22 +4,58 @@
   "description":"Binary.com gives everyone an easy way to participate in the financial markets.",
   "start_url": "/?utm_source=homescreen",
   "display": "standalone",
+  "orientation": "portrait",
   
   "icons": [
     {
-      "src": "https://www.binary.com/images/favicons/apple-touch-icon-57x57.png",
+      "src": "images/common/logos/mdpi.png",
       "type": "image/png",
-      "sizes": "57x57"
+      "sizes": "48x48"
     },
     {
-      "src": "https://www.binary.com/images/favicons/apple-touch-icon-72x72.png",
+      "src": "images/common/logos/hdpi.png",
       "type": "image/png",
       "sizes": "72x72"
     },
     {
-      "src": "https://www.binary.com/images/favicons/apple-touch-icon-180x180.png",
+      "src": "images/common/logos/xhdpi.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "images/common/logos/xxhdpi.png",
+      "type": "image/png",
+      "sizes": "144x144"
+    },
+    {
+      "src": "images/common/logos/xxxhdpi.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    },
+    {
+      "src": "images/common/logos/icon_60pt@2x.png",
+      "type": "image/png",
+      "sizes": "120x120"
+    },
+    {
+      "src": "images/common/logos/icon_60pt@3x.png",
       "type": "image/png",
       "sizes": "180x180"
+    },
+    {
+      "src": "images/common/logos/icon_76pt@2x.png",
+      "type": "image/png",
+      "sizes": "76x76"
+    },
+    {
+      "src": "images/common/logos/icon_76pt.png",
+      "type": "image/png",
+      "sizes": "152x152"
+    },
+    {
+      "src": "images/common/logos/icon_83.5@2x.png",
+      "type": "image/png",
+      "sizes": "167x167"
     }
   ],
   "background_color": "#2a3052",
