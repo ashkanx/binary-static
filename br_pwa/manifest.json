@@ -1,0 +1,29 @@
+{
+  "name": "Binary.com",
+  "short_name": "Binary.com",
+  "description":"Binary.com gives everyone an easy way to participate in the financial markets.",
+  "gcm_sender_id": "537217001441",
+  "display": "standalone",
+  "gcm_user_visible_only": true,
+  "icons": [
+    {
+      "src": "launcher-icon-1x.png",
+      "type": "image/png",
+      "sizes": "48x48"
+    },
+    {
+      "src": "launcher-icon-2x.png",
+      "type": "image/png",
+      "sizes": "96x96"
+    },
+    {
+      "src": "launcher-icon-4x.png",
+      "type": "image/png",
+      "sizes": "192x192"
+    }
+  ],
+  "background_color": "#2a3052",
+  "theme_color": "#2a3052",
+  "prefer_related_applications": false,
+  "start_url": "/"
+}
