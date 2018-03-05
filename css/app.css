@@ -1498,6 +1498,7 @@ a.previous-wrapper:hover {
 #trading_socket_container #contract_prices_container .price_container#price_container_middle .contract_longcode {
   text-align: center;
   margin: 10px 15px;
+  line-height: 1.4em;
 }
 #trading_socket_container #contract_prices_container .price_comment, #trading_socket_container #contract_prices_container .contract_error, #trading_socket_container #contract_prices_container #contract_purchase_balance {
   background-color: #dedede;
@@ -1703,6 +1704,7 @@ a.previous-wrapper:hover {
 }
 #trading_socket_container .small_width_input {
   width: 70px;
+  margin-right: 5px;
 }
 #trading_socket_container #currency {
   margin-bottom: 5px;
@@ -2070,7 +2072,8 @@ a.previous-wrapper:hover {
       -ms-flex: 0.8 1 35px;
           flex: 0.8 1 35px;
 }
-#statement-container #jump-to {
+
+#profit-table-container #date_to, #statement-container #date_to {
   width: 100%;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
@@ -2084,15 +2087,4 @@ a.previous-wrapper:hover {
     font-size: 0.7561436673rem;
     padding: 10px 15px;
   }
-}
-.ico-claim-form-content p {
-  font-size: 0.8695652174rem;
-}
-.ico-claim-form-content ol li {
-  font-size: 0.8695652174rem;
-}
-.ico-claim-form-content input[disabled='disabled'] {
-  background: #f2f2f2;
-  font-weight: 900;
-  width: 200px;
 }
