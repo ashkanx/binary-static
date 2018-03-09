@@ -1763,8 +1763,8 @@ var limitLanguage = function limitLanguage(lang) {
     }
     if (getElementById('select_language')) {
         $('.languages').remove();
-        $('#gmt-clock').addClass('gr-6 gr-12-m').removeClass('gr-5 gr-6-m');
-        $('#contact-us').addClass('gr-6').removeClass('gr-2');
+        $('#gmt-clock').addClass('gr-6 gr-11-m').removeClass('gr-5 gr-6-m');
+        $('#contact-us').addClass('gr-5').removeClass('gr-2');
     }
 };
 
@@ -2036,6 +2036,7 @@ var Cookies = __webpack_require__(45);
 var elementTextContent = __webpack_require__(3).elementTextContent;
 var getElementById = __webpack_require__(3).getElementById;
 var CookieStorage = __webpack_require__(6).CookieStorage;
+var LocalStore = __webpack_require__(6).LocalStore;
 var applyToAllElements = __webpack_require__(1).applyToAllElements;
 
 var Language = function () {
@@ -2109,6 +2110,7 @@ var Language = function () {
                 var lang = e.target.getAttribute('class');
                 if (getLanguage() === lang) return;
                 elementTextContent(getElementById('display_language').getElementsByClassName('language'), e.target.textContent);
+                LocalStore.remove('ws_cache');
                 setCookieLanguage(lang);
                 document.location = urlForLanguage(lang);
             });
@@ -19297,9 +19299,9 @@ var NetworkMonitor = function () {
     var _pending_timeouts;
 
     var status_config = {
-        online: { class: 'online', tooltip: localize('Online') },
-        offline: { class: 'offline', tooltip: localize('Offline') },
-        blinking: { class: 'blinker', tooltip: localize('Connecting to server') }
+        online: { class: 'online', tooltip: 'Online' },
+        offline: { class: 'offline', tooltip: 'Offline' },
+        blinking: { class: 'blinker', tooltip: 'Connecting to server' }
     };
     var pendings = {};
     var pending_keys = {
@@ -19360,7 +19362,7 @@ var NetworkMonitor = function () {
 
         if (el_status && el_tooltip) {
             el_status.setAttribute('class', status_config[network_status].class);
-            el_tooltip.setAttribute('data-balloon', localize('Network status') + ': ' + status_config[network_status].tooltip);
+            el_tooltip.setAttribute('data-balloon', localize('Network status') + ': ' + localize(status_config[network_status].tooltip));
         }
     };
 
@@ -22066,7 +22068,7 @@ var AssetIndex = function () {
                 var asset_cells = asset_item[idx.cells];
                 var values = {};
                 for (var j = 0; j < asset_cells.length; j++) {
-                    var col = asset_cells[j][idx.cell_props.cell_name];
+                    var col = asset_cells[j][idx.cell_props.cell_display_name];
 
                     values[col] = [asset_cells[j][idx.cell_props.cell_from], asset_cells[j][idx.cell_props.cell_to]].join(' - ');
 
