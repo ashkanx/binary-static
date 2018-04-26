@@ -5970,7 +5970,7 @@ var TradingAnalysis = function () {
             var array_length = selector_array.length;
             if (options.direction === 'left') {
                 index_to_show = active_index - 1;
-                index_to_show = index_to_show === 0 ? index_to_show : array_length - 1;
+                index_to_show = index_to_show < 0 ? array_length - 1 : index_to_show;
             } else {
                 index_to_show = active_index + 1;
                 index_to_show = index_to_show === array_length ? 0 : index_to_show;
@@ -7092,7 +7092,7 @@ var TabSelector = function () {
         });
         applyToAllElements('.go-right', function (element) {
             element.addEventListener('click', function (e) {
-                fn({ selector: e.target.getAttribute('data-parent'), direction: 'left' });
+                fn({ selector: e.target.getAttribute('data-parent'), direction: 'right' });
             });
         });
     };
@@ -20517,6 +20517,10 @@ var localize = __webpack_require__(3).localize;
 var State = __webpack_require__(6).State;
 
 var CashierJP = function () {
+    var $amount = void 0,
+        $loginid = void 0,
+        $email = void 0;
+
     var _onLoad = function _onLoad(action) {
         if (Client.isJPClient() && Client.get('residence') !== 'jp') BinaryPjax.loadPreviousUrl();
         if (action === 'deposit') {
@@ -20537,9 +20541,17 @@ var CashierJP = function () {
                         if (typeof limit !== 'undefined' && limit < 1) {
                             $container.find('#cashier_locked_message').text(localize('You have reached the withdrawal limit.')).setVisibility(1);
                         } else {
+                            $amount = $('#id123-control22598145');
+                            $loginid = $('#id123-control22598118');
+                            $email = $('#id123-control22598060');
+
                             var response_authorize = State.getResponse('authorize');
-                            $('#id123-control22598118').val(response_authorize.loginid || 'undef');
-                            $('#id123-control22598060').val(response_authorize.email || 'undef');
+                            if (response_authorize.loginid) {
+                                $loginid.val(response_authorize.loginid).attr('readonly', 'true');
+                            }
+                            if (response_authorize.email) {
+                                $email.val(response_authorize.email).attr('readonly', 'true');
+                            }
                             $('#japan_cashier_container button').on('click', function (e) {
                                 var result = errorHandler();
                                 if (!result) e.preventDefault();
@@ -20553,22 +20565,29 @@ var CashierJP = function () {
     };
 
     var errorHandler = function errorHandler() {
-        $('.error-msg').remove();
-        var $id = $('#id123-control22598145');
-        var withdrawal_amount = $id.val();
+        $amount.siblings('.error-msg').setVisibility(0);
+        $loginid.siblings('.error-msg').setVisibility(0);
+        $email.siblings('.error-msg').setVisibility(0);
 
-        var showError = function showError(message) {
-            $id.parent().append($('<p/>', { class: 'error-msg', text: localize(message) }));
-        };
+        var is_ok = true;
 
-        if (isNaN(withdrawal_amount) || +withdrawal_amount < 1) {
-            showError(localize('Should be more than [_1]', ['¥1']));
-            return false;
-        } else if (parseInt(Client.get('balance')) < +withdrawal_amount) {
-            showError('Insufficient balance.');
-            return false;
+        if (isNaN($amount.val()) || +$amount.val() < 1) {
+            $amount.siblings('.error-msg').text(localize('Should be more than [_1]', ['¥1'])).setVisibility(1);
+            is_ok = false;
+        } else if (parseInt(Client.get('balance')) < +$amount.val()) {
+            $amount.siblings('.error-msg').text(localize('Insufficient balance.')).setVisibility(1);
+            is_ok = false;
         }
-        return true;
+        if (!$loginid.val()) {
+            $loginid.removeAttr('readonly').siblings('.error-msg').setVisibility(1);
+            is_ok = false;
+        }
+        if (!$email.val()) {
+            $email.removeAttr('readonly').siblings('.error-msg').setVisibility(1);
+            is_ok = false;
+        }
+
+        return is_ok;
     };
 
     return {
@@ -23008,6 +23027,7 @@ var DigitInfo = function () {
     };
 
     var showChart = function showChart(underlying, underlying_spots) {
+        if (underlying_spots.length !== +$('#tick_count').val()) return;
         getHighstock(function (Highcharts) {
             var new_spots = underlying_spots;
             if (typeof new_spots === 'undefined' || new_spots.length <= 0) {
@@ -23026,17 +23046,12 @@ var DigitInfo = function () {
             };
 
             spots = new_spots;
-            if (chart && $('#last_digit_histo').html()) {
-                chart.xAxis[0].update({ title: getTitle() }, true);
-                chart.series[0].name = underlying;
-            } else {
-                addContent(underlying); // this creates #last_digit_title
-                chart_config.xAxis.title = getTitle();
-                chart = new Highcharts.Chart(chart_config);
-                chart.addSeries({ name: underlying, data: [] });
-                onLatest();
-                stream_id = null;
-            }
+            if (chart) chart.destroy();
+            addContent(underlying); // this creates #last_digit_title
+            chart_config.xAxis.title = getTitle();
+            chart = new Highcharts.Chart(chart_config);
+            chart.addSeries({ name: underlying, data: [] });
+            onLatest();
             update();
         });
     };
@@ -30288,6 +30303,7 @@ var Markets = function (_React$Component) {
 
         var market_symbol = _defaults2.default.get('market');
         _this.markets = _symbols2.default.markets();
+
         _this.underlyings = _symbols2.default.getAllSymbols() || {};
         var underlying_symbol = _defaults2.default.get('underlying');
         if (!underlying_symbol || !_this.underlyings[underlying_symbol]) {
@@ -30298,6 +30314,12 @@ var Markets = function (_React$Component) {
             return submarketSort(a[0], b[0]);
         });
         _this.markets_all = markets_arr.slice();
+        if (!(market_symbol in _this.markets)) {
+            market_symbol = Object.keys(_this.markets).find(function (m) {
+                return _this.markets[m].submarkets[market_symbol];
+            });
+            _defaults2.default.set('market', market_symbol);
+        }
         _this.el_underlying = (0, _common_functions.getElementById)('underlying');
         _this.references = {};
         _this.state = {
