@@ -2673,6 +2673,139 @@ a {
       font-weight: bold;
       color: #2a3052; }
 
+.indicative {
+  font-weight: bold; }
+  .indicative.price_moved_up {
+    color: #4caf50; }
+  .indicative.price_moved_down {
+    color: #f44336; }
+  .indicative.no_resale {
+    color: #b0b3bf; }
+
+.portfolio {
+  padding-top: 60px; }
+  .portfolio .portfolio_header_container {
+    position: fixed;
+    top: 57px;
+    height: 60px;
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
+    z-index: 90;
+    width: 100%;
+    background: #fff;
+    padding-left: 10px; }
+    .portfolio .portfolio_header_container h2 {
+      margin: 0px; }
+  .portfolio th {
+    white-space: nowrap; }
+    @media (max-width: 1000px) {
+      .portfolio th {
+        white-space: normal; } }
+    .portfolio th.details {
+      width: 30%; }
+      @media (max-width: 900px) {
+        .portfolio th.details {
+          width: 20%; } }
+    .portfolio th.remaining_time {
+      width: 16%; }
+    .portfolio th.type {
+      text-align: center; }
+  .portfolio .payout, .portfolio .indicative, .portfolio .purchase, .portfolio .remaining_time {
+    text-align: right; }
+  .portfolio .table-body td.reference span.tooltip {
+    color: #1565c0;
+    text-decoration: none; }
+  .portfolio .table-body td.reference {
+    color: #1565c0; }
+  .portfolio .table-body .type_container {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-direction: column;
+            flex-direction: column;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .portfolio .table-body .type_container .trade_type_icon {
+      width: 20px;
+      height: 20px;
+      padding: 5px;
+      margin-bottom: 3px;
+      border-radius: 100%;
+      background-color: #f2f2f2; }
+
+.icon_asianu--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-asianu.svg"); }
+
+.icon_call--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-call.svg"); }
+
+.icon_calle--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-calle.svg"); }
+
+.icon_put--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-put.svg"); }
+
+.icon_digitdiff--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitdiff.svg"); }
+
+.icon_digiteven--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digiteven.svg"); }
+
+.icon_digitmatch--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitmatch.svg"); }
+
+.icon_digitodd--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitodd.svg"); }
+
+.icon_digitover--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitover.svg"); }
+
+.icon_digitunder--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitunder.svg"); }
+
+.icon_expirymiss--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-expirymiss.svg"); }
+
+.icon_expiryrange--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-expiryrange.svg"); }
+
+.icon_expiryrangee--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-expiryrangee.svg"); }
+
+.icon_fall--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-fall.svg"); }
+
+.icon_notouch--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-notouch.svg"); }
+
+.icon_touch--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-touch.svg"); }
+
+.icon_range--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-range.svg"); }
+
+.icon_rise--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-rise.svg"); }
+
+.icon_upordown--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-upordown.svg"); }
+
+.icon_lbfloatcall--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-lbfloatcall.svg"); }
+
+.icon_lbfloatput--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-lbfloatput.svg"); }
+
+.icon_lbhighlow--light {
+  content: url("../images/trading_app/contracts/trade_types/light/ic-light-lbhighlow.svg"); }
+
 .statement-filter {
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
