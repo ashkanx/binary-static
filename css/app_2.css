@@ -71,9 +71,7 @@ select, input, textarea {
 
 fieldset {
   border: 1px solid #fafafb;
-  position: relative;
-  padding: 5px;
-  margin-bottom: 10px; }
+  padding: 5px; }
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -455,8 +453,6 @@ span.tooltip {
                     box-shadow: none; }
       #trade_container .chart-container div.debug-text {
         display: none; }
-    #trade_container .sidebar-container {
-      position: relative; }
     #trade_container .offset-container {
       display: none; }
     #trade_container > * {
@@ -475,12 +471,10 @@ span.tooltip {
           margin: 0 8px 16px; }
       #trade_container .sidebar-container {
         grid-column: col-start 11 / span 2;
-        grid-gap: 10px;
-        grid-template-rows: fit-content(40%) fit-content(40%) fit-content(40%) fit-content(40%);
         -webkit-transition: all 0.25s;
         transition: all 0.25s; }
         #trade_container .sidebar-container fieldset {
-          grid-column: 1; }
+          margin-bottom: 5px; }
           #trade_container .sidebar-container fieldset div.duration-container, #trade_container .sidebar-container fieldset div.amount-container {
             display: grid;
             grid-gap: 8px;
@@ -2035,7 +2029,6 @@ div.datepicker-container {
 
 div.contracts-popup-container {
   position: relative;
-  margin: 8px 0;
   z-index: 2;
   cursor: pointer;
   background: #fff;
