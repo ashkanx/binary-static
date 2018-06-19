@@ -1355,98 +1355,7 @@ a.previous-wrapper {
       background: url("../images/pages/trade/digits_even_1.svg") no-repeat no-repeat top center;
       background-size: 40%; }
     #trading_socket_container .contract_heading.DIGITODD {
-      background: url("../images/pages/trade/digits_odd_1.svg") no-repeat no-repeat top center;
-      background-size: 40%; }
-    #trading_socket_container .contract_heading.DIGITOVER {
-      background: url("../images/pages/trade/digits_over_1.svg") no-repeat no-repeat top center;
-      background-size: 40%; }
-    #trading_socket_container .contract_heading.DIGITUNDER {
-      background: url("../images/pages/trade/digits_under_1.svg") no-repeat no-repeat top center;
-      background-size: 40%; }
-    #trading_socket_container .contract_heading.CALL {
-      background: url("../images/pages/trade/rise_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.PUT {
-      background: url("../images/pages/trade/fall_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.CALLE {
-      background: url("../images/pages/trade/rise_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.PUTE {
-      background: url("../images/pages/trade/fall_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.ONETOUCH {
-      background: url("../images/pages/trade/touch_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.NOTOUCH {
-      background: url("../images/pages/trade/no-touch_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.RANGE {
-      background: url("../images/pages/trade/stay-in-between_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.UPORDOWN {
-      background: url("../images/pages/trade/stay-out_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.EXPIRYRANGEE {
-      background: url("../images/pages/trade/ends-between_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.EXPIRYMISSE {
-      background: url("../images/pages/trade/ends-outside_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.EXPIRYRANGE {
-      background: url("../images/pages/trade/ends-between_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.EXPIRYMISS {
-      background: url("../images/pages/trade/ends-outside_1.png") no-repeat top center; }
-    #trading_socket_container .contract_heading.LBFLOATPUT {
-      background: url("../images/pages/trade/low_icon.svg") no-repeat center top;
-      background-size: 50%; }
-    #trading_socket_container .contract_heading.LBFLOATCALL {
-      background: url("../images/pages/trade/high_icon.svg") no-repeat center top;
-      background-size: 50%; }
-    #trading_socket_container .contract_heading.LBHIGHLOW {
-      background: url("../images/pages/trade/high_low_icon.svg") no-repeat center top;
-      background-size: 50%; }
-  #trading_socket_container #contract_prices_container {
-    position: relative;
-    margin-left: 1em; }
-    #trading_socket_container #contract_prices_container .price_container {
-      border: 1px solid #dedede;
-      -webkit-box-align: stretch;
-          -ms-flex-align: stretch;
-              align-items: stretch;
-      padding: 0;
-      -webkit-box-flex: 1;
-          -ms-flex: 1 0 auto;
-              flex: 1 0 auto;
-      display: none;
-      border-radius: 4px; }
-      #trading_socket_container #contract_prices_container .price_container > .col.row {
-        -webkit-box-flex: 1;
-            -ms-flex: 1 0 auto;
-                flex: 1 0 auto; }
-      #trading_socket_container #contract_prices_container .price_container > .row {
-        padding: 0; }
-      #trading_socket_container #contract_prices_container .price_container .big-col {
-        -webkit-box-flex: 3;
-            -ms-flex: 3;
-                flex: 3; }
-      #trading_socket_container #contract_prices_container .price_container .contract_purchase {
-        margin-bottom: 6px;
-        width: 90%;
-        display: -webkit-inline-box;
-        display: -ms-inline-flexbox;
-        display: inline-flex; }
-        #trading_socket_container #contract_prices_container .price_container .contract_purchase .purchase_button {
-          cursor: pointer;
-          width: 100%; }
-        #trading_socket_container #contract_prices_container .price_container .contract_purchase.button-disabled .purchase_button {
-          cursor: auto; }
-    #trading_socket_container #contract_prices_container #contract_purchase_reference {
-      margin-bottom: 10px;
-      padding: 7px; }
-    #trading_socket_container #contract_prices_container #confirmation_error {
-      padding: 20px;
-      font-style: italic;
-      vertical-align: middle;
-      line-height: 1.3225rem; }
-    #trading_socket_container #contract_prices_container .price_container#price_container_top {
-      margin-bottom: 1rem; }
-    #trading_socket_container #contract_prices_container .price_container#price_container_middle .price_wrapper {
-      margin: 25px 0 10px;
-      padding: 0 15px 5px; }
-    #trading_socket_container #contract_prices_container .price_container#price_container_middle .payout_wrapper .contract_quantity {
-      font-weight: 700; }
-    #trading_socket_container #contract_prices_container .price_container#price_container_middle .contract_longcode {
+      background: url("../images/pages/trade/digits_odd_1.svg") no-repeat no-retainer #contract_prices_container .price_container#price_container_middle .contract_longcode {
       text-align: center;
       margin: 10px 15px;
       line-height: 1.4em; }
@@ -1456,15 +1365,12 @@ a.previous-wrapper {
       font-size: 0.7561436673rem;
       padding: 5px;
       text-align: center;
-      -webkit-box-flex: 0;
-          -ms-flex: 0 0 auto;
-              flex: 0 0 auto; }
+      flex: 0 0 auto; }
     #trading_socket_container #contract_prices_container #contract_purchase_balance {
       position: absolute;
       bottom: 0;
       color: #fff;
-      -webkit-box-sizing: border-box;
-              box-sizing: border-box;
+      box-sizing: border-box;
       display: block;
       background-color: #e98024;
       width: 100%; }
@@ -1479,20 +1385,12 @@ a.previous-wrapper {
       line-height: 1.4em; }
     #trading_socket_container #contract_prices_container #contract_purchase_profit_list, #trading_socket_container #contract_prices_container #contract_purchase_spots .row {
       padding: 3px 0;
-      -webkit-box-orient: horizontal !important;
-      -webkit-box-direction: normal !important;
-          -ms-flex-direction: row !important;
-              flex-direction: row !important; }
+      flex-direction: row !important; }
     #trading_socket_container #contract_prices_container #contract_purchase_profit_list {
       margin: 10px 0; }
       #trading_socket_container #contract_prices_container #contract_purchase_profit_list > div {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
+        flex-direction: column;
         line-height: 1.4em;
         padding: 0 10px; }
         #trading_socket_container #contract_prices_container #contract_purchase_profit_list > div > p {
@@ -1513,30 +1411,19 @@ a.previous-wrapper {
       padding: 3px;
       line-height: 1.5;
       font-size: 1rem;
-      -webkit-box-flex: 1;
-          -ms-flex: 1 0 auto;
-              flex: 1 0 auto;
-      display: -webkit-box;
-      display: -ms-flexbox;
+      flex: 1 0 auto;
       display: flex;
-      -webkit-box-align: center;
-          -ms-flex-align: center;
-              align-items: center; }
+      align-items: center; }
     #trading_socket_container #contract_prices_container .stake, #trading_socket_container #contract_prices_container .payout {
       padding: 0;
-      -webkit-box-pack: end;
-          -ms-flex-pack: end;
-              justify-content: flex-end; }
+      justify-content: flex-end; }
     #trading_socket_container #contract_prices_container .contract_amount, #trading_socket_container #contract_prices_container .contract_payout, #trading_socket_container #contract_prices_container .contract_multiplier {
       font-weight: bold;
       font-size: 1rem;
       border-radius: 5px;
-      -webkit-box-pack: center;
-          -ms-flex-pack: center;
-              justify-content: center; }
+      justify-content: center; }
   #trading_socket_container #expiry_type_duration {
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap; }
+    flex-wrap: wrap; }
   #trading_socket_container #contracts_list {
     position: relative; }
   #trading_socket_container .overlay_container {
@@ -1552,9 +1439,7 @@ a.previous-wrapper {
       display: block;
       position: absolute;
       height: 100%;
-      -webkit-box-flex: 1;
-          -ms-flex: 1 0 auto;
-              flex: 1 0 auto; }
+      flex: 1 0 auto; }
   #trading_socket_container #contract_confirmation_container {
     background-color: #f2f2f2;
     text-align: center; }
@@ -1565,13 +1450,9 @@ a.previous-wrapper {
       padding-top: 15px; }
   #trading_socket_container #contract_prices_container .price_container .price_wrapper {
     text-align: center;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center;
+    align-items: center;
     width: 100%;
-    -webkit-box-pack: start;
-        -ms-flex-pack: start;
-            justify-content: flex-start;
+    justify-content: flex-start;
     padding-left: 30px; }
     #trading_socket_container #contract_prices_container .price_container .price_wrapper.small {
       width: 95px; }
@@ -1586,30 +1467,19 @@ a.previous-wrapper {
       float: left;
       width: 100%; }
       #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: horizontal;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: row;
-                flex-direction: row;
-        -webkit-box-align: center;
-            -ms-flex-align: center;
-                align-items: center;
+        flex-direction: row;
+        align-items: center;
         margin-bottom: 10px; }
         #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div, #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div .contract_amount, #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div .contract_payout {
           vertical-align: middle; }
         #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div div {
-          -webkit-box-flex: 1;
-              -ms-flex-positive: 1;
-                  flex-grow: 1; }
+          flex-grow: 1; }
         #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div .stake_wrapper {
           margin-left: 20px; }
         #trading_socket_container #contract_prices_container .price_container .price_wrapper .amount_wrapper .amount_wrapper_div .payout_wrapper {
           margin-right: 20px; }
     #trading_socket_container #contract_prices_container .price_container .price_wrapper .contract_amount, #trading_socket_container #contract_prices_container .price_container .price_wrapper .contract_payout, #trading_socket_container #contract_prices_container .price_container .price_wrapper .stake, #trading_socket_container #contract_prices_container .price_container .price_wrapper .payout {
-      display: -webkit-inline-box;
-      display: -ms-inline-flexbox;
       display: inline-flex; }
   #trading_socket_container #duration_amount {
     margin-right: 0.5rem; }
@@ -1710,12 +1580,8 @@ a.previous-wrapper {
     white-space: nowrap; }
   #trading_socket_container #symbol_tip {
     font-size: 1.2rem;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-align: center;
-        -ms-flex-align: center;
-            align-items: center; }
+    align-items: center; }
   #trading_socket_container .small_width_input, #trading_socket_container .medium_width_input {
     width: 100%; }
   #trading_socket_container #time_start.medium_width_input {
@@ -1729,17 +1595,11 @@ a.previous-wrapper {
   #trading_socket_container #contract_form_content {
     margin-top: 0; }
   #trading_socket_container #contract_form_content_wrapper {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column; }
+    flex-direction: column; }
   #trading_socket_container #contract_symbol_container {
     text-align: center; }
     #trading_socket_container #contract_symbol_container .row {
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: column;
-              flex-direction: column; }
+      flex-direction: column; }
       #trading_socket_container #contract_symbol_container .row .col {
         margin-bottom: 5px; }
     #trading_socket_container #contract_symbol_container #contract_markets_container {
@@ -1751,19 +1611,13 @@ a.previous-wrapper {
   #trading_socket_container #contract_prices_container #price_container_top {
     margin-right: 0 !important; }
   #trading_socket_container #contract_prices_container .price_wrapper {
-    -webkit-box-orient: horizontal !important;
-    -webkit-box-direction: normal !important;
-        -ms-flex-direction: row !important;
-            flex-direction: row !important; }
+    flex-direction: row !important; }
     #trading_socket_container #contract_prices_container .price_wrapper.small {
       width: auto; }
     #trading_socket_container #contract_prices_container .price_wrapper .amount_wrapper {
       width: 70%; }
   #trading_socket_container #contract_prices_container .row {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column; }
+    flex-direction: column; }
     #trading_socket_container #contract_prices_container .row .col {
       margin-bottom: 5px; }
       #trading_socket_container #contract_prices_container .row .col.price_comment {
@@ -1781,21 +1635,15 @@ a.previous-wrapper {
         display: block !important; }
   #trading_socket_container #contract_prices_container .price_container .price_wrapper {
     width: 100%;
-    -webkit-box-sizing: border-box;
-            box-sizing: border-box; }
+    box-sizing: border-box; }
     #trading_socket_container #contract_prices_container .price_container .price_wrapper.small {
       width: auto; } }
 
 @media all and (max-width: 768px) {
   #trading_socket_container #contract_form_content_wrapper {
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column; }
+    flex-direction: column; }
     #trading_socket_container #contract_form_content_wrapper > .col {
-      -webkit-box-flex: 1;
-          -ms-flex: 1 0 auto;
-              flex: 1 0 auto; }
+      flex: 1 0 auto; }
   #trading_socket_container #contract_form_content {
     margin-top: 20px; }
   #trading_socket_container #contract_prices_container {
@@ -1833,9 +1681,7 @@ a.previous-wrapper {
     overflow-y: hidden; }
     #trading_bottom_content #webtrader_chart .row {
       padding: unset;
-      -webkit-box-pack: unset;
-          -ms-flex-pack: unset;
-              justify-content: unset; }
+      justify-content: unset; }
   #trading_bottom_content #last_digit_histo_form {
     margin-bottom: 20px; }
   #trading_bottom_content div.select > select#digit_underlying {
@@ -1937,16 +1783,11 @@ a.previous-wrapper {
   text-align: right !important; }
 
 #profit-table-container #pl-day-total .buy-date {
-  -webkit-box-flex: 6;
-      -ms-flex-positive: 6;
-          flex-grow: 6;
-  -ms-flex-negative: 6;
-      flex-shrink: 6; }
+  flex-grow: 6;
+  flex-shrink: 6; }
 
 #profit-table-container .contract {
-  -webkit-box-flex: 2;
-      -ms-flex: 2 1 100px;
-          flex: 2 1 100px;
+  flex: 2 1 100px;
   padding-right: 20px;
   min-width: 150px; }
 
@@ -1957,22 +1798,17 @@ a.previous-wrapper {
   line-height: 28px; }
 
 #statement-container .desc {
-  -webkit-box-flex: 2;
-      -ms-flex: 2 1 100px;
-          flex: 2 1 100px;
+  flex: 2 1 100px;
   padding-right: 20px;
   word-break: break-word;
   min-width: 130px; }
 
 #statement-container .act {
-  -webkit-box-flex: 0.8;
-      -ms-flex: 0.8 1 35px;
-          flex: 0.8 1 35px; }
+  flex: 0.8 1 35px; }
 
 #profit-table-container #date_to, #statement-container #date_to {
   width: 100%;
-  -webkit-box-sizing: border-box;
-          box-sizing: border-box; }
+  box-sizing: border-box; }
 
 @media screen and (max-width: 480px) {
   .api_token table td, .api_token table th, #applications-container table td, #applications-container table th {
@@ -1987,13 +1823,8 @@ a.previous-wrapper {
   .markets .market_current {
     border: 1px solid #dedede;
     border-radius: 4px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    flex-direction: column;
     padding: 5px 10px;
     text-align: left;
     cursor: pointer;
@@ -2018,18 +1849,11 @@ a.previous-wrapper {
     background: #fff;
     border: 1px solid #dedede;
     border-radius: 4px;
-    -webkit-box-shadow: 0 0 2px 1px #dedede;
-            box-shadow: 0 0 2px 1px #dedede;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    box-shadow: 0 0 2px 1px #dedede;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    flex-direction: column;
     position: absolute;
     top: 0;
-    -webkit-transition: visibility 0s 0s, opacity 0.15s ease-in;
     transition: visibility 0s 0s, opacity 0.15s ease-in;
     width: 600px;
     z-index: 10000; }
@@ -2039,7 +1863,6 @@ a.previous-wrapper {
     .markets .markets_dropdown.hidden {
       opacity: 0;
       visibility: hidden;
-      -webkit-transition: visibility 0s 0.25s, opacity 0.25s ease-in 0.1s;
       transition: visibility 0s 0.25s, opacity 0.25s ease-in 0.1s; }
     .markets .markets_dropdown .asset-placeholder.mobile {
       margin: 10px 15px 0;
@@ -2077,32 +1900,17 @@ a.previous-wrapper {
         right: 7px;
         background: url("../images/pages/trade/assets/ic-search-normal.svg") 100% 100%; }
     .markets .markets_dropdown .markets_view {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
       width: 100%;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: row;
-              flex-direction: row;
+      flex-direction: row;
       text-align: left; }
       @media (min-width: 320px) and (max-width: 767px) {
         .markets .markets_dropdown .markets_view {
-          -webkit-box-orient: vertical;
-          -webkit-box-direction: normal;
-              -ms-flex-direction: column;
-                  flex-direction: column; } }
+          flex-direction: column; } }
       .markets .markets_dropdown .markets_view .markets_column {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
-        -webkit-box-flex: 1;
-            -ms-flex: 1 0 auto;
-                flex: 1 0 auto;
+        flex-direction: column;
+        flex: 1 0 auto;
         min-width: 140px;
         background: #fff;
         border-right: 1px solid #dedede;
@@ -2114,18 +1922,10 @@ a.previous-wrapper {
           font-size: 12px;
           padding: 8px 10px;
           color: #2a3052;
-          -webkit-transition: background 0.2s 0.1s;
           transition: background 0.2s 0.1s;
-          display: -webkit-box;
-          display: -ms-flexbox;
           display: flex;
-          -webkit-box-orient: horizontal;
-          -webkit-box-direction: normal;
-              -ms-flex-direction: row;
-                  flex-direction: row;
-          -webkit-box-align: center;
-              -ms-flex-align: center;
-                  align-items: center;
+          flex-direction: row;
+          align-items: center;
           cursor: pointer; }
           .markets .markets_dropdown .markets_view .markets_column .desktop .market:hover {
             text-decoration: underline; }
@@ -2138,22 +1938,14 @@ a.previous-wrapper {
         .markets .markets_dropdown .markets_view .markets_column .mobile {
           display: none; }
           .markets .markets_dropdown .markets_view .markets_column .mobile ul {
-            display: -webkit-box !important;
-            display: -ms-flexbox !important;
             display: flex !important;
-            -webkit-box-orient: horizontal;
-            -webkit-box-direction: normal;
-                -ms-flex-direction: row;
-                    flex-direction: row;
-            -webkit-box-pack: justify;
-                -ms-flex-pack: justify;
-                    justify-content: space-between;
+            flex-direction: row;
+            justify-content: space-between;
             padding: 5px 15px 0;
             border-bottom: 1px solid #dedede; }
             .markets .markets_dropdown .markets_view .markets_column .mobile ul li {
               margin: 0 !important;
               font-size: 12px;
-              -webkit-transition: background 0.2s 0.1s;
               transition: background 0.2s 0.1s;
               cursor: pointer;
               padding: 0 5px 5px;
@@ -2173,7 +1965,6 @@ a.previous-wrapper {
           .markets .markets_dropdown .markets_view .markets_column .icon.forex {
             background: url("../images/pages/trade/assets/ic-forex-normal.svg") no-repeat;
             background-size: contain;
-            -webkit-transition: none;
             transition: none; }
             .markets .markets_dropdown .markets_view .markets_column .icon.forex.active {
               background: url("../images/pages/trade/assets/ic-forex-active.svg") no-repeat;
@@ -2181,7 +1972,6 @@ a.previous-wrapper {
           .markets .markets_dropdown .markets_view .markets_column .icon.indices {
             background: url("../images/pages/trade/assets/ic-indices-normal.svg") no-repeat;
             background-size: contain;
-            -webkit-transition: none;
             transition: none; }
             .markets .markets_dropdown .markets_view .markets_column .icon.indices.active {
               background: url("../images/pages/trade/assets/ic-indices-active.svg") no-repeat;
@@ -2189,7 +1979,6 @@ a.previous-wrapper {
           .markets .markets_dropdown .markets_view .markets_column .icon.stocks {
             background: url("../images/pages/trade/assets/ic-stocks-normal.svg") no-repeat;
             background-size: contain;
-            -webkit-transition: none;
             transition: none; }
             .markets .markets_dropdown .markets_view .markets_column .icon.stocks.active {
               background: url("../images/pages/trade/assets/ic-stocks-active.svg") no-repeat;
@@ -2197,7 +1986,6 @@ a.previous-wrapper {
           .markets .markets_dropdown .markets_view .markets_column .icon.commodities {
             background: url("../images/pages/trade/assets/ic-commodities-normal.svg") no-repeat;
             background-size: contain;
-            -webkit-transition: none;
             transition: none; }
             .markets .markets_dropdown .markets_view .markets_column .icon.commodities.active {
               background: url("../images/pages/trade/assets/ic-commodities-active.svg") no-repeat;
@@ -2205,7 +1993,6 @@ a.previous-wrapper {
           .markets .markets_dropdown .markets_view .markets_column .icon.volidx {
             background: url("../images/pages/trade/assets/ic-volidx-normal.svg") no-repeat;
             background-size: contain;
-            -webkit-transition: none;
             transition: none; }
             .markets .markets_dropdown .markets_view .markets_column .icon.volidx.active {
               background: url("../images/pages/trade/assets/ic-volidx-active.svg") no-repeat;
@@ -2216,28 +2003,16 @@ a.previous-wrapper {
           .markets .markets_dropdown .markets_view .markets_column .mobile {
             display: block; } }
       .markets .markets_dropdown .markets_view .list {
-        display: -webkit-box;
-        display: -ms-flexbox;
         display: flex;
-        -webkit-box-orient: vertical;
-        -webkit-box-direction: normal;
-            -ms-flex-direction: column;
-                flex-direction: column;
+        flex-direction: column;
         height: 300px;
         width: calc(100% - 20px);
         overflow-y: scroll;
         padding: 0 10px; }
         .markets .markets_dropdown .markets_view .list .market {
-          display: -webkit-box;
-          display: -ms-flexbox;
           display: flex;
-          -webkit-box-orient: vertical;
-          -webkit-box-direction: normal;
-              -ms-flex-direction: column;
-                  flex-direction: column;
-          -webkit-box-flex: 0;
-              -ms-flex: 0 0 auto;
-                  flex: 0 0 auto;
+          flex-direction: column;
+          flex: 0 0 auto;
           padding-bottom: 40px; }
           .markets .markets_dropdown .markets_view .list .market:last-of-type {
             padding-bottom: 80px; }
@@ -2245,11 +2020,8 @@ a.previous-wrapper {
             font-size: 18px;
             padding: 10px 0;
             font-weight: 400;
-            -webkit-box-flex: 1;
-                -ms-flex: 1 0 auto;
-                    flex: 1 0 auto;
+            flex: 1 0 auto;
             color: #2a3052;
-            -webkit-transition: none;
             transition: none; }
             @media (min-width: 320px) and (max-width: 767px) {
               .markets .markets_dropdown .markets_view .list .market .market_name {
@@ -2266,41 +2038,24 @@ a.previous-wrapper {
             .markets .markets_dropdown .markets_view .list .market .market_name.put_under {
               z-index: -1; }
           .markets .markets_dropdown .markets_view .list .market .submarket {
-            display: -webkit-box;
-            display: -ms-flexbox;
             display: flex;
-            -webkit-box-orient: vertical;
-            -webkit-box-direction: normal;
-                -ms-flex-direction: column;
-                    flex-direction: column;
-            -webkit-box-flex: 1;
-                -ms-flex: 1 0 auto;
-                    flex: 1 0 auto;
+            flex-direction: column;
+            flex: 1 0 auto;
             margin-bottom: 10px; }
             .markets .markets_dropdown .markets_view .list .market .submarket .submarket_name {
               font-size: 12px;
               padding: 10px 0 0;
-              -webkit-box-flex: 1;
-                  -ms-flex: 1 0 auto;
-                      flex: 1 0 auto;
+              flex: 1 0 auto;
               font-weight: 300;
               color: #e98024; }
               @media (min-width: 320px) and (max-width: 767px) {
                 .markets .markets_dropdown .markets_view .list .market .submarket .submarket_name {
                   font-size: 14px; } }
             .markets .markets_dropdown .markets_view .list .market .submarket .symbols {
-              display: -webkit-box;
-              display: -ms-flexbox;
               display: flex;
-              -ms-flex-wrap: wrap;
-                  flex-wrap: wrap;
-              -webkit-box-orient: horizontal;
-              -webkit-box-direction: normal;
-                  -ms-flex-direction: row;
-                      flex-direction: row;
-              -webkit-box-flex: 1;
-                  -ms-flex: 1 0 auto;
-                      flex: 1 0 auto; }
+              flex-wrap: wrap;
+              flex-direction: row;
+              flex: 1 0 auto; }
               .markets .markets_dropdown .markets_view .list .market .submarket .symbols .symbol_name {
                 padding: 5px;
                 margin: 10px 0 5px 5px;
@@ -2309,7 +2064,6 @@ a.previous-wrapper {
                 width: 162px;
                 font-size: 14px;
                 font-weight: 400;
-                -webkit-transition: all 0.2s;
                 transition: all 0.2s; }
                 @media (min-width: 320px) and (max-width: 767px) {
                   .markets .markets_dropdown .markets_view .list .market .submarket .symbols .symbol_name {
@@ -2332,13 +2086,8 @@ a.previous-wrapper {
   .contracts .contract_current {
     border: 1px solid #dedede;
     border-radius: 4px;
-    display: -webkit-box;
-    display: -ms-flexbox;
     display: flex;
-    -webkit-box-orient: vertical;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: column;
-            flex-direction: column;
+    flex-direction: column;
     padding: 5px 10px;
     min-width: 100px;
     text-align: left;
@@ -2362,18 +2111,10 @@ a.previous-wrapper {
     background: #fff;
     border: 1px solid #dedede;
     border-radius: 4px;
-    -webkit-box-shadow: 0 0 2px 1px #dedede;
-            box-shadow: 0 0 2px 1px #dedede;
-    display: -webkit-box;
-    display: -ms-flexbox;
+    box-shadow: 0 0 2px 1px #dedede;
     display: flex;
-    -webkit-box-orient: horizontal;
-    -webkit-box-direction: normal;
-        -ms-flex-direction: row;
-            flex-direction: row;
-    -ms-flex-wrap: wrap;
-        flex-wrap: wrap;
-    -webkit-transition: visibility 0s 0s, opacity 0.15s ease-in;
+    flex-direction: row;
+    flex-wrap: wrap;
     transition: visibility 0s 0s, opacity 0.15s ease-in;
     z-index: 10000;
     padding: 10px;
@@ -2385,7 +2126,6 @@ a.previous-wrapper {
     .contracts .contracts_dropdown.hidden {
       opacity: 0;
       visibility: hidden;
-      -webkit-transition: visibility 0s 0.25s, opacity 0.25s ease-in 0.1s;
       transition: visibility 0s 0.25s, opacity 0.25s ease-in 0.1s; }
     @media (max-width: 767px) {
       .contracts .contracts_dropdown .mobile_close {
@@ -2408,15 +2148,9 @@ a.previous-wrapper {
       background: url("../images/pages/trade/assets/ic-close-normal.svg") 100% 100%; }
     .contracts .contracts_dropdown .list {
       width: 100%;
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-orient: horizontal;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: row;
-              flex-direction: row;
-      -ms-flex-wrap: wrap;
-          flex-wrap: wrap; }
+      flex-direction: row;
+      flex-wrap: wrap; }
       @media (min-width: 320px) and (max-width: 767px) {
         .contracts .contracts_dropdown .list {
           padding-top: 41px;
@@ -2424,17 +2158,10 @@ a.previous-wrapper {
           overflow-x: hidden;
           overflow-y: scroll; } }
     .contracts .contracts_dropdown .contract {
-      display: -webkit-box;
-      display: -ms-flexbox;
       display: flex;
-      -webkit-box-orient: vertical;
-      -webkit-box-direction: normal;
-          -ms-flex-direction: column;
-              flex-direction: column;
+      flex-direction: column;
       padding: 0 0 10px;
-      -webkit-box-flex: 1;
-          -ms-flex: 1 0 auto;
-              flex: 1 0 auto;
+      flex: 1 0 auto;
       width: 185px;
       margin-right: 5px;
       text-align: left; }
