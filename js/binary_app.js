@@ -4078,7 +4078,7 @@ var initApp = function initApp() {
  * @return {string} returns the basename of current url
  */
 var getBasename = function getBasename() {
-    var regex_string = '((' + Object.keys((0, _language.getAll)()).join('|') + ')/app.html).*';
+    var regex_string = '(.*(' + Object.keys((0, _language.getAll)()).join('|') + ')/app.html).*';
     var basename = new RegExp(regex_string, 'ig').exec(window.location.pathname);
 
     if (basename && basename.length) {
