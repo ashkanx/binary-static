@@ -594,7 +594,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(273);
+var _reactRouterDom = __webpack_require__(275);
 
 var _propTypes = __webpack_require__(10);
 
@@ -608,15 +608,15 @@ var _login = __webpack_require__(40);
 
 var _localize = __webpack_require__(2);
 
-var _portfolio = __webpack_require__(394);
+var _portfolio = __webpack_require__(396);
 
 var _portfolio2 = _interopRequireDefault(_portfolio);
 
-var _trade_app = __webpack_require__(418);
+var _trade_app = __webpack_require__(420);
 
 var _trade_app2 = _interopRequireDefault(_trade_app);
 
-var _statement = __webpack_require__(396);
+var _statement = __webpack_require__(398);
 
 var _statement2 = _interopRequireDefault(_statement);
 
@@ -1655,6 +1655,123 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+var URLHelper = function () {
+    function URLHelper() {
+        _classCallCheck(this, URLHelper);
+    }
+
+    _createClass(URLHelper, null, [{
+        key: 'getQueryParams',
+
+        /**
+         * Get query string of the url
+         *
+         * @param {String|null} url
+         * 
+         * @return {Object} returns a key-value object that contains all query string of the url.
+         */
+        value: function getQueryParams(url) {
+            var query_string = url ? new URL(url).search : window.location.search;
+            var query_params = new URLSearchParams(query_string.slice(1));
+
+            return query_params;
+        }
+
+        /**
+         * append params to url query string
+         *
+         * @param {Object} params - a key value object that contains all query strings should be added to the url
+         * @param {String} url - the url that should query strings add to
+         *
+         * @return {Object} returns modified url object.
+         */
+
+    }, {
+        key: 'setQueryParam',
+        value: function setQueryParam(params) {
+            var url = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : null;
+
+            var url_object = url ? new URL(url) : window.location;
+            var param_object = new URLSearchParams(url_object.search.slice(1));
+            Object.keys(params).forEach(function (name) {
+                param_object.delete(name);
+
+                var value = params[name];
+
+                if (value && (typeof value === 'undefined' ? 'undefined' : _typeof(value)) !== 'object' && value !== '') {
+                    param_object.append(name, params[name]);
+                }
+            });
+
+            param_object.sort();
+
+            if (!url) {
+                window.history.replaceState(null, null, '?' + param_object.toString());
+            } else {
+                url_object.seach = param_object.toString();
+            }
+
+            return url_object;
+        }
+
+        /**
+         * Update query string by values of passing object
+         *
+         * @param {Object} store - an object that contains values which should be added to the query string
+         * @param {string[]} allowed_query_string_variables - a list of variables those are allowed to add to query string.
+         *
+         * @return {Object} returns an iterator object of updated query string
+         */
+
+    }, {
+        key: 'updateQueryString',
+        value: function updateQueryString(store, allowed_query_string_variables) {
+            var _this = this;
+
+            var queryParams = URLHelper.getQueryParams();
+
+            if (store && Object.keys(store).length > 0 && store.constructor === Object) {
+
+                // create query string by default values in trade_store if the param doesn't exist in query string.
+                allowed_query_string_variables.filter(function (p) {
+                    return !queryParams.get(p);
+                }).forEach(function (key) {
+                    if (store[key] && store[key] !== '') {
+                        URLHelper.setQueryParam(_defineProperty({}, key, _this[key]));
+                        queryParams.set(key, _this[key]);
+                    }
+                });
+            }
+
+            return queryParams;
+        }
+    }]);
+
+    return URLHelper;
+}();
+
+exports.default = URLHelper;
+
+/***/ }),
+
+/***/ 214:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _react = __webpack_require__(7);
@@ -1815,7 +1932,7 @@ exports.default = DataTable;
 
 /***/ }),
 
-/***/ 214:
+/***/ 215:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1840,7 +1957,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _drawer_header = __webpack_require__(215);
+var _drawer_header = __webpack_require__(216);
 
 var _connect = __webpack_require__(26);
 
@@ -1973,7 +2090,7 @@ exports.Drawer = drawer_component;
 
 /***/ }),
 
-/***/ 215:
+/***/ 216:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2042,7 +2159,7 @@ DrawerHeader.propTypes = {
 
 /***/ }),
 
-/***/ 216:
+/***/ 217:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2156,7 +2273,7 @@ exports.DrawerItem = drawer_item_component;
 
 /***/ }),
 
-/***/ 217:
+/***/ 218:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2166,7 +2283,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _drawer_header = __webpack_require__(215);
+var _drawer_header = __webpack_require__(216);
 
 Object.keys(_drawer_header).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2178,7 +2295,7 @@ Object.keys(_drawer_header).forEach(function (key) {
   });
 });
 
-var _drawer_item = __webpack_require__(216);
+var _drawer_item = __webpack_require__(217);
 
 Object.keys(_drawer_item).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2190,7 +2307,7 @@ Object.keys(_drawer_item).forEach(function (key) {
   });
 });
 
-var _drawer_items = __webpack_require__(385);
+var _drawer_items = __webpack_require__(387);
 
 Object.keys(_drawer_items).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2202,7 +2319,7 @@ Object.keys(_drawer_items).forEach(function (key) {
   });
 });
 
-var _drawer = __webpack_require__(214);
+var _drawer = __webpack_require__(215);
 
 Object.keys(_drawer).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2214,7 +2331,7 @@ Object.keys(_drawer).forEach(function (key) {
   });
 });
 
-var _toggle_drawer = __webpack_require__(386);
+var _toggle_drawer = __webpack_require__(388);
 
 Object.keys(_toggle_drawer).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2228,7 +2345,7 @@ Object.keys(_toggle_drawer).forEach(function (key) {
 
 /***/ }),
 
-/***/ 218:
+/***/ 219:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2278,7 +2395,7 @@ exports.default = Tooltip;
 
 /***/ }),
 
-/***/ 219:
+/***/ 220:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2332,7 +2449,7 @@ exports.default = Button;
 
 /***/ }),
 
-/***/ 220:
+/***/ 221:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2366,7 +2483,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _arrowhead = __webpack_require__(383);
+var _arrowhead = __webpack_require__(385);
 
 var _arrowhead2 = _interopRequireDefault(_arrowhead);
 
@@ -3171,7 +3288,7 @@ exports.default = DatePicker;
 
 /***/ }),
 
-/***/ 221:
+/***/ 222:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3191,7 +3308,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _iscroll = __webpack_require__(651);
+var _iscroll = __webpack_require__(653);
 
 var _iscroll2 = _interopRequireDefault(_iscroll);
 
@@ -3664,7 +3781,21 @@ exports.default = TimePicker;
 
 /***/ }),
 
-/***/ 222:
+/***/ 223:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+// list of trade's options that should be used in querstring of trade page url.
+var allowed_query_string_variables = exports.allowed_query_string_variables = ['amount', 'barrier_1', 'barrier_2', 'basis', 'contract_start_type', 'contract_type', 'contract_type', 'currency', 'duration', 'duration_unit', 'expiry_date', 'expiry_type', 'last_digit', 'start_date', 'symbol'];
+
+/***/ }),
+
+/***/ 224:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3805,7 +3936,7 @@ exports.default = FullscreenDialog;
 
 /***/ }),
 
-/***/ 225:
+/***/ 227:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3851,7 +3982,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _mobx = __webpack_require__(65);
 
-var _mobxReact = __webpack_require__(268);
+var _mobxReact = __webpack_require__(270);
 
 var _react = __webpack_require__(7);
 
@@ -3990,7 +4121,7 @@ var connect = exports.connect = function connect(mapStoresToProps) {
 
 /***/ }),
 
-/***/ 284:
+/***/ 286:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4006,35 +4137,35 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactDom = __webpack_require__(107);
 
-var _reactRouterDom = __webpack_require__(273);
+var _reactRouterDom = __webpack_require__(275);
 
-var _network_monitor = __webpack_require__(378);
+var _network_monitor = __webpack_require__(380);
 
 var _network_monitor2 = _interopRequireDefault(_network_monitor);
 
-var _client_store = __webpack_require__(419);
+var _client_store = __webpack_require__(421);
 
 var _client_store2 = _interopRequireDefault(_client_store);
 
-var _common_store = __webpack_require__(420);
+var _common_store = __webpack_require__(422);
 
 var _common_store2 = _interopRequireDefault(_common_store);
 
 var _connect = __webpack_require__(26);
 
-var _trade_store = __webpack_require__(421);
+var _trade_store = __webpack_require__(423);
 
 var _trade_store2 = _interopRequireDefault(_trade_store);
 
-var _ui_store = __webpack_require__(422);
+var _ui_store = __webpack_require__(424);
 
 var _ui_store2 = _interopRequireDefault(_ui_store);
 
-var _footer = __webpack_require__(390);
+var _footer = __webpack_require__(392);
 
 var _footer2 = _interopRequireDefault(_footer);
 
-var _header = __webpack_require__(391);
+var _header = __webpack_require__(393);
 
 var _header2 = _interopRequireDefault(_header);
 
@@ -4078,7 +4209,7 @@ var initApp = function initApp() {
  * @return {string} returns the basename of current url
  */
 var getBasename = function getBasename() {
-    var regex_string = '(.*(' + Object.keys((0, _language.getAll)()).join('|') + ')/app.html).*';
+    var regex_string = '(.*(' + Object.keys((0, _language.getAll)()).join('|') + ')/app\\.html).*';
     var basename = new RegExp(regex_string, 'ig').exec(window.location.pathname);
 
     if (basename && basename.length) {
@@ -4351,7 +4482,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 377:
+/***/ 379:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4393,7 +4524,7 @@ var doLogout = function doLogout(response) {
 
 /***/ }),
 
-/***/ 378:
+/***/ 380:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4403,7 +4534,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _socket_general = __webpack_require__(379);
+var _socket_general = __webpack_require__(381);
 
 var _socket_general2 = _interopRequireDefault(_socket_general);
 
@@ -4428,7 +4559,7 @@ exports.default = NetworkMonitor;
 
 /***/ }),
 
-/***/ 379:
+/***/ 381:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4657,7 +4788,7 @@ var ResponseHandlers = function () {
 
 /***/ }),
 
-/***/ 380:
+/***/ 382:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4667,7 +4798,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _smartcharts = __webpack_require__(288);
+var _smartcharts = __webpack_require__(290);
 
 var _propTypes = __webpack_require__(10);
 
@@ -4695,7 +4826,8 @@ var forget = function forget(match_values, callback) {
 };
 
 var SmartCharts = function SmartCharts(_ref) {
-    var _onSymbolChange = _ref.onSymbolChange;
+    var _onSymbolChange = _ref.onSymbolChange,
+        initial_symbol = _ref.initial_symbol;
 
     var is_mobile = window.innerWidth <= 767;
     return _react2.default.createElement(
@@ -4713,12 +4845,14 @@ var SmartCharts = function SmartCharts(_ref) {
                     }
                 });
             },
+            initialSymbol: initial_symbol,
             isMobile: is_mobile
         })
     );
 };
 
 SmartCharts.propTypes = {
+    initial_symbol: _propTypes2.default.string,
     onSymbolChange: _propTypes2.default.func
 };
 
@@ -4732,7 +4866,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 381:
+/***/ 383:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4755,7 +4889,7 @@ var _currency_base = __webpack_require__(39);
 
 var _connect = __webpack_require__(26);
 
-var _button = __webpack_require__(219);
+var _button = __webpack_require__(220);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -4821,7 +4955,7 @@ var AccountBalance = exports.AccountBalance = (0, _connect.connect)(function (_r
 
 /***/ }),
 
-/***/ 382:
+/***/ 384:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4841,7 +4975,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactPerfectScrollbar = __webpack_require__(270);
+var _reactPerfectScrollbar = __webpack_require__(272);
 
 var _reactPerfectScrollbar2 = _interopRequireDefault(_reactPerfectScrollbar);
 
@@ -5015,7 +5149,7 @@ exports.default = AccountSwitcher;
 
 /***/ }),
 
-/***/ 383:
+/***/ 385:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5052,7 +5186,7 @@ exports.default = Arrowhead;
 
 /***/ }),
 
-/***/ 384:
+/***/ 386:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5095,7 +5229,7 @@ exports.default = CardList;
 
 /***/ }),
 
-/***/ 385:
+/***/ 387:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5122,7 +5256,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _drawer_item = __webpack_require__(216);
+var _drawer_item = __webpack_require__(217);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5215,7 +5349,7 @@ exports.DrawerItems = DrawerItems;
 
 /***/ }),
 
-/***/ 386:
+/***/ 388:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5240,7 +5374,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _drawer = __webpack_require__(214);
+var _drawer = __webpack_require__(215);
 
 var _url = __webpack_require__(9);
 
@@ -5344,7 +5478,7 @@ exports.ToggleDrawer = drawer_component;
 
 /***/ }),
 
-/***/ 387:
+/***/ 389:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5359,15 +5493,15 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactPerfectScrollbar = __webpack_require__(270);
+var _reactPerfectScrollbar = __webpack_require__(272);
 
 var _reactPerfectScrollbar2 = _interopRequireDefault(_reactPerfectScrollbar);
 
 var _localize = __webpack_require__(2);
 
-var _index = __webpack_require__(217);
+var _index = __webpack_require__(218);
 
-var _common = __webpack_require__(377);
+var _common = __webpack_require__(379);
 
 var _client_base = __webpack_require__(20);
 
@@ -5406,7 +5540,131 @@ var MenuDrawer = exports.MenuDrawer = function MenuDrawer() {
 
 /***/ }),
 
-/***/ 388:
+/***/ 39:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var getLanguage = __webpack_require__(14).get;
+var localize = __webpack_require__(2).localize;
+var State = __webpack_require__(5).State;
+var getPropertyValue = __webpack_require__(1).getPropertyValue;
+
+var currencies_config = {};
+
+var formatMoney = function formatMoney(currency_value, amount, exclude_currency) {
+    var decimals = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
+    var minimumFractionDigits = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
+
+    var money = amount;
+    if (money) money = String(money).replace(/,/g, '');
+    var sign = money && Number(money) < 0 ? '-' : '';
+    var decimal_places = decimals || getDecimalPlaces(currency_value);
+
+    money = isNaN(money) ? 0 : Math.abs(money);
+    if (typeof Intl !== 'undefined') {
+        var options = {
+            minimumFractionDigits: minimumFractionDigits || decimal_places,
+            maximumFractionDigits: decimal_places
+        };
+        money = new Intl.NumberFormat(getLanguage().toLowerCase().replace('_', '-'), options).format(money);
+    } else {
+        money = addComma(money, decimal_places);
+    }
+
+    return sign + (exclude_currency ? '' : formatCurrency(currency_value)) + money;
+};
+
+var formatCurrency = function formatCurrency(currency) {
+    return '<span class="symbols ' + (currency || '').toLowerCase() + '"></span>';
+}; // defined in binary-style
+
+var addComma = function addComma(num, decimal_points, is_crypto) {
+    var number = String(num || 0).replace(/,/g, '');
+    if (typeof decimal_points !== 'undefined') {
+        number = (+number).toFixed(decimal_points);
+    }
+    if (is_crypto) {
+        number = parseFloat(+number);
+    }
+
+    return number.toString().replace(/(^|[^\w.])(\d{4,})/g, function ($0, $1, $2) {
+        return $1 + $2.replace(/\d(?=(?:\d\d\d)+(?!\d))/g, '$&,');
+    });
+};
+
+var isJPClient = function isJPClient() {
+    return !!State.get('is_jp_client');
+};
+
+var getFiatDecimalPlaces = function getFiatDecimalPlaces() {
+    return isJPClient() ? 0 : 2;
+};
+
+var calcDecimalPlaces = function calcDecimalPlaces(currency) {
+    return isCryptocurrency(currency) ? 8 : getFiatDecimalPlaces();
+};
+
+var getDecimalPlaces = function getDecimalPlaces(currency) {
+    return (
+        // need to check currencies_config[currency] exists instead of || in case of 0 value
+        currencies_config[currency] ? getPropertyValue(currencies_config, [currency, 'fractional_digits']) : calcDecimalPlaces(currency)
+    );
+};
+
+var setCurrencies = function setCurrencies(website_status) {
+    currencies_config = website_status.currencies_config;
+};
+
+var isCryptocurrency = function isCryptocurrency(currency) {
+    return (/crypto/i.test(getPropertyValue(currencies_config, [currency, 'type']))
+    );
+};
+
+var crypto_config = {
+    BTC: { name: 'Bitcoin', min_withdrawal: 0.002 },
+    BCH: { name: 'Bitcoin Cash', min_withdrawal: 0.002 },
+    ETH: { name: 'Ether', min_withdrawal: 0.002 },
+    ETC: { name: 'Ether Classic', min_withdrawal: 0.002 },
+    LTC: { name: 'Litecoin', min_withdrawal: 0.002 },
+    DAI: { name: 'Dai', min_withdrawal: 0.002 }
+};
+
+var getMinWithdrawal = function getMinWithdrawal(currency) {
+    return isCryptocurrency(currency) ? getPropertyValue(crypto_config, [currency, 'min_withdrawal']) || 0.002 : 1;
+};
+
+var getCurrencyName = function getCurrencyName(currency) {
+    return localize(getPropertyValue(crypto_config, [currency, 'name']) || '');
+};
+
+var getFiatPayout = function getFiatPayout() {
+    return isJPClient() ? 1 : 10;
+};
+
+var getMinPayout = function getMinPayout(currency) {
+    return isCryptocurrency(currency) ? getPropertyValue(currencies_config, [currency, 'stake_default']) : getFiatPayout();
+};
+
+module.exports = {
+    formatMoney: formatMoney,
+    formatCurrency: formatCurrency,
+    addComma: addComma,
+    getDecimalPlaces: getDecimalPlaces,
+    setCurrencies: setCurrencies,
+    isCryptocurrency: isCryptocurrency,
+    getCurrencyName: getCurrencyName,
+    getMinWithdrawal: getMinWithdrawal,
+    getMinPayout: getMinPayout,
+    getCurrencies: function getCurrencies() {
+        return currencies_config;
+    }
+};
+
+/***/ }),
+
+/***/ 390:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5501,7 +5759,7 @@ exports.default = Popover;
 
 /***/ }),
 
-/***/ 389:
+/***/ 391:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5674,131 +5932,7 @@ exports.default = PortfolioDrawer;
 
 /***/ }),
 
-/***/ 39:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var getLanguage = __webpack_require__(14).get;
-var localize = __webpack_require__(2).localize;
-var State = __webpack_require__(5).State;
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
-
-var currencies_config = {};
-
-var formatMoney = function formatMoney(currency_value, amount, exclude_currency) {
-    var decimals = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
-    var minimumFractionDigits = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
-
-    var money = amount;
-    if (money) money = String(money).replace(/,/g, '');
-    var sign = money && Number(money) < 0 ? '-' : '';
-    var decimal_places = decimals || getDecimalPlaces(currency_value);
-
-    money = isNaN(money) ? 0 : Math.abs(money);
-    if (typeof Intl !== 'undefined') {
-        var options = {
-            minimumFractionDigits: minimumFractionDigits || decimal_places,
-            maximumFractionDigits: decimal_places
-        };
-        money = new Intl.NumberFormat(getLanguage().toLowerCase().replace('_', '-'), options).format(money);
-    } else {
-        money = addComma(money, decimal_places);
-    }
-
-    return sign + (exclude_currency ? '' : formatCurrency(currency_value)) + money;
-};
-
-var formatCurrency = function formatCurrency(currency) {
-    return '<span class="symbols ' + (currency || '').toLowerCase() + '"></span>';
-}; // defined in binary-style
-
-var addComma = function addComma(num, decimal_points, is_crypto) {
-    var number = String(num || 0).replace(/,/g, '');
-    if (typeof decimal_points !== 'undefined') {
-        number = (+number).toFixed(decimal_points);
-    }
-    if (is_crypto) {
-        number = parseFloat(+number);
-    }
-
-    return number.toString().replace(/(^|[^\w.])(\d{4,})/g, function ($0, $1, $2) {
-        return $1 + $2.replace(/\d(?=(?:\d\d\d)+(?!\d))/g, '$&,');
-    });
-};
-
-var isJPClient = function isJPClient() {
-    return !!State.get('is_jp_client');
-};
-
-var getFiatDecimalPlaces = function getFiatDecimalPlaces() {
-    return isJPClient() ? 0 : 2;
-};
-
-var calcDecimalPlaces = function calcDecimalPlaces(currency) {
-    return isCryptocurrency(currency) ? 8 : getFiatDecimalPlaces();
-};
-
-var getDecimalPlaces = function getDecimalPlaces(currency) {
-    return (
-        // need to check currencies_config[currency] exists instead of || in case of 0 value
-        currencies_config[currency] ? getPropertyValue(currencies_config, [currency, 'fractional_digits']) : calcDecimalPlaces(currency)
-    );
-};
-
-var setCurrencies = function setCurrencies(website_status) {
-    currencies_config = website_status.currencies_config;
-};
-
-var isCryptocurrency = function isCryptocurrency(currency) {
-    return (/crypto/i.test(getPropertyValue(currencies_config, [currency, 'type']))
-    );
-};
-
-var crypto_config = {
-    BTC: { name: 'Bitcoin', min_withdrawal: 0.002 },
-    BCH: { name: 'Bitcoin Cash', min_withdrawal: 0.002 },
-    ETH: { name: 'Ether', min_withdrawal: 0.002 },
-    ETC: { name: 'Ether Classic', min_withdrawal: 0.002 },
-    LTC: { name: 'Litecoin', min_withdrawal: 0.002 },
-    DAI: { name: 'Dai', min_withdrawal: 0.002 }
-};
-
-var getMinWithdrawal = function getMinWithdrawal(currency) {
-    return isCryptocurrency(currency) ? getPropertyValue(crypto_config, [currency, 'min_withdrawal']) || 0.002 : 1;
-};
-
-var getCurrencyName = function getCurrencyName(currency) {
-    return localize(getPropertyValue(crypto_config, [currency, 'name']) || '');
-};
-
-var getFiatPayout = function getFiatPayout() {
-    return isJPClient() ? 1 : 10;
-};
-
-var getMinPayout = function getMinPayout(currency) {
-    return isCryptocurrency(currency) ? getPropertyValue(currencies_config, [currency, 'stake_default']) : getFiatPayout();
-};
-
-module.exports = {
-    formatMoney: formatMoney,
-    formatCurrency: formatCurrency,
-    addComma: addComma,
-    getDecimalPlaces: getDecimalPlaces,
-    setCurrencies: setCurrencies,
-    isCryptocurrency: isCryptocurrency,
-    getCurrencyName: getCurrencyName,
-    getMinWithdrawal: getMinWithdrawal,
-    getMinPayout: getMinPayout,
-    getCurrencies: function getCurrencies() {
-        return currencies_config;
-    }
-};
-
-/***/ }),
-
-/***/ 390:
+/***/ 392:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5818,7 +5952,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _popover = __webpack_require__(388);
+var _popover = __webpack_require__(390);
 
 var _popover2 = _interopRequireDefault(_popover);
 
@@ -6020,7 +6154,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 391:
+/***/ 393:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6040,11 +6174,11 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _account_switcher = __webpack_require__(382);
+var _account_switcher = __webpack_require__(384);
 
 var _account_switcher2 = _interopRequireDefault(_account_switcher);
 
-var _index = __webpack_require__(217);
+var _index = __webpack_require__(218);
 
 var _routes = __webpack_require__(117);
 
@@ -6052,9 +6186,9 @@ var _url = __webpack_require__(9);
 
 var _url2 = _interopRequireDefault(_url);
 
-var _account_balance = __webpack_require__(381);
+var _account_balance = __webpack_require__(383);
 
-var _menu_drawer = __webpack_require__(387);
+var _menu_drawer = __webpack_require__(389);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6151,7 +6285,7 @@ exports.default = Header;
 
 /***/ }),
 
-/***/ 392:
+/***/ 394:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6363,7 +6497,7 @@ exports.default = SubscriptionManager;
 
 /***/ }),
 
-/***/ 393:
+/***/ 395:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6373,7 +6507,7 @@ __webpack_require__(109);
 
 __webpack_require__(135);
 
-var _app = __webpack_require__(284);
+var _app = __webpack_require__(286);
 
 var _app2 = _interopRequireDefault(_app);
 
@@ -6393,7 +6527,7 @@ window.addEventListener('pageshow', function (e) {
 
 /***/ }),
 
-/***/ 394:
+/***/ 396:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6415,15 +6549,15 @@ var _moment = __webpack_require__(8);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _portfolio_card = __webpack_require__(395);
+var _portfolio_card = __webpack_require__(397);
 
 var _portfolio_card2 = _interopRequireDefault(_portfolio_card);
 
-var _data_table = __webpack_require__(213);
+var _data_table = __webpack_require__(214);
 
 var _data_table2 = _interopRequireDefault(_data_table);
 
-var _tooltip = __webpack_require__(218);
+var _tooltip = __webpack_require__(219);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
@@ -6443,7 +6577,7 @@ var _localize = __webpack_require__(2);
 
 var _utility = __webpack_require__(1);
 
-var _loading = __webpack_require__(225);
+var _loading = __webpack_require__(227);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -6830,7 +6964,7 @@ exports.default = Portfolio;
 
 /***/ }),
 
-/***/ 395:
+/***/ 397:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6940,7 +7074,7 @@ PortfolioCard.propTypes = {
 
 /***/ }),
 
-/***/ 396:
+/***/ 398:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6976,15 +7110,15 @@ var _ws_methods2 = _interopRequireDefault(_ws_methods);
 
 var _connect = __webpack_require__(26);
 
-var _card_list = __webpack_require__(384);
+var _card_list = __webpack_require__(386);
 
 var _card_list2 = _interopRequireDefault(_card_list);
 
-var _data_table = __webpack_require__(213);
+var _data_table = __webpack_require__(214);
 
 var _data_table2 = _interopRequireDefault(_data_table);
 
-var _date_picker = __webpack_require__(220);
+var _date_picker = __webpack_require__(221);
 
 var _date_picker2 = _interopRequireDefault(_date_picker);
 
@@ -6998,7 +7132,7 @@ var _localize = __webpack_require__(2);
 
 var _string_util = __webpack_require__(18);
 
-var _loading = __webpack_require__(225);
+var _loading = __webpack_require__(227);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -7425,7 +7559,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 397:
+/***/ 399:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7454,7 +7588,52 @@ var onChangeContractType = exports.onChangeContractType = function onChangeContr
 
 /***/ }),
 
-/***/ 398:
+/***/ 40:
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var Client = __webpack_require__(20);
+var getLanguage = __webpack_require__(14).get;
+var isStorageSupported = __webpack_require__(5).isStorageSupported;
+var getAppId = __webpack_require__(34).getAppId;
+
+var Login = function () {
+    var redirectToLogin = function redirectToLogin() {
+        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
+            sessionStorage.setItem('redirect_url', window.location.href);
+            window.location.href = loginUrl();
+        }
+    };
+
+    var loginUrl = function loginUrl() {
+        var server_url = localStorage.getItem('config.server_url');
+        var language = getLanguage();
+        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language : 'https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language;
+    };
+
+    var isLoginPages = function isLoginPages() {
+        return (/logged_inws|redirect/i.test(window.location.pathname)
+        );
+    };
+
+    var socialLoginUrl = function socialLoginUrl(brand) {
+        return loginUrl() + '&social_signup=' + brand;
+    };
+
+    return {
+        redirectToLogin: redirectToLogin,
+        isLoginPages: isLoginPages,
+        socialLoginUrl: socialLoginUrl
+    };
+}();
+
+module.exports = Login;
+
+/***/ }),
+
+/***/ 400:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7529,7 +7708,7 @@ var getCurrenciesAsync = exports.getCurrenciesAsync = function () {
 
 /***/ }),
 
-/***/ 399:
+/***/ 401:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7570,52 +7749,7 @@ var onChangeExpiry = exports.onChangeExpiry = function onChangeExpiry(store) {
 
 /***/ }),
 
-/***/ 40:
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var Client = __webpack_require__(20);
-var getLanguage = __webpack_require__(14).get;
-var isStorageSupported = __webpack_require__(5).isStorageSupported;
-var getAppId = __webpack_require__(34).getAppId;
-
-var Login = function () {
-    var redirectToLogin = function redirectToLogin() {
-        if (!Client.isLoggedIn() && !isLoginPages() && isStorageSupported(sessionStorage)) {
-            sessionStorage.setItem('redirect_url', window.location.href);
-            window.location.href = loginUrl();
-        }
-    };
-
-    var loginUrl = function loginUrl() {
-        var server_url = localStorage.getItem('config.server_url');
-        var language = getLanguage();
-        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language : 'https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language;
-    };
-
-    var isLoginPages = function isLoginPages() {
-        return (/logged_inws|redirect/i.test(window.location.pathname)
-        );
-    };
-
-    var socialLoginUrl = function socialLoginUrl(brand) {
-        return loginUrl() + '&social_signup=' + brand;
-    };
-
-    return {
-        redirectToLogin: redirectToLogin,
-        isLoginPages: isLoginPages,
-        socialLoginUrl: socialLoginUrl
-    };
-}();
-
-module.exports = Login;
-
-/***/ }),
-
-/***/ 400:
+/***/ 402:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7645,7 +7779,7 @@ var buildBarriersConfig = exports.buildBarriersConfig = function buildBarriersCo
 
 /***/ }),
 
-/***/ 401:
+/***/ 403:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7722,7 +7856,7 @@ module.exports = {
 
 /***/ }),
 
-/***/ 402:
+/***/ 404:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7789,7 +7923,7 @@ var createProposalRequest = function createProposalRequest(store, type_of_contra
 
 /***/ }),
 
-/***/ 403:
+/***/ 405:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7823,7 +7957,7 @@ var buildForwardStartingConfig = exports.buildForwardStartingConfig = function b
 
 /***/ }),
 
-/***/ 404:
+/***/ 406:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7846,35 +7980,43 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _utility = __webpack_require__(1);
 
+var _url_helper = __webpack_require__(213);
+
+var _url_helper2 = _interopRequireDefault(_url_helper);
+
 var _contract_type = __webpack_require__(92);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _proposal = __webpack_require__(402);
+var _query_string = __webpack_require__(223);
 
-var _contract_type3 = __webpack_require__(397);
+var _proposal = __webpack_require__(404);
+
+var _contract_type3 = __webpack_require__(399);
 
 var ContractType = _interopRequireWildcard(_contract_type3);
 
-var _currency = __webpack_require__(398);
+var _currency = __webpack_require__(400);
 
 var Currency = _interopRequireWildcard(_currency);
 
-var _duration = __webpack_require__(399);
+var _duration = __webpack_require__(401);
 
 var Duration = _interopRequireWildcard(_duration);
 
-var _start_date = __webpack_require__(406);
+var _start_date = __webpack_require__(408);
 
 var StartDate = _interopRequireWildcard(_start_date);
 
-var _symbol = __webpack_require__(407);
+var _symbol = __webpack_require__(409);
 
 var _Symbol = _interopRequireWildcard(_symbol);
 
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
@@ -7901,6 +8043,12 @@ var updateStore = exports.updateStore = function () {
                                         store.is_purchase_enabled = false;
                                         store.is_trade_enabled = false;
                                     }
+
+                                    // Add changes to queryString of the url
+                                    if (_query_string.allowed_query_string_variables.indexOf(key) !== -1) {
+                                        _url_helper2.default.setQueryParam(_defineProperty({}, key, new_state[key]));
+                                    }
+
                                     store[key] = new_state[key];
                                 }
                             });
@@ -8000,7 +8148,7 @@ var extendOrReplace = function extendOrReplace(source, new_values) {
 
 /***/ }),
 
-/***/ 405:
+/***/ 407:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8046,7 +8194,7 @@ var processPurchase = exports.processPurchase = function () {
 
 /***/ }),
 
-/***/ 406:
+/***/ 408:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8079,7 +8227,7 @@ var onChangeStartDate = exports.onChangeStartDate = function onChangeStartDate(_
 
 /***/ }),
 
-/***/ 407:
+/***/ 409:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8122,7 +8270,7 @@ var onChangeSymbolAsync = exports.onChangeSymbolAsync = function () {
 
 /***/ }),
 
-/***/ 408:
+/***/ 410:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8256,7 +8404,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 409:
+/***/ 411:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8364,7 +8512,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 410:
+/***/ 412:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8384,7 +8532,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _contracts_popup = __webpack_require__(412);
+var _contracts_popup = __webpack_require__(414);
 
 var _contracts_popup2 = _interopRequireDefault(_contracts_popup);
 
@@ -8425,7 +8573,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 411:
+/***/ 413:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8447,7 +8595,7 @@ var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _date_picker = __webpack_require__(220);
+var _date_picker = __webpack_require__(221);
 
 var _date_picker2 = _interopRequireDefault(_date_picker);
 
@@ -8463,7 +8611,7 @@ var _input_field = __webpack_require__(153);
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
-var _time_picker = __webpack_require__(221);
+var _time_picker = __webpack_require__(222);
 
 var _time_picker2 = _interopRequireDefault(_time_picker);
 
@@ -8611,7 +8759,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 412:
+/***/ 414:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8631,7 +8779,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _fullscreen_dialog = __webpack_require__(222);
+var _fullscreen_dialog = __webpack_require__(224);
 
 var _fullscreen_dialog2 = _interopRequireDefault(_fullscreen_dialog);
 
@@ -8846,7 +8994,7 @@ exports.default = ContractsPopUp;
 
 /***/ }),
 
-/***/ 413:
+/***/ 415:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8866,7 +9014,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _fullscreen_dialog = __webpack_require__(222);
+var _fullscreen_dialog = __webpack_require__(224);
 
 var _fullscreen_dialog2 = _interopRequireDefault(_fullscreen_dialog);
 
@@ -8955,7 +9103,7 @@ exports.default = MobileWidget;
 
 /***/ }),
 
-/***/ 414:
+/***/ 416:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9044,7 +9192,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 415:
+/***/ 417:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9064,7 +9212,7 @@ var _propTypes2 = _interopRequireDefault(_propTypes);
 
 var _date_time = __webpack_require__(152);
 
-var _button = __webpack_require__(219);
+var _button = __webpack_require__(220);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -9230,7 +9378,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 416:
+/***/ 418:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9256,7 +9404,7 @@ var _fieldset = __webpack_require__(91);
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _time_picker = __webpack_require__(221);
+var _time_picker = __webpack_require__(222);
 
 var _time_picker2 = _interopRequireDefault(_time_picker);
 
@@ -9335,7 +9483,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ 417:
+/***/ 419:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9444,7 +9592,7 @@ exports.default = (0, _connect.connect)(function (_ref4) {
 
 /***/ }),
 
-/***/ 418:
+/***/ 420:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9464,47 +9612,47 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _amount = __webpack_require__(408);
+var _amount = __webpack_require__(410);
 
 var _amount2 = _interopRequireDefault(_amount);
 
-var _barrier = __webpack_require__(409);
+var _barrier = __webpack_require__(411);
 
 var _barrier2 = _interopRequireDefault(_barrier);
 
-var _contract_type = __webpack_require__(410);
+var _contract_type = __webpack_require__(412);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _duration = __webpack_require__(411);
+var _duration = __webpack_require__(413);
 
 var _duration2 = _interopRequireDefault(_duration);
 
-var _mobile_widget = __webpack_require__(413);
+var _mobile_widget = __webpack_require__(415);
 
 var _mobile_widget2 = _interopRequireDefault(_mobile_widget);
 
-var _last_digit = __webpack_require__(414);
+var _last_digit = __webpack_require__(416);
 
 var _last_digit2 = _interopRequireDefault(_last_digit);
 
-var _purchase = __webpack_require__(415);
+var _purchase = __webpack_require__(417);
 
 var _purchase2 = _interopRequireDefault(_purchase);
 
-var _start_date = __webpack_require__(416);
+var _start_date = __webpack_require__(418);
 
 var _start_date2 = _interopRequireDefault(_start_date);
 
-var _test = __webpack_require__(417);
+var _test = __webpack_require__(419);
 
 var _test2 = _interopRequireDefault(_test);
 
-var _smartcharts = __webpack_require__(380);
+var _smartcharts = __webpack_require__(382);
 
 var _smartcharts2 = _interopRequireDefault(_smartcharts);
 
-var _portfolio_drawer = __webpack_require__(389);
+var _portfolio_drawer = __webpack_require__(391);
 
 var _portfolio_drawer2 = _interopRequireDefault(_portfolio_drawer);
 
@@ -9624,7 +9772,7 @@ exports.default = (0, _connect.connect)(function (_ref3) {
 
 /***/ }),
 
-/***/ 419:
+/***/ 421:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9697,7 +9845,7 @@ exports.default = ClientStore;
 
 /***/ }),
 
-/***/ 420:
+/***/ 422:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9778,7 +9926,7 @@ exports.default = CommonStore;
 
 /***/ }),
 
-/***/ 421:
+/***/ 423:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9799,9 +9947,15 @@ var _contract_type = __webpack_require__(92);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _index = __webpack_require__(404);
+var _index = __webpack_require__(406);
 
-var _purchase = __webpack_require__(405);
+var _query_string = __webpack_require__(223);
+
+var _purchase = __webpack_require__(407);
+
+var _url_helper = __webpack_require__(213);
+
+var _url_helper2 = _interopRequireDefault(_url_helper);
 
 var _client_base = __webpack_require__(20);
 
@@ -9810,6 +9964,8 @@ var _client_base2 = _interopRequireDefault(_client_base);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 function _initDefineProp(target, property, descriptor, context) {
     if (!descriptor) return;
@@ -9926,6 +10082,14 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         value: function init() {
             var _this = this;
 
+            // Update the url's query string by default values of the store
+            var queryParams = _url_helper2.default.updateQueryString(this, _query_string.allowed_query_string_variables);
+
+            // update state values from query string 
+            [].concat(_toConsumableArray(queryParams)).forEach(function (param) {
+                _this[param[0]] = isNaN(param[1]) ? param[1] : +param[1];
+            });
+
             if (this.symbol) {
                 _contract_type2.default.buildContractTypesConfig(this.symbol).then((0, _mobx.action)(function () {
                     (0, _index.updateStore)(_this, _contract_type2.default.getContractCategories());
@@ -9943,6 +10107,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             if (!(name in this)) {
                 throw new Error('Invalid Argument: ' + name);
             }
+
             (0, _index.updateStore)(this, _defineProperty({}, name, type === 'number' ? +value : value), true);
         }
     }, {
@@ -10166,7 +10331,7 @@ exports.default = TradeStore;
 
 /***/ }),
 
-/***/ 422:
+/***/ 424:
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11218,7 +11383,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _subscription_manager = __webpack_require__(392);
+var _subscription_manager = __webpack_require__(394);
 
 var _subscription_manager2 = _interopRequireDefault(_subscription_manager);
 
@@ -11362,7 +11527,7 @@ exports.default = WS;
 
 /***/ }),
 
-/***/ 685:
+/***/ 687:
 /***/ (function(module, exports) {
 
 module.exports = CIQ;
@@ -11379,7 +11544,7 @@ var urlForLanguage = __webpack_require__(14).urlFor;
 var urlLang = __webpack_require__(14).urlLang;
 var createElement = __webpack_require__(1).createElement;
 var isEmptyObject = __webpack_require__(1).isEmptyObject;
-__webpack_require__(277);
+__webpack_require__(279);
 
 var Url = function () {
     var location_url = void 0,
@@ -11535,7 +11700,7 @@ var _propTypes = __webpack_require__(10);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _tooltip = __webpack_require__(218);
+var _tooltip = __webpack_require__(219);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
@@ -11621,11 +11786,11 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var _barrier = __webpack_require__(400);
+var _barrier = __webpack_require__(402);
 
-var _duration = __webpack_require__(401);
+var _duration = __webpack_require__(403);
 
-var _start_date = __webpack_require__(403);
+var _start_date = __webpack_require__(405);
 
 var _ws_methods = __webpack_require__(62);
 
@@ -11947,5 +12112,5 @@ exports.default = ContractType;
 
 /***/ })
 
-},[393]);
+},[395]);
 //# sourceMappingURL=binary_app.js.map
