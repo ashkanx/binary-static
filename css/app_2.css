@@ -11,15 +11,6 @@ body, input {
     body, input {
       font-size: 22px; } }
 
-.btn span {
-  font-size: 12px; }
-  @media screen and (min-width: 320px) {
-    .btn span {
-      font-size: calc(0.1785714286vw + 11.4285714286px); } }
-  @media screen and (min-width: 1440px) {
-    .btn span {
-      font-size: 14px; } }
-
 .sidebar-container .contracts-popup-container.desktop-only span {
   font-size: 11px; }
   @media screen and (min-width: 320px) {
@@ -37,6 +28,24 @@ body, input {
   @media screen and (min-width: 1440px) {
     .sidebar-container fieldset div, .sidebar-container fieldset input, .sidebar-container fieldset span {
       font-size: 12px; } }
+
+.sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper div, .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper strong, .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper span, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper div, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper strong, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper span {
+  font-size: 8px; }
+  @media screen and (min-width: 320px) {
+    .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper div, .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper strong, .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper span, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper div, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper strong, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper span {
+      font-size: calc(0.2678571429vw + 7.1428571429px); } }
+  @media screen and (min-width: 1440px) {
+    .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper div, .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper strong, .sidebar-container fieldset.purchase-option > .box > .purchase-info-wrapper span, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper div, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper strong, .sidebar-container fieldset.purchase-option > .box > .error-info-wrapper span {
+      font-size: 11px; } }
+
+.sidebar-container div.purchase-error p, .sidebar-container div.purchase-error span.info-text {
+  font-size: 8px; }
+  @media screen and (min-width: 320px) {
+    .sidebar-container div.purchase-error p, .sidebar-container div.purchase-error span.info-text {
+      font-size: calc(0.2678571429vw + 7.1428571429px); } }
+  @media screen and (min-width: 1440px) {
+    .sidebar-container div.purchase-error p, .sidebar-container div.purchase-error span.info-text {
+      font-size: 11px; } }
 
 /* Multiple properties with same values */
 h1, h2, h3, h4, h5 {
@@ -70,8 +79,7 @@ select, input, textarea {
   border-radius: 4px; }
 
 fieldset {
-  border: 1px solid #fafafb;
-  padding: 5px; }
+  border: 1px solid #fafafb; }
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
@@ -283,7 +291,7 @@ span.tooltip {
     position: relative;
     cursor: help; }
     span.tooltip[data-tooltip]:hover:after, span.tooltip[data-tooltip]:hover:before {
-      opacity: 0.88;
+      opacity: 0.96;
       pointer-events: auto;
       -webkit-transform: translate(-50%, 0);
               transform: translate(-50%, 0); }
@@ -308,12 +316,11 @@ span.tooltip {
       text-transform: none;
       text-decoration: none;
       letter-spacing: normal;
-      background: rgba(21, 33, 45, 0.88);
+      background: rgba(21, 33, 45, 0.96);
       -webkit-box-shadow: 0 2px 8px 0 rgba(21, 33, 45, 0.32);
               box-shadow: 0 2px 8px 0 rgba(21, 33, 45, 0.32);
       border-radius: 4px;
       color: #fff;
-      max-width: 400px;
       content: attr(data-tooltip);
       padding: 8px;
       white-space: nowrap;
@@ -325,7 +332,7 @@ span.tooltip {
       width: 0;
       position: absolute;
       pointer-events: none;
-      border-top-color: rgba(21, 33, 45, 0.88);
+      border-top-color: rgba(21, 33, 45, 0.96);
       border-width: 6px;
       margin-bottom: -1px; }
     span.tooltip[data-tooltip][data-tooltip-pos=right]:before, span.tooltip[data-tooltip][data-tooltip-pos=right]:after {
@@ -341,7 +348,7 @@ span.tooltip {
               transform: translate(0, -50%); }
     span.tooltip[data-tooltip][data-tooltip-pos=right]:after {
       border-top-color: transparent;
-      border-right-color: rgba(21, 33, 45, 0.88); }
+      border-right-color: rgba(21, 33, 45, 0.96); }
     span.tooltip[data-tooltip][data-tooltip-pos=left]:before, span.tooltip[data-tooltip][data-tooltip-pos=left]:after {
       bottom: auto;
       left: auto;
@@ -356,7 +363,7 @@ span.tooltip {
               transform: translate(0, -50%); }
     span.tooltip[data-tooltip][data-tooltip-pos=left]:after {
       border-top-color: transparent;
-      border-left-color: rgba(21, 33, 45, 0.88);
+      border-left-color: rgba(21, 33, 45, 0.96);
       margin-right: -1px; }
     span.tooltip[data-tooltip][data-tooltip-pos=bottom]:before, span.tooltip[data-tooltip][data-tooltip-pos=bottom]:after {
       bottom: auto;
@@ -371,7 +378,7 @@ span.tooltip {
               transform: translate(-50%, 0); }
     span.tooltip[data-tooltip][data-tooltip-pos=bottom]:after {
       border-top-color: transparent;
-      border-bottom-color: rgba(21, 33, 45, 0.88); }
+      border-bottom-color: rgba(21, 33, 45, 0.96); }
 
 .barspinner {
   margin: 50px auto;
@@ -430,13 +437,13 @@ span.tooltip {
   /* trade-app layout */
   .trade-container {
     position: relative;
-    padding: 12px 12px 0;
+    padding: 8px 12px 0;
     display: grid;
     grid-template-columns: repeat(12, [col-start] 1fr);
     grid-template-rows: 1fr;
     grid-gap: 4px;
     overflow: hidden;
-    min-height: calc(100vh - 110px); }
+    min-height: calc(100vh - 105px); }
     .trade-container .chart-container {
       position: relative; }
       .trade-container .chart-container cq-context {
@@ -453,6 +460,9 @@ span.tooltip {
                     box-shadow: none; }
       .trade-container .chart-container div.debug-text {
         display: none; }
+    .trade-container .sidebar-container, .trade-container .sidebar-items {
+      position: relative;
+      min-height: 500px; }
     .trade-container .offset-container {
       display: none; }
     .trade-container > * {
@@ -484,12 +494,51 @@ span.tooltip {
             display: grid;
             grid-gap: 8px;
             grid-template-columns: 1.5fr 1fr;
-            margin-top: -8px; } }
+            grid-auto-columns: auto; } }
       @media (min-width: 769px) and (min-width: 979px) {
         .trade-container .sidebar-container fieldset div.duration-container {
           grid-template-columns: 1fr 1.5fr; }
         .trade-container .sidebar-container fieldset div.amount-container {
-          grid-template-columns: 1fr 1.5fr; } }
+          grid-template-columns: 1fr 1.5fr;
+          grid-gap: 0; }
+          .trade-container .sidebar-container fieldset div.amount-container div:first-child {
+            border-right-width: 0px;
+            border-left-width: 1px;
+            border-top-left-radius: 4px;
+            border-bottom-left-radius: 4px;
+            border-top-right-radius: 0;
+            border-bottom-right-radius: 0; }
+            .trade-container .sidebar-container fieldset div.amount-container div:first-child:hover, .trade-container .sidebar-container fieldset div.amount-container div:first-child:focus, .trade-container .sidebar-container fieldset div.amount-container div:first-child:active, .trade-container .sidebar-container fieldset div.amount-container div:first-child.clicked {
+              border-right-width: 1px;
+              border-left-width: 1px; }
+            .trade-container .sidebar-container fieldset div.amount-container div:first-child.dropdown-container:hover, .trade-container .sidebar-container fieldset div.amount-container div:first-child.dropdown-container:active, .trade-container .sidebar-container fieldset div.amount-container div:first-child.dropdown-container:focus, .trade-container .sidebar-container fieldset div.amount-container div:first-child.dropdown-container.show {
+              border-top-left-radius: 4px;
+              border-bottom-left-radius: 4px; }
+          .trade-container .sidebar-container fieldset div.amount-container input:last-child {
+            border-right-width: 1px;
+            border-left-width: 1px;
+            border-top-left-radius: 0;
+            border-bottom-left-radius: 0;
+            border-top-right-radius: 4px;
+            border-bottom-right-radius: 4px; }
+          .trade-container .sidebar-container fieldset div.amount-container.three-columns {
+            grid-template-columns: 1.5fr 1.2fr 1.5fr; }
+            .trade-container .sidebar-container fieldset div.amount-container.three-columns div, .trade-container .sidebar-container fieldset div.amount-container.three-columns input {
+              border-radius: 0;
+              border-left-width: 0;
+              border-right-width: 0; }
+              .trade-container .sidebar-container fieldset div.amount-container.three-columns div:first-child div, .trade-container .sidebar-container fieldset div.amount-container.three-columns div:first-child input, .trade-container .sidebar-container fieldset div.amount-container.three-columns input:first-child div, .trade-container .sidebar-container fieldset div.amount-container.three-columns input:first-child input {
+                border-right-width: 1px;
+                border-left-width: 1px;
+                border-top-left-radius: 4px;
+                border-bottom-left-radius: 4px; }
+              .trade-container .sidebar-container fieldset div.amount-container.three-columns div:last-child div, .trade-container .sidebar-container fieldset div.amount-container.three-columns div:last-child input, .trade-container .sidebar-container fieldset div.amount-container.three-columns input:last-child div, .trade-container .sidebar-container fieldset div.amount-container.three-columns input:last-child input {
+                border-right-width: 1px;
+                border-left-width: 1px;
+                border-top-left-radius: 0;
+                border-bottom-left-radius: 0;
+                border-top-right-radius: 4px;
+                border-bottom-right-radius: 4px; } }
     @media (min-width: 1025px) {
       .trade-container .offset-container {
         display: unset;
@@ -509,7 +558,12 @@ span.tooltip {
                   transform: translate(-100%); }
         .trade-container.show .offset-container {
           -webkit-transform: translate(calc(-100% - 20px));
-                  transform: translate(calc(-100% - 20px)); } } }
+                  transform: translate(calc(-100% - 20px)); } }
+    @media (min-width: 979px) and (max-width: 1125px) {
+      .trade-container .chart-container {
+        grid-column: col-start 1 / span 9 !important; }
+      .trade-container .sidebar-container {
+        grid-column: col-start 10 / span 3 !important; } } }
 
 /* flexbox fallback is if the browser does not support display:grid */
 @supports not (display: grid) {
@@ -641,11 +695,11 @@ span.tooltip {
                 -ms-flex-pack: space-evenly;
                     justify-content: space-evenly; }
             #trading_header header .menu-items .menu-left .menu-links a span {
-              font-size: 0.75rem;
+              font-size: 0.875rem;
               /* stylelint-disable-line number-max-precision */
               font-weight: 300;
               text-transform: capitalize;
-              color: #15212d;
+              color: #333;
               padding: 14px 18px 12px 34px; }
               #trading_header header .menu-items .menu-left .menu-links a span:before {
                 position: absolute;
@@ -710,28 +764,43 @@ span.tooltip {
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
-            -webkit-box-orient: vertical;
+            -webkit-box-orient: horizontal;
             -webkit-box-direction: normal;
-                -ms-flex-direction: column;
-                    flex-direction: column;
+                -ms-flex-direction: row;
+                    flex-direction: row;
             -webkit-box-align: center;
                 -ms-flex-align: center;
                     align-items: center;
             -webkit-box-pack: center;
                 -ms-flex-pack: center;
                     justify-content: center; }
-            #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance p.acc-balance-accountid {
-              line-height: 0.5;
-              color: #e98024;
-              font-size: 0.75rem;
-              margin: 0.5em;
-              font-weight: 600;
-              text-align: center; }
+            #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info {
+              display: -webkit-box;
+              display: -ms-flexbox;
+              display: flex;
+              -webkit-box-orient: vertical;
+              -webkit-box-direction: normal;
+                  -ms-flex-direction: column;
+                      flex-direction: column;
+              -webkit-box-align: end;
+                  -ms-flex-align: end;
+                      align-items: flex-end;
+              -webkit-box-pack: center;
+                  -ms-flex-pack: center;
+                      justify-content: center;
+              border-right: 1px solid #e9e9ed; }
+              #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info p.acc-balance-accountid, #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info p.acc-balance-currency {
+                line-height: 0.5;
+                color: #333;
+                font-size: 0.875rem;
+                margin: 0.5em 1rem;
+                font-weight: 400;
+                text-align: center; }
             #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance p.acc-balance-amount {
-              line-height: 0.5;
-              color: #e98024;
-              font-size: 1.25rem;
-              margin: 0.5em;
+              line-height: 100%;
+              color: #333;
+              font-size: 1rem;
+              margin: 0.5rem 1rem;
               font-weight: 600;
               text-align: center; }
               @media (max-width: 768px) {
@@ -754,15 +823,14 @@ span.tooltip {
 footer {
   position: fixed;
   bottom: 0;
-  padding: 0 10px;
+  padding: 3px 10px;
   width: 100%;
   height: 35px;
-  border-top: 1px solid #e9e9e9;
-  /* stylelint-disable-line color-no-hex */
+  border-top: 1px #e9e9ed;
   background-color: #fff;
   -webkit-box-sizing: border-box;
           box-sizing: border-box;
-  z-index: 1;
+  z-index: 3;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -798,9 +866,8 @@ footer {
         vertical-align: middle;
         display: inline-block; }
       footer .footer-links a:hover {
-        background: #e9e9e9;
-        /* stylelint-disable-line color-no-hex */ }
-  @media (max-width: 1025px) {
+        background: #e9e9ed; }
+  @media (max-width: 768px) {
     footer {
       display: none; } }
 
@@ -815,6 +882,9 @@ footer {
 
 .ic-chat-bubble:before {
   content: url("../images/trading_app/footer/ic_chat_bubble_outline_light.svg"); }
+
+.ic-two-step:before {
+  content: url("../images/trading_app/footer/ic_purchase_confirmation_light.svg"); }
 
 .ic-lock-open:before {
   content: url("../images/trading_app/footer/ic_lock_open_light.svg"); }
@@ -1323,7 +1393,7 @@ hr {
 
 /* Ant style */
 .input-field {
-  margin: 8px 0;
+  margin: 8px 0 0;
   font-weight: 300; }
   .input-field i {
     position: relative; }
@@ -1355,7 +1425,7 @@ hr {
     font-size: 1rem;
     line-height: normal;
     padding-left: 8px;
-    color: #000;
+    color: #333;
     background-color: #fff;
     background-image: none;
     border: 1px solid #e9e9ed;
@@ -1392,7 +1462,7 @@ hr {
 
 div.dropdown-container {
   position: relative;
-  margin: 8px 0; }
+  margin: 8px 0 0; }
   div.dropdown-container .dropdown-display {
     background: #fff;
     height: 30px;
@@ -1476,11 +1546,10 @@ div.dropdown-container {
           display: inline-block;
           vertical-align: middle; }
         div.dropdown-container .dropdown-list .list-container .list-item:hover {
-          background-color: #f2f3f8;
-          /* stylelint-disable-line color-no-hex */ }
+          background-color: #e9e9ed; }
         div.dropdown-container .dropdown-list .list-container .list-item.selected span {
-          background-color: #2a3052;
-          color: #fff;
+          background-color: #e9e9ed;
+          color: #2a3052;
           font-weight: 400; }
   div.dropdown-container .select-arrow {
     display: inline-block;
@@ -1492,7 +1561,7 @@ div.dropdown-container {
     position: absolute;
     pointer-events: none;
     top: 12px;
-    right: 11px;
+    right: 6px;
     line-height: 1;
     -webkit-transition: -webkit-transform 0.2s ease;
     transition: -webkit-transform 0.2s ease;
@@ -1530,6 +1599,8 @@ div.dropdown-container {
   position: relative;
   color: rgba(0, 0, 0, 0.65);
   background: #2e8836;
+  font-size: 0.875rem;
+  /* stylelint-disable-line number-max-precision */
   /* Ant Effect */ }
   .btn:not([disabled]):hover {
     text-decoration: none; }
@@ -1814,7 +1885,7 @@ div.dropdown-container {
 
 div.datepicker-container {
   position: relative;
-  margin: 8px 0; }
+  margin: 8px 0 0; }
   div.datepicker-container:hover .datepicker-display, div.datepicker-container .datepicker-display:focus {
     border-color: #2a3052; }
   div.datepicker-container .datepicker-display:focus + .datepicker-native-overlay .datepicker-native-overlay__arrowhead .arrow-path {
@@ -1906,7 +1977,7 @@ div.datepicker-container {
             transform: scale(1, 1); }
 
 .time-picker {
-  margin: 8px 0;
+  margin: 8px 0 0;
   position: relative; }
   .time-picker.padding {
     padding: 16px; }
@@ -2011,7 +2082,7 @@ div.datepicker-container {
           cursor: pointer; }
           .time-picker .time-picker-dropdown .time-picker-selector .time-picker-hours .list-container .list-item:hover, .time-picker .time-picker-dropdown .time-picker-selector .time-picker-minutes .list-container .list-item:hover, .time-picker .time-picker-dropdown .time-picker-selector .time-picker-meridiem .list-container .list-item:hover {
             background: #e9e9ed;
-            color: #000; }
+            color: #333; }
             .time-picker .time-picker-dropdown .time-picker-selector .time-picker-hours .list-container .list-item:hover.selected, .time-picker .time-picker-dropdown .time-picker-selector .time-picker-minutes .list-container .list-item:hover.selected, .time-picker .time-picker-dropdown .time-picker-selector .time-picker-meridiem .list-container .list-item:hover.selected {
               background: #2a3052;
               color: #fff; }
@@ -2038,6 +2109,10 @@ div.contracts-popup-container {
   background: #fff;
   border: solid 1px #e9e9ed;
   border-radius: 4px; }
+  div.contracts-popup-container:hover {
+    border-color: #2a3052; }
+    div.contracts-popup-container:hover .select-arrow {
+      color: #2a3052; }
   div.contracts-popup-container.mobile-only {
     border: solid 1px #2a3052; }
   div.contracts-popup-container .contracts-popup-display {
@@ -2054,7 +2129,7 @@ div.contracts-popup-container {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column;
-    padding: 6px 0; }
+    padding: 5px; }
     div.contracts-popup-container .contracts-popup-display i {
       margin-bottom: 5px; }
     div.contracts-popup-container .contracts-popup-display span {
@@ -2079,7 +2154,6 @@ div.contracts-popup-container {
   div.contracts-popup-container.show > .clicked {
     border-color: #2a3052; }
   div.contracts-popup-container.show > .select-arrow {
-    top: 40%;
     -webkit-transform: rotate(0deg);
             transform: rotate(0deg); }
   div.contracts-popup-container .list-item {
@@ -2131,7 +2205,7 @@ div.contracts-popup-container {
       position: absolute;
       width: 560px;
       right: calc(100% + 10px);
-      top: -56px;
+      top: -54px;
       display: grid;
       grid-auto-columns: 1fr;
       z-index: 2;
@@ -2186,7 +2260,7 @@ div.contracts-popup-container {
     position: absolute;
     pointer-events: none;
     top: 40%;
-    right: 15px;
+    right: 9px;
     line-height: 1;
     -webkit-transition: -webkit-transform 0.3s ease;
     transition: -webkit-transform 0.3s ease;
@@ -2578,6 +2652,102 @@ a {
       bottom: unset;
       -webkit-transform: rotate(-135deg);
               transform: rotate(-135deg); }
+
+/* Loading Spinner */
+.block-ui {
+  position: absolute;
+  z-index: 3;
+  background: rgba(255, 255, 255, 0.8);
+  top: 0;
+  left: 2px;
+  right: 0;
+  bottom: 0;
+  width: calc(100% - 4px);
+  height: 100%; }
+  .block-ui .loading {
+    position: absolute;
+    top: calc(50% - 22px);
+    left: calc(50% - 16px);
+    z-index: 11; }
+    .block-ui .loading .spinner {
+      position: relative;
+      margin: 0 auto;
+      width: 42px; }
+      .block-ui .loading .spinner:before {
+        content: '';
+        display: block;
+        padding-top: 100%; }
+      .block-ui .loading .spinner .circular {
+        -webkit-animation: rotate 2s linear infinite;
+                animation: rotate 2s linear infinite;
+        height: 100%;
+        -webkit-transform-origin: center center;
+                transform-origin: center center;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        margin: auto; }
+        .block-ui .loading .spinner .circular .path {
+          stroke-dasharray: 1, 200;
+          stroke-dashoffset: 0;
+          -webkit-animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+                  animation: dash 1.5s ease-in-out infinite, color 6s ease-in-out infinite;
+          stroke-linecap: round; }
+
+/* Spinner Loader Animation */
+@-webkit-keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+@keyframes rotate {
+  100% {
+    -webkit-transform: rotate(360deg);
+            transform: rotate(360deg); } }
+
+@-webkit-keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px; }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px; } }
+
+@keyframes dash {
+  0% {
+    stroke-dasharray: 1, 200;
+    stroke-dashoffset: 0; }
+  50% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -35px; }
+  100% {
+    stroke-dasharray: 89, 200;
+    stroke-dashoffset: -124px; } }
+
+@-webkit-keyframes color {
+  100%, 0% {
+    stroke: #e98024; }
+  40% {
+    stroke: #2a3052; }
+  66% {
+    stroke: #e98024; }
+  80%, 90% {
+    stroke: #2a3052; } }
+
+@keyframes color {
+  100%, 0% {
+    stroke: #e98024; }
+  40% {
+    stroke: #2a3052; }
+  66% {
+    stroke: #e98024; }
+  80%, 90% {
+    stroke: #2a3052; } }
 
 /* stylelint-disable color-no-hex */
 .fullscreen-dialog {
@@ -3209,8 +3379,6 @@ a {
     background-image: url("../images/trading_app/sidebar/light/ic_barrier_light.svg"); }
   .binary-app .icon.digits:before {
     background-image: url("../images/trading_app/sidebar/light/ic_digit_light.svg"); }
-  .binary-app .desktop-only fieldset .duration-container > * {
-    margin-top: 0; }
   .binary-app input:hover {
     border-color: #2a3052; }
   .binary-app input:active, .binary-app input:focus {
@@ -3221,7 +3389,8 @@ a {
   .binary-app fieldset {
     background-color: #fafafb;
     border-radius: 4px;
-    border: 1px solid #e9e9ed; }
+    border: 1px solid #e9e9ed;
+    padding: 1vh 4px; }
     .binary-app fieldset input, .binary-app fieldset select {
       width: 100%;
       height: 32px;
@@ -3262,37 +3431,251 @@ a {
       text-align: center;
       z-index: 1;
       color: #2a3052; }
+    .binary-app fieldset .clock-header span.field-info, .binary-app fieldset .fieldset-header span.field-info, .binary-app fieldset .stake-wrapper span.field-info {
+      position: absolute;
+      color: #2a3052;
+      font-size: 0.7rem;
+      font-weight: 400;
+      margin: 5px 0 12px; }
+      .binary-app fieldset .clock-header span.field-info.icon, .binary-app fieldset .fieldset-header span.field-info.icon, .binary-app fieldset .stake-wrapper span.field-info.icon {
+        display: -webkit-inline-box;
+        display: -ms-inline-flexbox;
+        display: inline-flex;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        top: -3px; }
+        .binary-app fieldset .clock-header span.field-info.icon:before, .binary-app fieldset .fieldset-header span.field-info.icon:before, .binary-app fieldset .stake-wrapper span.field-info.icon:before {
+          margin-right: 5px; }
+      .binary-app fieldset .clock-header span.field-info.left, .binary-app fieldset .fieldset-header span.field-info.left, .binary-app fieldset .stake-wrapper span.field-info.left {
+        left: 5px; }
+      .binary-app fieldset .clock-header span.field-info.right, .binary-app fieldset .fieldset-header span.field-info.right, .binary-app fieldset .stake-wrapper span.field-info.right {
+        top: -3px;
+        right: 5px;
+        font-size: 0.5625rem;
+        /* stylelint-disable-line number-max-precision */ }
     .binary-app fieldset .clock-header, .binary-app fieldset .fieldset-header {
       height: 1.5rem;
       position: relative; }
-      .binary-app fieldset .clock-header span.field-info, .binary-app fieldset .fieldset-header span.field-info {
-        position: absolute;
-        color: #2a3052;
-        font-size: 0.7rem;
-        font-weight: 400;
-        margin: 5px 0 12px; }
-        .binary-app fieldset .clock-header span.field-info.icon, .binary-app fieldset .fieldset-header span.field-info.icon {
-          display: -webkit-inline-box;
-          display: -ms-inline-flexbox;
-          display: inline-flex;
-          -webkit-box-align: center;
-              -ms-flex-align: center;
-                  align-items: center;
-          top: -3px; }
-          .binary-app fieldset .clock-header span.field-info.icon:before, .binary-app fieldset .fieldset-header span.field-info.icon:before {
-            margin-right: 5px; }
-        .binary-app fieldset .clock-header span.field-info.left, .binary-app fieldset .fieldset-header span.field-info.left {
-          left: 5px; }
-        .binary-app fieldset .clock-header span.field-info.right, .binary-app fieldset .fieldset-header span.field-info.right {
-          top: -3px;
-          right: 5px;
-          font-size: 0.5625rem;
-          /* stylelint-disable-line number-max-precision */ }
+    .binary-app fieldset .error-info-wrapper {
+      -webkit-box-pack: center;
+          -ms-flex-pack: center;
+              justify-content: center;
+      -webkit-box-align: center;
+          -ms-flex-align: center;
+              align-items: center;
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex; }
+      .binary-app fieldset .error-info-wrapper span {
+        padding: 5px 5px 5px 8px;
+        line-height: normal;
+        background-color: #fef1cf;
+        display: block;
+        margin-bottom: 10px;
+        font-weight: 300;
+        border-radius: 4px; }
+    .binary-app fieldset .purchase-info-wrapper {
+      line-height: 1rem;
+      padding-bottom: 1vh; }
+      .binary-app fieldset .purchase-info-wrapper .stake-wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        height: 1rem; }
+        .binary-app fieldset .purchase-info-wrapper .stake-wrapper span.field-info {
+          margin: 0 0 0 auto; }
     .binary-app fieldset.trade-types {
       border: 0;
       padding: 0;
-      margin-bottom: 0;
       background: transparent; }
+    @media screen and (max-height: 800px) {
+      .binary-app fieldset .fieldset-header {
+        margin-bottom: -8px; }
+      .binary-app fieldset input, .binary-app fieldset input.datepicker-display, .binary-app fieldset .time-picker #time-picker-input.time-picker-input {
+        height: 26px; }
+      .binary-app fieldset .input-field i .symbols {
+        height: 24px;
+        line-height: 24px; }
+      .binary-app fieldset .dropdown-display {
+        height: 24px; }
+        .binary-app fieldset .dropdown-display span {
+          line-height: 26px; }
+      .binary-app fieldset span.select-arrow {
+        top: 9px; } }
+  .binary-app div.purchase-wrapper {
+    position: relative; }
+    .binary-app div.purchase-wrapper div.purchase-error {
+      position: absolute;
+      top: 0;
+      height: calc(100% - 2px);
+      width: calc(100% - 6px);
+      left: 2px;
+      z-index: 2;
+      border: 1px solid #e9e9ed;
+      border-radius: 4px;
+      background: #fafafb; }
+      .binary-app div.purchase-wrapper div.purchase-error .close-btn {
+        position: absolute;
+        padding: 8px;
+        top: 0;
+        right: 0;
+        cursor: pointer; }
+        .binary-app div.purchase-wrapper div.purchase-error .close-btn:before {
+          content: url("../images/trading_app/footer/ic_close_blue_light.svg"); }
+      .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+            -ms-flex-direction: column;
+                flex-direction: column;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center;
+        margin-top: 25%; }
+        .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper button.btn {
+          margin: 0 auto; }
+          .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper button.btn span {
+            font-size: 0.875rem;
+            /* stylelint-disable-line number-max-precision */
+            text-transform: uppercase; }
+        .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper p {
+          line-height: 100%;
+          margin-bottom: 0;
+          font-size: 10px; }
+        .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper a {
+          text-decoration: none;
+          color: #333;
+          font-weight: 500; }
+          .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper a span.info-text {
+            padding: 5px 10px 10px; }
+          .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper a:hover, .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper a:focus, .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper a:active {
+            text-decoration: underline;
+            color: #333; }
+      .binary-app div.purchase-wrapper div.purchase-error span.info-text {
+        display: -webkit-box;
+        display: -ms-flexbox;
+        display: flex;
+        padding: 10px;
+        -webkit-box-align: center;
+            -ms-flex-align: center;
+                align-items: center;
+        -webkit-box-pack: center;
+            -ms-flex-pack: center;
+                justify-content: center; }
+    .binary-app div.purchase-wrapper fieldset.purchase-option {
+      padding-top: 1.5vh;
+      padding-bottom: 1.5vh;
+      min-height: 100px; }
+      .binary-app div.purchase-wrapper fieldset.purchase-option div.box {
+        display: grid;
+        grid-template-columns: 1fr 2fr;
+        position: relative;
+        min-height: 71px; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box .left-column, .binary-app div.purchase-wrapper fieldset.purchase-option div.box .right-column {
+          position: relative;
+          -ms-flex-item-align: start;
+              align-self: flex-start;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box .left-column span, .binary-app div.purchase-wrapper fieldset.purchase-option div.box .right-column span {
+            display: block; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box .left-column > .type-wrapper {
+          width: 36px;
+          height: 36px;
+          background: #e9e9ed;
+          border-radius: 100%; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box .left-column > .type-wrapper img.type {
+            width: 24px;
+            margin: 6px 0 0 6px; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box h4.trade-type {
+          position: absolute;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          padding: 0;
+          font-weight: 600;
+          text-transform: capitalize;
+          text-align: center;
+          top: 24px;
+          line-height: 12px;
+          max-width: 50px;
+          word-spacing: 0; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount {
+          position: relative; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.down {
+            color: #f44336; }
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.down:after {
+              content: url("../images/trading_app/purchase/ic_pricedown.svg");
+              position: absolute;
+              top: 2px;
+              right: 0.5rem; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.up {
+            color: #1565c0; }
+            .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.up:after {
+              content: url("../images/trading_app/purchase/ic_priceup.svg");
+              position: absolute;
+              top: 2px;
+              right: 0.5rem; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount span.symbols {
+            left: 0;
+            top: 6px;
+            font-size: 0.88rem;
+            color: inherit; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount span.payout {
+            font-weight: 600; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box span:not(.purchase-return):not(.symbols) {
+          position: relative; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box span.purchase-return {
+          color: #e98024; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.box .symbols {
+          position: relative;
+          display: inline; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.box .symbols:before {
+            margin-right: 1px; }
+      .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section {
+        display: grid;
+        grid-template-columns: 1fr; }
+        .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn {
+          text-transform: capitalize;
+          margin: 0;
+          width: 100%;
+          height: 4vh;
+          min-height: 25px;
+          max-height: 35px; }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn:not([disabled]) {
+            -webkit-box-shadow: 1px 3px 4px 0 rgba(76, 175, 80, 0.14), 1px 3px 4px 0 rgba(76, 175, 80, 0.14);
+                    box-shadow: 1px 3px 4px 0 rgba(76, 175, 80, 0.14), 1px 3px 4px 0 rgba(76, 175, 80, 0.14); }
+          .binary-app div.purchase-wrapper fieldset.purchase-option div.submit-section .btn span {
+            font-size: 0.88rem; }
+      .binary-app div.purchase-wrapper fieldset.purchase-option span.tooltip:before {
+        max-width: unset;
+        width: 250px;
+        white-space: normal; }
+      .binary-app div.purchase-wrapper fieldset.purchase-option:not(:only-child):nth-last-child(2) {
+        border-bottom: 1px;
+        border-bottom-left-radius: 0;
+        border-bottom-right-radius: 0;
+        margin-bottom: 0 !important; }
+      .binary-app div.purchase-wrapper fieldset.purchase-option:not(:only-child):nth-last-child(1) {
+        border-top-left-radius: 0;
+        border-top-right-radius: 0;
+        margin-bottom: 0 !important; }
+      .binary-app div.purchase-wrapper fieldset.purchase-option div.block-ui {
+        background: rgba(255, 255, 255, 0.2);
+        border-radius: 4px;
+        border: 1px solid #fafafb;
+        width: calc(100% - 6px);
+        height: calc(100% - 2px); }
   .binary-app .calendar {
     width: 187px; }
     .binary-app .calendar .calendar-input, .binary-app .calendar .calendar-footer {
