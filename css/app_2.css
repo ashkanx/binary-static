@@ -262,7 +262,7 @@ span.tooltip {
   color: #2a3052;
   font-size: inherit; }
   span.tooltip i.question:after {
-    content: url("../images/trading_app/common/tooltip/ic_tooltip_question_light.svg ");
+    content: url("../images/app_2/common/tooltip/ic_tooltip_question_light.svg ");
     margin-left: 5px;
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -275,7 +275,7 @@ span.tooltip {
             align-items: center;
     vertical-align: middle; }
   span.tooltip i.info:after {
-    content: url("../images/trading_app/common/tooltip/ic_tooltip_info_light.svg ");
+    content: url("../images/app_2/common/tooltip/ic_tooltip_info_light.svg ");
     margin-left: 5px;
     display: -webkit-inline-box;
     display: -ms-inline-flexbox;
@@ -432,7 +432,7 @@ span.tooltip {
 
 @supports (display: grid) {
   .app-contents {
-    margin: 49px 0 0;
+    margin: 49px 0 41px;
     overflow: auto; }
   /* trade-app layout */
   .trade-container {
@@ -604,19 +604,19 @@ span.tooltip {
   .mobile-only {
     display: none !important; } }
 
-#trading_header {
+#header {
   position: fixed;
   z-index: 99;
   width: 100%;
   height: 50px;
   top: 0; }
-  #trading_header header {
+  #header header {
     background-color: #fff !important;
     position: relative;
     border: 0;
     width: 100%;
     z-index: 1; }
-    #trading_header header .menu-items {
+    #header header .menu-items {
       display: -webkit-box;
       display: -ms-flexbox;
       display: flex;
@@ -624,12 +624,12 @@ span.tooltip {
       -webkit-box-sizing: border-box;
               box-sizing: border-box;
       width: 100%; }
-      #trading_header header .menu-items .navbar-icons {
+      #header header .menu-items .navbar-icons {
         cursor: pointer;
         padding: 6px 10px;
         -ms-flex-item-align: center;
             align-self: center; }
-        #trading_header header .menu-items .navbar-icons.binary-logo {
+        #header header .menu-items .navbar-icons.binary-logo {
           border-left: 1px solid #e9e9ed;
           display: -webkit-box;
           display: -ms-flexbox;
@@ -642,21 +642,21 @@ span.tooltip {
           -webkit-box-align: center;
               -ms-flex-align: center;
                   align-items: center; }
-        #trading_header header .menu-items .navbar-icons img {
+        #header header .menu-items .navbar-icons img {
           width: 1.5rem;
           height: auto; }
-          #trading_header header .menu-items .navbar-icons img.logo-img {
+          #header header .menu-items .navbar-icons img.logo-img {
             width: 30px;
             height: 30px; }
-        #trading_header header .menu-items .navbar-icons.notify-toggle {
+        #header header .menu-items .navbar-icons.notify-toggle {
           -webkit-box-ordinal-group: 3;
               -ms-flex-order: 2;
                   order: 2;
           padding: 6px; }
-          #trading_header header .menu-items .navbar-icons.notify-toggle img {
+          #header header .menu-items .navbar-icons.notify-toggle img {
             width: 32px;
             height: auto; }
-      #trading_header header .menu-items .menu-left {
+      #header header .menu-items .menu-left {
         -webkit-box-pack: start;
             -ms-flex-pack: start;
                 justify-content: flex-start;
@@ -669,19 +669,19 @@ span.tooltip {
         -webkit-box-flex: 1;
             -ms-flex: 1;
                 flex: 1; }
-        #trading_header header .menu-items .menu-left .menu-toggle {
+        #header header .menu-items .menu-left .menu-toggle {
           -ms-flex-item-align: center;
               align-self: center;
           display: -webkit-box;
           display: -ms-flexbox;
           display: flex; }
-          #trading_header header .menu-items .menu-left .menu-toggle img {
+          #header header .menu-items .menu-left .menu-toggle img {
             width: 24px;
             height: auto; }
-        #trading_header header .menu-items .menu-left .menu-links {
+        #header header .menu-items .menu-left .menu-links {
           -ms-flex-item-align: center;
               align-self: center; }
-          #trading_header header .menu-items .menu-left .menu-links a {
+          #header header .menu-items .menu-left .menu-links a {
             padding: 0 12px;
             text-decoration: none;
             position: relative;
@@ -694,43 +694,43 @@ span.tooltip {
             -webkit-box-pack: space-evenly;
                 -ms-flex-pack: space-evenly;
                     justify-content: space-evenly; }
-            #trading_header header .menu-items .menu-left .menu-links a span {
+            #header header .menu-items .menu-left .menu-links a span {
               font-size: 0.875rem;
               /* stylelint-disable-line number-max-precision */
               font-weight: 300;
               text-transform: capitalize;
               color: #333;
               padding: 14px 18px 12px 34px; }
-              #trading_header header .menu-items .menu-left .menu-links a span:before {
+              #header header .menu-items .menu-left .menu-links a span:before {
                 position: absolute;
                 top: 12px;
                 left: 24px; }
-              #trading_header header .menu-items .menu-left .menu-links a span:after {
+              #header header .menu-items .menu-left .menu-links a span:after {
                 display: block;
                 content: attr(title);
                 font-weight: 400;
                 height: 0;
                 overflow: hidden;
                 visibility: hidden; }
-              #trading_header header .menu-items .menu-left .menu-links a span.trade:before {
-                content: url("../images/trading_app/header/icons/ic_trade_normal_light.svg"); }
-              #trading_header header .menu-items .menu-left .menu-links a span.portfolio:before {
-                content: url("../images/trading_app/header/icons/ic_portfolio_normal_light.svg"); }
-              #trading_header header .menu-items .menu-left .menu-links a span.statement:before {
-                content: url("../images/trading_app/header/icons/ic_statement_normal_light.svg"); }
-              #trading_header header .menu-items .menu-left .menu-links a span.cashier:before {
-                content: url("../images/trading_app/header/icons/ic_cashier_normal_light.svg"); }
-            #trading_header header .menu-items .menu-left .menu-links a:hover > span, #trading_header header .menu-items .menu-left .menu-links a.active > span {
+              #header header .menu-items .menu-left .menu-links a span.trade:before {
+                content: url("../images/app_2/header/icons/ic_trade_normal_light.svg"); }
+              #header header .menu-items .menu-left .menu-links a span.portfolio:before {
+                content: url("../images/app_2/header/icons/ic_portfolio_normal_light.svg"); }
+              #header header .menu-items .menu-left .menu-links a span.statement:before {
+                content: url("../images/app_2/header/icons/ic_statement_normal_light.svg"); }
+              #header header .menu-items .menu-left .menu-links a span.cashier:before {
+                content: url("../images/app_2/header/icons/ic_cashier_normal_light.svg"); }
+            #header header .menu-items .menu-left .menu-links a:hover > span, #header header .menu-items .menu-left .menu-links a.active > span {
               font-weight: 400; }
-            #trading_header header .menu-items .menu-left .menu-links a:hover > span.trade:before, #trading_header header .menu-items .menu-left .menu-links a.active > span.trade:before {
-              content: url("../images/trading_app/header/icons/ic_trade_active_light.svg"); }
-            #trading_header header .menu-items .menu-left .menu-links a:hover > span.portfolio:before, #trading_header header .menu-items .menu-left .menu-links a.active > span.portfolio:before {
-              content: url("../images/trading_app/header/icons/ic_portfolio_active_light.svg"); }
-            #trading_header header .menu-items .menu-left .menu-links a:hover > span.statement:before, #trading_header header .menu-items .menu-left .menu-links a.active > span.statement:before {
-              content: url("../images/trading_app/header/icons/ic_statement_active_light.svg"); }
-            #trading_header header .menu-items .menu-left .menu-links a:hover > span.cashier:before, #trading_header header .menu-items .menu-left .menu-links a.active > span.cashier:before {
-              content: url("../images/trading_app/header/icons/ic_cashier_active_light.svg"); }
-            #trading_header header .menu-items .menu-left .menu-links a.active:after {
+            #header header .menu-items .menu-left .menu-links a:hover > span.trade:before, #header header .menu-items .menu-left .menu-links a.active > span.trade:before {
+              content: url("../images/app_2/header/icons/ic_trade_active_light.svg"); }
+            #header header .menu-items .menu-left .menu-links a:hover > span.portfolio:before, #header header .menu-items .menu-left .menu-links a.active > span.portfolio:before {
+              content: url("../images/app_2/header/icons/ic_portfolio_active_light.svg"); }
+            #header header .menu-items .menu-left .menu-links a:hover > span.statement:before, #header header .menu-items .menu-left .menu-links a.active > span.statement:before {
+              content: url("../images/app_2/header/icons/ic_statement_active_light.svg"); }
+            #header header .menu-items .menu-left .menu-links a:hover > span.cashier:before, #header header .menu-items .menu-left .menu-links a.active > span.cashier:before {
+              content: url("../images/app_2/header/icons/ic_cashier_active_light.svg"); }
+            #header header .menu-items .menu-left .menu-links a.active:after {
               display: block;
               position: absolute;
               content: '';
@@ -740,9 +740,9 @@ span.tooltip {
               bottom: -4px;
               background-color: #2a3052; }
           @media (max-width: 980px) {
-            #trading_header header .menu-items .menu-left .menu-links {
+            #header header .menu-items .menu-left .menu-links {
               display: none; } }
-      #trading_header header .menu-items .menu-right {
+      #header header .menu-items .menu-right {
         -webkit-box-pack: end;
             -ms-flex-pack: end;
                 justify-content: flex-end;
@@ -753,14 +753,14 @@ span.tooltip {
         display: -ms-inline-flexbox;
         display: inline-flex;
         border-right: 1px solid #e9e9ed; }
-        #trading_header header .menu-items .menu-right .acc-balance-container {
+        #header header .menu-items .menu-right .acc-balance-container {
           display: -webkit-inline-box;
           display: -ms-inline-flexbox;
           display: inline-flex;
           -webkit-box-align: center;
               -ms-flex-align: center;
                   align-items: center; }
-          #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance {
+          #header header .menu-items .menu-right .acc-balance-container .acc-balance {
             display: -webkit-box;
             display: -ms-flexbox;
             display: flex;
@@ -774,7 +774,7 @@ span.tooltip {
             -webkit-box-pack: center;
                 -ms-flex-pack: center;
                     justify-content: center; }
-            #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info {
+            #header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info {
               display: -webkit-box;
               display: -ms-flexbox;
               display: flex;
@@ -789,14 +789,14 @@ span.tooltip {
                   -ms-flex-pack: center;
                       justify-content: center;
               border-right: 1px solid #e9e9ed; }
-              #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info p.acc-balance-accountid, #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info p.acc-balance-currency {
+              #header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info p.acc-balance-accountid, #header header .menu-items .menu-right .acc-balance-container .acc-balance .acc-info p.acc-balance-currency {
                 line-height: 0.5;
                 color: #333;
                 font-size: 0.875rem;
                 margin: 0.5em 1rem;
                 font-weight: 400;
                 text-align: center; }
-            #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance p.acc-balance-amount {
+            #header header .menu-items .menu-right .acc-balance-container .acc-balance p.acc-balance-amount {
               line-height: 100%;
               color: #333;
               font-size: 1rem;
@@ -804,16 +804,16 @@ span.tooltip {
               font-weight: 600;
               text-align: center; }
               @media (max-width: 768px) {
-                #trading_header header .menu-items .menu-right .acc-balance-container .acc-balance p.acc-balance-amount {
+                #header header .menu-items .menu-right .acc-balance-container .acc-balance p.acc-balance-amount {
                   font-size: 1rem; } }
-          #trading_header header .menu-items .menu-right .acc-balance-container button.btn {
+          #header header .menu-items .menu-right .acc-balance-container button.btn {
             margin: 0 16px 0 4px; }
             @media (max-width: 768px) {
-              #trading_header header .menu-items .menu-right .acc-balance-container button.btn {
+              #header header .menu-items .menu-right .acc-balance-container button.btn {
                 margin: 0 8px 0 4px; }
-                #trading_header header .menu-items .menu-right .acc-balance-container button.btn span {
+                #header header .menu-items .menu-right .acc-balance-container button.btn span {
                   display: none; } }
-      #trading_header header .menu-items .notifications-toggle {
+      #header header .menu-items .notifications-toggle {
         -webkit-box-pack: end;
             -ms-flex-pack: end;
                 justify-content: flex-end;
@@ -872,28 +872,28 @@ footer {
       display: none; } }
 
 .ic-portfolio:before {
-  content: url("../images/trading_app/footer/ic_portfolio_normal_light.svg"); }
+  content: url("../images/app_2/footer/ic_portfolio_normal_light.svg"); }
 
 .ic-portfolio-active:before {
-  content: url("../images/trading_app/footer/ic_portfolio_active_light.svg"); }
+  content: url("../images/app_2/footer/ic_portfolio_active_light.svg"); }
 
 .ic-statement:before {
-  content: url("../images/trading_app/footer/ic_statement_normal_light.svg"); }
+  content: url("../images/app_2/footer/ic_statement_normal_light.svg"); }
 
 .ic-chat-bubble:before {
-  content: url("../images/trading_app/footer/ic_chat_bubble_outline_light.svg"); }
+  content: url("../images/app_2/footer/ic_chat_bubble_outline_light.svg"); }
 
 .ic-two-step:before {
-  content: url("../images/trading_app/footer/ic_purchase_confirmation_light.svg"); }
+  content: url("../images/app_2/footer/ic_purchase_confirmation_light.svg"); }
 
 .ic-lock-open:before {
-  content: url("../images/trading_app/footer/ic_lock_open_light.svg"); }
+  content: url("../images/app_2/footer/ic_lock_open_light.svg"); }
 
 .ic-settings:before {
-  content: url("../images/trading_app/footer/ic_edit_normal_light.svg"); }
+  content: url("../images/app_2/footer/ic_edit_normal_light.svg"); }
 
 .ic-fullscreen:before {
-  content: url("../images/trading_app/footer/ic_fullscreen_light.svg"); }
+  content: url("../images/app_2/footer/ic_fullscreen_light.svg"); }
 
 hr {
   display: block;
@@ -1272,7 +1272,7 @@ hr {
     .portfolio-drawer-header .ic-close {
       margin-left: auto; }
       .portfolio-drawer-header .ic-close:before {
-        content: url("../images/trading_app/footer/ic_close_blue_light.svg"); }
+        content: url("../images/app_2/footer/ic_close_blue_light.svg"); }
   .portfolio-drawer .portfolio {
     position: relative;
     -webkit-box-sizing: border-box;
@@ -1955,9 +1955,9 @@ div.datepicker-container {
       opacity: 1;
       pointer-events: auto; }
     div.datepicker-container .picker-calendar-icon.picker-calendar-icon:before, div.datepicker-container .close-circle-icon.picker-calendar-icon:before {
-      background-image: url("../images/trading_app/common/calendar.svg"); }
+      background-image: url("../images/app_2/common/calendar.svg"); }
     div.datepicker-container .picker-calendar-icon.close-circle-icon:before, div.datepicker-container .close-circle-icon.close-circle-icon:before {
-      background-image: url("../images/trading_app/common/close_circle.svg"); }
+      background-image: url("../images/app_2/common/close_circle.svg"); }
   div.datepicker-container .datepicker-calendar .calendar {
     opacity: 0;
     -webkit-transform: scale(1, 0);
@@ -2043,7 +2043,7 @@ div.datepicker-container {
       -webkit-transition: height 0.3s ease 0.15s;
       transition: height 0.3s ease 0.15s; }
       .time-picker .time-picker-dropdown .time-picker-panel .time-picker-clear {
-        background: url("../images/trading_app/common/close_circle.svg") no-repeat;
+        background: url("../images/app_2/common/close_circle.svg") no-repeat;
         position: relative;
         float: right;
         display: none;
@@ -2283,76 +2283,76 @@ div.contracts-popup-container {
       font-size: 1.1rem; }
 
 .contract-icon.ic-rise_fall:before {
-  content: url("../images/trading_app/contracts/rise_fall.svg"); }
+  content: url("../images/app_2/contracts/categories/rise_fall.svg"); }
 
 .contract-icon.ic-rise_fall--invert:before {
-  content: url("../images/trading_app/contracts/invert/rise_fall.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/rise_fall.svg"); }
 
 .contract-icon.ic-high_low:before {
-  content: url("../images/trading_app/contracts/high_low.svg"); }
+  content: url("../images/app_2/contracts/categories/high_low.svg"); }
 
 .contract-icon.ic-high_low--invert:before {
-  content: url("../images/trading_app/contracts/invert/high_low.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/high_low.svg"); }
 
 .contract-icon.ic-touch:before {
-  content: url("../images/trading_app/contracts/touch.svg"); }
+  content: url("../images/app_2/contracts/categories/touch.svg"); }
 
 .contract-icon.ic-touch--invert:before {
-  content: url("../images/trading_app/contracts/invert/touch.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/touch.svg"); }
 
 .contract-icon.ic-end:before {
-  content: url("../images/trading_app/contracts/end.svg"); }
+  content: url("../images/app_2/contracts/categories/end.svg"); }
 
 .contract-icon.ic-end--invert:before {
-  content: url("../images/trading_app/contracts/invert/end.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/end.svg"); }
 
 .contract-icon.ic-stay:before {
-  content: url("../images/trading_app/contracts/stay.svg"); }
+  content: url("../images/app_2/contracts/categories/stay.svg"); }
 
 .contract-icon.ic-stay--invert:before {
-  content: url("../images/trading_app/contracts/invert/stay.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/stay.svg"); }
 
 .contract-icon.ic-asian:before {
-  content: url("../images/trading_app/contracts/asian.svg"); }
+  content: url("../images/app_2/contracts/categories/asian.svg"); }
 
 .contract-icon.ic-asian--invert:before {
-  content: url("../images/trading_app/contracts/invert/asian.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/asian.svg"); }
 
 .contract-icon.ic-match_diff:before {
-  content: url("../images/trading_app/contracts/match_diff.svg"); }
+  content: url("../images/app_2/contracts/categories/match_diff.svg"); }
 
 .contract-icon.ic-match_diff--invert:before {
-  content: url("../images/trading_app/contracts/invert/match_diff.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/match_diff.svg"); }
 
 .contract-icon.ic-even_odd:before {
-  content: url("../images/trading_app/contracts/even_odd.svg"); }
+  content: url("../images/app_2/contracts/categories/even_odd.svg"); }
 
 .contract-icon.ic-even_odd--invert:before {
-  content: url("../images/trading_app/contracts/invert/even_odd.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/even_odd.svg"); }
 
 .contract-icon.ic-over_under:before {
-  content: url("../images/trading_app/contracts/over_under.svg"); }
+  content: url("../images/app_2/contracts/categories/over_under.svg"); }
 
 .contract-icon.ic-over_under--invert:before {
-  content: url("../images/trading_app/contracts/invert/over_under.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/over_under.svg"); }
 
 .contract-icon.ic-lb_call:before {
-  content: url("../images/trading_app/contracts/lb_call.svg"); }
+  content: url("../images/app_2/contracts/categories/lb_call.svg"); }
 
 .contract-icon.ic-lb_call--invert:before {
-  content: url("../images/trading_app/contracts/invert/lb_call.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/lb_call.svg"); }
 
 .contract-icon.ic-lb_put:before {
-  content: url("../images/trading_app/contracts/lb_put.svg"); }
+  content: url("../images/app_2/contracts/categories/lb_put.svg"); }
 
 .contract-icon.ic-lb_put--invert:before {
-  content: url("../images/trading_app/contracts/invert/lb_put.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/lb_put.svg"); }
 
 .contract-icon.ic-lb_high_low:before {
-  content: url("../images/trading_app/contracts/lb_high_low.svg"); }
+  content: url("../images/app_2/contracts/categories/lb_high_low.svg"); }
 
 .contract-icon.ic-lb_high_low--invert:before {
-  content: url("../images/trading_app/contracts/invert/lb_high_low.svg"); }
+  content: url("../images/app_2/contracts/categories/invert/lb_high_low.svg"); }
 
 .table {
   color: #333333;
@@ -2960,70 +2960,73 @@ a {
       background-color: #fafafb; }
 
 .icon_asianu--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-asianu.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_asianu.svg"); }
+
+.icon_asaind--light {
+  content: url("../images/app_2/contracts/types/light/ic_asaind.svg"); }
 
 .icon_call--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-call.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_call.svg"); }
 
 .icon_calle--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-calle.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_calle.svg"); }
 
 .icon_put--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-put.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_put.svg"); }
 
 .icon_digitdiff--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitdiff.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_digitdiff.svg"); }
 
 .icon_digiteven--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digiteven.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_digiteven.svg"); }
 
 .icon_digitmatch--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitmatch.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_digitmatch.svg"); }
 
 .icon_digitodd--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitodd.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_digitodd.svg"); }
 
 .icon_digitover--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitover.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_digitover.svg"); }
 
 .icon_digitunder--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-digitunder.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_digitunder.svg"); }
 
 .icon_expirymiss--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-expirymiss.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_expirymiss.svg"); }
 
 .icon_expiryrange--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-expiryrange.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_expiryrange.svg"); }
 
 .icon_expiryrangee--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-expiryrangee.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_expiryrangee.svg"); }
 
 .icon_fall--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-fall.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_fall.svg"); }
 
 .icon_notouch--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-notouch.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_notouch.svg"); }
 
-.icon_touch--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-touch.svg"); }
+.icon_onetouch--light {
+  content: url("../images/app_2/contracts/types/light/ic_onetouch.svg"); }
 
 .icon_range--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-range.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_range.svg"); }
 
 .icon_rise--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-rise.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_rise.svg"); }
 
 .icon_upordown--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-upordown.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_upordown.svg"); }
 
 .icon_lbfloatcall--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-lbfloatcall.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_lbfloatcall.svg"); }
 
 .icon_lbfloatput--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-lbfloatput.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_lbfloatput.svg"); }
 
 .icon_lbhighlow--light {
-  content: url("../images/trading_app/contracts/trade_types/light/ic-light-lbhighlow.svg"); }
+  content: url("../images/app_2/contracts/types/light/ic_lbhighlow.svg"); }
 
 .settings__sidebar {
   width: 350px;
@@ -3354,17 +3357,17 @@ a {
   .statement-card__amount--buy, .statement-card__amount--withdrawal {
     color: #f44336; }
   .statement-card__amount--sell:before {
-    background-image: url("../images/trading_app/statement/ic_sell.svg"); }
+    background-image: url("../images/app_2/statement/ic_sell.svg"); }
   .statement-card__amount--buy:before {
-    background-image: url("../images/trading_app/statement/ic_buy.svg"); }
+    background-image: url("../images/app_2/statement/ic_buy.svg"); }
   .statement-card__amount--deposit:before {
-    background-image: url("../images/trading_app/statement/ic_deposit.svg"); }
+    background-image: url("../images/app_2/statement/ic_deposit.svg"); }
   .statement-card__amount--withdrawal:before {
-    background-image: url("../images/trading_app/statement/ic_withdrawal.svg"); }
+    background-image: url("../images/app_2/statement/ic_withdrawal.svg"); }
   .statement-card__payout:before {
-    background-image: url("../images/trading_app/statement/ic_payout.svg"); }
+    background-image: url("../images/app_2/statement/ic_payout.svg"); }
   .statement-card__balance:before {
-    background-image: url("../images/trading_app/statement/ic_wallet.svg"); }
+    background-image: url("../images/app_2/statement/ic_wallet.svg"); }
 
 .binary-app {
   overflow: hidden; }
@@ -3377,15 +3380,15 @@ a {
     height: 16px;
     width: 16px; }
   .binary-app .icon.start-time:before {
-    background-image: url("../images/trading_app/sidebar/light/ic_watch_later_light.svg"); }
+    background-image: url("../images/app_2/sidebar/light/ic_watch_later_light.svg"); }
   .binary-app .icon.trade-duration:before {
-    background-image: url("../images/trading_app/sidebar/light/ic_timelapse_light.svg"); }
+    background-image: url("../images/app_2/sidebar/light/ic_timelapse_light.svg"); }
   .binary-app .icon.invest-amount:before {
-    background-image: url("../images/trading_app/sidebar/light/ic_monetization_light.svg"); }
+    background-image: url("../images/app_2/sidebar/light/ic_monetization_light.svg"); }
   .binary-app .icon.barriers:before {
-    background-image: url("../images/trading_app/sidebar/light/ic_barrier_light.svg"); }
+    background-image: url("../images/app_2/sidebar/light/ic_barrier_light.svg"); }
   .binary-app .icon.digits:before {
-    background-image: url("../images/trading_app/sidebar/light/ic_digit_light.svg"); }
+    background-image: url("../images/app_2/sidebar/light/ic_digit_light.svg"); }
   .binary-app input:hover {
     border-color: #2a3052; }
   .binary-app input:active, .binary-app input:focus {
@@ -3529,7 +3532,7 @@ a {
         right: 0;
         cursor: pointer; }
         .binary-app div.purchase-wrapper div.purchase-error .close-btn:before {
-          content: url("../images/trading_app/footer/ic_close_blue_light.svg"); }
+          content: url("../images/app_2/footer/ic_close_blue_light.svg"); }
       .binary-app div.purchase-wrapper div.purchase-error div.purchase-login-wrapper {
         display: -webkit-box;
         display: -ms-flexbox;
@@ -3622,14 +3625,14 @@ a {
           .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.down {
             color: #f44336; }
             .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.down:after {
-              content: url("../images/trading_app/purchase/ic_pricedown.svg");
+              content: url("../images/app_2/purchase/ic_pricedown.svg");
               position: absolute;
               top: 2px;
               right: 0.5rem; }
           .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.up {
             color: #1565c0; }
             .binary-app div.purchase-wrapper fieldset.purchase-option div.box div.amount.up:after {
-              content: url("../images/trading_app/purchase/ic_priceup.svg");
+              content: url("../images/app_2/purchase/ic_priceup.svg");
               position: absolute;
               top: 2px;
               right: 0.5rem; }
