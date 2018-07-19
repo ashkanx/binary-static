@@ -6,10 +6,53 @@ webpackJsonp([3],[
 "use strict";
 
 
+var moment = __webpack_require__(9);
+var template = __webpack_require__(2).template;
+
+var Localize = function () {
+    var localized_texts = void 0;
+
+    var localizeForLang = function localizeForLang(lang) {
+        localized_texts = texts_json[lang.toUpperCase()];
+        moment.locale(lang.toLowerCase());
+    };
+
+    var doLocalize = function doLocalize(txt, params) {
+        var text = txt;
+
+        var index = text.replace(/[\s|.]/g, '_');
+
+        text = localized_texts && localized_texts[index] || text;
+
+        // only use template when explicitly required
+        return params ? template(text, params) : text;
+    };
+
+    var localize = function localize(text, params) {
+        return Array.isArray(text) ? text.map(function (t) {
+            return doLocalize(t, params);
+        }) : doLocalize(text, params);
+    };
+
+    return {
+        localize: localize,
+        forLang: localizeForLang
+    };
+}();
+
+module.exports = Localize;
+
+/***/ }),
+/* 2 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
-var extend = __webpack_require__(192);
-__webpack_require__(146);
+var extend = __webpack_require__(193);
+__webpack_require__(147);
 
 /**
  * Write loading image to a container for ajax request
@@ -253,49 +296,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 2 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-var moment = __webpack_require__(9);
-var template = __webpack_require__(1).template;
-
-var Localize = function () {
-    var localized_texts = void 0;
-
-    var localizeForLang = function localizeForLang(lang) {
-        localized_texts = texts_json[lang.toUpperCase()];
-        moment.locale(lang.toLowerCase());
-    };
-
-    var doLocalize = function doLocalize(txt, params) {
-        var text = txt;
-
-        var index = text.replace(/[\s|.]/g, '_');
-
-        text = localized_texts && localized_texts[index] || text;
-
-        // only use template when explicitly required
-        return params ? template(text, params) : text;
-    };
-
-    var localize = function localize(text, params) {
-        return Array.isArray(text) ? text.map(function (t) {
-            return doLocalize(t, params);
-        }) : doLocalize(text, params);
-    };
-
-    return {
-        localize: localize,
-        forLang: localizeForLang
-    };
-}();
-
-module.exports = Localize;
-
-/***/ }),
 /* 3 */,
 /* 4 */,
 /* 5 */
@@ -304,7 +304,7 @@ module.exports = Localize;
 "use strict";
 
 
-var createElement = __webpack_require__(1).createElement;
+var createElement = __webpack_require__(2).createElement;
 
 // show hedging value if trading purpose is set to hedging else hide it
 var detectHedging = function detectHedging($purpose, $hedging) {
@@ -442,8 +442,8 @@ module.exports = {
 
 
 var Cookies = __webpack_require__(49);
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
-var isEmptyObject = __webpack_require__(1).isEmptyObject;
+var getPropertyValue = __webpack_require__(2).getPropertyValue;
+var isEmptyObject = __webpack_require__(2).isEmptyObject;
 
 var getObject = function getObject(key) {
     return JSON.parse(this.getItem(key) || '{}');
@@ -693,9 +693,9 @@ module.exports = {
 
 var urlForLanguage = __webpack_require__(13).urlFor;
 var urlLang = __webpack_require__(13).urlLang;
-var createElement = __webpack_require__(1).createElement;
-var isEmptyObject = __webpack_require__(1).isEmptyObject;
-__webpack_require__(304);
+var createElement = __webpack_require__(2).createElement;
+var isEmptyObject = __webpack_require__(2).isEmptyObject;
+__webpack_require__(306);
 
 var Url = function () {
     var location_url = void 0,
@@ -839,7 +839,7 @@ var elementTextContent = __webpack_require__(5).elementTextContent;
 var getElementById = __webpack_require__(5).getElementById;
 var CookieStorage = __webpack_require__(7).CookieStorage;
 var LocalStore = __webpack_require__(7).LocalStore;
-var applyToAllElements = __webpack_require__(1).applyToAllElements;
+var applyToAllElements = __webpack_require__(2).applyToAllElements;
 
 var Language = function () {
     var all_languages = {
@@ -942,7 +942,8 @@ module.exports = Language;
 /* 15 */,
 /* 16 */,
 /* 17 */,
-/* 18 */
+/* 18 */,
+/* 19 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -1010,7 +1011,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 19 */,
 /* 20 */,
 /* 21 */,
 /* 22 */
@@ -1024,8 +1024,8 @@ var isCryptocurrency = __webpack_require__(34).isCryptocurrency;
 var SocketCache = __webpack_require__(50);
 var LocalStore = __webpack_require__(7).LocalStore;
 var State = __webpack_require__(7).State;
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
-var isEmptyObject = __webpack_require__(1).isEmptyObject;
+var getPropertyValue = __webpack_require__(2).getPropertyValue;
+var isEmptyObject = __webpack_require__(2).isEmptyObject;
 
 var ClientBase = function () {
     var storage_key = 'client.accounts';
@@ -1520,9 +1520,9 @@ var connect = exports.connect = function connect(StoreClass, mapper) {
 
 
 var getLanguage = __webpack_require__(13).get;
-var localize = __webpack_require__(2).localize;
+var localize = __webpack_require__(1).localize;
 var State = __webpack_require__(7).State;
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
+var getPropertyValue = __webpack_require__(2).getPropertyValue;
 
 var currencies_config = {};
 
@@ -1794,9 +1794,9 @@ var ClientBase = __webpack_require__(22);
 var SocketCache = __webpack_require__(50);
 var getLanguage = __webpack_require__(13).get;
 var State = __webpack_require__(7).State;
-var cloneObject = __webpack_require__(1).cloneObject;
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
-var isEmptyObject = __webpack_require__(1).isEmptyObject;
+var cloneObject = __webpack_require__(2).cloneObject;
+var getPropertyValue = __webpack_require__(2).getPropertyValue;
+var isEmptyObject = __webpack_require__(2).isEmptyObject;
 var getAppId = __webpack_require__(38).getAppId;
 var getSocketURL = __webpack_require__(38).getSocketURL;
 
@@ -2137,9 +2137,9 @@ module.exports = BinarySocketBase;
 var moment = __webpack_require__(9);
 var getLanguage = __webpack_require__(13).get;
 var LocalStore = __webpack_require__(7).LocalStore;
-var getPropertyValue = __webpack_require__(1).getPropertyValue;
-var getStaticHash = __webpack_require__(1).getStaticHash;
-var isEmptyObject = __webpack_require__(1).isEmptyObject;
+var getPropertyValue = __webpack_require__(2).getPropertyValue;
+var getStaticHash = __webpack_require__(2).getStaticHash;
+var isEmptyObject = __webpack_require__(2).isEmptyObject;
 
 /*
  * Caches WS responses to reduce delay time and number of requests
@@ -2529,7 +2529,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.WS = exports.BinarySocketGeneral = undefined;
 
-var _logout = __webpack_require__(248);
+var _logout = __webpack_require__(250);
 
 Object.keys(_logout).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -2541,11 +2541,11 @@ Object.keys(_logout).forEach(function (key) {
   });
 });
 
-var _socket_general = __webpack_require__(482);
+var _socket_general = __webpack_require__(496);
 
 var _socket_general2 = _interopRequireDefault(_socket_general);
 
-var _ws_methods = __webpack_require__(164);
+var _ws_methods = __webpack_require__(165);
 
 var _ws_methods2 = _interopRequireDefault(_ws_methods);
 
@@ -2593,7 +2593,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -2605,7 +2605,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _tooltip = __webpack_require__(161);
+var _tooltip = __webpack_require__(162);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
@@ -2684,23 +2684,23 @@ var _moment = __webpack_require__(9);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _barrier = __webpack_require__(493);
+var _barrier = __webpack_require__(507);
 
-var _duration = __webpack_require__(249);
+var _duration = __webpack_require__(251);
 
-var _start_date = __webpack_require__(250);
+var _start_date = __webpack_require__(252);
 
-var _contract = __webpack_require__(490);
+var _contract = __webpack_require__(504);
 
 var _Services = __webpack_require__(65);
 
 var _language = __webpack_require__(13);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
-var _string_util = __webpack_require__(18);
+var _string_util = __webpack_require__(19);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3053,7 +3053,7 @@ var _desc, _value, _class, _class2, _temp;
 
 var _mobx = __webpack_require__(43);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -3256,7 +3256,29 @@ var BaseStore = (_class = (_temp = _class2 = function () {
 exports.default = BaseStore;
 
 /***/ }),
-/* 105 */,
+/* 105 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _date_time = __webpack_require__(519);
+
+Object.keys(_date_time).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _date_time[key];
+    }
+  });
+});
+
+/***/ }),
 /* 106 */,
 /* 107 */,
 /* 108 */,
@@ -3265,7 +3287,8 @@ exports.default = BaseStore;
 /* 111 */,
 /* 112 */,
 /* 113 */,
-/* 114 */
+/* 114 */,
+/* 115 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3273,7 +3296,7 @@ exports.default = BaseStore;
 
 var moment = __webpack_require__(9);
 var urlForStatic = __webpack_require__(10).urlForStatic;
-var getStaticHash = __webpack_require__(1).getStaticHash;
+var getStaticHash = __webpack_require__(2).getStaticHash;
 
 // only reload if it's more than 10 minutes since the last reload
 var shouldForceReload = function shouldForceReload(last_reload) {
@@ -3309,7 +3332,6 @@ module.exports = {
 };
 
 /***/ }),
-/* 115 */,
 /* 116 */,
 /* 117 */,
 /* 118 */,
@@ -3317,7 +3339,37 @@ module.exports = {
 /* 120 */,
 /* 121 */,
 /* 122 */,
-/* 123 */
+/* 123 */,
+/* 124 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.CalendarPanelTypes = undefined;
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CalendarPanelTypes = exports.CalendarPanelTypes = {
+    calendar_date: _propTypes2.default.string,
+    calendar_view: _propTypes2.default.string,
+    date_format: _propTypes2.default.string,
+    isPeriodDisabled: _propTypes2.default.func,
+    max_date: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
+    min_date: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
+    onClick: _propTypes2.default.object,
+    selected_date: _propTypes2.default.string
+};
+
+/***/ }),
+/* 125 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3590,7 +3642,7 @@ NativeSelect.propTypes = {
 exports.default = Dropdown;
 
 /***/ }),
-/* 124 */
+/* 126 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3614,7 +3666,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(113);
+var _reactRouterDom = __webpack_require__(114);
 
 var _client_base = __webpack_require__(22);
 
@@ -3622,57 +3674,57 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _login = __webpack_require__(35);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
-var _Portfolio = __webpack_require__(441);
+var _Portfolio = __webpack_require__(455);
 
 var _Portfolio2 = _interopRequireDefault(_Portfolio);
 
-var _Trading = __webpack_require__(473);
+var _Trading = __webpack_require__(487);
 
 var _Trading2 = _interopRequireDefault(_Trading);
 
-var _settings = __webpack_require__(477);
+var _settings = __webpack_require__(491);
 
 var _settings2 = _interopRequireDefault(_settings);
 
-var _Statement = __webpack_require__(450);
+var _Statement = __webpack_require__(464);
 
 var _Statement2 = _interopRequireDefault(_Statement);
 
-var _account_password = __webpack_require__(239);
+var _account_password = __webpack_require__(241);
 
 var _account_password2 = _interopRequireDefault(_account_password);
 
-var _api_token = __webpack_require__(240);
+var _api_token = __webpack_require__(242);
 
 var _api_token2 = _interopRequireDefault(_api_token);
 
-var _authorized_applications = __webpack_require__(241);
+var _authorized_applications = __webpack_require__(243);
 
 var _authorized_applications2 = _interopRequireDefault(_authorized_applications);
 
-var _cashier_password = __webpack_require__(242);
+var _cashier_password = __webpack_require__(244);
 
 var _cashier_password2 = _interopRequireDefault(_cashier_password);
 
-var _financial_assessment = __webpack_require__(243);
+var _financial_assessment = __webpack_require__(245);
 
 var _financial_assessment2 = _interopRequireDefault(_financial_assessment);
 
-var _limits = __webpack_require__(244);
+var _limits = __webpack_require__(246);
 
 var _limits2 = _interopRequireDefault(_limits);
 
-var _login_history = __webpack_require__(245);
+var _login_history = __webpack_require__(247);
 
 var _login_history2 = _interopRequireDefault(_login_history);
 
-var _personal_details = __webpack_require__(246);
+var _personal_details = __webpack_require__(248);
 
 var _personal_details2 = _interopRequireDefault(_personal_details);
 
-var _self_exclusion = __webpack_require__(247);
+var _self_exclusion = __webpack_require__(249);
 
 var _self_exclusion2 = _interopRequireDefault(_self_exclusion);
 
@@ -3754,30 +3806,6 @@ BinaryLink.propTypes = {
 };
 
 /***/ }),
-/* 125 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _date_time = __webpack_require__(505);
-
-Object.keys(_date_time).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _date_time[key];
-    }
-  });
-});
-
-/***/ }),
-/* 126 */,
 /* 127 */,
 /* 128 */,
 /* 129 */,
@@ -3795,7 +3823,8 @@ Object.keys(_date_time).forEach(function (key) {
 /* 141 */,
 /* 142 */,
 /* 143 */,
-/* 144 */
+/* 144 */,
+/* 145 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -3934,7 +3963,7 @@ var NetworkMonitorBase = function () {
 module.exports = NetworkMonitorBase;
 
 /***/ }),
-/* 145 */
+/* 146 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4004,7 +4033,7 @@ var ServerTime = function () {
 module.exports = ServerTime;
 
 /***/ }),
-/* 146 */
+/* 147 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4020,7 +4049,6 @@ if (!Element.prototype.matches) {
 }
 
 /***/ }),
-/* 147 */,
 /* 148 */,
 /* 149 */,
 /* 150 */,
@@ -4033,7 +4061,8 @@ if (!Element.prototype.matches) {
 /* 157 */,
 /* 158 */,
 /* 159 */,
-/* 160 */
+/* 160 */,
+/* 161 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4043,7 +4072,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _drawer_header = __webpack_require__(225);
+var _drawer_header = __webpack_require__(227);
 
 Object.keys(_drawer_header).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -4055,7 +4084,7 @@ Object.keys(_drawer_header).forEach(function (key) {
   });
 });
 
-var _drawer_item = __webpack_require__(226);
+var _drawer_item = __webpack_require__(228);
 
 Object.keys(_drawer_item).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -4067,7 +4096,7 @@ Object.keys(_drawer_item).forEach(function (key) {
   });
 });
 
-var _drawer_items = __webpack_require__(407);
+var _drawer_items = __webpack_require__(419);
 
 Object.keys(_drawer_items).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -4079,7 +4108,7 @@ Object.keys(_drawer_items).forEach(function (key) {
   });
 });
 
-var _drawer = __webpack_require__(224);
+var _drawer = __webpack_require__(226);
 
 Object.keys(_drawer).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -4091,7 +4120,7 @@ Object.keys(_drawer).forEach(function (key) {
   });
 });
 
-var _toggle_drawer = __webpack_require__(408);
+var _toggle_drawer = __webpack_require__(420);
 
 Object.keys(_toggle_drawer).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -4104,7 +4133,7 @@ Object.keys(_toggle_drawer).forEach(function (key) {
 });
 
 /***/ }),
-/* 161 */
+/* 162 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4114,7 +4143,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -4153,7 +4182,7 @@ Tooltip.propTypes = {
 exports.default = Tooltip;
 
 /***/ }),
-/* 162 */
+/* 163 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4218,7 +4247,7 @@ Button.propTypes = {
 exports.default = Button;
 
 /***/ }),
-/* 163 */
+/* 164 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4318,7 +4347,7 @@ InputField.propTypes = {
 exports.default = InputField;
 
 /***/ }),
-/* 164 */
+/* 165 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4330,7 +4359,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _subscription_manager = __webpack_require__(483);
+var _subscription_manager = __webpack_require__(497);
 
 var _subscription_manager2 = _interopRequireDefault(_subscription_manager);
 
@@ -4338,7 +4367,7 @@ var _socket_base = __webpack_require__(44);
 
 var _socket_base2 = _interopRequireDefault(_socket_base);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4473,7 +4502,6 @@ var WS = function () {
 exports.default = WS;
 
 /***/ }),
-/* 165 */,
 /* 166 */,
 /* 167 */,
 /* 168 */,
@@ -4532,7 +4560,61 @@ exports.default = WS;
 /* 221 */,
 /* 222 */,
 /* 223 */,
-/* 224 */
+/* 224 */,
+/* 225 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = CalendarButton;
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarButton(_ref) {
+    var children = _ref.children,
+        className = _ref.className,
+        is_hidden = _ref.is_hidden,
+        label = _ref.label,
+        onClick = _ref.onClick;
+
+    return _react2.default.createElement(
+        _react2.default.Fragment,
+        null,
+        !is_hidden && _react2.default.createElement(
+            'span',
+            {
+                type: 'button',
+                className: className,
+                onClick: onClick
+            },
+            label,
+            children
+        )
+    );
+}
+
+CalendarButton.propTypes = {
+    children: _propTypes2.default.oneOfType([_propTypes2.default.array, _propTypes2.default.object, _propTypes2.default.string]),
+    className: _propTypes2.default.string,
+    is_hidden: _propTypes2.default.bool,
+    label: _propTypes2.default.string,
+    onClick: _propTypes2.default.func
+};
+
+/***/ }),
+/* 226 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4545,7 +4627,7 @@ exports.Drawer = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -4557,7 +4639,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _drawer_header = __webpack_require__(225);
+var _drawer_header = __webpack_require__(227);
 
 var _connect = __webpack_require__(26);
 
@@ -4689,7 +4771,7 @@ var drawer_component = (0, _connect.connect)(function (_ref2) {
 exports.Drawer = drawer_component;
 
 /***/ }),
-/* 225 */
+/* 227 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4700,7 +4782,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.DrawerHeader = undefined;
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -4716,7 +4798,7 @@ var _url = __webpack_require__(10);
 
 var _url2 = _interopRequireDefault(_url);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4768,7 +4850,7 @@ DrawerHeader.propTypes = {
 };
 
 /***/ }),
-/* 226 */
+/* 228 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4789,7 +4871,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _routes = __webpack_require__(124);
+var _routes = __webpack_require__(126);
 
 var _connect = __webpack_require__(26);
 
@@ -4881,7 +4963,7 @@ var drawer_item_component = (0, _connect.connect)(function (_ref2) {
 exports.DrawerItem = drawer_item_component;
 
 /***/ }),
-/* 227 */
+/* 229 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -4896,7 +4978,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -4904,7 +4986,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4993,7 +5075,7 @@ PopConfirmElement.propTypes = {
 exports.PopConfirmElement = PopConfirmElement;
 
 /***/ }),
-/* 228 */
+/* 230 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5011,11 +5093,11 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _toggle_button = __webpack_require__(424);
+var _toggle_button = __webpack_require__(436);
 
 var _toggle_button2 = _interopRequireDefault(_toggle_button);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5053,7 +5135,7 @@ SettingsControl.propTypes = {
 exports.default = SettingsControl;
 
 /***/ }),
-/* 229 */
+/* 231 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5064,7 +5146,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.TabsItem = undefined;
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -5111,7 +5193,7 @@ TabsItem.propTypes = {
 exports.TabsItem = TabsItem;
 
 /***/ }),
-/* 230 */
+/* 232 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5132,7 +5214,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _tabs_item = __webpack_require__(229);
+var _tabs_item = __webpack_require__(231);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5238,7 +5320,7 @@ TabsWrapper.propTypes = {
 exports.TabsWrapper = TabsWrapper;
 
 /***/ }),
-/* 231 */
+/* 233 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5250,7 +5332,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -5409,7 +5491,7 @@ DataTable.propTypes = {
 exports.default = DataTable;
 
 /***/ }),
-/* 232 */
+/* 234 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -5419,7 +5501,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -5463,845 +5545,27 @@ UILoader.propTypes = {
 exports.default = UILoader;
 
 /***/ }),
-/* 233 */
+/* 235 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
 Object.defineProperty(exports, "__esModule", {
-    value: true
+  value: true
 });
+exports.default = undefined;
 
-var _class, _temp, _initialiseProps;
+var _date_picker = __webpack_require__(437);
 
-var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _classnames = __webpack_require__(19);
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _moment = __webpack_require__(9);
-
-var _moment2 = _interopRequireDefault(_moment);
-
-var _propTypes = __webpack_require__(4);
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(3);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _arrowhead = __webpack_require__(420);
-
-var _arrowhead2 = _interopRequireDefault(_arrowhead);
-
-var _localize = __webpack_require__(2);
+var _date_picker2 = _interopRequireDefault(_date_picker);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Calendar = function (_React$Component) {
-    _inherits(Calendar, _React$Component);
-
-    function Calendar(props) {
-        _classCallCheck(this, Calendar);
-
-        var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
-
-        _this.getDays = _this.getDays.bind(_this);
-        _this.getDates = _this.getDates.bind(_this);
-        _this.getMonths = _this.getMonths.bind(_this);
-        _this.getYears = _this.getYears.bind(_this);
-        _this.getDecades = _this.getDecades.bind(_this);
-
-        _this.setToday = _this.setToday.bind(_this);
-        _this.setActiveView = _this.setActiveView.bind(_this);
-
-        _this.nextMonth = _this.nextMonth.bind(_this);
-        _this.previousMonth = _this.previousMonth.bind(_this);
-
-        _this.nextYear = _this.nextYear.bind(_this);
-        _this.previousYear = _this.previousYear.bind(_this);
-
-        _this.nextDecade = _this.nextDecade.bind(_this);
-        _this.previousDecade = _this.previousDecade.bind(_this);
-
-        _this.nextCentury = _this.nextCentury.bind(_this);
-        _this.previousCentury = _this.previousCentury.bind(_this);
-
-        _this.handleDateSelected = _this.handleDateSelected.bind(_this);
-        _this.handleMonthSelected = _this.handleMonthSelected.bind(_this);
-        _this.handleYearSelected = _this.handleYearSelected.bind(_this);
-        _this.handleDecadeSelected = _this.handleDecadeSelected.bind(_this);
-
-        _this.onChangeInput = _this.onChangeInput.bind(_this);
-        _this.resetCalendar = _this.resetCalendar.bind(_this);
-
-        var startDate = props.startDate,
-            minDate = props.minDate,
-            initial_value = props.initial_value;
-
-
-        var current_date = (0, _moment2.default)(startDate || minDate).format(_this.props.dateFormat);
-
-        _this.state = {
-            date: current_date, // calendar dates reference
-            selected_date: initial_value !== undefined ? initial_value : current_date // selected date
-        };
-        return _this;
-    }
-
-    _createClass(Calendar, [{
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            this.setState({ active_view: 'date' });
-        }
-    }, {
-        key: 'componentWillReceiveProps',
-        value: function componentWillReceiveProps(nextProps) {
-            var date = (0, _moment2.default)(this.state.date);
-
-            if (date.isBefore((0, _moment2.default)(nextProps.minDate))) {
-                this.setState({
-                    date: nextProps.minDate
-                });
-            } else if (date.isAfter((0, _moment2.default)(nextProps.maxDate))) {
-                this.setState({
-                    date: nextProps.maxDate
-                });
-            }
-        }
-    }, {
-        key: 'setToday',
-        value: function setToday() {
-            var now = (0, _moment2.default)().format(this.props.dateFormat);
-            this.setState({
-                date: now,
-                selected_date: now,
-                active_view: 'date'
-            });
-            this.props.handleDateChange(now, true);
-        }
-    }, {
-        key: 'updateDate',
-        value: function updateDate(value, unit, is_add) {
-            var new_date = (0, _moment2.default)(this.state.date)[is_add ? 'add' : 'subtract'](value, unit).format(this.props.dateFormat);
-
-            if (unit === 'months' && this.isPeriodDisabled(new_date, 'month')) return;
-
-            if (unit === 'years' && this.isPeriodDisabled(new_date, 'month')) {
-                new_date = is_add ? this.props.maxDate : this.props.minDate;
-            }
-
-            this.setState({ date: new_date });
-        }
-    }, {
-        key: 'isPeriodDisabled',
-        value: function isPeriodDisabled(date, unit) {
-            var start_of_period = (0, _moment2.default)(date).startOf(unit);
-            var end_of_period = (0, _moment2.default)(date).endOf(unit);
-            return end_of_period.isBefore((0, _moment2.default)(this.props.minDate)) || start_of_period.isAfter((0, _moment2.default)(this.props.maxDate));
-        }
-    }, {
-        key: 'nextMonth',
-        value: function nextMonth() {
-            this.updateDate(1, 'months', true);
-        }
-    }, {
-        key: 'previousMonth',
-        value: function previousMonth() {
-            this.updateDate(1, 'months', false);
-        }
-    }, {
-        key: 'nextYear',
-        value: function nextYear() {
-            this.updateDate(1, 'years', true);
-        }
-    }, {
-        key: 'previousYear',
-        value: function previousYear() {
-            this.updateDate(1, 'years', false);
-        }
-    }, {
-        key: 'nextDecade',
-        value: function nextDecade() {
-            this.updateDate(10, 'years', true);
-        }
-    }, {
-        key: 'previousDecade',
-        value: function previousDecade() {
-            this.updateDate(10, 'years', false);
-        }
-    }, {
-        key: 'nextCentury',
-        value: function nextCentury() {
-            this.updateDate(100, 'years', true);
-        }
-    }, {
-        key: 'previousCentury',
-        value: function previousCentury() {
-            this.updateDate(100, 'years', false);
-        }
-    }, {
-        key: 'setActiveView',
-        value: function setActiveView(active_view) {
-            this.setState({ active_view: active_view });
-        }
-    }, {
-        key: 'handleDateSelected',
-        value: function handleDateSelected(e) {
-            var date = (0, _moment2.default)(e.target.dataset.date);
-            var min_date = (0, _moment2.default)(this.props.minDate).format(this.props.dateFormat);
-            var max_date = (0, _moment2.default)(this.props.maxDate).format(this.props.dateFormat);
-            var is_before = date.isBefore(min_date);
-            var is_after = date.isAfter(max_date);
-
-            if (is_before || is_after) return;
-
-            var formatted_date = date.format(this.props.dateFormat);
-            this.setState({
-                date: formatted_date,
-                selected_date: formatted_date
-            });
-            this.props.handleDateChange(formatted_date);
-        }
-    }, {
-        key: 'updateSelected',
-        value: function updateSelected(e, type) {
-            var active_view = {
-                month: 'date',
-                year: 'month',
-                decade: 'year'
-            };
-            var date = (0, _moment2.default)(this.state.date)[type === 'decade' ? 'year' : type](e.target.dataset[type].split('-')[0]).format(this.props.dateFormat);
-
-            if (this.isPeriodDisabled(date, type)) return;
-
-            this.setState({
-                date: date,
-                active_view: active_view[type]
-            });
-        }
-    }, {
-        key: 'handleMonthSelected',
-        value: function handleMonthSelected(e) {
-            this.updateSelected(e, 'month');
-        }
-    }, {
-        key: 'handleYearSelected',
-        value: function handleYearSelected(e) {
-            this.updateSelected(e, 'year');
-        }
-    }, {
-        key: 'handleDecadeSelected',
-        value: function handleDecadeSelected(e) {
-            this.updateSelected(e, 'decade');
-        }
-    }, {
-        key: 'onChangeInput',
-        value: function onChangeInput(e) {
-            var value = e.target.value;
-
-            if (this.props.mode === 'duration' && value) {
-                // TODO: these kinds of logic should update store instead of just component's state
-                value = (0, _moment2.default)().add(value || 1, 'days');
-            }
-
-            this.setState({ selected_date: value }); // update calendar input
-
-            if ((0, _moment2.default)(value, 'YYYY-MM-DD', true).isValid() || !value) {
-                this.props.handleDateChange(value, true);
-
-                if (!value) {
-                    var _props = _extends({}, this.props),
-                        startDate = _props.startDate,
-                        minDate = _props.minDate;
-
-                    var currentDate = (0, _moment2.default)(startDate || minDate).format(this.props.dateFormat);
-                    this.setState({ date: currentDate });
-                } else {
-                    this.setState({ date: (0, _moment2.default)(value).format(this.props.dateFormat) }); // update calendar dates
-                }
-            }
-        }
-    }, {
-        key: 'resetCalendar',
-        value: function resetCalendar() {
-            var _props2 = this.props,
-                startDate = _props2.startDate,
-                minDate = _props2.minDate;
-
-            var default_date = (0, _moment2.default)(startDate || minDate).format(this.props.dateFormat);
-            this.setState({
-                date: default_date,
-                selected_date: ''
-            });
-        }
-    }, {
-        key: 'getDays',
-        value: function getDays() {
-            var _this2 = this;
-
-            var dates = [];
-            var days = [];
-            var num_of_days = (0, _moment2.default)(this.state.date).daysInMonth() + 1;
-            var start_of_month = (0, _moment2.default)(this.state.date).startOf('month').format(this.props.dateFormat);
-            var end_of_month = (0, _moment2.default)(this.state.date).endOf('month').format(this.props.dateFormat);
-            var first_day = (0, _moment2.default)(start_of_month).day();
-            var last_day = (0, _moment2.default)(end_of_month).day();
-
-            var pad = function pad(value) {
-                return ('0' + value).substr(-2);
-            }; // pad zero
-
-            for (var i = first_day; i > 0; i--) {
-                dates.push((0, _moment2.default)(start_of_month).subtract(i, 'day').format(this.props.dateFormat));
-            }
-            for (var idx = 1; idx < num_of_days; idx += 1) {
-                dates.push((0, _moment2.default)(this.state.date).format(this.props.dateFormat.replace('DD', pad(idx))));
-            }
-            for (var _i = 1; _i <= 6 - last_day; _i++) {
-                dates.push((0, _moment2.default)(end_of_month).add(_i, 'day').format(this.props.dateFormat));
-            }
-
-            dates.forEach(function (date) {
-                var is_disabled = (0, _moment2.default)(date).isBefore((0, _moment2.default)(_this2.props.minDate)) || (0, _moment2.default)(date).isAfter((0, _moment2.default)(_this2.props.maxDate));
-                var is_other_month = (0, _moment2.default)(date).isBefore((0, _moment2.default)(start_of_month)) || (0, _moment2.default)(date).isAfter((0, _moment2.default)(end_of_month));
-                var is_active = _this2.state.selected_date && (0, _moment2.default)(date).isSame((0, _moment2.default)(_this2.state.selected_date));
-                var is_today = (0, _moment2.default)(date).isSame((0, _moment2.default)().utc(), 'day');
-
-                days.push(_react2.default.createElement(
-                    'span',
-                    {
-                        key: date,
-                        className: (0, _classnames2.default)('calendar-date', {
-                            active: is_active,
-                            today: is_today,
-                            disabled: is_disabled,
-                            hidden: is_other_month
-                        }),
-                        onClick: _this2.handleDateSelected,
-                        'data-date': date
-                    },
-                    (0, _moment2.default)(date).date()
-                ));
-            });
-
-            return days;
-        }
-    }, {
-        key: 'getDates',
-        value: function getDates() {
-            var days = this.getDays().map(function (day) {
-                return day;
-            });
-            var week_headers = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'calendar-date-panel' },
-                week_headers.map(function (item, idx) {
-                    return _react2.default.createElement(
-                        'span',
-                        { key: idx, className: 'calendar-date-header' },
-                        (0, _localize.localize)(item)
-                    );
-                }),
-                days
-            );
-        }
-    }, {
-        key: 'getMonths',
-        value: function getMonths() {
-            var _this3 = this;
-
-            var is_active = (0, _moment2.default)(this.state.selected_date).month();
-            var month_headers = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-            return _react2.default.createElement(
-                'div',
-                { className: 'calendar-month-panel' },
-                month_headers.map(function (item, idx) {
-                    var date = (0, _moment2.default)(_this3.state.date).month(item);
-                    var is_disabled = _this3.isPeriodDisabled(date, 'month');
-                    return _react2.default.createElement(
-                        'span',
-                        {
-                            key: idx,
-                            className: (0, _classnames2.default)('calendar-month', {
-                                active: idx === is_active,
-                                disabled: is_disabled
-                            }),
-                            onClick: _this3.handleMonthSelected,
-                            'data-month': idx
-                        },
-                        (0, _localize.localize)(item)
-                    );
-                })
-            );
-        }
-    }, {
-        key: 'getYears',
-        value: function getYears() {
-            var _this4 = this;
-
-            var is_active = (0, _moment2.default)(this.state.selected_date).year();
-            var current_year = (0, _moment2.default)(this.state.date).year();
-            var years = [];
-            for (var year = current_year - 1; year < current_year + 11; year++) {
-                years.push(year);
-            }
-            return _react2.default.createElement(
-                'div',
-                { className: 'calendar-year-panel' },
-                years.map(function (year, idx) {
-                    var date = (0, _moment2.default)(_this4.state.date).year(year);
-                    var is_disabled = _this4.isPeriodDisabled(date, 'year');
-                    return _react2.default.createElement(
-                        'span',
-                        {
-                            key: idx,
-                            className: (0, _classnames2.default)('calendar-year', {
-                                disabled: is_disabled,
-                                active: year === is_active
-                            }),
-                            onClick: _this4.handleYearSelected,
-                            'data-year': year
-                        },
-                        year
-                    );
-                })
-            );
-        }
-    }, {
-        key: 'getDecades',
-        value: function getDecades() {
-            var _this5 = this;
-
-            var is_active = (0, _moment2.default)(this.state.selected_date).year();
-            var current_year = (0, _moment2.default)(this.state.date).year();
-            var decades = [];
-            var min_year = current_year - 10;
-
-            for (var i = 0; i < 12; i++) {
-                var max_year = min_year + 9;
-                var range = min_year + '-' + max_year;
-                decades.push(range);
-                min_year = max_year + 1;
-            }
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'calendar-decade-panel' },
-                decades.map(function (range, idx) {
-                    var _range$split = range.split('-'),
-                        _range$split2 = _slicedToArray(_range$split, 2),
-                        start_year = _range$split2[0],
-                        end_year = _range$split2[1];
-
-                    var start_date = (0, _moment2.default)(_this5.state.date).year(start_year);
-                    var end_date = (0, _moment2.default)(_this5.state.date).year(end_year);
-                    var is_disabled = _this5.isPeriodDisabled(start_date, 'year') && _this5.isPeriodDisabled(end_date, 'year');
-                    return _react2.default.createElement(
-                        'span',
-                        {
-                            key: idx,
-                            className: (0, _classnames2.default)('calendar-decade', {
-                                disabled: is_disabled,
-                                active: start_year === is_active
-                            }),
-                            onClick: _this5.handleDecadeSelected,
-                            'data-decade': range
-                        },
-                        range
-                    );
-                })
-            );
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this6 = this;
-
-            var view = this.state.active_view;
-
-            var is_date_view = view === 'date';
-            var is_month_view = view === 'month';
-            var is_year_view = view === 'year';
-            var is_decade_view = view === 'decade';
-
-            var BtnPrevMonth = is_date_view && _react2.default.createElement('span', {
-                type: 'button',
-                className: (0, _classnames2.default)('calendar-prev-month-btn', {
-                    hidden: this.isPeriodDisabled((0, _moment2.default)(this.state.date).subtract(1, 'month'), 'month')
-                }),
-                onClick: this.previousMonth
-            });
-            var BtnNextMonth = is_date_view && _react2.default.createElement('span', {
-                type: 'button',
-                className: (0, _classnames2.default)('calendar-next-month-btn', {
-                    hidden: this.isPeriodDisabled((0, _moment2.default)(this.state.date).add(1, 'month'), 'month')
-                }),
-                onClick: this.nextMonth
-            });
-
-            var BtnPrevYear = _react2.default.createElement('span', {
-                type: 'button',
-                className: (0, _classnames2.default)('calendar-prev-year-btn', {
-                    hidden: this.isPeriodDisabled((0, _moment2.default)(this.state.date).subtract(1, 'month'), 'month')
-                }),
-                onClick: function onClick() {
-                    return (is_date_view || is_month_view) && _this6.previousYear() || is_year_view && _this6.previousDecade() || is_decade_view && _this6.previousCentury();
-                }
-            });
-
-            var BtnNextYear = _react2.default.createElement('span', {
-                type: 'button',
-                className: (0, _classnames2.default)('calendar-next-year-btn', {
-                    hidden: this.isPeriodDisabled((0, _moment2.default)(this.state.date).add(1, 'month'), 'month')
-                }),
-                onClick: function onClick() {
-                    return (is_date_view || is_month_view) && _this6.nextYear() || is_year_view && _this6.nextDecade() || is_decade_view && _this6.nextCentury();
-                }
-            });
-
-            var SelectMonth = is_date_view && _react2.default.createElement(
-                'span',
-                { type: 'button', className: 'calendar-select-month-btn', onClick: function onClick() {
-                        return _this6.setActiveView('month');
-                    } },
-                (0, _moment2.default)(this.state.date).format('MMM')
-            );
-
-            var SelectYear = _react2.default.createElement(
-                'span',
-                {
-                    type: 'button',
-                    className: 'calendar-select-year-btn',
-                    onClick: function onClick() {
-                        return is_date_view || is_month_view ? _this6.setActiveView('year') : _this6.setActiveView('decade');
-                    }
-                },
-                (0, _moment2.default)(this.state.date).year(),
-                is_year_view && '-' + (0, _moment2.default)(this.state.date).add(9, 'years').year(),
-                is_decade_view && '-' + (0, _moment2.default)(this.state.date).add(99, 'years').year()
-            );
-
-            var PanelCalendar = is_date_view && this.getDates() || is_month_view && this.getMonths() || is_year_view && this.getYears() || is_decade_view && this.getDecades();
-
-            var value = this.props.mode === 'duration' ? getDayDifference(this.state.selected_date) : this.state.selected_date;
-
-            return _react2.default.createElement(
-                'div',
-                { className: 'calendar' },
-                _react2.default.createElement('input', {
-                    type: 'text',
-                    placeholder: this.props.placeholder || (this.props.mode === 'duration' ? (0, _localize.localize)('Select a duration') : (0, _localize.localize)('Select date')),
-                    value: value,
-                    onChange: this.onChangeInput,
-                    className: 'calendar-input'
-                }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'calendar-header' },
-                    BtnPrevYear,
-                    BtnPrevMonth,
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'calendar-select' },
-                        SelectMonth,
-                        SelectYear
-                    ),
-                    BtnNextMonth,
-                    BtnNextYear
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'calendar-panel' },
-                    PanelCalendar
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'calendar-footer' },
-                    this.props.footer && _react2.default.createElement(
-                        'span',
-                        { className: 'calendar-footer-extra' },
-                        this.props.footer
-                    ),
-                    this.props.showTodayBtn && _react2.default.createElement(
-                        'span',
-                        { className: 'calendar-footer-btn' },
-                        _react2.default.createElement(
-                            'a',
-                            { role: 'button', onClick: this.setToday },
-                            (0, _localize.localize)('Today')
-                        )
-                    )
-                )
-            );
-        }
-    }]);
-
-    return Calendar;
-}(_react2.default.Component);
-
-Calendar.defaultProps = {
-    dateFormat: 'YYYY-MM-DD',
-    minDate: (0, _moment2.default)(0).utc().format('YYYY-MM-DD'), // by default, minDate is set to Unix Epoch (January 1st 1970)
-    maxDate: (0, _moment2.default)().utc().add(120, 'y').format('YYYY-MM-DD') // by default, maxDate is set to 120 years after today
-};
-
-var getDayDifference = function getDayDifference(date) {
-    var diff = (0, _moment2.default)(date).diff((0, _moment2.default)().utc(), 'days');
-    return !date || diff < 0 ? '' : diff + 1;
-};
-
-var DatePicker = (_temp = _class = function (_React$Component2) {
-    _inherits(DatePicker, _React$Component2);
-
-    function DatePicker(props) {
-        _classCallCheck(this, DatePicker);
-
-        var _this7 = _possibleConstructorReturn(this, (DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call(this, props));
-
-        _initialiseProps.call(_this7);
-
-        _this7.handleClickOutside = _this7.handleClickOutside.bind(_this7);
-        _this7.handleVisibility = _this7.handleVisibility.bind(_this7);
-        _this7.handleDateChange = _this7.handleDateChange.bind(_this7);
-        _this7.handleMouseEnter = _this7.handleMouseEnter.bind(_this7);
-        _this7.handleMouseLeave = _this7.handleMouseLeave.bind(_this7);
-
-        var selected_date = props.initial_value !== undefined ? props.initial_value : (0, _moment2.default)(_this7.props.minDate).format(_this7.props.dateFormat);
-
-        _this7.state = {
-            selected_date: selected_date,
-            is_calendar_visible: false,
-            is_close_btn_visible: false
-        };
-        return _this7;
-    }
-
-    _createClass(DatePicker, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.props.onChange({ target: { name: this.props.name, value: this.getPickerValue() } });
-        }
-    }, {
-        key: 'componentWillMount',
-        value: function componentWillMount() {
-            document.addEventListener('click', this.handleClickOutside, true);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            document.removeEventListener('click', this.handleClickOutside, true);
-        }
-    }, {
-        key: 'handleClickOutside',
-        value: function handleClickOutside(e) {
-            if (!this.mainNode.contains(e.target) && this.state.is_calendar_visible) {
-                this.setState({ is_calendar_visible: false });
-            }
-        }
-    }, {
-        key: 'handleVisibility',
-        value: function handleVisibility() {
-            this.setState({
-                is_calendar_visible: !this.state.is_calendar_visible
-            });
-        }
-    }, {
-        key: 'handleMouseEnter',
-        value: function handleMouseEnter() {
-            if (this.getPickerValue()) {
-                this.setState({ is_close_btn_visible: true });
-            }
-        }
-    }, {
-        key: 'handleMouseLeave',
-        value: function handleMouseLeave() {
-            this.setState({ is_close_btn_visible: false });
-        }
-    }, {
-        key: 'handleDateChange',
-        value: function handleDateChange(selected_date, is_calendar_visible) {
-            var value = selected_date;
-            if (!(0, _moment2.default)(value).isValid) {
-                value = '';
-            }
-
-            this.setState({
-                selected_date: value,
-                is_calendar_visible: is_calendar_visible
-            }, this.changeCallback);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this8 = this;
-
-            var value = this.getPickerValue();
-            if (this.props.is_nativepicker) {
-                return _react2.default.createElement(
-                    'div',
-                    { ref: function ref(node) {
-                            _this8.mainNode = node;
-                        }, className: 'datepicker-container' },
-                    _react2.default.createElement('input', {
-                        id: this.props.name,
-                        name: this.props.name,
-                        className: 'datepicker-display',
-                        type: 'date',
-                        value: value,
-                        min: this.props.minDate,
-                        max: this.props.maxDate,
-                        onChange: function onChange(e) {
-                            // fix for ios issue: clear button doesn't work
-                            // https://github.com/facebook/react/issues/8938
-                            var target = e.nativeEvent.target;
-                            function iosClearDefault() {
-                                target.defaultValue = '';
-                            }
-                            window.setTimeout(iosClearDefault, 0);
-
-                            _this8.handleDateChange(e.target.value);
-                        }
-                    }),
-                    _react2.default.createElement(
-                        'label',
-                        { className: 'datepicker-native-overlay', htmlFor: this.props.name },
-                        value || this.props.placeholder,
-                        _react2.default.createElement(_arrowhead2.default, { className: 'datepicker-native-overlay__arrowhead' })
-                    )
-                );
-            }
-            return _react2.default.createElement(
-                'div',
-                { ref: function ref(node) {
-                        _this8.mainNode = node;
-                    }, className: 'datepicker-container' },
-                _react2.default.createElement(
-                    'div',
-                    {
-                        className: 'datepicker-display-wrapper',
-                        onMouseEnter: this.handleMouseEnter,
-                        onMouseLeave: this.handleMouseLeave
-                    },
-                    _react2.default.createElement('input', {
-                        id: this.props.id,
-                        name: this.props.name,
-                        className: 'datepicker-display',
-                        value: value,
-                        readOnly: true,
-                        placeholder: this.props.placeholder || (this.props.mode === 'duration' ? (0, _localize.localize)('Select a duration') : (0, _localize.localize)('Select date')),
-                        onClick: this.handleVisibility
-                    }),
-                    _react2.default.createElement('span', {
-                        className: (0, _classnames2.default)('picker-calendar-icon', {
-                            show: !this.state.is_close_btn_visible
-                        }),
-                        onClick: this.handleVisibility
-                    }),
-                    _react2.default.createElement('span', {
-                        className: (0, _classnames2.default)('close-circle-icon', {
-                            show: this.state.is_close_btn_visible
-                        }),
-                        onClick: this.clearDateInput
-                    })
-                ),
-                _react2.default.createElement(
-                    'div',
-                    {
-                        className: (0, _classnames2.default)('datepicker-calendar', {
-                            show: this.state.is_calendar_visible
-                        })
-                    },
-                    _react2.default.createElement(Calendar, _extends({
-                        ref: function ref(node) {
-                            _this8.calendar = node;
-                        },
-                        handleDateChange: this.handleDateChange
-                    }, this.props))
-                )
-            );
-        }
-    }]);
-
-    return DatePicker;
-}(_react2.default.Component), _initialiseProps = function _initialiseProps() {
-    var _this9 = this;
-
-    this.changeCallback = function () {
-        _this9.props.onChange({ target: { name: _this9.props.name, value: _this9.getPickerValue() } });
-    };
-
-    this.clearDateInput = function () {
-        _this9.setState({ selected_date: '' }, _this9.changeCallback);
-        _this9.calendar.resetCalendar();
-    };
-
-    this.getPickerValue = function () {
-        var mode = _this9.props.mode;
-        var selected_date = _this9.state.selected_date;
-
-        return mode === 'duration' ? getDayDifference(selected_date) : selected_date;
-    };
-}, _temp);
-
-
-DatePicker.defaultProps = {
-    dateFormat: 'YYYY-MM-DD',
-    mode: 'date'
-};
-
-// ToDo: Refactor Calendar and trade_store.
-// Need major refactorization in helper function.
-Calendar.propTypes = {
-    dateFormat: _propTypes2.default.string,
-    footer: _propTypes2.default.string,
-    handleDateChange: _propTypes2.default.func,
-    id: _propTypes2.default.number,
-    initial_value: _propTypes2.default.string,
-    is_nativepicker: _propTypes2.default.bool,
-    maxDate: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
-    minDate: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
-    mode: _propTypes2.default.string,
-    placeholder: _propTypes2.default.string,
-    showTodayBtn: _propTypes2.default.bool,
-    startDate: _propTypes2.default.string
-};
-
-// ToDo: Refactor DatePicker and trade_store.
-// Need major refactorization in helper function.
-DatePicker.propTypes = {
-    dateFormat: _propTypes2.default.string,
-    id: _propTypes2.default.number,
-    initial_value: _propTypes2.default.string,
-    is_nativepicker: _propTypes2.default.bool,
-    maxDate: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
-    minDate: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
-    mode: _propTypes2.default.string,
-    name: _propTypes2.default.string,
-    onChange: _propTypes2.default.func,
-    placeholder: _propTypes2.default.string,
-    showTodayBtn: _propTypes2.default.bool
-};
-
-exports.default = DatePicker;
+exports.default = _date_picker2.default;
 
 /***/ }),
-/* 234 */
+/* 236 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6329,9 +5593,9 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _start_date = __webpack_require__(250);
+var _start_date = __webpack_require__(252);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6727,7 +5991,7 @@ TimePickerDropdown.propTypes = {
 exports.default = TimePicker;
 
 /***/ }),
-/* 235 */
+/* 237 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6838,7 +6102,7 @@ FullScreenDialog.propTypes = {
 exports.default = FullScreenDialog;
 
 /***/ }),
-/* 236 */
+/* 238 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6856,7 +6120,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _contract_type_widget = __webpack_require__(455);
+var _contract_type_widget = __webpack_require__(469);
 
 var _contract_type_widget2 = _interopRequireDefault(_contract_type_widget);
 
@@ -6897,7 +6161,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 })(Contract);
 
 /***/ }),
-/* 237 */
+/* 239 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -6921,11 +6185,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ui = __webpack_require__(492);
+var _ui = __webpack_require__(506);
 
 var _connect = __webpack_require__(26);
 
-var _component = __webpack_require__(507);
+var _component = __webpack_require__(521);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -6998,7 +6262,7 @@ exports.default = (0, _connect.connect)(function (_ref3) {
 })(TradeParams);
 
 /***/ }),
-/* 238 */
+/* 240 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7016,7 +6280,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(113);
+var _reactRouterDom = __webpack_require__(114);
 
 var _url = __webpack_require__(10);
 
@@ -7072,7 +6336,7 @@ MenuItem.propTypes = {
 exports.default = MenuItem;
 
 /***/ }),
-/* 239 */
+/* 241 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7110,7 +6374,7 @@ AccountPassword.propTypes = {
 exports.default = AccountPassword;
 
 /***/ }),
-/* 240 */
+/* 242 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7148,7 +6412,7 @@ ApiToken.propTypes = {
 exports.default = ApiToken;
 
 /***/ }),
-/* 241 */
+/* 243 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7186,7 +6450,7 @@ AuthorizedApplications.propTypes = {
 exports.default = AuthorizedApplications;
 
 /***/ }),
-/* 242 */
+/* 244 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7224,7 +6488,7 @@ CashierPassword.propTypes = {
 exports.default = CashierPassword;
 
 /***/ }),
-/* 243 */
+/* 245 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7262,7 +6526,7 @@ FinancialAssessment.propTypes = {
 exports.default = FinancialAssessment;
 
 /***/ }),
-/* 244 */
+/* 246 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7300,7 +6564,7 @@ Limits.propTypes = {
 exports.default = Limits;
 
 /***/ }),
-/* 245 */
+/* 247 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7338,7 +6602,7 @@ LoginHistory.propTypes = {
 exports.default = LoginHistory;
 
 /***/ }),
-/* 246 */
+/* 248 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7376,7 +6640,7 @@ PersonalDetails.propTypes = {
 exports.default = PersonalDetails;
 
 /***/ }),
-/* 247 */
+/* 249 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7414,7 +6678,7 @@ SelfExclusion.propTypes = {
 exports.default = SelfExclusion;
 
 /***/ }),
-/* 248 */
+/* 250 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7425,7 +6689,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.requestLogout = undefined;
 
-var _ws_methods = __webpack_require__(164);
+var _ws_methods = __webpack_require__(165);
 
 var _ws_methods2 = _interopRequireDefault(_ws_methods);
 
@@ -7455,7 +6719,7 @@ var doLogout = function doLogout(response) {
 };
 
 /***/ }),
-/* 249 */
+/* 251 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7465,7 +6729,7 @@ var _moment = __webpack_require__(9);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7556,7 +6820,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 250 */
+/* 252 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7614,7 +6878,7 @@ var isSessionAvailable = exports.isSessionAvailable = function isSessionAvailabl
 };
 
 /***/ }),
-/* 251 */
+/* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7624,7 +6888,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _language = __webpack_require__(506);
+var _language = __webpack_require__(520);
 
 Object.keys(_language).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -7637,9 +6901,9 @@ Object.keys(_language).forEach(function (key) {
 });
 
 /***/ }),
-/* 252 */,
-/* 253 */,
-/* 254 */
+/* 254 */,
+/* 255 */,
+/* 256 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7669,8 +6933,6 @@ var Loading = function Loading(_ref) {
 exports.default = Loading;
 
 /***/ }),
-/* 255 */,
-/* 256 */,
 /* 257 */,
 /* 258 */,
 /* 259 */,
@@ -7725,7 +6987,9 @@ exports.default = Loading;
 /* 308 */,
 /* 309 */,
 /* 310 */,
-/* 311 */
+/* 311 */,
+/* 312 */,
+/* 313 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7743,25 +7007,25 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactDom = __webpack_require__(112);
+var _reactDom = __webpack_require__(113);
 
-var _reactRouterDom = __webpack_require__(113);
+var _reactRouterDom = __webpack_require__(114);
 
-var _footer = __webpack_require__(430);
+var _footer = __webpack_require__(444);
 
 var _footer2 = _interopRequireDefault(_footer);
 
-var _header = __webpack_require__(429);
+var _header = __webpack_require__(443);
 
 var _header2 = _interopRequireDefault(_header);
 
-var _routes = __webpack_require__(124);
+var _routes = __webpack_require__(126);
 
-var _network_monitor = __webpack_require__(481);
+var _network_monitor = __webpack_require__(495);
 
 var _network_monitor2 = _interopRequireDefault(_network_monitor);
 
-var _Stores = __webpack_require__(503);
+var _Stores = __webpack_require__(517);
 
 var _Stores2 = _interopRequireDefault(_Stores);
 
@@ -7773,7 +7037,7 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _language = __webpack_require__(13);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -7851,8 +7115,6 @@ BinaryApp.propTypes = {
 exports.default = initApp;
 
 /***/ }),
-/* 312 */,
-/* 313 */,
 /* 314 */,
 /* 315 */,
 /* 316 */,
@@ -7945,7 +7207,9 @@ exports.default = initApp;
 /* 403 */,
 /* 404 */,
 /* 405 */,
-/* 406 */
+/* 406 */,
+/* 407 */,
+/* 408 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -7955,7 +7219,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _smartcharts = __webpack_require__(316);
+var _smartcharts = __webpack_require__(318);
 
 var _mobx = __webpack_require__(43);
 
@@ -7971,7 +7235,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Services = __webpack_require__(65);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8048,7 +7312,943 @@ SmartCharts.propTypes = {
 exports.default = (0, _mobxReact.observer)(SmartCharts);
 
 /***/ }),
-/* 407 */
+/* 409 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _class, _temp, _initialiseProps;
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _calendar_footer = __webpack_require__(410);
+
+var _calendar_footer2 = _interopRequireDefault(_calendar_footer);
+
+var _calendar_header = __webpack_require__(411);
+
+var _calendar_header2 = _interopRequireDefault(_calendar_header);
+
+var _calendar_panel = __webpack_require__(412);
+
+var _calendar_panel2 = _interopRequireDefault(_calendar_panel);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Calendar = (_temp = _class = function (_React$PureComponent) {
+    _inherits(Calendar, _React$PureComponent);
+
+    function Calendar(props) {
+        _classCallCheck(this, Calendar);
+
+        var _this = _possibleConstructorReturn(this, (Calendar.__proto__ || Object.getPrototypeOf(Calendar)).call(this, props));
+
+        _initialiseProps.call(_this);
+
+        var date_format = props.date_format,
+            start_date = props.start_date;
+
+        var current_date = (start_date ? (0, _moment2.default)(start_date) : (0, _moment2.default)()).utc().format(date_format);
+        _this.state = {
+            calendar_date: current_date, // calendar date reference
+            selected_date: '', // selected date
+            calendar_view: 'date'
+        };
+        return _this;
+    }
+
+    // navigates to next or previous's month/year/decade/century
+
+
+    // selects a day, a month, a year, or a decade
+
+
+    // sets Calendar active view
+
+
+    _createClass(Calendar, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                children = _props.children,
+                date_format = _props.date_format,
+                footer = _props.footer,
+                id = _props.id,
+                max_date = _props.max_date,
+                min_date = _props.min_date,
+                has_today_btn = _props.has_today_btn;
+            var _state = this.state,
+                calendar_date = _state.calendar_date,
+                calendar_view = _state.calendar_view,
+                selected_date = _state.selected_date;
+
+
+            return _react2.default.createElement(
+                'div',
+                { id: id, className: 'calendar', value: selected_date },
+                children,
+                _react2.default.createElement(_calendar_header2.default, {
+                    calendar_date: calendar_date,
+                    isPeriodDisabled: this.isPeriodDisabled,
+                    onClick: this.navigators,
+                    onSelect: this.calendarViews,
+                    calendar_view: calendar_view
+                }),
+                _react2.default.createElement(_calendar_panel2.default, {
+                    calendar_date: calendar_date,
+                    date_format: date_format,
+                    isPeriodDisabled: this.isPeriodDisabled,
+                    max_date: max_date,
+                    min_date: min_date,
+                    onClick: this.panelSelectors,
+                    selected_date: selected_date,
+                    calendar_view: calendar_view
+                }),
+                _react2.default.createElement(_calendar_footer2.default, {
+                    footer: footer,
+                    onClick: this.setToday,
+                    has_today_btn: has_today_btn
+                })
+            );
+        }
+    }]);
+
+    return Calendar;
+}(_react2.default.PureComponent), _initialiseProps = function _initialiseProps() {
+    var _this2 = this;
+
+    this.navigators = {
+        nextMonth: function nextMonth() {
+            _this2.navigateTo(1, 'months', true);
+        },
+        previousMonth: function previousMonth() {
+            _this2.navigateTo(1, 'months', false);
+        },
+        nextYear: function nextYear() {
+            _this2.navigateTo(1, 'years', true);
+        },
+        previousYear: function previousYear() {
+            _this2.navigateTo(1, 'years', false);
+        },
+        nextDecade: function nextDecade() {
+            _this2.navigateTo(10, 'years', true);
+        },
+        previousDecade: function previousDecade() {
+            _this2.navigateTo(10, 'years', false);
+        },
+        nextCentury: function nextCentury() {
+            _this2.navigateTo(100, 'years', true);
+        },
+        previousCentury: function previousCentury() {
+            _this2.navigateTo(100, 'years', false);
+        } };
+    this.panelSelectors = {
+        date: function date(e) {
+            _this2.updateSelectedDate(e);
+        },
+        month: function month(e) {
+            _this2.updateSelected(e, 'month');
+        },
+        year: function year(e) {
+            _this2.updateSelected(e, 'year');
+        },
+        decade: function decade(e) {
+            _this2.updateSelected(e, 'decade');
+        } };
+    this.calendarViews = {
+        date: function date() {
+            _this2.setState({ calendar_view: 'date' });
+        },
+        month: function month() {
+            _this2.setState({ calendar_view: 'month' });
+        },
+        year: function year() {
+            _this2.setState({ calendar_view: 'year' });
+        },
+        decade: function decade() {
+            _this2.setState({ calendar_view: 'decade' });
+        }
+    };
+
+    this.navigateTo = function (value, unit, is_add) {
+        var _props2 = _this2.props,
+            date_format = _props2.date_format,
+            max_date = _props2.max_date,
+            min_date = _props2.min_date;
+
+
+        var new_date = (0, _moment2.default)(_this2.state.calendar_date, date_format)[is_add ? 'add' : 'subtract'](value, unit).format(date_format);
+
+        if (unit === 'months' && _this2.isPeriodDisabled(new_date, 'month')) return;
+
+        if (unit === 'years' && _this2.isPeriodDisabled(new_date, 'years')) {
+            new_date = is_add ? max_date : min_date;
+        }
+
+        _this2.setState({ calendar_date: (0, _moment2.default)(new_date, date_format).format(date_format) }); // formatted date
+    };
+
+    this.updateSelectedDate = function (e) {
+        var _props3 = _this2.props,
+            date_format = _props3.date_format,
+            max_date = _props3.max_date,
+            min_date = _props3.min_date,
+            onSelect = _props3.onSelect;
+
+
+        var date = (0, _moment2.default)(e.target.dataset.date);
+        var is_before = date.isBefore((0, _moment2.default)(min_date).format(date_format));
+        var is_after = date.isAfter((0, _moment2.default)(max_date).format(date_format));
+
+        if (is_before || is_after) return;
+
+        var formatted_date = date.format(date_format);
+        _this2.setState({
+            calendar_date: formatted_date,
+            selected_date: formatted_date
+        });
+
+        if (onSelect) {
+            onSelect(formatted_date);
+        }
+    };
+
+    this.updateSelected = function (e, type) {
+        var view_map = {
+            month: 'date',
+            year: 'month',
+            decade: 'year'
+        };
+        var date = (0, _moment2.default)(_this2.state.calendar_date, _this2.props.date_format)[type === 'decade' ? 'year' : type](e.target.dataset[type].split('-')[0]).format(_this2.props.date_format);
+
+        if (_this2.isPeriodDisabled(date, type)) return;
+
+        _this2.setState({
+            calendar_date: date,
+            calendar_view: view_map[type]
+        });
+    };
+
+    this.resetCalendar = function () {
+        var _props4 = _this2.props,
+            date_format = _props4.date_format,
+            start_date = _props4.start_date;
+
+
+        var default_date = (start_date ? (0, _moment2.default)(start_date) : (0, _moment2.default)()).utc().format(date_format);
+        _this2.setState({
+            calendar_date: default_date,
+            selected_date: '',
+            calendar_view: 'date'
+        });
+    };
+
+    this.setToday = function () {
+        var _props5 = _this2.props,
+            date_format = _props5.date_format,
+            onSelect = _props5.onSelect;
+
+
+        var now = (0, _moment2.default)().utc().format(date_format);
+        _this2.setState({
+            calendar_date: now,
+            selected_date: now,
+            calendar_view: 'date'
+        });
+
+        if (onSelect) {
+            onSelect(now, true);
+        }
+    };
+
+    this.isPeriodDisabled = function (date, unit) {
+        var _props6 = _this2.props,
+            max_date = _props6.max_date,
+            min_date = _props6.min_date;
+
+
+        var start_of_period = (0, _moment2.default)(date).startOf(unit);
+        var end_of_period = (0, _moment2.default)(date).endOf(unit);
+        return end_of_period.isBefore((0, _moment2.default)(min_date)) || start_of_period.isAfter((0, _moment2.default)(max_date));
+    };
+}, _temp);
+
+
+Calendar.defaultProps = {
+    date_format: 'YYYY-MM-DD',
+    min_date: (0, _moment2.default)(0).utc().format('YYYY-MM-DD'), // by default, min_date is set to Unix Epoch (January 1st 1970)
+    max_date: (0, _moment2.default)().utc().add(120, 'y').format('YYYY-MM-DD') // by default, max_date is set to 120 years after today
+};
+
+Calendar.propTypes = {
+    children: _propTypes2.default.object,
+    date_format: _propTypes2.default.string,
+    footer: _propTypes2.default.string,
+    has_today_btn: _propTypes2.default.bool,
+    id: _propTypes2.default.string,
+    is_nativepicker: _propTypes2.default.bool,
+    max_date: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
+    min_date: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string]),
+    onSelect: _propTypes2.default.func,
+    start_date: _propTypes2.default.oneOfType([_propTypes2.default.object, _propTypes2.default.string])
+};
+
+exports.default = Calendar;
+
+/***/ }),
+/* 410 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = CalendarFooter;
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _calendar_button = __webpack_require__(225);
+
+var _calendar_button2 = _interopRequireDefault(_calendar_button);
+
+var _localize = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarFooter(_ref) {
+    var footer = _ref.footer,
+        has_today_btn = _ref.has_today_btn,
+        onClick = _ref.onClick;
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-footer' },
+        footer && _react2.default.createElement(
+            'span',
+            { className: 'calendar-footer-extra' },
+            footer
+        ),
+        has_today_btn && _react2.default.createElement(
+            _calendar_button2.default,
+            { className: 'calendar-footer-btn' },
+            _react2.default.createElement(
+                'a',
+                { role: 'button', onClick: onClick },
+                (0, _localize.localize)('Today')
+            )
+        )
+    );
+}
+
+CalendarFooter.propTypes = {
+    footer: _propTypes2.default.string,
+    has_today_btn: _propTypes2.default.bool,
+    onClick: _propTypes2.default.func
+};
+
+/***/ }),
+/* 411 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _classnames = __webpack_require__(17);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _calendar_button = __webpack_require__(225);
+
+var _calendar_button2 = _interopRequireDefault(_calendar_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarHeader(_ref) {
+    var calendar_date = _ref.calendar_date,
+        isPeriodDisabled = _ref.isPeriodDisabled,
+        _onClick = _ref.onClick,
+        onSelect = _ref.onSelect,
+        calendar_view = _ref.calendar_view;
+
+    var is_date_view = calendar_view === 'date';
+    var is_month_view = calendar_view === 'month';
+    var is_year_view = calendar_view === 'year';
+    var is_decade_view = calendar_view === 'decade';
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-header' },
+        _react2.default.createElement(_calendar_button2.default, {
+            className: (0, _classnames2.default)('calendar-prev-year-btn', {
+                hidden: isPeriodDisabled((0, _moment2.default)(calendar_date).subtract(1, 'month'), 'month')
+            }),
+            onClick: function onClick() {
+                return (is_date_view || is_month_view) && _onClick.previousYear() || is_year_view && _onClick.previousDecade() || is_decade_view && _onClick.previousCentury();
+            }
+        }),
+        _react2.default.createElement(_calendar_button2.default, {
+            className: (0, _classnames2.default)('calendar-prev-month-btn', {
+                hidden: isPeriodDisabled((0, _moment2.default)(calendar_date).subtract(1, 'month'), 'month')
+            }),
+            is_hidden: !is_date_view,
+            onClick: _onClick.previousMonth
+        }),
+        _react2.default.createElement(
+            'div',
+            { className: 'calendar-select' },
+            is_date_view && _react2.default.createElement(_calendar_button2.default, {
+                className: 'calendar-select-month-btn',
+                is_hidden: !is_date_view,
+                label: (0, _moment2.default)(calendar_date).format('MMM'),
+                onClick: onSelect.month
+            }),
+            _react2.default.createElement(
+                _calendar_button2.default,
+                {
+                    className: 'calendar-select-year-btn',
+                    onClick: function onClick() {
+                        return is_date_view || is_month_view ? onSelect.year() : onSelect.decade();
+                    }
+                },
+                (is_date_view || is_month_view) && (0, _moment2.default)(calendar_date).year(),
+                is_year_view && (0, _moment2.default)(calendar_date).subtract(1, 'years').year() + '-' + (0, _moment2.default)(calendar_date).add(10, 'years').year(),
+                is_decade_view && (0, _moment2.default)(calendar_date).subtract(10, 'years').year() + '-' + (0, _moment2.default)(calendar_date).add(109, 'years').year()
+            )
+        ),
+        _react2.default.createElement(_calendar_button2.default, {
+            className: (0, _classnames2.default)('calendar-next-month-btn', {
+                hidden: isPeriodDisabled((0, _moment2.default)(calendar_date).add(1, 'month'), 'month')
+            }),
+            is_hidden: !is_date_view,
+            onClick: _onClick.nextMonth
+        }),
+        _react2.default.createElement(_calendar_button2.default, {
+            className: (0, _classnames2.default)('calendar-next-year-btn', {
+                hidden: isPeriodDisabled((0, _moment2.default)(calendar_date).add(1, 'month'), 'month')
+            }),
+            onClick: function onClick() {
+                return (is_date_view || is_month_view) && _onClick.nextYear() || is_year_view && _onClick.nextDecade() || is_decade_view && _onClick.nextCentury();
+            }
+        })
+    );
+}
+
+exports.default = CalendarHeader;
+CalendarHeader.propTypes = {
+    calendar_date: _propTypes2.default.string,
+    calendar_view: _propTypes2.default.string,
+    isPeriodDisabled: _propTypes2.default.func,
+    onClick: _propTypes2.default.object,
+    onSelect: _propTypes2.default.object
+};
+
+/***/ }),
+/* 412 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = CalendarPanel;
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _panels = __webpack_require__(418);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarPanel(props) {
+    var calendar_panel = {
+        date: _react2.default.createElement(_panels.CalendarDays, props),
+        month: _react2.default.createElement(_panels.CalendarMonths, props),
+        year: _react2.default.createElement(_panels.CalendarYears, props),
+        decade: _react2.default.createElement(_panels.CalendarDecades, props)
+    };
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-panel' },
+        calendar_panel[props.calendar_view]
+    );
+}
+
+CalendarPanel.propTypes = {
+    calendar_view: _propTypes2.default.string
+};
+
+/***/ }),
+/* 413 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _calendar = __webpack_require__(409);
+
+var _calendar2 = _interopRequireDefault(_calendar);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _calendar2.default;
+
+/***/ }),
+/* 414 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.CalendarDays = CalendarDays;
+
+var _classnames = __webpack_require__(17);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _types = __webpack_require__(124);
+
+var _types2 = _interopRequireDefault(_types);
+
+var _localize = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var getDays = function getDays(_ref) {
+    var calendar_date = _ref.calendar_date,
+        date_format = _ref.date_format,
+        max_date = _ref.max_date,
+        min_date = _ref.min_date,
+        onClick = _ref.onClick,
+        selected_date = _ref.selected_date;
+
+    var dates = [];
+    var days = [];
+    var num_of_days = (0, _moment2.default)(calendar_date).daysInMonth() + 1;
+    var start_of_month = (0, _moment2.default)(calendar_date).startOf('month').format(date_format);
+    var end_of_month = (0, _moment2.default)(calendar_date).endOf('month').format(date_format);
+    var first_day = (0, _moment2.default)(start_of_month).day();
+    var last_day = (0, _moment2.default)(end_of_month).day();
+
+    var pad = function pad(num) {
+        return ('0' + num).substr(-2);
+    }; // pad zero
+
+    for (var i = first_day; i > 0; i--) {
+        dates.push((0, _moment2.default)(start_of_month).subtract(i, 'day').format(date_format));
+    }
+    for (var idx = 1; idx < num_of_days; idx += 1) {
+        dates.push((0, _moment2.default)(calendar_date).format(date_format.replace('DD', pad(idx))));
+    }
+    for (var _i = 1; _i <= 6 - last_day; _i++) {
+        dates.push((0, _moment2.default)(end_of_month).add(_i, 'day').format(date_format));
+    }
+
+    dates.map(function (date) {
+        var is_disabled = (0, _moment2.default)(date).isBefore((0, _moment2.default)(min_date)) || (0, _moment2.default)(date).isAfter((0, _moment2.default)(max_date));
+        var is_other_month = (0, _moment2.default)(date).isBefore((0, _moment2.default)(start_of_month)) || (0, _moment2.default)(date).isAfter((0, _moment2.default)(end_of_month));
+        var is_active = selected_date && (0, _moment2.default)(date).isSame((0, _moment2.default)(selected_date));
+        var is_today = (0, _moment2.default)(date).isSame((0, _moment2.default)().utc(), 'day');
+
+        days.push(_react2.default.createElement(
+            'span',
+            {
+                key: date,
+                className: (0, _classnames2.default)('calendar-date', {
+                    active: is_active && !is_disabled,
+                    today: is_today,
+                    disabled: is_disabled,
+                    hidden: is_other_month
+                }),
+                onClick: onClick.date,
+                'data-date': date
+            },
+            (0, _moment2.default)(date).date()
+        ));
+    });
+
+    return days;
+};
+
+function CalendarDays(props) {
+    var days = getDays(props).map(function (day) {
+        return day;
+    });
+    var week_headers = ['Su', 'Mo', 'Tu', 'We', 'Th', 'Fr', 'Sa'];
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-date-panel' },
+        week_headers.map(function (item, idx) {
+            return _react2.default.createElement(
+                'span',
+                { key: idx, className: 'calendar-date-header' },
+                (0, _localize.localize)(item)
+            );
+        }),
+        days
+    );
+}
+
+CalendarDays.propTypes = _extends({}, _types2.default);
+
+/***/ }),
+/* 415 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
+
+exports.CalendarDecades = CalendarDecades;
+
+var _classnames = __webpack_require__(17);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _types = __webpack_require__(124);
+
+var _types2 = _interopRequireDefault(_types);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarDecades(_ref) {
+    var calendar_date = _ref.calendar_date,
+        isPeriodDisabled = _ref.isPeriodDisabled,
+        onClick = _ref.onClick,
+        selected_date = _ref.selected_date;
+
+    var is_active = (0, _moment2.default)(selected_date).year();
+    var current_year = (0, _moment2.default)(calendar_date).year();
+    var decades = [];
+    var min_year = current_year - 10;
+
+    for (var i = 0; i < 12; i++) {
+        var max_year = min_year + 9;
+        var range = min_year + '-' + max_year;
+        decades.push(range);
+        min_year = max_year + 1;
+    }
+
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-decade-panel' },
+        decades.map(function (range, idx) {
+            var _range$split = range.split('-'),
+                _range$split2 = _slicedToArray(_range$split, 2),
+                start_year = _range$split2[0],
+                end_year = _range$split2[1];
+
+            var start_date = (0, _moment2.default)(calendar_date).year(start_year);
+            var end_date = (0, _moment2.default)(calendar_date).year(end_year);
+            var is_disabled = isPeriodDisabled(start_date, 'year') && isPeriodDisabled(end_date, 'year');
+            return _react2.default.createElement(
+                'span',
+                {
+                    key: idx,
+                    className: (0, _classnames2.default)('calendar-decade', {
+                        disabled: is_disabled,
+                        active: start_year === is_active
+                    }),
+                    onClick: onClick.decade,
+                    'data-decade': range
+                },
+                range
+            );
+        })
+    );
+}
+
+CalendarDecades.propTypes = _extends({}, _types2.default);
+
+/***/ }),
+/* 416 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.CalendarMonths = CalendarMonths;
+
+var _classnames = __webpack_require__(17);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _types = __webpack_require__(124);
+
+var _types2 = _interopRequireDefault(_types);
+
+var _localize = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarMonths(_ref) {
+    var calendar_date = _ref.calendar_date,
+        isPeriodDisabled = _ref.isPeriodDisabled,
+        onClick = _ref.onClick,
+        selected_date = _ref.selected_date;
+
+    var is_active = (0, _moment2.default)(selected_date).month();
+    var month_headers = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-month-panel' },
+        month_headers.map(function (item, idx) {
+            var dates = (0, _moment2.default)(calendar_date).month(item);
+            var is_disabled = isPeriodDisabled(dates, 'month');
+            return _react2.default.createElement(
+                'span',
+                {
+                    key: idx,
+                    className: (0, _classnames2.default)('calendar-month', {
+                        active: idx === is_active,
+                        disabled: is_disabled
+                    }),
+                    onClick: onClick.month,
+                    'data-month': idx
+                },
+                (0, _localize.localize)(item)
+            );
+        })
+    );
+}
+
+CalendarMonths.propTypes = _extends({}, _types2.default);
+
+/***/ }),
+/* 417 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+exports.CalendarYears = CalendarYears;
+
+var _classnames = __webpack_require__(17);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _types = __webpack_require__(124);
+
+var _types2 = _interopRequireDefault(_types);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function CalendarYears(_ref) {
+    var calendar_date = _ref.calendar_date,
+        isPeriodDisabled = _ref.isPeriodDisabled,
+        onClick = _ref.onClick,
+        selected_date = _ref.selected_date;
+
+    var is_active = (0, _moment2.default)(selected_date).year();
+    var current_year = (0, _moment2.default)(calendar_date).year();
+    var years = [];
+    for (var year = current_year - 1; year < current_year + 11; year++) {
+        years.push(year);
+    }
+    return _react2.default.createElement(
+        'div',
+        { className: 'calendar-year-panel' },
+        years.map(function (year, idx) {
+            var dates = (0, _moment2.default)(calendar_date).year(year);
+            var is_disabled = isPeriodDisabled(dates, 'year');
+            return _react2.default.createElement(
+                'span',
+                {
+                    key: idx,
+                    className: (0, _classnames2.default)('calendar-year', {
+                        disabled: is_disabled,
+                        active: year === is_active
+                    }),
+                    onClick: onClick.year,
+                    'data-year': year
+                },
+                year
+            );
+        })
+    );
+}
+
+CalendarYears.propTypes = _extends({}, _types2.default);
+
+/***/ }),
+/* 418 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _calendar_days = __webpack_require__(414);
+
+Object.keys(_calendar_days).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _calendar_days[key];
+    }
+  });
+});
+
+var _calendar_months = __webpack_require__(416);
+
+Object.keys(_calendar_months).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _calendar_months[key];
+    }
+  });
+});
+
+var _calendar_years = __webpack_require__(417);
+
+Object.keys(_calendar_years).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _calendar_years[key];
+    }
+  });
+});
+
+var _calendar_decades = __webpack_require__(415);
+
+Object.keys(_calendar_decades).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _calendar_decades[key];
+    }
+  });
+});
+
+/***/ }),
+/* 419 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8063,7 +8263,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -8075,7 +8275,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _drawer_item = __webpack_require__(226);
+var _drawer_item = __webpack_require__(228);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8167,7 +8367,7 @@ DrawerItems.propTypes = {
 exports.DrawerItems = DrawerItems;
 
 /***/ }),
-/* 408 */
+/* 420 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8180,7 +8380,7 @@ exports.ToggleDrawer = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -8192,7 +8392,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _drawer = __webpack_require__(224);
+var _drawer = __webpack_require__(226);
 
 var _connect = __webpack_require__(26);
 
@@ -8295,7 +8495,7 @@ var drawer_component = (0, _connect.connect)(function (_ref2) {
 exports.ToggleDrawer = drawer_component;
 
 /***/ }),
-/* 409 */
+/* 421 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8305,7 +8505,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _notifications = __webpack_require__(410);
+var _notifications = __webpack_require__(422);
 
 Object.keys(_notifications).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -8318,7 +8518,7 @@ Object.keys(_notifications).forEach(function (key) {
 });
 
 /***/ }),
-/* 410 */
+/* 422 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8337,13 +8537,13 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Drawer = __webpack_require__(160);
+var _Drawer = __webpack_require__(161);
 
 var _url = __webpack_require__(10);
 
 var _url2 = _interopRequireDefault(_url);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8395,7 +8595,7 @@ Notifications.propTypes = {
 exports.Notifications = Notifications;
 
 /***/ }),
-/* 411 */
+/* 423 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8405,7 +8605,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _popconfirm = __webpack_require__(412);
+var _popconfirm = __webpack_require__(424);
 
 Object.keys(_popconfirm).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -8417,7 +8617,7 @@ Object.keys(_popconfirm).forEach(function (key) {
   });
 });
 
-var _popconfirm_element = __webpack_require__(227);
+var _popconfirm_element = __webpack_require__(229);
 
 Object.keys(_popconfirm_element).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -8430,7 +8630,7 @@ Object.keys(_popconfirm_element).forEach(function (key) {
 });
 
 /***/ }),
-/* 412 */
+/* 424 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8451,7 +8651,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _popconfirm_element = __webpack_require__(227);
+var _popconfirm_element = __webpack_require__(229);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8541,7 +8741,7 @@ PopConfirm.propTypes = {
 exports.PopConfirm = PopConfirm;
 
 /***/ }),
-/* 413 */
+/* 425 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8551,7 +8751,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -8563,13 +8763,13 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _arrowback = __webpack_require__(419);
+var _arrowback = __webpack_require__(431);
 
 var _arrowback2 = _interopRequireDefault(_arrowback);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
-var _index = __webpack_require__(251);
+var _index = __webpack_require__(253);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8630,7 +8830,7 @@ LanguageDialog.propTypes = {
 exports.default = LanguageDialog;
 
 /***/ }),
-/* 414 */
+/* 426 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8642,7 +8842,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -8654,11 +8854,11 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Tabs = __webpack_require__(415);
+var _Tabs = __webpack_require__(427);
 
-var _SettingsDialog = __webpack_require__(431);
+var _SettingsDialog = __webpack_require__(445);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8752,7 +8952,7 @@ SettingsDialog.propTypes = {
 exports.default = SettingsDialog;
 
 /***/ }),
-/* 415 */
+/* 427 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8762,7 +8962,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _tabs = __webpack_require__(416);
+var _tabs = __webpack_require__(428);
 
 Object.keys(_tabs).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -8774,7 +8974,7 @@ Object.keys(_tabs).forEach(function (key) {
   });
 });
 
-var _tabs_item = __webpack_require__(229);
+var _tabs_item = __webpack_require__(231);
 
 Object.keys(_tabs_item).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -8786,7 +8986,7 @@ Object.keys(_tabs_item).forEach(function (key) {
   });
 });
 
-var _tabs_wrapper = __webpack_require__(230);
+var _tabs_wrapper = __webpack_require__(232);
 
 Object.keys(_tabs_wrapper).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -8799,7 +8999,7 @@ Object.keys(_tabs_wrapper).forEach(function (key) {
 });
 
 /***/ }),
-/* 416 */
+/* 428 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8812,7 +9012,7 @@ exports.Tabs = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -8824,7 +9024,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _tabs_wrapper = __webpack_require__(230);
+var _tabs_wrapper = __webpack_require__(232);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8913,7 +9113,7 @@ Tabs.propTypes = {
 exports.Tabs = Tabs;
 
 /***/ }),
-/* 417 */
+/* 429 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -8928,7 +9128,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _button = __webpack_require__(162);
+var _button = __webpack_require__(163);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -8942,7 +9142,7 @@ var _currency_base = __webpack_require__(34);
 
 var _login = __webpack_require__(35);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9010,7 +9210,7 @@ var AccountBalance = exports.AccountBalance = (0, _connect.connect)(function (_r
 });
 
 /***/ }),
-/* 418 */
+/* 430 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9022,7 +9222,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -9030,7 +9230,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactPerfectScrollbar = __webpack_require__(298);
+var _reactPerfectScrollbar = __webpack_require__(300);
 
 var _reactPerfectScrollbar2 = _interopRequireDefault(_reactPerfectScrollbar);
 
@@ -9046,7 +9246,7 @@ var _socket_cache = __webpack_require__(50);
 
 var _socket_cache2 = _interopRequireDefault(_socket_cache);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9203,7 +9403,7 @@ var AccountSwitcher = function (_React$Component) {
 exports.default = AccountSwitcher;
 
 /***/ }),
-/* 419 */
+/* 431 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9239,7 +9439,7 @@ Arrowback.propTypes = {
 exports.default = Arrowback;
 
 /***/ }),
-/* 420 */
+/* 432 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9275,7 +9475,7 @@ Arrowhead.propTypes = {
 exports.default = Arrowhead;
 
 /***/ }),
-/* 421 */
+/* 433 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9290,11 +9490,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactPerfectScrollbar = __webpack_require__(298);
+var _reactPerfectScrollbar = __webpack_require__(300);
 
 var _reactPerfectScrollbar2 = _interopRequireDefault(_reactPerfectScrollbar);
 
-var _Drawer = __webpack_require__(160);
+var _Drawer = __webpack_require__(161);
 
 var _Services = __webpack_require__(65);
 
@@ -9302,7 +9502,7 @@ var _client_base = __webpack_require__(22);
 
 var _client_base2 = _interopRequireDefault(_client_base);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9338,7 +9538,7 @@ var MenuDrawer = exports.MenuDrawer = function MenuDrawer() {
 };
 
 /***/ }),
-/* 422 */
+/* 434 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9382,7 +9582,7 @@ Money.propTypes = {
 exports.default = Money;
 
 /***/ }),
-/* 423 */
+/* 435 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9408,7 +9608,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _connect = __webpack_require__(26);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -9590,7 +9790,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 })(PortfolioDrawer);
 
 /***/ }),
-/* 424 */
+/* 436 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9600,7 +9800,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -9633,7 +9833,333 @@ ToggleButton.propTypes = {
 exports.default = ToggleButton;
 
 /***/ }),
-/* 425 */
+/* 437 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(17);
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _moment = __webpack_require__(9);
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _date_picker_input = __webpack_require__(438);
+
+var _date_picker_input2 = _interopRequireDefault(_date_picker_input);
+
+var _arrowhead = __webpack_require__(432);
+
+var _arrowhead2 = _interopRequireDefault(_arrowhead);
+
+var _Calendar = __webpack_require__(413);
+
+var _Calendar2 = _interopRequireDefault(_Calendar);
+
+var _Date = __webpack_require__(105);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var DatePicker = function (_React$PureComponent) {
+    _inherits(DatePicker, _React$PureComponent);
+
+    function DatePicker() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, DatePicker);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = DatePicker.__proto__ || Object.getPrototypeOf(DatePicker)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            value: '',
+            is_datepicker_visible: false,
+            is_close_btn_visible: false
+        }, _this.handleVisibility = function () {
+            _this.setState({ is_datepicker_visible: !_this.state.is_datepicker_visible });
+        }, _this.onClickOutside = function (e) {
+            if (!_this.mainNode.contains(e.target) && _this.state.is_datepicker_visible) {
+                _this.setState({ is_datepicker_visible: false });
+                if (_this.props.mode !== 'duration') {
+                    _this.updateDatePickerValue((0, _Date.formatDate)(_this.state.value));
+                }
+            }
+        }, _this.onMouseEnter = function () {
+            if (_this.state.value) {
+                _this.setState({ is_close_btn_visible: true });
+            }
+        }, _this.onMouseLeave = function () {
+            _this.setState({ is_close_btn_visible: false });
+        }, _this.onSelectCalendar = function (selected_date, is_datepicker_visible) {
+            var value = selected_date;
+            if (!(0, _moment2.default)(value).isValid) {
+                value = '';
+            }
+
+            if (_this.props.mode === 'duration') {
+                _this.updateDatePickerValue((0, _Date.daysFromTodayTo)(value), 'duration');
+            } else {
+                _this.updateDatePickerValue(value);
+            }
+            _this.setState({ is_datepicker_visible: is_datepicker_visible });
+        }, _this.onChangeInput = function (e) {
+            var value = e.target.value;
+            _this.updateDatePickerValue(value, _this.props.mode);
+        }, _this.clearDatePickerInput = function () {
+            _this.setState({ value: '' }, _this.updateStore);
+            _this.calendar.resetCalendar();
+        }, _this.updateDatePickerValue = function (value, mode) {
+            _this.setState({ value: value }, _this.updateStore);
+
+            // update Calendar
+            var _this$props = _this.props,
+                date_format = _this$props.date_format,
+                start_date = _this$props.start_date;
+
+            var new_date = mode === 'duration' ? (0, _moment2.default)().add(value, 'days').format(date_format) : value;
+            if ((0, _moment2.default)(new_date, date_format).isValid() || !new_date) {
+                if (!new_date) {
+                    var current_date = (start_date ? (0, _moment2.default)(start_date) : (0, _moment2.default)()).utc().format(date_format);
+                    _this.calendar.setState({
+                        calendar_date: current_date,
+                        selected_date: current_date
+                    });
+                } else {
+                    _this.calendar.setState({
+                        calendar_date: (0, _Date.formatDate)(new_date),
+                        selected_date: (0, _Date.formatDate)(new_date)
+                    });
+                }
+            }
+        }, _this.updateStore = function () {
+            var _this$props2 = _this.props,
+                name = _this$props2.name,
+                onChange = _this$props2.onChange;
+
+            if (onChange) {
+                onChange({ target: { name: name, value: _this.state.value } });
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(DatePicker, [{
+        key: 'componentWillReceiveProps',
+        value: function componentWillReceiveProps(_ref2) {
+            var value = _ref2.value,
+                mode = _ref2.mode;
+
+            if (value === this.state.value) return;
+            this.updateDatePickerValue(value, mode);
+        }
+    }, {
+        key: 'componentWillMount',
+        value: function componentWillMount() {
+            document.addEventListener('click', this.onClickOutside, true);
+        }
+    }, {
+        key: 'componentWillUnmount',
+        value: function componentWillUnmount() {
+            document.removeEventListener('click', this.onClickOutside, true);
+        }
+
+        // TODO: handle cases where user inputs date before min_date and date after max_date
+
+
+        // update MobX store
+
+    }, {
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            if (this.props.is_nativepicker) {
+                return _react2.default.createElement(
+                    'div',
+                    { ref: function ref(node) {
+                            _this2.mainNode = node;
+                        }, className: 'datepicker-container' },
+                    _react2.default.createElement('input', {
+                        id: this.props.name,
+                        name: this.props.name,
+                        className: 'datepicker-display',
+                        type: 'date',
+                        value: this.state.value,
+                        min: this.props.min_date,
+                        max: this.props.max_date,
+                        onChange: function onChange(e) {
+                            // fix for ios issue: clear button doesn't work
+                            // https://github.com/facebook/react/issues/8938
+                            var target = e.nativeEvent.target;
+                            function iosClearDefault() {
+                                target.defaultValue = '';
+                            }
+                            window.setTimeout(iosClearDefault, 0);
+
+                            _this2.onSelectCalendar(e.target.value);
+                        }
+                    }),
+                    _react2.default.createElement(
+                        'label',
+                        { className: 'datepicker-native-overlay', htmlFor: this.props.name },
+                        this.state.value || this.props.placeholder,
+                        _react2.default.createElement(_arrowhead2.default, { className: 'datepicker-native-overlay__arrowhead' })
+                    )
+                );
+            }
+
+            return _react2.default.createElement(
+                'div',
+                { ref: function ref(node) {
+                        _this2.mainNode = node;
+                    }, className: 'datepicker-container' },
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: 'datepicker-display-wrapper',
+                        onMouseEnter: this.onMouseEnter,
+                        onMouseLeave: this.onMouseLeave
+                    },
+                    _react2.default.createElement(_date_picker_input2.default, {
+                        class_name: 'datepicker-display',
+                        mode: this.props.mode,
+                        name: this.props.name,
+                        placeholder: this.props.placeholder,
+                        onClick: this.handleVisibility,
+                        is_read_only: true,
+                        value: this.state.value
+                    }),
+                    _react2.default.createElement('span', {
+                        className: (0, _classnames2.default)('picker-calendar-icon', {
+                            show: !this.state.is_close_btn_visible
+                        }),
+                        onClick: this.handleVisibility
+                    }),
+                    _react2.default.createElement('span', {
+                        className: (0, _classnames2.default)('close-circle-icon', {
+                            show: this.state.is_close_btn_visible
+                        }),
+                        onClick: this.clearDatePickerInput
+                    })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: (0, _classnames2.default)('datepicker-calendar', {
+                            show: this.state.is_datepicker_visible
+                        })
+                    },
+                    _react2.default.createElement(
+                        _Calendar2.default,
+                        _extends({
+                            ref: function ref(node) {
+                                _this2.calendar = node;
+                            },
+                            onSelect: this.onSelectCalendar
+                        }, this.props),
+                        _react2.default.createElement(_date_picker_input2.default, {
+                            class_name: 'calendar-input',
+                            mode: this.props.mode,
+                            name: this.props.name,
+                            onChange: this.onChangeInput,
+                            placeholder: this.props.placeholder,
+                            is_read_only: false,
+                            value: this.state.value
+                        })
+                    )
+                )
+            );
+        }
+    }]);
+
+    return DatePicker;
+}(_react2.default.PureComponent);
+
+DatePicker.defaultProps = {
+    date_format: _Calendar2.default.defaultProps.date_format,
+    mode: 'date'
+};
+
+DatePicker.propTypes = _extends({}, _date_picker_input2.default.propTypes, _Calendar2.default.propTypes);
+
+exports.default = DatePicker;
+
+/***/ }),
+/* 438 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = DatePickerInput;
+
+var _propTypes = __webpack_require__(4);
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(3);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(1);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function DatePickerInput(props) {
+    return _react2.default.createElement('input', {
+        id: props.id,
+        name: props.name,
+        className: props.class_name,
+        readOnly: props.is_read_only,
+        placeholder: props.placeholder || (props.mode === 'duration' ? (0, _localize.localize)('Select a duration') : (0, _localize.localize)('Select date')),
+        onChange: props.onChange,
+        onClick: props.onClick,
+        value: props.value
+    });
+};
+
+DatePickerInput.propTypes = {
+    class_name: _propTypes2.default.string,
+    id: _propTypes2.default.string,
+    is_read_only: _propTypes2.default.bool,
+    mode: _propTypes2.default.string,
+    name: _propTypes2.default.string,
+    onChange: _propTypes2.default.func,
+    onClick: _propTypes2.default.func,
+    placeholder: _propTypes2.default.string,
+    value: _propTypes2.default.oneOfType([_propTypes2.default.number, // duration
+    _propTypes2.default.string] // date
+    )
+};
+
+/***/ }),
+/* 439 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9643,7 +10169,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _toggle_fullscreen = __webpack_require__(426);
+var _toggle_fullscreen = __webpack_require__(440);
 
 Object.keys(_toggle_fullscreen).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -9655,7 +10181,7 @@ Object.keys(_toggle_fullscreen).forEach(function (key) {
   });
 });
 
-var _toggle_portfolio = __webpack_require__(427);
+var _toggle_portfolio = __webpack_require__(441);
 
 Object.keys(_toggle_portfolio).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -9667,7 +10193,7 @@ Object.keys(_toggle_portfolio).forEach(function (key) {
   });
 });
 
-var _toggle_settings = __webpack_require__(428);
+var _toggle_settings = __webpack_require__(442);
 
 Object.keys(_toggle_settings).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -9680,7 +10206,7 @@ Object.keys(_toggle_settings).forEach(function (key) {
 });
 
 /***/ }),
-/* 426 */
+/* 440 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9693,7 +10219,7 @@ exports.ToggleFullScreen = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -9782,7 +10308,7 @@ var ToggleFullScreen = function (_React$Component) {
 exports.ToggleFullScreen = ToggleFullScreen;
 
 /***/ }),
-/* 427 */
+/* 441 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9793,7 +10319,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.TogglePortfolio = undefined;
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -9829,7 +10355,7 @@ TogglePortfolio.propTypes = {
 exports.TogglePortfolio = TogglePortfolio;
 
 /***/ }),
-/* 428 */
+/* 442 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9840,7 +10366,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ToggleSettings = undefined;
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -9852,7 +10378,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _settings_dialog = __webpack_require__(414);
+var _settings_dialog = __webpack_require__(426);
 
 var _settings_dialog2 = _interopRequireDefault(_settings_dialog);
 
@@ -9891,7 +10417,7 @@ ToggleSettings.propTypes = {
 exports.ToggleSettings = ToggleSettings;
 
 /***/ }),
-/* 429 */
+/* 443 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -9911,19 +10437,19 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _account_balance = __webpack_require__(417);
+var _account_balance = __webpack_require__(429);
 
-var _account_switcher = __webpack_require__(418);
+var _account_switcher = __webpack_require__(430);
 
 var _account_switcher2 = _interopRequireDefault(_account_switcher);
 
-var _Notifications = __webpack_require__(409);
+var _Notifications = __webpack_require__(421);
 
-var _Drawer = __webpack_require__(160);
+var _Drawer = __webpack_require__(161);
 
-var _menu_drawer = __webpack_require__(421);
+var _menu_drawer = __webpack_require__(433);
 
-var _routes = __webpack_require__(124);
+var _routes = __webpack_require__(126);
 
 var _url = __webpack_require__(10);
 
@@ -10021,7 +10547,7 @@ Header.propTypes = {
 exports.default = Header;
 
 /***/ }),
-/* 430 */
+/* 444 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10039,13 +10565,13 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Footer = __webpack_require__(425);
+var _Footer = __webpack_require__(439);
 
-var _server_time = __webpack_require__(435);
+var _server_time = __webpack_require__(449);
 
 var _server_time2 = _interopRequireDefault(_server_time);
 
-var _routes = __webpack_require__(124);
+var _routes = __webpack_require__(126);
 
 var _connect = __webpack_require__(26);
 
@@ -10107,7 +10633,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 })(Footer);
 
 /***/ }),
-/* 431 */
+/* 445 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10117,7 +10643,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _settings_chart = __webpack_require__(432);
+var _settings_chart = __webpack_require__(446);
 
 Object.keys(_settings_chart).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -10129,7 +10655,7 @@ Object.keys(_settings_chart).forEach(function (key) {
   });
 });
 
-var _settings_general = __webpack_require__(433);
+var _settings_general = __webpack_require__(447);
 
 Object.keys(_settings_general).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -10141,7 +10667,7 @@ Object.keys(_settings_general).forEach(function (key) {
   });
 });
 
-var _settings_language = __webpack_require__(434);
+var _settings_language = __webpack_require__(448);
 
 Object.keys(_settings_language).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
@@ -10154,7 +10680,7 @@ Object.keys(_settings_language).forEach(function (key) {
 });
 
 /***/ }),
-/* 432 */
+/* 446 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10173,7 +10699,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _settings_control = __webpack_require__(228);
+var _settings_control = __webpack_require__(230);
 
 var _settings_control2 = _interopRequireDefault(_settings_control);
 
@@ -10238,7 +10764,7 @@ var chart_settings_component = (0, _connect.connect)(function (_ref2) {
 exports.ChartSettings = chart_settings_component;
 
 /***/ }),
-/* 433 */
+/* 447 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10257,7 +10783,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _settings_control = __webpack_require__(228);
+var _settings_control = __webpack_require__(230);
 
 var _settings_control2 = _interopRequireDefault(_settings_control);
 
@@ -10338,7 +10864,7 @@ var general_settings_component = (0, _connect.connect)(function (_ref2) {
 exports.GeneralSettings = general_settings_component;
 
 /***/ }),
-/* 434 */
+/* 448 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10357,7 +10883,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _language_dialog = __webpack_require__(413);
+var _language_dialog = __webpack_require__(425);
 
 var _language_dialog2 = _interopRequireDefault(_language_dialog);
 
@@ -10394,7 +10920,7 @@ var language_settings_component = (0, _connect.connect)(function (_ref2) {
 exports.LanguageSettings = language_settings_component;
 
 /***/ }),
-/* 435 */
+/* 449 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10414,7 +10940,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _connect = __webpack_require__(26);
 
-var _Date = __webpack_require__(125);
+var _Date = __webpack_require__(105);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10442,7 +10968,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 })(ServerTime);
 
 /***/ }),
-/* 436 */
+/* 450 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10476,7 +11002,7 @@ var contract_type_display = exports.contract_type_display = {
 };
 
 /***/ }),
-/* 437 */
+/* 451 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10488,7 +11014,7 @@ Object.defineProperty(exports, "__esModule", {
 var MAX_MOBILE_WIDTH = exports.MAX_MOBILE_WIDTH = 767;
 
 /***/ }),
-/* 438 */
+/* 452 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10596,7 +11122,7 @@ PortfolioCard.propTypes = {
 exports.default = PortfolioCard;
 
 /***/ }),
-/* 439 */
+/* 453 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10614,25 +11140,25 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _portfolio_card = __webpack_require__(438);
+var _portfolio_card = __webpack_require__(452);
 
 var _portfolio_card2 = _interopRequireDefault(_portfolio_card);
 
-var _process_data = __webpack_require__(440);
+var _process_data = __webpack_require__(454);
 
-var _data_table = __webpack_require__(231);
+var _data_table = __webpack_require__(233);
 
 var _data_table2 = _interopRequireDefault(_data_table);
 
-var _tooltip = __webpack_require__(161);
+var _tooltip = __webpack_require__(162);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _contract = __webpack_require__(436);
+var _contract = __webpack_require__(450);
 
 var _Services = __webpack_require__(65);
 
-var _Helpers = __webpack_require__(479);
+var _Helpers = __webpack_require__(493);
 
 var _config = __webpack_require__(38);
 
@@ -10642,11 +11168,11 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _currency_base = __webpack_require__(34);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
-var _loading = __webpack_require__(254);
+var _loading = __webpack_require__(256);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -10969,7 +11495,7 @@ var Portfolio = function (_React$Component) {
 exports.default = Portfolio;
 
 /***/ }),
-/* 440 */
+/* 454 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -10980,11 +11506,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.formatPortfolioData = undefined;
 
-var _Date = __webpack_require__(125);
+var _Date = __webpack_require__(105);
 
 var _currency_base = __webpack_require__(34);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 var formatPortfolioData = exports.formatPortfolioData = function formatPortfolioData(portfolio_arr) {
     return portfolio_arr.map(function (portfolio_item) {
@@ -11014,7 +11540,7 @@ var formatPortfolioData = exports.formatPortfolioData = function formatPortfolio
 };
 
 /***/ }),
-/* 441 */
+/* 455 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11025,7 +11551,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _portfolio = __webpack_require__(439);
+var _portfolio = __webpack_require__(453);
 
 var _portfolio2 = _interopRequireDefault(_portfolio);
 
@@ -11034,7 +11560,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _portfolio2.default;
 
 /***/ }),
-/* 442 */
+/* 456 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11044,7 +11570,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -11067,7 +11593,7 @@ var AmountCell = function AmountCell(data, data_index) {
 exports.default = AmountCell;
 
 /***/ }),
-/* 443 */
+/* 457 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11083,9 +11609,9 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _data_table_constants = __webpack_require__(447);
+var _data_table_constants = __webpack_require__(461);
 
-var _data_table = __webpack_require__(231);
+var _data_table = __webpack_require__(233);
 
 var _data_table2 = _interopRequireDefault(_data_table);
 
@@ -11114,7 +11640,7 @@ ListLargeScreen.propTypes = {
 exports.default = ListLargeScreen;
 
 /***/ }),
-/* 444 */
+/* 458 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11132,7 +11658,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _statement_card = __webpack_require__(446);
+var _statement_card = __webpack_require__(460);
 
 var _statement_card2 = _interopRequireDefault(_statement_card);
 
@@ -11160,7 +11686,7 @@ ListSmallScreen.propTypes = {
 exports.default = ListSmallScreen;
 
 /***/ }),
-/* 445 */
+/* 459 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11178,7 +11704,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11202,7 +11728,7 @@ NoActivityMessage.propTypes = {
 exports.default = NoActivityMessage;
 
 /***/ }),
-/* 446 */
+/* 460 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11212,7 +11738,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -11315,7 +11841,7 @@ StatementCard.propTypes = {
 exports.default = StatementCard;
 
 /***/ }),
-/* 447 */
+/* 461 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11326,11 +11852,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getTableColumnsTemplate = undefined;
 
-var _amount_cell = __webpack_require__(442);
+var _amount_cell = __webpack_require__(456);
 
 var _amount_cell2 = _interopRequireDefault(_amount_cell);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11342,7 +11868,7 @@ var getTableColumnsTemplate = exports.getTableColumnsTemplate = function getTabl
 };
 
 /***/ }),
-/* 448 */
+/* 462 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11364,25 +11890,25 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _statement_filter = __webpack_require__(449);
+var _statement_filter = __webpack_require__(463);
 
 var _statement_filter2 = _interopRequireDefault(_statement_filter);
 
-var _no_activity_message = __webpack_require__(445);
+var _no_activity_message = __webpack_require__(459);
 
 var _no_activity_message2 = _interopRequireDefault(_no_activity_message);
 
-var _list_large_screen = __webpack_require__(443);
+var _list_large_screen = __webpack_require__(457);
 
 var _list_large_screen2 = _interopRequireDefault(_list_large_screen);
 
-var _list_small_screen = __webpack_require__(444);
+var _list_small_screen = __webpack_require__(458);
 
 var _list_small_screen2 = _interopRequireDefault(_list_small_screen);
 
 var _connect = __webpack_require__(26);
 
-var _loading = __webpack_require__(254);
+var _loading = __webpack_require__(256);
 
 var _loading2 = _interopRequireDefault(_loading);
 
@@ -11463,7 +11989,7 @@ exports.default = (0, _connect.connect)(function (_ref) {
 })(Statement);
 
 /***/ }),
-/* 449 */
+/* 463 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11473,7 +11999,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -11489,13 +12015,13 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _date_picker = __webpack_require__(233);
+var _DatePicker = __webpack_require__(235);
 
-var _date_picker2 = _interopRequireDefault(_date_picker);
+var _DatePicker2 = _interopRequireDefault(_DatePicker);
 
 var _connect = __webpack_require__(26);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11516,13 +12042,13 @@ var Filter = function Filter(_ref) {
                 { className: 'statement-filter__label' },
                 (0, _localize.localize)('Filter by date:')
             ),
-            _react2.default.createElement(_date_picker2.default, {
+            _react2.default.createElement(_DatePicker2.default, {
                 name: 'date_from',
-                initial_value: '',
                 placeholder: (0, _localize.localize)('Start date'),
-                startDate: date_to || today,
-                maxDate: date_to || today,
+                start_date: date_to || today,
+                max_date: date_to || today,
                 onChange: handleDateChange,
+                value: date_from,
                 is_nativepicker: is_mobile
             }),
             _react2.default.createElement(
@@ -11530,15 +12056,15 @@ var Filter = function Filter(_ref) {
                 { className: 'statement-filter__dash' },
                 '\u2014'
             ),
-            _react2.default.createElement(_date_picker2.default, {
+            _react2.default.createElement(_DatePicker2.default, {
                 name: 'date_to',
-                initial_value: '',
                 placeholder: (0, _localize.localize)('End date'),
-                startDate: today,
-                minDate: date_from,
-                maxDate: today,
-                showTodayBtn: true,
+                start_date: today,
+                min_date: date_from,
+                max_date: today,
+                has_today_btn: true,
                 onChange: handleDateChange,
+                value: date_to,
                 is_nativepicker: is_mobile
             })
         )
@@ -11568,7 +12094,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 })(Filter);
 
 /***/ }),
-/* 450 */
+/* 464 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11579,7 +12105,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _statement = __webpack_require__(448);
+var _statement = __webpack_require__(462);
 
 var _statement2 = _interopRequireDefault(_statement);
 
@@ -11588,7 +12114,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _statement2.default;
 
 /***/ }),
-/* 451 */
+/* 465 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11604,11 +12130,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _full_screen_dialog = __webpack_require__(235);
+var _full_screen_dialog = __webpack_require__(237);
 
 var _full_screen_dialog2 = _interopRequireDefault(_full_screen_dialog);
 
-var _trade_params = __webpack_require__(237);
+var _trade_params = __webpack_require__(239);
 
 var _trade_params2 = _interopRequireDefault(_trade_params);
 
@@ -11680,7 +12206,7 @@ var MobileWidget = function (_React$PureComponent) {
 exports.default = MobileWidget;
 
 /***/ }),
-/* 452 */
+/* 466 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11698,7 +12224,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _full_screen_dialog = __webpack_require__(235);
+var _full_screen_dialog = __webpack_require__(237);
 
 var _full_screen_dialog2 = _interopRequireDefault(_full_screen_dialog);
 
@@ -11743,7 +12269,7 @@ ContractTypeDialog.propTypes = {
 exports.default = ContractTypeDialog;
 
 /***/ }),
-/* 453 */
+/* 467 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11802,7 +12328,7 @@ ContractTypeItem.propTypes = {
 exports.default = ContractTypeItem;
 
 /***/ }),
-/* 454 */
+/* 468 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11822,7 +12348,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _contract_type_item = __webpack_require__(453);
+var _contract_type_item = __webpack_require__(467);
 
 var _contract_type_item2 = _interopRequireDefault(_contract_type_item);
 
@@ -11874,7 +12400,7 @@ ContractTypeList.propTypes = {
 exports.default = ContractTypeList;
 
 /***/ }),
-/* 455 */
+/* 469 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -11894,11 +12420,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _contract_type_dialog = __webpack_require__(452);
+var _contract_type_dialog = __webpack_require__(466);
 
 var _contract_type_dialog2 = _interopRequireDefault(_contract_type_dialog);
 
-var _contract_type_list = __webpack_require__(454);
+var _contract_type_list = __webpack_require__(468);
 
 var _contract_type_list2 = _interopRequireDefault(_contract_type_list);
 
@@ -12044,7 +12570,7 @@ ContractTypeWidget.propTypes = {
 exports.default = ContractTypeWidget;
 
 /***/ }),
-/* 456 */
+/* 470 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12080,7 +12606,7 @@ ErrorGeneral.propTypes = {
 exports.default = ErrorGeneral;
 
 /***/ }),
-/* 457 */
+/* 471 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12094,13 +12620,13 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _button = __webpack_require__(162);
+var _button = __webpack_require__(163);
 
 var _button2 = _interopRequireDefault(_button);
 
 var _login = __webpack_require__(35);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12139,7 +12665,7 @@ var ErrorLogin = function ErrorLogin() {
 exports.default = ErrorLogin;
 
 /***/ }),
-/* 458 */
+/* 472 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12150,7 +12676,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _message_box = __webpack_require__(459);
+var _message_box = __webpack_require__(473);
 
 var _message_box2 = _interopRequireDefault(_message_box);
 
@@ -12159,7 +12685,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _message_box2.default;
 
 /***/ }),
-/* 459 */
+/* 473 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12177,19 +12703,19 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _error_general = __webpack_require__(456);
+var _error_general = __webpack_require__(470);
 
 var _error_general2 = _interopRequireDefault(_error_general);
 
-var _error_login = __webpack_require__(457);
+var _error_login = __webpack_require__(471);
 
 var _error_login2 = _interopRequireDefault(_error_login);
 
-var _purchase_result = __webpack_require__(460);
+var _purchase_result = __webpack_require__(474);
 
 var _purchase_result2 = _interopRequireDefault(_purchase_result);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12224,7 +12750,7 @@ MessageBox.propTypes = {
 exports.default = MessageBox;
 
 /***/ }),
-/* 460 */
+/* 474 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12242,9 +12768,9 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Date = __webpack_require__(125);
+var _Date = __webpack_require__(105);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12315,7 +12841,7 @@ PurchaseResult.propTypes = {
 exports.default = PurchaseResult;
 
 /***/ }),
-/* 461 */
+/* 475 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12333,15 +12859,15 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _money = __webpack_require__(422);
+var _money = __webpack_require__(434);
 
 var _money2 = _interopRequireDefault(_money);
 
-var _tooltip = __webpack_require__(161);
+var _tooltip = __webpack_require__(162);
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 var _url = __webpack_require__(10);
 
@@ -12457,7 +12983,7 @@ ContractInfo.propTypes = {
 exports.default = ContractInfo;
 
 /***/ }),
-/* 462 */
+/* 476 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12467,7 +12993,7 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -12481,7 +13007,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _dropdown = __webpack_require__(123);
+var _dropdown = __webpack_require__(125);
 
 var _dropdown2 = _interopRequireDefault(_dropdown);
 
@@ -12489,7 +13015,7 @@ var _fieldset = __webpack_require__(94);
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _input_field = __webpack_require__(163);
+var _input_field = __webpack_require__(164);
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
@@ -12499,7 +13025,7 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _currency_base = __webpack_require__(34);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12589,7 +13115,7 @@ Amount.propTypes = {
 exports.default = (0, _mobxReact.observer)(Amount);
 
 /***/ }),
-/* 463 */
+/* 477 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12613,11 +13139,11 @@ var _fieldset = __webpack_require__(94);
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _input_field = __webpack_require__(163);
+var _input_field = __webpack_require__(164);
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12687,7 +13213,7 @@ Barrier.propTypes = {
 exports.default = (0, _mobxReact.observer)(Barrier);
 
 /***/ }),
-/* 464 */
+/* 478 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12713,11 +13239,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _date_picker = __webpack_require__(233);
+var _DatePicker = __webpack_require__(235);
 
-var _date_picker2 = _interopRequireDefault(_date_picker);
+var _DatePicker2 = _interopRequireDefault(_DatePicker);
 
-var _dropdown = __webpack_require__(123);
+var _dropdown = __webpack_require__(125);
 
 var _dropdown2 = _interopRequireDefault(_dropdown);
 
@@ -12725,15 +13251,15 @@ var _fieldset = __webpack_require__(94);
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _input_field = __webpack_require__(163);
+var _input_field = __webpack_require__(164);
 
 var _input_field2 = _interopRequireDefault(_input_field);
 
-var _time_picker = __webpack_require__(234);
+var _time_picker = __webpack_require__(236);
 
 var _time_picker2 = _interopRequireDefault(_time_picker);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12830,13 +13356,14 @@ var Duration = function Duration(_ref) {
             _react2.default.createElement(
                 'div',
                 { className: 'duration-container' },
-                duration_unit === 'd' && !is_nativepicker ? _react2.default.createElement(_date_picker2.default, {
+                duration_unit === 'd' && !is_nativepicker ? _react2.default.createElement(_DatePicker2.default, {
                     name: 'duration',
-                    minDate: min_date_duration,
-                    maxDate: max_date_duration,
+                    min_date: min_date_duration,
+                    max_date: max_date_duration,
                     mode: 'duration',
                     onChange: onChange,
-                    is_nativepicker: is_nativepicker,
+                    value: duration || 1 // TODO: replace 1 with min duration
+                    , is_nativepicker: is_nativepicker,
                     footer: (0, _localize.localize)('The minimum duration is 1 day')
                 }) : _react2.default.createElement(_input_field2.default, {
                     type: 'number',
@@ -12859,12 +13386,13 @@ var Duration = function Duration(_ref) {
             _react2.default.createElement(
                 'div',
                 { className: 'endtime-container' },
-                _react2.default.createElement(_date_picker2.default, {
+                _react2.default.createElement(_DatePicker2.default, {
                     name: 'expiry_date',
-                    showTodayBtn: true,
-                    minDate: min_date_expiry,
-                    maxDate: max_date_duration,
+                    has_today_btn: true,
+                    min_date: min_date_expiry,
+                    max_date: max_date_duration,
                     onChange: onChange,
+                    value: expiry_date,
                     is_nativepicker: is_nativepicker
                 }),
                 is_same_day && _react2.default.createElement(_time_picker2.default, {
@@ -12902,7 +13430,7 @@ Duration.propTypes = {
 exports.default = (0, _mobxReact.observer)(Duration);
 
 /***/ }),
-/* 465 */
+/* 479 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -12922,7 +13450,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _dropdown = __webpack_require__(123);
+var _dropdown = __webpack_require__(125);
 
 var _dropdown2 = _interopRequireDefault(_dropdown);
 
@@ -12930,7 +13458,7 @@ var _fieldset = __webpack_require__(94);
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12983,7 +13511,7 @@ LastDigit.propTypes = {
 exports.default = (0, _mobxReact.observer)(LastDigit);
 
 /***/ }),
-/* 466 */
+/* 480 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13003,7 +13531,7 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _dropdown = __webpack_require__(123);
+var _dropdown = __webpack_require__(125);
 
 var _dropdown2 = _interopRequireDefault(_dropdown);
 
@@ -13011,11 +13539,11 @@ var _fieldset = __webpack_require__(94);
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
 
-var _time_picker = __webpack_require__(234);
+var _time_picker = __webpack_require__(236);
 
 var _time_picker2 = _interopRequireDefault(_time_picker);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13090,7 +13618,7 @@ StartDate.propTypes = {
 exports.default = (0, _mobxReact.observer)(StartDate);
 
 /***/ }),
-/* 467 */
+/* 481 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13108,11 +13636,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _screen_large = __webpack_require__(468);
+var _screen_large = __webpack_require__(482);
 
 var _screen_large2 = _interopRequireDefault(_screen_large);
 
-var _screen_small = __webpack_require__(469);
+var _screen_small = __webpack_require__(483);
 
 var _screen_small2 = _interopRequireDefault(_screen_small);
 
@@ -13132,7 +13660,7 @@ FormLayout.propTypes = {
 exports.default = FormLayout;
 
 /***/ }),
-/* 468 */
+/* 482 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13150,19 +13678,19 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _contract_type = __webpack_require__(236);
+var _contract_type = __webpack_require__(238);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _purchase = __webpack_require__(470);
+var _purchase = __webpack_require__(484);
 
 var _purchase2 = _interopRequireDefault(_purchase);
 
-var _trade_params = __webpack_require__(237);
+var _trade_params = __webpack_require__(239);
 
 var _trade_params2 = _interopRequireDefault(_trade_params);
 
-var _ui_loader = __webpack_require__(232);
+var _ui_loader = __webpack_require__(234);
 
 var _ui_loader2 = _interopRequireDefault(_ui_loader);
 
@@ -13202,7 +13730,7 @@ ScreenLarge.propTypes = {
 exports.default = ScreenLarge;
 
 /***/ }),
-/* 469 */
+/* 483 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13220,11 +13748,11 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _mobile_widget = __webpack_require__(451);
+var _mobile_widget = __webpack_require__(465);
 
 var _mobile_widget2 = _interopRequireDefault(_mobile_widget);
 
-var _contract_type = __webpack_require__(236);
+var _contract_type = __webpack_require__(238);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
@@ -13251,7 +13779,7 @@ ScreenSmall.propTypes = {
 exports.default = ScreenSmall;
 
 /***/ }),
-/* 470 */
+/* 484 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13269,21 +13797,21 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _contract_info = __webpack_require__(461);
+var _contract_info = __webpack_require__(475);
 
 var _contract_info2 = _interopRequireDefault(_contract_info);
 
-var _MessageBox = __webpack_require__(458);
+var _MessageBox = __webpack_require__(472);
 
 var _MessageBox2 = _interopRequireDefault(_MessageBox);
 
-var _PopConfirm = __webpack_require__(411);
+var _PopConfirm = __webpack_require__(423);
 
-var _ui_loader = __webpack_require__(232);
+var _ui_loader = __webpack_require__(234);
 
 var _ui_loader2 = _interopRequireDefault(_ui_loader);
 
-var _button = __webpack_require__(162);
+var _button = __webpack_require__(163);
 
 var _button2 = _interopRequireDefault(_button);
 
@@ -13293,9 +13821,9 @@ var _fieldset2 = _interopRequireDefault(_fieldset);
 
 var _connect = __webpack_require__(26);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13397,7 +13925,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 })(Purchase);
 
 /***/ }),
-/* 471 */
+/* 485 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13524,7 +14052,7 @@ exports.default = (0, _connect.connect)(function (_ref4) {
 })(Test);
 
 /***/ }),
-/* 472 */
+/* 486 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13536,7 +14064,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -13548,19 +14076,19 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _test = __webpack_require__(471);
+var _test = __webpack_require__(485);
 
 var _test2 = _interopRequireDefault(_test);
 
-var _form_layout = __webpack_require__(467);
+var _form_layout = __webpack_require__(481);
 
 var _form_layout2 = _interopRequireDefault(_form_layout);
 
-var _smartcharts = __webpack_require__(406);
+var _smartcharts = __webpack_require__(408);
 
 var _smartcharts2 = _interopRequireDefault(_smartcharts);
 
-var _portfolio_drawer = __webpack_require__(423);
+var _portfolio_drawer = __webpack_require__(435);
 
 var _portfolio_drawer2 = _interopRequireDefault(_portfolio_drawer);
 
@@ -13654,7 +14182,7 @@ exports.default = (0, _connect.connect)(function (_ref) {
 })(Trade);
 
 /***/ }),
-/* 473 */
+/* 487 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13665,7 +14193,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _trade = __webpack_require__(472);
+var _trade = __webpack_require__(486);
 
 var _trade2 = _interopRequireDefault(_trade);
 
@@ -13674,7 +14202,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 exports.default = _trade2.default;
 
 /***/ }),
-/* 474 */
+/* 488 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13692,7 +14220,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _menu_list = __webpack_require__(475);
+var _menu_list = __webpack_require__(489);
 
 var _menu_list2 = _interopRequireDefault(_menu_list);
 
@@ -13729,7 +14257,7 @@ Menu.propTypes = {
 exports.default = Menu;
 
 /***/ }),
-/* 475 */
+/* 489 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13747,7 +14275,7 @@ var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _menu_item = __webpack_require__(238);
+var _menu_item = __webpack_require__(240);
 
 var _menu_item2 = _interopRequireDefault(_menu_item);
 
@@ -13786,7 +14314,7 @@ MenuList.propTypes = {
 exports.default = MenuList;
 
 /***/ }),
-/* 476 */
+/* 490 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13798,7 +14326,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _classnames = __webpack_require__(19);
+var _classnames = __webpack_require__(17);
 
 var _classnames2 = _interopRequireDefault(_classnames);
 
@@ -13810,9 +14338,9 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(113);
+var _reactRouterDom = __webpack_require__(114);
 
-var _menu_item = __webpack_require__(238);
+var _menu_item = __webpack_require__(240);
 
 var _menu_item2 = _interopRequireDefault(_menu_item);
 
@@ -13916,7 +14444,7 @@ MobileDropdown.propTypes = {
 exports.default = MobileDropdown;
 
 /***/ }),
-/* 477 */
+/* 491 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -13932,21 +14460,21 @@ var _react = __webpack_require__(3);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(113);
+var _reactRouterDom = __webpack_require__(114);
 
 var _propTypes = __webpack_require__(4);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _menu = __webpack_require__(474);
+var _menu = __webpack_require__(488);
 
 var _menu2 = _interopRequireDefault(_menu);
 
-var _mobile_dropdown = __webpack_require__(476);
+var _mobile_dropdown = __webpack_require__(490);
 
 var _mobile_dropdown2 = _interopRequireDefault(_mobile_dropdown);
 
-var _settings_data = __webpack_require__(478);
+var _settings_data = __webpack_require__(492);
 
 var _settings_data2 = _interopRequireDefault(_settings_data);
 
@@ -14040,7 +14568,7 @@ Settings.propTypes = {
 exports.default = Settings;
 
 /***/ }),
-/* 478 */
+/* 492 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14050,43 +14578,43 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
-var _account_password = __webpack_require__(239);
+var _account_password = __webpack_require__(241);
 
 var _account_password2 = _interopRequireDefault(_account_password);
 
-var _api_token = __webpack_require__(240);
+var _api_token = __webpack_require__(242);
 
 var _api_token2 = _interopRequireDefault(_api_token);
 
-var _authorized_applications = __webpack_require__(241);
+var _authorized_applications = __webpack_require__(243);
 
 var _authorized_applications2 = _interopRequireDefault(_authorized_applications);
 
-var _cashier_password = __webpack_require__(242);
+var _cashier_password = __webpack_require__(244);
 
 var _cashier_password2 = _interopRequireDefault(_cashier_password);
 
-var _financial_assessment = __webpack_require__(243);
+var _financial_assessment = __webpack_require__(245);
 
 var _financial_assessment2 = _interopRequireDefault(_financial_assessment);
 
-var _limits = __webpack_require__(244);
+var _limits = __webpack_require__(246);
 
 var _limits2 = _interopRequireDefault(_limits);
 
-var _login_history = __webpack_require__(245);
+var _login_history = __webpack_require__(247);
 
 var _login_history2 = _interopRequireDefault(_login_history);
 
-var _personal_details = __webpack_require__(246);
+var _personal_details = __webpack_require__(248);
 
 var _personal_details2 = _interopRequireDefault(_personal_details);
 
-var _self_exclusion = __webpack_require__(247);
+var _self_exclusion = __webpack_require__(249);
 
 var _self_exclusion2 = _interopRequireDefault(_self_exclusion);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14146,7 +14674,7 @@ var data = [{
 exports.default = data;
 
 /***/ }),
-/* 479 */
+/* 493 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14157,7 +14685,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.ProcessData = undefined;
 
-var _process_data = __webpack_require__(480);
+var _process_data = __webpack_require__(494);
 
 var _ProcessData = _interopRequireWildcard(_process_data);
 
@@ -14166,7 +14694,7 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 exports.ProcessData = _ProcessData;
 
 /***/ }),
-/* 480 */
+/* 494 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14194,7 +14722,7 @@ var getOauthAppsObject = exports.getOauthAppsObject = function getOauthAppsObjec
 };
 
 /***/ }),
-/* 481 */
+/* 495 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14206,7 +14734,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _index = __webpack_require__(65);
 
-var _network_monitor_base = __webpack_require__(144);
+var _network_monitor_base = __webpack_require__(145);
 
 var _network_monitor_base2 = _interopRequireDefault(_network_monitor_base);
 
@@ -14226,7 +14754,7 @@ var NetworkMonitor = function () {
 exports.default = NetworkMonitor;
 
 /***/ }),
-/* 482 */
+/* 496 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14238,9 +14766,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _mobx = __webpack_require__(43);
 
-var _logout = __webpack_require__(248);
+var _logout = __webpack_require__(250);
 
-var _ws_methods = __webpack_require__(164);
+var _ws_methods = __webpack_require__(165);
 
 var _ws_methods2 = _interopRequireDefault(_ws_methods);
 
@@ -14254,7 +14782,7 @@ var _login = __webpack_require__(35);
 
 var _login2 = _interopRequireDefault(_login);
 
-var _server_time = __webpack_require__(145);
+var _server_time = __webpack_require__(146);
 
 var _server_time2 = _interopRequireDefault(_server_time);
 
@@ -14264,7 +14792,7 @@ var _socket_base2 = _interopRequireDefault(_socket_base);
 
 var _storage = __webpack_require__(7);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14456,7 +14984,7 @@ var ResponseHandlers = function () {
 }();
 
 /***/ }),
-/* 483 */
+/* 497 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14472,7 +15000,7 @@ var _socket_base = __webpack_require__(44);
 
 var _socket_base2 = _interopRequireDefault(_socket_base);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14667,7 +15195,7 @@ var SubscriptionManager = function () {
 exports.default = SubscriptionManager;
 
 /***/ }),
-/* 484 */
+/* 498 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14695,7 +15223,7 @@ var onChangeContractType = exports.onChangeContractType = function onChangeContr
 };
 
 /***/ }),
-/* 485 */
+/* 499 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14708,7 +15236,7 @@ exports.getCurrenciesAsync = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
-var _currency = __webpack_require__(495);
+var _currency = __webpack_require__(509);
 
 var _Services = __webpack_require__(65);
 
@@ -14746,7 +15274,7 @@ var getCurrenciesAsync = exports.getCurrenciesAsync = function () {
 }();
 
 /***/ }),
-/* 486 */
+/* 500 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14763,7 +15291,7 @@ var _contract_type = __webpack_require__(95);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _duration = __webpack_require__(249);
+var _duration = __webpack_require__(251);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -14780,7 +15308,7 @@ var onChangeExpiry = exports.onChangeExpiry = function onChangeExpiry(store) {
 };
 
 /***/ }),
-/* 487 */
+/* 501 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14821,7 +15349,7 @@ var processPurchase = exports.processPurchase = function () {
 }();
 
 /***/ }),
-/* 488 */
+/* 502 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14857,7 +15385,7 @@ var onChangeStartDate = exports.onChangeStartDate = function onChangeStartDate(s
 };
 
 /***/ }),
-/* 489 */
+/* 503 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14899,7 +15427,7 @@ var onChangeSymbolAsync = exports.onChangeSymbolAsync = function () {
 }();
 
 /***/ }),
-/* 490 */
+/* 504 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14910,7 +15438,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getContractCategoriesConfig = exports.getContractTypesConfig = undefined;
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -14942,7 +15470,7 @@ var getContractCategoriesConfig = exports.getContractCategoriesConfig = function
 };
 
 /***/ }),
-/* 491 */
+/* 505 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14955,7 +15483,7 @@ Object.defineProperty(exports, "__esModule", {
 var allowed_query_string_variables = exports.allowed_query_string_variables = ['amount', 'barrier_1', 'barrier_2', 'basis', 'contract_start_type', 'contract_type', 'currency', 'duration', 'duration_unit', 'expiry_date', 'expiry_type', 'last_digit', 'start_date', 'symbol'];
 
 /***/ }),
-/* 492 */
+/* 506 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -14966,23 +15494,23 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.form_components = undefined;
 
-var _duration = __webpack_require__(464);
+var _duration = __webpack_require__(478);
 
 var _duration2 = _interopRequireDefault(_duration);
 
-var _start_date = __webpack_require__(466);
+var _start_date = __webpack_require__(480);
 
 var _start_date2 = _interopRequireDefault(_start_date);
 
-var _last_digit = __webpack_require__(465);
+var _last_digit = __webpack_require__(479);
 
 var _last_digit2 = _interopRequireDefault(_last_digit);
 
-var _amount = __webpack_require__(462);
+var _amount = __webpack_require__(476);
 
 var _amount2 = _interopRequireDefault(_amount);
 
-var _barrier = __webpack_require__(463);
+var _barrier = __webpack_require__(477);
 
 var _barrier2 = _interopRequireDefault(_barrier);
 
@@ -14991,7 +15519,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var form_components = exports.form_components = [{ name: 'start_date', Component: _start_date2.default }, { name: 'duration', Component: _duration2.default }, { name: 'barrier', Component: _barrier2.default }, { name: 'last_digit', Component: _last_digit2.default }, { name: 'amount', Component: _amount2.default }];
 
 /***/ }),
-/* 493 */
+/* 507 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15020,7 +15548,7 @@ var buildBarriersConfig = exports.buildBarriersConfig = function buildBarriersCo
 };
 
 /***/ }),
-/* 494 */
+/* 508 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15213,7 +15741,7 @@ var CONTRACT_SHADES = {
 };
 
 /***/ }),
-/* 495 */
+/* 509 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15226,7 +15754,7 @@ exports.getDefaultCurrency = exports.buildCurrenciesList = undefined;
 
 var _currency_base = __webpack_require__(34);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -15261,7 +15789,7 @@ var getDefaultCurrency = exports.getDefaultCurrency = function getDefaultCurrenc
 };
 
 /***/ }),
-/* 496 */
+/* 510 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15272,7 +15800,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.processTradeParams = undefined;
 
-var _extend = __webpack_require__(192);
+var _extend = __webpack_require__(193);
 
 var _extend2 = _interopRequireDefault(_extend);
 
@@ -15280,25 +15808,25 @@ var _client_base = __webpack_require__(22);
 
 var _client_base2 = _interopRequireDefault(_client_base);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 var _contract_type = __webpack_require__(95);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _contract_type3 = __webpack_require__(484);
+var _contract_type3 = __webpack_require__(498);
 
 var ContractType = _interopRequireWildcard(_contract_type3);
 
-var _currency = __webpack_require__(485);
+var _currency = __webpack_require__(499);
 
 var Currency = _interopRequireWildcard(_currency);
 
-var _duration = __webpack_require__(486);
+var _duration = __webpack_require__(500);
 
 var Duration = _interopRequireWildcard(_duration);
 
-var _start_date = __webpack_require__(488);
+var _start_date = __webpack_require__(502);
 
 var StartDate = _interopRequireWildcard(_start_date);
 
@@ -15373,7 +15901,7 @@ var extendOrReplace = function extendOrReplace(source, new_values) {
 };
 
 /***/ }),
-/* 497 */
+/* 511 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15390,11 +15918,11 @@ var _moment = __webpack_require__(9);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _Date = __webpack_require__(125);
+var _Date = __webpack_require__(105);
 
 var _currency_base = __webpack_require__(34);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -15452,7 +15980,7 @@ var createProposalRequestForContract = function createProposalRequestForContract
 };
 
 /***/ }),
-/* 498 */
+/* 512 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -15471,23 +15999,23 @@ var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _desc, _value, _class
 
 var _mobx = __webpack_require__(43);
 
-var _purchase = __webpack_require__(487);
+var _purchase = __webpack_require__(501);
 
-var _symbol = __webpack_require__(489);
+var _symbol = __webpack_require__(503);
 
 var _Symbol = _interopRequireWildcard(_symbol);
 
-var _query_string = __webpack_require__(491);
+var _query_string = __webpack_require__(505);
 
-var _chart = __webpack_require__(494);
+var _chart = __webpack_require__(508);
 
 var _contract_type = __webpack_require__(95);
 
 var _contract_type2 = _interopRequireDefault(_contract_type);
 
-var _process = __webpack_require__(496);
+var _process = __webpack_require__(510);
 
-var _proposal = __webpack_require__(497);
+var _proposal = __webpack_require__(511);
 
 var _base_store = __webpack_require__(104);
 
@@ -15495,7 +16023,7 @@ var _base_store2 = _interopRequireDefault(_base_store);
 
 var _Services = __webpack_require__(65);
 
-var _URL = __webpack_require__(508);
+var _URL = __webpack_require__(522);
 
 var _URL2 = _interopRequireDefault(_URL);
 
@@ -15503,7 +16031,7 @@ var _client_base = __webpack_require__(22);
 
 var _client_base2 = _interopRequireDefault(_client_base);
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16015,7 +16543,7 @@ exports.default = TradeStore;
 ;
 
 /***/ }),
-/* 499 */
+/* 513 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16026,11 +16554,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _statement_store = __webpack_require__(500);
+var _statement_store = __webpack_require__(514);
 
 var _statement_store2 = _interopRequireDefault(_statement_store);
 
-var _trade_store = __webpack_require__(498);
+var _trade_store = __webpack_require__(512);
 
 var _trade_store2 = _interopRequireDefault(_trade_store);
 
@@ -16049,7 +16577,7 @@ exports.default = ModulesStore;
 ;
 
 /***/ }),
-/* 500 */
+/* 514 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16084,9 +16612,9 @@ var _client_base = __webpack_require__(22);
 
 var _client_base2 = _interopRequireDefault(_client_base);
 
-var _localize = __webpack_require__(2);
+var _localize = __webpack_require__(1);
 
-var _string_util = __webpack_require__(18);
+var _string_util = __webpack_require__(19);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16292,7 +16820,7 @@ var getStatementData = function getStatementData(statement, currency) {
 };
 
 /***/ }),
-/* 501 */
+/* 515 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16388,7 +16916,7 @@ exports.default = ClientStore;
 ;
 
 /***/ }),
-/* 502 */
+/* 516 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16407,7 +16935,7 @@ var _moment = __webpack_require__(9);
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _index = __webpack_require__(251);
+var _index = __webpack_require__(253);
 
 var _base_store = __webpack_require__(104);
 
@@ -16497,7 +17025,7 @@ exports.default = CommonStore;
 ;
 
 /***/ }),
-/* 503 */
+/* 517 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16508,19 +17036,19 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
-var _client_store = __webpack_require__(501);
+var _client_store = __webpack_require__(515);
 
 var _client_store2 = _interopRequireDefault(_client_store);
 
-var _common_store = __webpack_require__(502);
+var _common_store = __webpack_require__(516);
 
 var _common_store2 = _interopRequireDefault(_common_store);
 
-var _Modules = __webpack_require__(499);
+var _Modules = __webpack_require__(513);
 
 var _Modules2 = _interopRequireDefault(_Modules);
 
-var _ui_store = __webpack_require__(504);
+var _ui_store = __webpack_require__(518);
 
 var _ui_store2 = _interopRequireDefault(_ui_store);
 
@@ -16541,7 +17069,7 @@ exports.default = RootStore;
 ;
 
 /***/ }),
-/* 504 */
+/* 518 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16562,7 +17090,7 @@ var _base_store = __webpack_require__(104);
 
 var _base_store2 = _interopRequireDefault(_base_store);
 
-var _ui = __webpack_require__(437);
+var _ui = __webpack_require__(451);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16808,7 +17336,7 @@ exports.default = UIStore;
 ;
 
 /***/ }),
-/* 505 */
+/* 519 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16817,7 +17345,7 @@ exports.default = UIStore;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.toGMTFormat = exports.convertToUnix = exports.toMoment = undefined;
+exports.daysFromTodayTo = exports.formatDate = exports.toGMTFormat = exports.convertToUnix = exports.toMoment = undefined;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
@@ -16867,8 +17395,23 @@ var toGMTFormat = exports.toGMTFormat = function toGMTFormat(time) {
   return (0, _moment2.default)(time || undefined).utc().format('YYYY-MM-DD HH:mm:ss [GMT]');
 };
 
+var formatDate = exports.formatDate = function formatDate(date) {
+  var date_format = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'YYYY-MM-DD';
+  return (0, _moment2.default)(date || undefined, date_format).format(date_format);
+};
+
+/**
+ * return the number of days from today to date specified
+ * @param  {String} date   the date to calculate number of days from today
+ * @return {Number} an integer of the number of days
+ */
+var daysFromTodayTo = exports.daysFromTodayTo = function daysFromTodayTo(date) {
+  var diff = (0, _moment2.default)(date).utc().diff((0, _moment2.default)().utc(), 'days');
+  return !date || diff < 0 ? '' : diff + 1;
+};
+
 /***/ }),
-/* 506 */
+/* 520 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16900,7 +17443,7 @@ var getURL = exports.getURL = function getURL(lang) {
 };
 
 /***/ }),
-/* 507 */
+/* 521 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16948,7 +17491,7 @@ var getPropFromStores = function getPropFromStores(prop) {
 };
 
 /***/ }),
-/* 508 */
+/* 522 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16958,7 +17501,7 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _url = __webpack_require__(509);
+var _url = __webpack_require__(523);
 
 Object.defineProperty(exports, 'default', {
   enumerable: true,
@@ -16970,7 +17513,7 @@ Object.defineProperty(exports, 'default', {
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /***/ }),
-/* 509 */
+/* 523 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -16985,7 +17528,7 @@ var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _utility = __webpack_require__(1);
+var _utility = __webpack_require__(2);
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -17088,21 +17631,21 @@ var URLHelper = function () {
 exports.default = URLHelper;
 
 /***/ }),
-/* 510 */
+/* 524 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
 
-__webpack_require__(115);
+__webpack_require__(116);
 
-__webpack_require__(143);
+__webpack_require__(144);
 
-var _app = __webpack_require__(311);
+var _app = __webpack_require__(313);
 
 var _app2 = _interopRequireDefault(_app);
 
-var _check_new_release = __webpack_require__(114);
+var _check_new_release = __webpack_require__(115);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -17117,20 +17660,6 @@ window.addEventListener('pageshow', function (e) {
 });
 
 /***/ }),
-/* 511 */,
-/* 512 */,
-/* 513 */,
-/* 514 */,
-/* 515 */,
-/* 516 */,
-/* 517 */,
-/* 518 */,
-/* 519 */,
-/* 520 */,
-/* 521 */,
-/* 522 */,
-/* 523 */,
-/* 524 */,
 /* 525 */,
 /* 526 */,
 /* 527 */,
@@ -17378,11 +17907,25 @@ window.addEventListener('pageshow', function (e) {
 /* 769 */,
 /* 770 */,
 /* 771 */,
-/* 772 */
+/* 772 */,
+/* 773 */,
+/* 774 */,
+/* 775 */,
+/* 776 */,
+/* 777 */,
+/* 778 */,
+/* 779 */,
+/* 780 */,
+/* 781 */,
+/* 782 */,
+/* 783 */,
+/* 784 */,
+/* 785 */,
+/* 786 */
 /***/ (function(module, exports) {
 
 module.exports = CIQ;
 
 /***/ })
-],[510]);
+],[524]);
 //# sourceMappingURL=binary_app.js.map
