@@ -864,15 +864,17 @@ span.tooltip {
       -ms-flex-item-align: center;
           align-self: center; }
 
-.inkbar {
-  display: block;
-  position: absolute;
-  content: '';
-  height: 2px;
-  bottom: 0;
-  background-color: #2a3052;
-  -webkit-transition: left 0.3s;
-  transition: left 0.3s; }
+.has-inkbar {
+  position: relative; }
+  .has-inkbar .inkbar {
+    display: block;
+    position: absolute;
+    content: '';
+    height: 2px;
+    bottom: 0;
+    background-color: #2a3052;
+    -webkit-transition: all 0.3s;
+    transition: all 0.3s; }
 
 footer {
   position: fixed;
