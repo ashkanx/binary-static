@@ -15860,7 +15860,7 @@ var Amount = function Amount(_ref) {
                 is_nativepicker: is_nativepicker
             }),
             _react2.default.createElement(_input_field2.default, {
-                type: 'number',
+                type: 'text',
                 name: 'amount',
                 value: amount,
                 onChange: onChange,
@@ -15873,7 +15873,7 @@ var Amount = function Amount(_ref) {
 };
 
 Amount.propTypes = {
-    amount: _propTypes2.default.number,
+    amount: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     basis: _propTypes2.default.string,
     basis_list: _mobxReact.PropTypes.arrayOrObservableArray,
     currencies_list: _propTypes2.default.object,
@@ -16150,7 +16150,7 @@ var Duration = function Duration(_ref) {
                     is_nativepicker: is_nativepicker,
                     footer: (0, _localize.localize)('The minimum duration is 1 day')
                 }) : _react2.default.createElement(_input_field2.default, {
-                    type: 'number',
+                    type: 'text',
                     name: 'duration',
                     value: duration,
                     onChange: onChange,
