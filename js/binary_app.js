@@ -23044,7 +23044,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             // update state values from query string
             var config = {};
             [].concat(_toConsumableArray(queryParams)).forEach(function (param) {
-                config[param[0]] = isNaN(param[1]) ? param[1] : +param[1];
+                return config[param[0]] = param[1];
             });
             this.processNewValuesAsync(config);
         }
