@@ -11507,7 +11507,7 @@ var LoginPrompt = function LoginPrompt(_ref) {
 };
 
 LoginPrompt.propTypes = {
-    IconComponent: _propTypes2.default.node,
+    IconComponent: _propTypes2.default.func,
     onLogin: _propTypes2.default.func,
     onSignup: _propTypes2.default.func
 };
@@ -12023,27 +12023,24 @@ var _Footer = __webpack_require__(184);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TogglePortfolio = function TogglePortfolio(_ref) {
-    var is_disabled = _ref.is_disabled,
-        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
+    var is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
         togglePortfolioDrawer = _ref.togglePortfolioDrawer;
 
     var toggle_portfolio_class = (0, _classnames2.default)('ic-portfolio', {
-        'active': is_portfolio_drawer_on,
-        'disabled': is_disabled
+        'active': is_portfolio_drawer_on
     });
     return _react2.default.createElement(
         'a',
         {
             href: 'javascript:;',
             className: toggle_portfolio_class,
-            onClick: is_disabled ? undefined : togglePortfolioDrawer
+            onClick: togglePortfolioDrawer
         },
         _react2.default.createElement(_Footer.IconQuickPortfolio, { className: 'footer-icon' })
     );
 };
 
 TogglePortfolio.propTypes = {
-    is_disabled: _propTypes2.default.bool,
     is_portfolio_drawer_on: _propTypes2.default.bool,
     togglePortfolioDrawer: _propTypes2.default.func
 };
@@ -12694,9 +12691,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var MenuDrawer = function MenuDrawer(_ref) {
     var is_dark_mode = _ref.is_dark_mode,
         is_mobile = _ref.is_mobile,
+        is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
         is_purchase_confirmed = _ref.is_purchase_confirmed,
         is_purchase_locked = _ref.is_purchase_locked,
         toggleDarkMode = _ref.toggleDarkMode,
+        togglePortfolioDrawer = _ref.togglePortfolioDrawer,
         togglePurchaseLock = _ref.togglePurchaseLock,
         togglePurchaseConfirmation = _ref.togglePurchaseConfirmation;
     return _react2.default.createElement(
@@ -12747,7 +12746,12 @@ var MenuDrawer = function MenuDrawer(_ref) {
             _react2.default.createElement(_Drawer.DrawerItem, {
                 icon: _react2.default.createElement(_Drawer2.IconLogout, { className: 'drawer-icon' }),
                 text: (0, _localize.localize)('Logout'),
-                custom_action: _Services.requestLogout
+                custom_action: function custom_action() {
+                    if (is_portfolio_drawer_on) {
+                        togglePortfolioDrawer(); // TODO: hide drawer inside logout, once it is a mobx action
+                    }
+                    (0, _Services.requestLogout)();
+                }
             })
         )
     );
@@ -12755,9 +12759,11 @@ var MenuDrawer = function MenuDrawer(_ref) {
 
 MenuDrawer.propTypes = {
     is_dark_mode: _propTypes2.default.bool,
+    is_portfolio_drawer_on: _propTypes2.default.bool,
     is_purchase_confirmed: _propTypes2.default.bool,
     is_purchase_locked: _propTypes2.default.bool,
     toggleDarkMode: _propTypes2.default.func,
+    togglePortfolioDrawer: _propTypes2.default.func,
     togglePurchaseConfirmation: _propTypes2.default.func,
     togglePurchaseLock: _propTypes2.default.func,
     is_mobile: _propTypes2.default.bool
@@ -12767,9 +12773,11 @@ var menu_drawer_component = (0, _connect.connect)(function (_ref2) {
     var ui = _ref2.ui;
     return {
         is_dark_mode: ui.is_dark_mode_on,
+        is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
         is_purchase_confirmed: ui.is_purchase_confirm_on,
         is_purchase_locked: ui.is_purchase_lock_on,
         toggleDarkMode: ui.toggleDarkMode,
+        togglePortfolioDrawer: ui.togglePortfolioDrawer,
         togglePurchaseConfirmation: ui.togglePurchaseConfirmation,
         togglePurchaseLock: ui.togglePurchaseLock,
         is_mobile: ui.is_mobile
@@ -12877,8 +12885,7 @@ var Footer = function Footer(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'footer-links' },
-            _react2.default.createElement(_Footer.TogglePortfolio, {
-                is_disabled: !is_logged_in,
+            is_logged_in && _react2.default.createElement(_Footer.TogglePortfolio, {
                 is_portfolio_drawer_on: is_portfolio_drawer_on,
                 togglePortfolioDrawer: togglePortfolioDrawer
             }),
@@ -23696,6 +23703,9 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
         _initDefineProp(_this, 'screen_width', _descriptor12, _this);
 
         window.addEventListener('resize', _this.handleResize);
+        (0, _mobx.autorun)(function () {
+            return document.body.classList[_this.is_dark_mode_on ? 'add' : 'remove']('dark');
+        });
         return _this;
     }
 
