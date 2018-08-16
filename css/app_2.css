@@ -3890,6 +3890,59 @@ a {
         .info-box .general .sell .tooltip:before {
           width: 350px;
           white-space: normal; }
+  .info-box .digits {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center; }
+    .info-box .digits .digit-title {
+      font-weight: bold;
+      max-width: -webkit-min-content;
+      max-width: -moz-min-content;
+      max-width: min-content; }
+    .info-box .digits .digit-list {
+      display: -webkit-box;
+      display: -ms-flexbox;
+      display: flex;
+      margin: 0 25px 0 10px; }
+      .info-box .digits .digit-list .digit-info {
+        margin: 0 4px;
+        text-align: center; }
+        .info-box .digits .digit-list .digit-info .digit-value {
+          width: 32px;
+          height: 32px;
+          margin-bottom: 5px;
+          border: 2px solid #4caf50;
+          border-radius: 50%;
+          display: -webkit-box;
+          display: -ms-flexbox;
+          display: flex;
+          -webkit-box-pack: center;
+              -ms-flex-pack: center;
+                  justify-content: center;
+          -webkit-box-align: center;
+              -ms-flex-align: center;
+                  align-items: center;
+          color: #4caf50;
+          font-size: 1rem;
+          font-weight: bold; }
+          .info-box .digits .digit-list .digit-info .digit-value.loss {
+            border-color: #f44336;
+            color: #f44336; }
+          .info-box .digits .digit-list .digit-info .digit-value.last {
+            background-color: #4caf50;
+            color: #fff; }
+            .info-box .digits .digit-list .digit-info .digit-value.last.loss {
+              background-color: #f44336; }
+          .info-box .digits .digit-list .digit-info .digit-value:empty {
+            border-color: #ccc; }
+        .info-box .digits .digit-list .digit-info .tick-number {
+          line-height: 0.6rem;
+          font-size: 0.6rem; }
+    .info-box .digits .expired {
+      margin-right: -25px; }
 
 .theme-wrapper.dark .contract-container {
   border-color: #4a4f6c;
@@ -3913,6 +3966,8 @@ a {
     .theme-wrapper.dark .info-box .general .sell .btn:disabled {
       background: #4a4f6c;
       color: #60647e !important; }
+  .theme-wrapper.dark .info-box .digit-value:empty {
+    border-color: #60647e !important; }
 
 .portfolio {
   padding: 1.5rem 12px;
