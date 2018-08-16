@@ -23051,6 +23051,12 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         _this.proposal_requests = {};
 
 
+        Object.defineProperty(_this, 'is_query_string_applied', {
+            enumerable: false,
+            value: false,
+            writable: true
+        });
+
         if (_client_base2.default.isLoggedIn) {
             _this.processNewValuesAsync({ currency: _client_base2.default.get('currency') });
         }
@@ -23082,35 +23088,39 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                 var _this2 = this;
 
-                var active_symbols;
+                var query_string_values, active_symbols;
                 return regeneratorRuntime.wrap(function _callee$(_context) {
                     while (1) {
                         switch (_context.prev = _context.next) {
                             case 0:
+                                query_string_values = this.updateQueryString();
+
                                 this.smart_chart = this.root_store.modules.smart_chart;
 
                                 if (this.symbol) {
-                                    _context.next = 7;
+                                    _context.next = 8;
                                     break;
                                 }
 
-                                _context.next = 4;
+                                _context.next = 5;
                                 return _Services.WS.activeSymbols();
 
-                            case 4:
+                            case 5:
                                 active_symbols = _context.sent;
-                                _context.next = 7;
-                                return this.processNewValuesAsync({ symbol: (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols) });
+                                _context.next = 8;
+                                return this.processNewValuesAsync(_extends({
+                                    symbol: (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols)
+                                }, query_string_values));
 
-                            case 7:
+                            case 8:
 
                                 if (this.symbol) {
                                     _contract_type2.default.buildContractTypesConfig(this.symbol).then((0, _mobx.action)(function () {
-                                        _this2.processNewValuesAsync(_extends({}, _contract_type2.default.getContractValues(_this2), _contract_type2.default.getContractCategories()));
+                                        _this2.processNewValuesAsync(_extends({}, _contract_type2.default.getContractValues(_this2), _contract_type2.default.getContractCategories(), query_string_values));
                                     }));
                                 }
 
-                            case 8:
+                            case 9:
                             case 'end':
                                 return _context.stop();
                         }
@@ -23200,7 +23210,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
                 var obj_new_values = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
                 var is_changed_by_user = arguments[1];
-                var new_state, is_barrier_changed, snapshot;
+                var new_state, is_barrier_changed, snapshot, query_string_values;
                 return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
@@ -23208,7 +23218,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 new_state = this.updateStore((0, _utility.cloneObject)(obj_new_values));
 
                                 if (!(is_changed_by_user || /\b(symbol|contract_types_list)\b/.test(Object.keys(new_state)))) {
-                                    _context2.next = 13;
+                                    _context2.next = 15;
                                     break;
                                 }
 
@@ -23242,13 +23252,17 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                             case 9:
                                 snapshot = _context2.sent;
+                                query_string_values = this.is_query_string_applied ? {} : this.updateQueryString();
 
                                 snapshot.is_trade_enabled = true;
-                                this.updateStore(snapshot);
+
+                                this.updateStore(_extends({}, snapshot, query_string_values));
+
+                                this.is_query_string_applied = true;
 
                                 this.requestProposal();
 
-                            case 13:
+                            case 15:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -23301,14 +23315,14 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         key: 'updateQueryString',
         value: function updateQueryString() {
             // Update the url's query string by default values of the store
-            var queryParams = _url_helper2.default.updateQueryString(this, _query_string.allowed_query_string_variables);
+            var query_params = _url_helper2.default.updateQueryString(this, _query_string.allowed_query_string_variables);
 
             // update state values from query string
             var config = {};
-            [].concat(_toConsumableArray(queryParams)).forEach(function (param) {
+            [].concat(_toConsumableArray(query_params)).forEach(function (param) {
                 return config[param[0]] = param[1];
             });
-            this.processNewValuesAsync(config);
+            return config;
         }
     }, {
         key: 'changeDurationValidationRules',
@@ -24524,22 +24538,22 @@ var URLHelper = function () {
         key: 'updateQueryString',
         value: function updateQueryString(store, allowed_query_string_variables) {
 
-            var queryParams = URLHelper.getQueryParams();
+            var query_params = URLHelper.getQueryParams();
 
             if (!(0, _utility.isEmptyObject)(store)) {
 
                 // create query string by default values in trade_store if the param doesn't exist in query string.
                 allowed_query_string_variables.filter(function (p) {
-                    return !queryParams.get(p);
+                    return !query_params.get(p);
                 }).forEach(function (key) {
                     if (store[key]) {
                         URLHelper.setQueryParam(_defineProperty({}, key, store[key]));
-                        queryParams.set(key, store[key]);
+                        query_params.set(key, store[key]);
                     }
                 });
             }
 
-            return queryParams;
+            return query_params;
         }
     }]);
 
