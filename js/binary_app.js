@@ -20790,16 +20790,17 @@ var getDetailsExpiry = exports.getDetailsExpiry = function getDetailsExpiry(stor
 
     if (!store.is_ended) return {};
 
-    var _store$contract_info = store.contract_info,
-        end_spot = _store$contract_info.end_spot,
-        end_spot_time = _store$contract_info.end_spot_time,
-        date_expiry = _store$contract_info.date_expiry;
+    var contract_info = store.contract_info,
+        end_spot = store.end_spot,
+        end_spot_time = store.end_spot_time,
+        indicative_price = store.indicative_price,
+        is_user_sold = store.is_user_sold;
 
     // TODO: don't localize on every call
     // for user sold contracts sell spot can get updated when the next tick becomes available
     // so we only show end time instead of any spot information
 
-    return _extends({}, store.is_user_sold ? _defineProperty({}, (0, _localize.localize)('End Time'), date_expiry && (0, _Date.toGMTFormat)(+date_expiry * 1000)) : (_ref3 = {}, _defineProperty(_ref3, (0, _localize.localize)('Exit Spot'), end_spot ? (0, _currency_base.addComma)(end_spot) : '-'), _defineProperty(_ref3, (0, _localize.localize)('Exit Spot Time'), end_spot_time ? (0, _Date.toGMTFormat)(+end_spot_time * 1000) : '-'), _ref3), _defineProperty({}, (0, _localize.localize)('Payout'), _react2.default.createElement(_money2.default, { amount: store.indicative_price, currency: 'USD' })));
+    return _extends({}, is_user_sold ? _defineProperty({}, (0, _localize.localize)('End Time'), contract_info.date_expiry && (0, _Date.toGMTFormat)(+contract_info.date_expiry * 1000)) : (_ref3 = {}, _defineProperty(_ref3, (0, _localize.localize)('Exit Spot'), end_spot ? (0, _currency_base.addComma)(end_spot) : '-'), _defineProperty(_ref3, (0, _localize.localize)('Exit Spot Time'), end_spot_time ? (0, _Date.toGMTFormat)(+end_spot_time * 1000) : '-'), _ref3), _defineProperty({}, (0, _localize.localize)('Payout'), _react2.default.createElement(_money2.default, { amount: indicative_price, currency: 'USD' })));
 };
 
 /***/ }),
@@ -20942,6 +20943,11 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
                 (0, _mobx.extendObservable)(this.digits_info, (0, _digits.getDigitInfo)(this.digits_info, this.contract_info));
             }
         }
+    }, {
+        key: 'forgetProposalOpenContract',
+        value: function forgetProposalOpenContract() {
+            _Services.WS.forget('proposal_open_contract', this.updateProposal, { contract_id: this.contract_id });
+        }
 
         // ---------------------------
         // ----- Computed values -----
@@ -21039,10 +21045,12 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
         var _this2 = this;
 
         return function () {
-            _Services.WS.forgetAll('proposal_open_contract');
+            _this2.forgetProposalOpenContract();
+
             _this2.contract_id = null;
             _this2.contract_info = {};
             _this2.digits_info = {};
+
             _this2.smart_chart.removeBarriers();
             _this2.smart_chart.removeMarkers();
             _this2.smart_chart.setContractMode(false);
