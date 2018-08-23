@@ -2505,7 +2505,8 @@ exports.WS = _ws_methods2.default;
 /* 62 */,
 /* 63 */,
 /* 64 */,
-/* 65 */
+/* 65 */,
+/* 66 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2562,7 +2563,7 @@ Money.propTypes = {
 exports.default = Money;
 
 /***/ }),
-/* 66 */
+/* 67 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2621,7 +2622,7 @@ Object.keys(_icon_exclamation).forEach(function (key) {
 });
 
 /***/ }),
-/* 67 */
+/* 68 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -2671,7 +2672,6 @@ Section.propTypes = {
 exports.default = Section;
 
 /***/ }),
-/* 68 */,
 /* 69 */,
 /* 70 */,
 /* 71 */,
@@ -4010,7 +4010,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -5932,7 +5932,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 var _localize = __webpack_require__(2);
 
@@ -6183,7 +6183,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 var _localize = __webpack_require__(2);
 
@@ -7363,7 +7363,7 @@ var _sell_info = __webpack_require__(545);
 
 var _sell_info2 = _interopRequireDefault(_sell_info);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -7807,7 +7807,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -8318,7 +8318,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8356,7 +8356,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8394,7 +8394,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8432,7 +8432,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8470,7 +8470,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8508,7 +8508,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8546,7 +8546,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8584,7 +8584,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -8622,7 +8622,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _section = __webpack_require__(67);
+var _section = __webpack_require__(68);
 
 var _section2 = _interopRequireDefault(_section);
 
@@ -11162,7 +11162,7 @@ var _empty_portfolio_message = __webpack_require__(275);
 
 var _empty_portfolio_message2 = _interopRequireDefault(_empty_portfolio_message);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11306,7 +11306,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -11399,7 +11399,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 var _localize = __webpack_require__(2);
 
@@ -11767,7 +11767,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactPerfectScrollbar = __webpack_require__(887);
+var _reactPerfectScrollbar = __webpack_require__(888);
 
 var _reactPerfectScrollbar2 = _interopRequireDefault(_reactPerfectScrollbar);
 
@@ -12030,7 +12030,7 @@ var _date_picker_input = __webpack_require__(490);
 
 var _date_picker_input2 = _interopRequireDefault(_date_picker_input);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 var _Calendar = __webpack_require__(461);
 
@@ -15722,7 +15722,7 @@ var _contract_sell = __webpack_require__(548);
 
 var _contract_sell2 = _interopRequireDefault(_contract_sell);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -15904,7 +15904,7 @@ var _localize = __webpack_require__(260);
 
 var _localize2 = _interopRequireDefault(_localize);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -15966,7 +15966,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -16278,7 +16278,7 @@ var _propTypes = __webpack_require__(1);
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -16337,7 +16337,7 @@ var _contract_link = __webpack_require__(139);
 
 var _contract_link2 = _interopRequireDefault(_contract_link);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -16461,7 +16461,7 @@ var _contract_link = __webpack_require__(139);
 
 var _contract_link2 = _interopRequireDefault(_contract_link);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -18078,7 +18078,7 @@ var _contract_type_list = __webpack_require__(574);
 
 var _contract_type_list2 = _interopRequireDefault(_contract_type_list);
 
-var _Common = __webpack_require__(66);
+var _Common = __webpack_require__(67);
 
 var _Categories = __webpack_require__(268);
 
@@ -18747,7 +18747,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -19821,7 +19821,7 @@ var Test = function (_React$Component) {
                         k = _ref3[0],
                         v = _ref3[1];
 
-                    return k !== 'root_store' && _react2.default.createElement(
+                    return k !== 'root_store' && typeof v !== 'function' && _react2.default.createElement(
                         'div',
                         { key: k },
                         _react2.default.createElement(
@@ -21157,7 +21157,7 @@ var _react = __webpack_require__(0);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _money = __webpack_require__(65);
+var _money = __webpack_require__(66);
 
 var _money2 = _interopRequireDefault(_money);
 
@@ -23328,6 +23328,10 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32;
 
+var _lodash = __webpack_require__(880);
+
+var _lodash2 = _interopRequireDefault(_lodash);
+
 var _mobx = __webpack_require__(29);
 
 var _purchase = __webpack_require__(621);
@@ -23372,9 +23376,9 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _utility = __webpack_require__(3);
 
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
@@ -23434,16 +23438,20 @@ function _initializerWarningHelper(descriptor, context) {
 var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(TradeStore, _BaseStore);
 
-    // Last Digit
+    // Chart
 
 
-    // Start Time
+    // Purchase
+    // Number(0) refers to 'now'
 
 
-    // Duration
+    // Barrier
 
 
-    // Underlying
+    // Amount
+
+
+    // Contract Type
     function TradeStore(_ref) {
         var root_store = _ref.root_store;
 
@@ -23525,6 +23533,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         _initDefineProp(_this, 'purchase_info', _descriptor32, _this);
 
         _this.chart_id = 1;
+        _this.debouncedProposal = (0, _lodash2.default)(_this.requestProposal, 500);
         _this.proposal_requests = {};
 
 
@@ -23547,20 +23556,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         return _this;
     }
 
-    // Chart
+    // Last Digit
 
 
-    // Purchase
-    // Number(0) refers to 'now'
+    // Start Time
 
 
-    // Barrier
+    // Duration
 
 
-    // Amount
-
-
-    // Contract Type
+    // Underlying
 
 
     _createClass(TradeStore, [{
@@ -23741,7 +23746,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.is_query_string_applied = true;
 
-                                this.requestProposal();
+                                this.debouncedProposal();
 
                             case 15:
                             case 'end':
@@ -25773,7 +25778,8 @@ window.addEventListener('pageshow', function (e) {
 /* 909 */,
 /* 910 */,
 /* 911 */,
-/* 912 */
+/* 912 */,
+/* 913 */
 /***/ (function(module, exports) {
 
 module.exports = CIQ;
