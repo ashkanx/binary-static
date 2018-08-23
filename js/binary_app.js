@@ -8804,9 +8804,9 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 // list of trade's options that should be used in query string of trade page url.
-var allowed_query_string_variables = exports.allowed_query_string_variables = ['amount', 'barrier_1', 'barrier_2', 'basis', 'contract_start_type', 'contract_type', 'currency', 'duration', 'duration_unit', 'expiry_date', 'expiry_type', 'last_digit', 'start_date', 'symbol'];
+var allowed_query_string_variables = exports.allowed_query_string_variables = ['amount', 'barrier_1', 'barrier_2', 'basis', 'contract_start_type', 'contract_type', 'duration', 'duration_unit', 'expiry_date', 'expiry_type', 'last_digit', 'start_date', 'symbol'];
 
-var non_proposal_query_string_variable = exports.non_proposal_query_string_variable = ['expiry_type', 'contract_start_type'];
+var non_proposal_query_string_variable = exports.non_proposal_query_string_variable = ['contract_start_type', 'expiry_type'];
 
 var proposal_properties_alternative_names = exports.proposal_properties_alternative_names = {
     barrier: function barrier(is_digit) {
@@ -8817,7 +8817,7 @@ var proposal_properties_alternative_names = exports.proposal_properties_alternat
     date_start: 'start_date'
 };
 
-var removable_proposal_properties = exports.removable_proposal_properties = ['proposal', 'subscribe', 'passthrough', 'req_id'];
+var removable_proposal_properties = exports.removable_proposal_properties = ['currency', 'passthrough', 'proposal', 'req_id', 'subscribe'];
 
 /***/ }),
 /* 295 */
@@ -23454,6 +23454,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             validation_rules: _validation_rules2.default
         };
 
+        _url_helper2.default.pruneQueryString(_query_string.allowed_query_string_variables);
+
         var _this = _possibleConstructorReturn(this, (TradeStore.__proto__ || Object.getPrototypeOf(TradeStore)).call(this, options));
 
         _initDefineProp(_this, 'is_trade_component_mounted', _descriptor, _this);
@@ -25038,7 +25040,6 @@ var URLHelper = function () {
         key: 'updateQueryString',
         value: function updateQueryString(store, allowed_query_string_variables) {
             var set_query_string = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
-
 
             var query_params = URLHelper.getQueryParams();
 
