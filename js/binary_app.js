@@ -12777,7 +12777,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var LoginButton = function LoginButton() {
     return _react2.default.createElement(_button2.default, {
-        className: 'primary orange',
+        className: 'secondary orange',
         has_effect: true,
         text: (0, _localize.localize)('Log in'),
         onClick: _login.redirectToLogin
