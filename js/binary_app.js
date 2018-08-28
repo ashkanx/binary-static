@@ -3469,7 +3469,7 @@ var ContractType = function () {
                 var config = available_contract_types[type].config || {};
 
                 // set config values
-                config.has_spot = contract.start_type === 'spot';
+                config.has_spot = config.has_spot || contract.start_type === 'spot';
                 config.durations = (0, _duration.buildDurationConfig)(contract, config.durations);
                 config.trade_types = buildTradeTypesConfig(contract, config.trade_types);
                 config.barriers = (0, _barrier.buildBarriersConfig)(contract, config.barriers);
@@ -5530,7 +5530,8 @@ var buildDurationConfig = function buildDurationConfig(contract) {
         }
     } else {
         Object.keys(duration_maps).forEach(function (u) {
-            if (arr_units.indexOf(u) === -1 && duration_maps[u].order >= duration_maps[obj_min.unit].order && duration_maps[u].order <= duration_maps[obj_max.unit].order) {
+            if (u !== 'd' && // when the expiray_type is intraday, the supported units are seconds, minutes and hours.
+            arr_units.indexOf(u) === -1 && duration_maps[u].order >= duration_maps[obj_min.unit].order && duration_maps[u].order <= duration_maps[obj_max.unit].order) {
                 arr_units.push(u);
             }
         });
