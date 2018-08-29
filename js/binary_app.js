@@ -13919,9 +13919,9 @@ var App = function App(_ref) {
                 _react2.default.createElement(
                     _app_contents2.default,
                     null,
-                    _react2.default.createElement(_routes2.default, null)
+                    _react2.default.createElement(_routes2.default, null),
+                    _react2.default.createElement(_PortfolioDrawer2.default, null)
                 ),
-                _react2.default.createElement(_PortfolioDrawer2.default, null),
                 _react2.default.createElement(
                     'footer',
                     { id: 'footer' },
