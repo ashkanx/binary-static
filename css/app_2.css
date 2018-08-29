@@ -2557,10 +2557,9 @@ div.datepicker-container {
     background-color: #fff;
     border: 1px solid #e9e9ed;
     border-radius: 4px;
-    cursor: pointer;
     color: #000; }
-    .card-list .card-list__card:hover {
-      background: #fafafb; }
+  .card-list a.card-list__card {
+    cursor: pointer; }
 
 div.contracts-popup-container {
   position: relative;
@@ -2853,11 +2852,11 @@ div.contracts-popup-container {
     -webkit-box-direction: normal;
         -ms-flex-direction: column;
             flex-direction: column; }
-  .table__body .table__row:hover {
-    background-color: #fafafb;
-    cursor: pointer; }
-  .table__body .table__row:last-child {
-    border-bottom: none; }
+    .table__body a.table__row:hover {
+      background-color: #fafafb;
+      cursor: pointer; }
+    .table__body .table__row:last-child {
+      border-bottom: none; }
   .table__head, .table__foot {
     font-weight: 500;
     white-space: nowrap;
@@ -5307,7 +5306,7 @@ body.dark, .theme-wrapper.dark {
         background: #353b5b; }
       body.dark .app-contents .table__head, body.dark .app-contents .table__foot, body.dark .app-contents .table__row, .theme-wrapper.dark .app-contents .table__head, .theme-wrapper.dark .app-contents .table__foot, .theme-wrapper.dark .app-contents .table__row {
         border-color: #4a4f6c; }
-      body.dark .app-contents .table__body .table__row:hover, .theme-wrapper.dark .app-contents .table__body .table__row:hover {
+      body.dark .app-contents .table__body a.table__row:hover, .theme-wrapper.dark .app-contents .table__body a.table__row:hover {
         background: #4a4f6c; }
       body.dark .app-contents .table__body .table__row, body.dark .app-contents .table__body .table__row:active, body.dark .app-contents .table__body .table__row:visited, .theme-wrapper.dark .app-contents .table__body .table__row, .theme-wrapper.dark .app-contents .table__body .table__row:active, .theme-wrapper.dark .app-contents .table__body .table__row:visited {
         color: #aaacba; }
