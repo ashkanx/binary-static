@@ -3137,6 +3137,22 @@ var BaseStore = (_class = (_temp = _class2 = function () {
             validator.isPassed();
             this.setValidationErrorMessages(property, validator.errors.get(property));
         }
+
+        /**
+         * Validates all properties which validation rule has been set for.
+         *
+         */
+
+    }, {
+        key: 'validateAllProperties',
+        value: function validateAllProperties() {
+            var _this6 = this;
+
+            this.validation_errors = {};
+            Object.keys(this.validation_rules).forEach(function (p) {
+                _this6.validateProperty(p, _this6[p]);
+            });
+        }
     }]);
 
     return BaseStore;
@@ -3153,7 +3169,7 @@ var BaseStore = (_class = (_temp = _class2 = function () {
     initializer: function initializer() {
         return {};
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'retrieveFromStorage', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'retrieveFromStorage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setValidationErrorMessages', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setValidationErrorMessages'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setValidationRules', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setValidationRules'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addRule', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'addRule'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'validateProperty', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'validateProperty'), _class.prototype)), _class);
+}), _applyDecoratedDescriptor(_class.prototype, 'retrieveFromStorage', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'retrieveFromStorage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setValidationErrorMessages', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setValidationErrorMessages'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setValidationRules', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'setValidationRules'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addRule', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'addRule'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'validateProperty', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'validateProperty'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'validateAllProperties', [_mobx.action], Object.getOwnPropertyDescriptor(_class.prototype, 'validateAllProperties'), _class.prototype)), _class);
 exports.default = BaseStore;
 
 /***/ }),
@@ -4905,23 +4921,24 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var InputField = function InputField(_ref) {
     var className = _ref.className,
         error_messages = _ref.error_messages,
+        fractional_digits = _ref.fractional_digits,
         helper = _ref.helper,
         is_disabled = _ref.is_disabled,
         is_float = _ref.is_float,
         _ref$is_signed = _ref.is_signed,
         is_signed = _ref$is_signed === undefined ? false : _ref$is_signed,
         label = _ref.label,
+        max_length = _ref.max_length,
         name = _ref.name,
         onChange = _ref.onChange,
         placeholder = _ref.placeholder,
         prefix = _ref.prefix,
         required = _ref.required,
-        _ref$step = _ref.step,
-        step = _ref$step === undefined ? '0.01' : _ref$step,
         type = _ref.type,
         value = _ref.value;
 
     var has_error = error_messages && error_messages.length;
+    var has_valid_length = true;
 
     var changeValue = function changeValue(e) {
         if (type === 'number') {
@@ -4932,8 +4949,15 @@ var InputField = function InputField(_ref) {
 
             var is_not_completed_number = is_float && new RegExp('^' + signed_regex + '(\\.|\\d+\\.)?$').test(e.target.value);
 
-            if (is_number || is_empty) {
-                e.target.value = is_empty || is_signed ? e.target.value : +e.target.value;
+            // This regex check whether there is any zero at the end of fractional part or not.
+            var has_zero_at_end = new RegExp('^' + signed_regex + '(\\d+)?\\.(\\d+)?[0]+$').test(e.target.value);
+
+            if (max_length && fractional_digits) {
+                has_valid_length = new RegExp('^' + signed_regex + '(\\d{0,' + max_length + '})(\\.\\d{0,' + fractional_digits + '})?$').test(e.target.value);
+            }
+
+            if ((is_number || is_empty) && has_valid_length) {
+                e.target.value = is_empty || is_signed || has_zero_at_end ? e.target.value : +e.target.value;
             } else if (!is_not_completed_number) {
                 e.target.value = value;
                 return;
@@ -4948,11 +4972,11 @@ var InputField = function InputField(_ref) {
         disabled: is_disabled,
         'data-for': 'error_tooltip_' + name,
         'data-tip': true,
+        maxLength: fractional_digits ? max_length + fractional_digits + 1 : max_length,
         name: name,
         onChange: changeValue,
         placeholder: placeholder || undefined,
         required: required || undefined,
-        step: is_float ? step : undefined,
         type: type === 'number' ? 'text' : type,
         value: value
     });
@@ -4991,17 +5015,18 @@ var InputField = function InputField(_ref) {
 InputField.propTypes = {
     className: _propTypes2.default.string,
     error_messages: _mobxReact.PropTypes.arrayOrObservableArray,
+    fractional_digits: _propTypes2.default.number,
     helper: _propTypes2.default.bool,
     is_float: _propTypes2.default.bool,
     is_disabled: _propTypes2.default.string,
     is_signed: _propTypes2.default.bool,
     label: _propTypes2.default.string,
+    max_length: _propTypes2.default.number,
     name: _propTypes2.default.string,
     onChange: _propTypes2.default.func,
     placeholder: _propTypes2.default.string,
     prefix: _propTypes2.default.string,
     required: _propTypes2.default.bool,
-    step: _propTypes2.default.string,
     type: _propTypes2.default.string,
     value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };
@@ -5583,8 +5608,11 @@ var convertDurationLimit = function convertDurationLimit(value, unit) {
         var minute = value / 60;
         return minute >= 1 ? Math.floor(minute) : 1;
     } else if (unit === 'h') {
-        var hour = value / 3600;
+        var hour = value / (60 * 60);
         return hour >= 1 ? Math.floor(hour) : 1;
+    } else if (unit === 'd') {
+        var day = value / (60 * 60 * 24);
+        return day >= 1 ? Math.floor(day) : 1;
     }
 
     return value;
@@ -18941,14 +18969,16 @@ var Amount = function Amount(_ref) {
                 is_nativepicker: is_nativepicker
             }),
             _react2.default.createElement(_input_field2.default, {
-                type: 'number',
-                name: 'amount',
-                value: amount,
-                onChange: onChange,
+                error_messages: validation_errors.amount,
+                fractional_digits: (0, _currency_base.getDecimalPlaces)(currency),
                 is_float: true,
-                prefix: has_currency ? currency : null,
                 is_nativepicker: is_nativepicker,
-                error_messages: validation_errors.amount
+                max_length: 10,
+                name: 'amount',
+                onChange: onChange,
+                prefix: has_currency ? currency : null,
+                type: 'number',
+                value: amount
             })
         )
     );
@@ -22955,19 +22985,23 @@ Object.defineProperty(exports, "__esModule", {
 var validation_rules = {
     amount: [['req', { message: 'The amount is a required field.' }], ['number', { min: 0, type: 'float' }]],
     barrier_1: [['req', { condition: function condition(store) {
-            return store.barrier_count;
+            return store.barrier_count && store.form_components.indexOf('barrier') > -1;
         }, message: 'The barrier is a required field.' }], ['barrier', { condition: function condition(store) {
             return store.contract_expiry_type !== 'daily' && store.barrier_count;
         } }], ['number', { condition: function condition(store) {
             return store.contract_expiry_type === 'daily' && store.barrier_count;
-        }, type: 'float' }]],
+        }, type: 'float' }], ['custom', { func: function func(value, options, store) {
+            return store.barrier_count > 1 ? value > store.barrier_2 : true;
+        }, message: 'The higher barrier must be higher than the lower barrier.' }]],
     barrier_2: [['req', { condition: function condition(store) {
-            return store.barrier_count;
+            return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
         }, message: 'The barrier is a required field.' }], ['barrier', { condition: function condition(store) {
             return store.contract_expiry_type !== 'daily' && store.barrier_count;
         } }], ['number', { condition: function condition(store) {
             return store.contract_expiry_type === 'daily' && store.barrier_count;
-        }, type: 'float' }]],
+        }, type: 'float' }], ['custom', { func: function func(value, options, store) {
+            return store.barrier_1 > value;
+        }, message: 'The lower barrier must be lower than the higher barrier.' }]],
     duration: [['req', { message: 'The duration is a required field.' }]]
 };
 
@@ -23698,7 +23732,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 new_state = this.updateStore((0, _utility.cloneObject)(obj_new_values));
 
                                 if (!(is_changed_by_user || /\b(symbol|contract_types_list)\b/.test(Object.keys(new_state)))) {
-                                    _context2.next = 15;
+                                    _context2.next = 16;
                                     break;
                                 }
 
@@ -23740,9 +23774,13 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 this.is_query_string_applied = true;
 
+                                if (/\bcontract_type\b/.test(Object.keys(new_state))) {
+                                    this.validateAllProperties();
+                                }
+
                                 this.debouncedProposal();
 
-                            case 15:
+                            case 16:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -23762,6 +23800,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var _this5 = this;
 
             var requests = (0, _proposal.createProposalRequests)(this);
+
+            if (Object.values(this.validation_errors).some(function (e) {
+                return e.length;
+            })) {
+                this.proposal_info = {};
+                this.purchase_info = {};
+                _Services.WS.forgetAll('proposal');
+                return;
+            }
+
             if (!(0, _utility.isEmptyObject)(requests)) {
                 var proper_proposal_params_for_query_string = (0, _proposal.getProposalParametersName)(requests);
 
@@ -25438,7 +25486,7 @@ var Validator = function () {
                         return;
                     }
 
-                    var is_valid = ruleObject.validator(_this.input[attribute], ruleObject.options);
+                    var is_valid = ruleObject.validator(_this.input[attribute], ruleObject.options, _this.store);
 
                     if (!is_valid) {
                         _this.addFailure(attribute, ruleObject);
