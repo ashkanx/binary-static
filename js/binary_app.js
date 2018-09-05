@@ -13467,8 +13467,9 @@ var Header = function Header(_ref) {
         can_upgrade = _ref.can_upgrade,
         currency = _ref.currency,
         loginid = _ref.loginid,
-        is_logged_in = _ref.is_logged_in,
         is_acc_switcher_on = _ref.is_acc_switcher_on,
+        is_logged_in = _ref.is_logged_in,
+        is_mobile = _ref.is_mobile,
         onClickUpgrade = _ref.onClickUpgrade,
         toggleAccountsDialog = _ref.toggleAccountsDialog;
     return _react2.default.createElement(
@@ -13480,7 +13481,7 @@ var Header = function Header(_ref) {
             _react2.default.createElement(
                 'div',
                 { className: 'menu-left' },
-                _react2.default.createElement(_Header.ToggleMenuDrawer, null),
+                is_mobile && _react2.default.createElement(_Header.ToggleMenuDrawer, null),
                 _react2.default.createElement(_Header.MenuLinks, { items: _header_links2.default })
             ),
             _react2.default.createElement(
@@ -13516,6 +13517,7 @@ Header.propTypes = {
     is_acc_switcher_on: _propTypes2.default.bool,
     is_dark_mode: _propTypes2.default.bool, // TODO: add dark theme handler
     is_logged_in: _propTypes2.default.bool,
+    is_mobile: _propTypes2.default.bool,
     loginid: _propTypes2.default.string,
     onClickUpgrade: _propTypes2.default.func, // TODO: add click handler
     toggleAccountsDialog: _propTypes2.default.func
@@ -13534,6 +13536,7 @@ exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_
         loginid: client.loginid,
         is_acc_switcher_on: ui.is_accounts_switcher_on,
         is_dark_mode: ui.is_dark_mode_on,
+        is_mobile: ui.is_mobile,
         toggleAccountsDialog: ui.toggleAccountsDialog
     };
 })(Header));
