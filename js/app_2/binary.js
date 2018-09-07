@@ -14767,6 +14767,8 @@ var _time_picker = __webpack_require__(/*! ../../../../../App/Components/Form/ti
 
 var _time_picker2 = _interopRequireDefault(_time_picker);
 
+var _duration = __webpack_require__(/*! ../../../../../Stores/Modules/Trading/Helpers/duration */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/duration.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* TODO:
@@ -14779,10 +14781,13 @@ var now_date = void 0,
     min_date_duration = void 0,
     max_date_duration = void 0,
     min_date_expiry = void 0,
+    min_day = void 0,
+    max_day = void 0,
     start_date_time = void 0;
 
 var Duration = function Duration(_ref) {
-    var duration = _ref.duration,
+    var contract_expiry_type = _ref.contract_expiry_type,
+        duration = _ref.duration,
         duration_unit = _ref.duration_unit,
         duration_units_list = _ref.duration_units_list,
         duration_min_max = _ref.duration_min_max,
@@ -14799,12 +14804,19 @@ var Duration = function Duration(_ref) {
         validation_errors = _ref.validation_errors;
 
     var moment_now = (0, _moment2.default)(server_time);
-    if (!now_date || moment_now.date() !== now_date.date()) {
+    var new_min_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].min, 's', 'd');
+    var new_max_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].max, 's', 'd');
+    if (!now_date || moment_now.date() !== now_date.date() || duration_unit === 'd' && (min_day !== new_min_day || max_day !== new_max_day)) {
+        if (duration_unit === 'd') {
+            min_day = new_min_day;
+            max_day = new_max_day;
+        }
+
         var moment_today = moment_now.clone().startOf('day');
 
         now_date = moment_now.clone();
-        min_date_duration = moment_today.clone().add(1, 'd');
-        max_date_duration = moment_today.clone().add(365, 'd');
+        min_date_duration = moment_today.clone().add(min_day || 1, 'd');
+        max_date_duration = moment_today.clone().add(max_day || 365, 'd');
         min_date_expiry = moment_today.clone();
     }
     var moment_expiry = _moment2.default.utc(expiry_date);
@@ -14877,11 +14889,11 @@ var Duration = function Duration(_ref) {
                     max_date: max_date_duration,
                     mode: 'duration',
                     onChange: onChange,
-                    value: duration || duration_min_max.min,
+                    value: duration || min_day,
                     is_read_only: true,
                     is_clearable: false,
                     is_nativepicker: is_nativepicker,
-                    footer: (0, _localize.localize)('The minimum duration is 1 day')
+                    footer: (0, _localize.localize)('The minimum duration is [_1] day' + (min_day > 1 ? 's' : ''), [min_day])
                 }) : _react2.default.createElement(_input_field2.default, {
                     type: 'number',
                     name: 'duration',
@@ -14934,6 +14946,7 @@ var Duration = function Duration(_ref) {
 
 // ToDo: Refactor Duration.jsx and date_picker.jsx
 Duration.propTypes = {
+    contract_expiry_type: _propTypes2.default.string,
     duration: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     duration_min_max: _propTypes2.default.object,
     duration_unit: _propTypes2.default.string,
@@ -20476,7 +20489,6 @@ var ContractType = function () {
         };
     };
 
-    // TODO: use this getter function to dynamically compare min/max versus duration amount
     var getDurationMinMax = function getDurationMinMax(contract_type, contract_start_type, contract_expiry_type) {
         var duration_min_max = (0, _utility.getPropertyValue)(available_contract_types, [contract_type, 'config', 'durations', 'min_max', contract_start_type]) || {};
 
@@ -20565,11 +20577,11 @@ var ContractType = function () {
 
     var getExpiryDate = function getExpiryDate(expiry_date, start_date) {
         var moment_start = _moment2.default.utc(start_date ? start_date * 1000 : undefined);
-        var moment_expiry = _moment2.default.utc(expiry_date);
+        var moment_expiry = _moment2.default.utc(expiry_date || undefined);
         // forward starting contracts should only show today and tomorrow as expiry date
         var is_invalid = moment_expiry.isBefore(moment_start, 'day') || start_date && moment_expiry.isAfter(moment_start.clone().add(1, 'day'));
         return {
-            expiry_date: is_invalid ? moment_start.format('YYYY-MM-DD') : expiry_date
+            expiry_date: (is_invalid ? moment_start : moment_expiry).format('YYYY-MM-DD')
         };
     };
 
@@ -20712,7 +20724,7 @@ var getDefaultCurrency = exports.getDefaultCurrency = function getDefaultCurrenc
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.convertDurationLimit = exports.getExpiryType = exports.buildDurationConfig = undefined;
+exports.convertDurationLimit = exports.getExpiryType = exports.convertDurationUnit = exports.buildDurationConfig = undefined;
 
 var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 
@@ -20772,7 +20784,7 @@ var buildDurationConfig = exports.buildDurationConfig = function buildDurationCo
     return durations;
 };
 
-var convertDurationUnit = function convertDurationUnit(value, from_unit, to_unit) {
+var convertDurationUnit = exports.convertDurationUnit = function convertDurationUnit(value, from_unit, to_unit) {
     if (!value || !from_unit || !to_unit) return null;
     if (from_unit === to_unit || !('to_second' in duration_maps[from_unit])) return value;
     return value * duration_maps[from_unit].to_second / duration_maps[to_unit].to_second;
