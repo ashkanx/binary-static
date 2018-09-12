@@ -298,7 +298,8 @@ span.tooltip {
     vertical-align: middle; }
   span.tooltip[data-tooltip] {
     position: relative;
-    cursor: help; }
+    cursor: help;
+    display: block; }
     span.tooltip[data-tooltip]:hover:after, span.tooltip[data-tooltip]:hover:before {
       opacity: 0.96;
       pointer-events: auto;
@@ -396,6 +397,8 @@ span.tooltip {
     -webkit-box-shadow: 0 2px 8px 0 rgba(20, 20, 20, 0.2);
             box-shadow: 0 2px 8px 0 rgba(20, 20, 20, 0.2);
     color: #2a3052; }
+  .theme-wrapper.dark span.tooltip[data-tooltip-pos=top]:after {
+    border-top-color: rgba(255, 255, 255, 0.88); }
   .theme-wrapper.dark span.tooltip[data-tooltip-pos=right]:after {
     border-right-color: rgba(255, 255, 255, 0.88); }
   .theme-wrapper.dark span.tooltip[data-tooltip-pos=left]:after {
@@ -1021,6 +1024,23 @@ footer {
   @media (max-width: 768px) {
     footer {
       display: none; } }
+
+.network-status-wrapper {
+  border-left: 1px solid #ccc;
+  height: 14px; }
+
+.network-status-circle {
+  background: #d8d8d8;
+  width: 10px;
+  height: 10px;
+  margin: 2px 16px;
+  border-radius: 50%; }
+  .network-status-circle.online {
+    background: #4caf50; }
+  .network-status-circle.offline {
+    background: #f44336; }
+  .network-status-circle.blinker {
+    background: #d8d8d8; }
 
 .ic-settings.active {
   background: #e9e9ed; }
@@ -5418,7 +5438,7 @@ body.dark, .theme-wrapper.dark {
       background: #4a4f6c; }
       body.dark footer .footer-links a.active:after, body.dark footer .footer-links a:hover:after, .theme-wrapper.dark footer .footer-links a.active:after, .theme-wrapper.dark footer .footer-links a:hover:after {
         background: #fff; }
-    body.dark footer .server-time, .theme-wrapper.dark footer .server-time {
+    body.dark footer .server-time, body.dark footer .network-status-wrapper, .theme-wrapper.dark footer .server-time, .theme-wrapper.dark footer .network-status-wrapper {
       border-color: #4a4f6c; }
   body.dark .type-wrapper, .theme-wrapper.dark .type-wrapper {
     background: #60647e; }

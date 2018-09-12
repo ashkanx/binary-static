@@ -5910,6 +5910,18 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _network_status = __webpack_require__(/*! ./network_status.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/network_status.jsx");
+
+Object.keys(_network_status).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _network_status[key];
+    }
+  });
+});
+
 var _toggle_fullscreen = __webpack_require__(/*! ./toggle_fullscreen.jsx */ "./src/javascript/app_2/App/Components/Layout/Footer/toggle_fullscreen.jsx");
 
 Object.keys(_toggle_fullscreen).forEach(function (key) {
@@ -5945,6 +5957,62 @@ Object.keys(_toggle_settings).forEach(function (key) {
     }
   });
 });
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Layout/Footer/network_status.jsx":
+/*!******************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Layout/Footer/network_status.jsx ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.NetworkStatus = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _tooltip = __webpack_require__(/*! ../../Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
+
+var _tooltip2 = _interopRequireDefault(_tooltip);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var NetworkStatus = function NetworkStatus(_ref) {
+    var status = _ref.status;
+    return _react2.default.createElement(
+        'div',
+        { className: 'network-status-wrapper' },
+        _react2.default.createElement(
+            _tooltip2.default,
+            { alignment: 'top', message: (0, _localize.localize)('Network status: [_1]', [status.tooltip || (0, _localize.localize)('Connecting to server')]) },
+            _react2.default.createElement('div', { className: (0, _classnames2.default)('network-status-circle', status.class) })
+        )
+    );
+};
+
+NetworkStatus.propTypes = {
+    status: _propTypes2.default.object
+};
+
+exports.NetworkStatus = NetworkStatus;
 
 /***/ }),
 
@@ -7278,11 +7346,13 @@ var Footer = function Footer(_ref) {
         is_portfolio_drawer_on = _ref.is_portfolio_drawer_on,
         is_language_dialog_visible = _ref.is_language_dialog_visible,
         is_settings_dialog_on = _ref.is_settings_dialog_on,
+        network_status = _ref.network_status,
         toggleSettingsDialog = _ref.toggleSettingsDialog,
         togglePortfolioDrawer = _ref.togglePortfolioDrawer;
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
+        _react2.default.createElement(_Footer.NetworkStatus, { status: network_status }),
         _react2.default.createElement(_server_time2.default, null),
         _react2.default.createElement(
             'div',
@@ -7306,18 +7376,21 @@ Footer.propTypes = {
     is_logged_in: _propTypes2.default.bool,
     is_portfolio_drawer_on: _propTypes2.default.bool,
     is_settings_dialog_on: _propTypes2.default.bool,
+    network_status: _propTypes2.default.object,
     togglePortfolioDrawer: _propTypes2.default.func,
     toggleSettingsDialog: _propTypes2.default.func
 };
 
 exports.default = (0, _connect.connect)(function (_ref2) {
     var client = _ref2.client,
+        common = _ref2.common,
         ui = _ref2.ui;
     return {
         is_logged_in: client.is_logged_in,
         is_language_dialog_visible: ui.is_language_dialog_on,
         is_portfolio_drawer_on: ui.is_portfolio_drawer_on,
         is_settings_dialog_on: ui.is_settings_dialog_on,
+        network_status: common.network_status,
         togglePortfolioDrawer: ui.togglePortfolioDrawer,
         toggleSettingsDialog: ui.toggleSettingsDialog
     };
@@ -17151,6 +17224,8 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
+
 var _network_monitor_base = __webpack_require__(/*! ../../_common/base/network_monitor_base */ "./src/javascript/_common/base/network_monitor_base.js");
 
 var _network_monitor_base2 = _interopRequireDefault(_network_monitor_base);
@@ -17159,16 +17234,27 @@ var _index = __webpack_require__(/*! ./index */ "./src/javascript/app_2/Services
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// TODO: implement a component to display network status and corresponding messages
+var common_store = void 0; // eslint-disable-line import/order
+
+
 var NetworkMonitor = function () {
     var init = function init(store) {
-        _network_monitor_base2.default.init(_index.BinarySocketGeneral.init(store));
+        _network_monitor_base2.default.init(_index.BinarySocketGeneral.init(store), updateStore);
+        common_store = store.common;
     };
+
+    var updateStore = (0, _mobx.action)(function (status, is_online) {
+        if (common_store) {
+            common_store.network_status = status;
+            common_store.is_network_online = is_online;
+        }
+    });
 
     return {
         init: init
     };
-}(); // eslint-disable-line import/order
+}();
+
 exports.default = NetworkMonitor;
 
 /***/ }),
@@ -22423,7 +22509,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+var _dec, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -22502,7 +22588,7 @@ var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonStore.__proto__ || Object.getPrototypeOf(CommonStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'server_time', _descriptor, _this), _initDefineProp(_this, 'current_language', _descriptor2, _this), _initDefineProp(_this, 'has_error', _descriptor3, _this), _initDefineProp(_this, 'error', _descriptor4, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonStore.__proto__ || Object.getPrototypeOf(CommonStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'server_time', _descriptor, _this), _initDefineProp(_this, 'current_language', _descriptor2, _this), _initDefineProp(_this, 'has_error', _descriptor3, _this), _initDefineProp(_this, 'error', _descriptor4, _this), _initDefineProp(_this, 'network_status', _descriptor5, _this), _initDefineProp(_this, 'is_network_online', _descriptor6, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(CommonStore, [{
@@ -22539,6 +22625,16 @@ var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
             type: 'info',
             message: ''
         };
+    }
+}), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'network_status', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return {};
+    }
+}), _descriptor6 = _applyDecoratedDescriptor(_class.prototype, 'is_network_online', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return false;
     }
 }), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype)), _class));
 exports.default = CommonStore;
