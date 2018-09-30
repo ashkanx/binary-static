@@ -760,7 +760,7 @@ module.exports = {
 "use strict";
 
 
-var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
@@ -775,39 +775,22 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var GTM = function () {
     var isGtmApplicable = function isGtmApplicable() {
-        return (/^(1|1098|1108)$/.test(getAppId())
+        return (/^(1|1098|14473|1108)$/.test(getAppId())
         );
     };
 
-    var gtmDataLayerInfo = function gtmDataLayerInfo(data) {
-        var data_layer_info = {
+    var getCommonVariables = function getCommonVariables() {
+        return _extends({
             language: getLanguage(),
             pageTitle: pageTitle(),
             pjax: State.get('is_loaded_by_pjax'),
-            url: document.URL,
-            event: 'page_load'
-        };
-        if (ClientBase.isLoggedIn()) {
-            data_layer_info.visitorId = ClientBase.get('loginid');
-        }
-
-        Object.assign(true, data_layer_info, data);
-
-        var event = data_layer_info.event;
-        delete data_layer_info.event;
-
-        return {
-            event: event,
-            data: data_layer_info
-        };
+            url: document.URL
+        }, ClientBase.isLoggedIn() && { visitorId: ClientBase.get('loginid') });
     };
 
     var pushDataLayer = function pushDataLayer(data) {
         if (isGtmApplicable() && !Login.isLoginPages()) {
-            var info = gtmDataLayerInfo(data && (typeof data === 'undefined' ? 'undefined' : _typeof(data)) === 'object' ? data : null);
-            dataLayer[0] = info.data;
-            dataLayer.push(info.data);
-            dataLayer.push({ event: info.event });
+            dataLayer.push(_extends({}, getCommonVariables(), data));
         }
     };
 
@@ -872,7 +855,6 @@ var GTM = function () {
         var req = response.echo_req.passthrough;
         var data = {
             event: 'buy_contract',
-            visitorId: ClientBase.get('loginid'),
             bom_symbol: req.symbol,
             bom_market: getElementById('contract_markets').value,
             bom_currency: req.currency,
@@ -8739,7 +8721,7 @@ var BinaryLoader = function () {
 
     var afterContentChange = function afterContentChange(e) {
         Page.onLoad();
-        GTM.pushDataLayer();
+        GTM.pushDataLayer({ event: 'page_load' });
 
         var this_page = e.detail.getAttribute('data-page');
         if (this_page in pages_config) {
