@@ -16051,7 +16051,6 @@ TradeParams.propTypes = {
     form_components: _mobxReact.PropTypes.arrayOrObservableArray,
     is_minimized: _propTypes2.default.bool,
     is_nativepicker: _propTypes2.default.bool,
-    onChange: _propTypes2.default.func,
     server_time: _propTypes2.default.object,
     trade_store: _propTypes2.default.object
 };
@@ -16062,8 +16061,7 @@ exports.default = (0, _connect.connect)(function (_ref3) {
     return {
         server_time: common.server_time,
         form_components: modules.trade.form_components,
-        trade_store: modules.trade,
-        onChange: modules.trade.onChange
+        trade_store: modules.trade
     };
 })(TradeParams);
 
@@ -20347,26 +20345,26 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 var validation_rules = {
-    amount: [['req', { message: 'The amount is a required field.' }], ['number', { min: 0, type: 'float' }]],
+    amount: [['req', { message: 'Amount is a required field.' }], ['number', { min: 0, type: 'float' }]],
     barrier_1: [['req', { condition: function condition(store) {
             return store.barrier_count && store.form_components.indexOf('barrier') > -1;
-        }, message: 'The barrier is a required field.' }], ['barrier', { condition: function condition(store) {
+        }, message: 'Barrier is a required field.' }], ['barrier', { condition: function condition(store) {
             return store.contract_expiry_type !== 'daily' && store.barrier_count;
         } }], ['number', { condition: function condition(store) {
             return store.contract_expiry_type === 'daily' && store.barrier_count;
         }, type: 'float' }], ['custom', { func: function func(value, options, store) {
-            return store.barrier_count > 1 ? value > store.barrier_2 : true;
-        }, message: 'The higher barrier must be higher than the lower barrier.' }]],
+            return store.barrier_count > 1 ? +value > +store.barrier_2 : true;
+        }, message: 'Higher barrier must be higher than lower barrier.' }]],
     barrier_2: [['req', { condition: function condition(store) {
             return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
-        }, message: 'The barrier is a required field.' }], ['barrier', { condition: function condition(store) {
+        }, message: 'Barrier is a required field.' }], ['barrier', { condition: function condition(store) {
             return store.contract_expiry_type !== 'daily' && store.barrier_count;
         } }], ['number', { condition: function condition(store) {
             return store.contract_expiry_type === 'daily' && store.barrier_count;
         }, type: 'float' }], ['custom', { func: function func(value, options, store) {
-            return store.barrier_1 > value;
-        }, message: 'The lower barrier must be lower than the higher barrier.' }]],
-    duration: [['req', { message: 'The duration is a required field.' }]]
+            return +store.barrier_1 > +value;
+        }, message: 'Lower barrier must be lower than higher barrier.' }]],
+    duration: [['req', { message: 'Duration is a required field.' }]]
 };
 
 exports.default = validation_rules;
@@ -21552,7 +21550,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         // Adds intercept to change min_max value of duration validation
         (0, _mobx.reaction)(function () {
-            return [_this.duration_min_max, _this.contract_expiry_type, _this.duration_unit];
+            return [_this.contract_expiry_type, _this.duration_min_max, _this.duration_unit, _this.expiry_type];
         }, function () {
             _this.changeDurationValidationRules();
         });
@@ -21696,6 +21694,12 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                     }
 
                     _this4[key] = new_state[key];
+
+                    // validation is done in mobx intercept (base_store.js)
+                    // when barrier_1 is set, it is compared with store.barrier_2 (which is not updated yet)
+                    if (key === 'barrier_2' && new_state.barrier_1) {
+                        _this4.barrier_1 = new_state.barrier_1; // set it again, after barrier_2 is updated in store
+                    }
                 }
             });
 
@@ -21843,16 +21847,22 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     }, {
         key: 'changeDurationValidationRules',
         value: function changeDurationValidationRules() {
+            if (this.expiry_type === 'endtime') {
+                this.validation_errors.duration = [];
+                return;
+            }
+
             var index = this.validation_rules.duration.findIndex(function (item) {
                 return item[0] === 'number';
             });
             var limits = this.duration_min_max[this.contract_expiry_type] || false;
-            var duration_options = {
-                min: (0, _duration.convertDurationLimit)(+limits.min, this.duration_unit),
-                max: (0, _duration.convertDurationLimit)(+limits.max, this.duration_unit)
-            };
 
             if (limits) {
+                var duration_options = {
+                    min: (0, _duration.convertDurationLimit)(+limits.min, this.duration_unit),
+                    max: (0, _duration.convertDurationLimit)(+limits.max, this.duration_unit)
+                };
+
                 if (index > -1) {
                     this.validation_rules.duration[index][1] = duration_options;
                 } else {
