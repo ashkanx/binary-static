@@ -21169,7 +21169,7 @@ var createProposalRequestForContract = function createProposalRequestForContract
     var obj_expiry = {};
     if (store.expiry_type === 'endtime') {
         var expiry_date = _moment2.default.utc(store.expiry_date);
-        var start_date = _moment2.default.unix(store.start_date || store.server_time).utc();
+        var start_date = _moment2.default.unix(store.start_date || store.root_store.common.server_time / 1000).utc();
         var is_same_day = expiry_date.isSame(start_date, 'day');
         var expiry_time = is_same_day ? store.expiry_time : '23:59:59';
         obj_expiry.date_expiry = (0, _Date.convertToUnix)(expiry_date.unix(), expiry_time);
