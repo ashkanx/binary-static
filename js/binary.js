@@ -725,8 +725,8 @@ var getPaWithdrawalLimit = function getPaWithdrawalLimit(currency, limit) {
 };
 
 var getCurrencyName = function getCurrencyName(currency) {
-    return localize(getPropertyValue(crypto_config, [currency, 'name']) || '');
-};
+    return localize(getPropertyValue(crypto_config, [currency, 'name']) || '' /* localize-ignore */);
+}; // to refactor on master
 
 var getMinPayout = function getMinPayout(currency) {
     return getPropertyValue(currencies_config, [currency, 'stake_default']);

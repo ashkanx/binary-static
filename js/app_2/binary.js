@@ -1126,8 +1126,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _string_util = __webpack_require__(/*! ../../../../../../_common/string_util */ "./src/javascript/_common/string_util.js");
 
 var _types = __webpack_require__(/*! ./types */ "./src/javascript/app_2/App/Components/Elements/Calendar/panels/types.js");
@@ -1212,7 +1210,7 @@ var CalendarDays = exports.CalendarDays = function CalendarDays(props) {
             return _react2.default.createElement(
                 'span',
                 { key: idx, className: 'calendar-date-header' },
-                (0, _localize.localize)(item)
+                item
             );
         }),
         days
@@ -1345,7 +1343,22 @@ var _types2 = _interopRequireDefault(_types);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var month_headers = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var getMonthHeaders = function getMonthHeaders() {
+    return {
+        Jan: (0, _localize.localize)('Jan'),
+        Feb: (0, _localize.localize)('Feb'),
+        Mar: (0, _localize.localize)('Mar'),
+        Apr: (0, _localize.localize)('Apr'),
+        May: (0, _localize.localize)('May'),
+        Jun: (0, _localize.localize)('Jun'),
+        Jul: (0, _localize.localize)('Jul'),
+        Aug: (0, _localize.localize)('Aug'),
+        Sep: (0, _localize.localize)('Sep'),
+        Oct: (0, _localize.localize)('Oct'),
+        Nov: (0, _localize.localize)('Nov'),
+        Dec: (0, _localize.localize)('Dec')
+    };
+};
 
 var CalendarMonths = exports.CalendarMonths = function CalendarMonths(_ref) {
     var calendar_date = _ref.calendar_date,
@@ -1355,10 +1368,12 @@ var CalendarMonths = exports.CalendarMonths = function CalendarMonths(_ref) {
 
     var moment_date = _moment2.default.utc(calendar_date);
     var selected_month = _moment2.default.utc(selected_date).month();
+    var month_headers = getMonthHeaders();
+
     return _react2.default.createElement(
         'div',
         { className: 'calendar-month-panel' },
-        month_headers.map(function (month, idx) {
+        Object.keys(month_headers).map(function (month, idx) {
             return _react2.default.createElement(
                 'span',
                 {
@@ -1370,7 +1385,7 @@ var CalendarMonths = exports.CalendarMonths = function CalendarMonths(_ref) {
                     onClick: onClick.month,
                     'data-month': idx
                 },
-                (0, _localize.localize)(month)
+                month_headers[month]
             );
         })
     );
@@ -2636,7 +2651,7 @@ var ErrorComponent = function ErrorComponent(_ref) {
         _react2.default.createElement(
             'p',
             null,
-            (0, _localize.localize)(message || 'Sorry, an error occured while processing your request.')
+            message || (0, _localize.localize)('Sorry, an error occured while processing your request.')
         )
     );
 };
@@ -3196,8 +3211,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -3225,7 +3238,7 @@ var PopConfirmElement = function PopConfirmElement(_ref) {
             _react2.default.createElement(
                 'h4',
                 null,
-                (0, _localize.localize)(message)
+                message
             )
         ),
         _react2.default.createElement(
@@ -3240,7 +3253,7 @@ var PopConfirmElement = function PopConfirmElement(_ref) {
                 _react2.default.createElement(
                     'span',
                     null,
-                    (0, _localize.localize)(cancel_text)
+                    cancel_text
                 )
             ),
             _react2.default.createElement(
@@ -3252,7 +3265,7 @@ var PopConfirmElement = function PopConfirmElement(_ref) {
                 _react2.default.createElement(
                     'span',
                     null,
-                    (0, _localize.localize)(confirm_text)
+                    confirm_text
                 )
             )
         )
@@ -3677,8 +3690,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _toggle_button = __webpack_require__(/*! ../toggle_button.jsx */ "./src/javascript/app_2/App/Components/Elements/toggle_button.jsx");
 
 var _toggle_button2 = _interopRequireDefault(_toggle_button);
@@ -3698,7 +3709,7 @@ var SettingsControl = function SettingsControl(_ref) {
         _react2.default.createElement(
             'span',
             null,
-            (0, _localize.localize)(name)
+            name
         ),
         toggle ? _react2.default.createElement(_toggle_button2.default, {
             toggled: to_toggle,
@@ -4243,7 +4254,7 @@ var Localize = function Localize(_ref) {
     var str = _ref.str,
         replacers = _ref.replacers;
 
-    var localized = (0, _localize.localize)(str);
+    var localized = (0, _localize.localize)(str /* localize-ignore */); // should be localized on the caller side
 
     if (!/\[_\d+\]/.test(localized)) {
         return _react2.default.createElement(
@@ -6711,7 +6722,7 @@ var BinaryLink = function BinaryLink(_ref) {
         props = _objectWithoutProperties(_ref, ['to', 'children']);
 
     var path = (0, _helpers.normalizePath)(to);
-    var route = (0, _helpers.findRouteByPath)(path, _routes_config2.default);
+    var route = (0, _helpers.findRouteByPath)(path, (0, _routes_config2.default)());
 
     if (!route) {
         throw new Error('Route not found: ' + to);
@@ -6768,7 +6779,7 @@ var _routes_config2 = _interopRequireDefault(_routes_config);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var BinaryRoutes = function BinaryRoutes() {
-    return _routes_config2.default.map(function (route, idx) {
+    return (0, _routes_config2.default)().map(function (route, idx) {
         return _react2.default.createElement(_route_with_sub_routes2.default, _extends({ key: idx }, route));
     });
 };
@@ -6914,8 +6925,6 @@ var _client_base2 = _interopRequireDefault(_client_base);
 
 var _login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
 
-var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _routes = __webpack_require__(/*! ../../../Constants/routes */ "./src/javascript/app_2/Constants/routes.js");
 
 var _routes2 = _interopRequireDefault(_routes);
@@ -6949,7 +6958,7 @@ var RouteWithSubRoutes = function RouteWithSubRoutes(route) {
             result = route.is_authenticated && !_client_base2.default.isLoggedIn() ? _react2.default.createElement(_login_prompt2.default, { IconComponent: route.icon_component, onLogin: _login.redirectToLogin }) : _react2.default.createElement(route.component, _extends({}, props, { routes: route.routes }));
         }
 
-        var title = route.title ? (0, _localize.localize)(route.title) + ' | ' : '';
+        var title = route.title ? route.title + ' | ' : '';
         document.title = '' + title + _app_config.default_title;
         _gtm2.default.pushDataLayer({ event: 'page_load' });
         return result;
@@ -7044,6 +7053,8 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
+var _localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 var _Constants = __webpack_require__(/*! ../../Constants */ "./src/javascript/app_2/Constants/index.js");
 
 var _NavBar = __webpack_require__(/*! ../../Assets/Header/NavBar */ "./src/javascript/app_2/Assets/Header/NavBar/index.js");
@@ -7106,15 +7117,27 @@ var _self_exclusion2 = _interopRequireDefault(_self_exclusion);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var routes_config = [{ path: _Constants.routes.contract, component: _Contract2.default, title: 'Contract Details', is_authenticated: true }, { path: _Constants.routes.index, component: _reactRouterDom.Redirect, title: '', to: '/trade' }, { path: _Constants.routes.portfolio, component: _Portfolio2.default, title: 'Portfolio', is_authenticated: true, icon_component: _NavBar.IconPortfolio }, { path: _Constants.routes.root, component: _reactRouterDom.Redirect, title: '', exact: true, to: '/trade' }, { path: _Constants.routes.statement, component: _Statement2.default, title: 'Statement', is_authenticated: true, icon_component: _NavBar.IconStatement }, { path: _Constants.routes.trade, component: _Trading2.default, title: 'Trade', exact: true }, {
-    path: _Constants.routes.settings,
-    component: _settings2.default,
-    is_authenticated: true,
-    routes: [{ path: _Constants.routes.personal, component: _personal_details2.default, title: 'Personal Details' }, { path: _Constants.routes.financial, component: _financial_assessment2.default, title: 'Financial Assessment' }, { path: _Constants.routes.account_password, component: _account_password2.default, title: 'Account Password' }, { path: _Constants.routes.cashier_password, component: _cashier_password2.default, title: 'Cashier Password' }, { path: _Constants.routes.exclusion, component: _self_exclusion2.default, title: 'Self Exclusion' }, { path: _Constants.routes.limits, component: _limits2.default, title: 'Account Limits' }, { path: _Constants.routes.history, component: _login_history2.default, title: 'Login History' }, { path: _Constants.routes.token, component: _api_token2.default, title: 'API Token' }, { path: _Constants.routes.apps, component: _authorized_applications2.default, title: 'Authorized Applications' }]
-}];
+var initRoutesConfig = function initRoutesConfig() {
+    return [{ path: _Constants.routes.contract, component: _Contract2.default, title: (0, _localize.localize)('Contract Details'), is_authenticated: true }, { path: _Constants.routes.index, component: _reactRouterDom.Redirect, title: '', to: '/trade' }, { path: _Constants.routes.portfolio, component: _Portfolio2.default, title: (0, _localize.localize)('Portfolio'), is_authenticated: true, icon_component: _NavBar.IconPortfolio }, { path: _Constants.routes.root, component: _reactRouterDom.Redirect, title: '', exact: true, to: '/trade' }, { path: _Constants.routes.statement, component: _Statement2.default, title: (0, _localize.localize)('Statement'), is_authenticated: true, icon_component: _NavBar.IconStatement }, { path: _Constants.routes.trade, component: _Trading2.default, title: (0, _localize.localize)('Trade'), exact: true }, {
+        path: _Constants.routes.settings,
+        component: _settings2.default,
+        is_authenticated: true,
+        routes: [{ path: _Constants.routes.personal, component: _personal_details2.default, title: (0, _localize.localize)('Personal Details') }, { path: _Constants.routes.financial, component: _financial_assessment2.default, title: (0, _localize.localize)('Financial Assessment') }, { path: _Constants.routes.account_password, component: _account_password2.default, title: (0, _localize.localize)('Account Password') }, { path: _Constants.routes.cashier_password, component: _cashier_password2.default, title: (0, _localize.localize)('Cashier Password') }, { path: _Constants.routes.exclusion, component: _self_exclusion2.default, title: (0, _localize.localize)('Self Exclusion') }, { path: _Constants.routes.limits, component: _limits2.default, title: (0, _localize.localize)('Account Limits') }, { path: _Constants.routes.history, component: _login_history2.default, title: (0, _localize.localize)('Login History') }, { path: _Constants.routes.token, component: _api_token2.default, title: (0, _localize.localize)('API Token') }, { path: _Constants.routes.apps, component: _authorized_applications2.default, title: (0, _localize.localize)('Authorized Applications') }]
+    }];
+};
 
 // Settings Routes
-exports.default = routes_config;
+
+
+var routes_config = void 0;
+var getRoutesConfig = function getRoutesConfig() {
+    if (!routes_config) {
+        routes_config = initRoutesConfig();
+    }
+    return routes_config;
+};
+
+exports.default = getRoutesConfig;
 
 /***/ }),
 
@@ -7700,6 +7723,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
 var _settings_control = __webpack_require__(/*! ../../Components/Elements/SettingsDialog/settings_control.jsx */ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings_control.jsx");
@@ -7722,18 +7747,18 @@ var ChartSettings = function ChartSettings(_ref) {
             'div',
             { className: 'chart-setting-container' },
             _react2.default.createElement(_settings_control2.default, {
-                name: 'Position',
+                name: (0, _localize.localize)('Position'),
                 toggle: toggleLayout,
                 to_toggle: !is_layout_default,
                 style: 'toggle-chart-layout'
             }),
             _react2.default.createElement(_settings_control2.default, {
-                name: 'Asset Information',
+                name: (0, _localize.localize)('Asset Information'),
                 toggle: toggleAsset,
                 to_toggle: is_asset_visible
             }),
             _react2.default.createElement(_settings_control2.default, {
-                name: 'Scale Countdown',
+                name: (0, _localize.localize)('Scale Countdown'),
                 toggle: toggleCountdown,
                 to_toggle: is_countdown_visible
             })
@@ -7786,6 +7811,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
 var _settings_control = __webpack_require__(/*! ../../Components/Elements/SettingsDialog/settings_control.jsx */ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings_control.jsx");
@@ -7812,23 +7839,23 @@ var GeneralSettings = function GeneralSettings(_ref) {
             _react2.default.createElement(
                 _settings_control2.default,
                 {
-                    name: 'Language',
+                    name: (0, _localize.localize)('Language'),
                     onClick: showLanguage
                 },
                 _react2.default.createElement('i', { className: 'flag ic-flag-' + (curr_language || 'EN').toLowerCase() })
             ),
             _react2.default.createElement(_settings_control2.default, {
-                name: 'Dark Mode',
+                name: (0, _localize.localize)('Dark Mode'),
                 to_toggle: is_dark_mode,
                 toggle: toggleDarkMode
             }),
             _react2.default.createElement(_settings_control2.default, {
-                name: 'Purchase Confirmation',
+                name: (0, _localize.localize)('Purchase Confirmation'),
                 to_toggle: is_purchase_confirmed,
                 toggle: togglePurchaseConfirmation
             }),
             _react2.default.createElement(_settings_control2.default, {
-                name: 'Purchase Lock',
+                name: (0, _localize.localize)('Purchase Lock'),
                 to_toggle: is_purchase_locked,
                 toggle: togglePurchaseLock
             })
@@ -10031,29 +10058,35 @@ exports.IconLock = IconLock;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var contract_type_display = exports.contract_type_display = {
-    ASIANU: 'Asian Up',
-    ASIAND: 'Asian Down',
-    CALL: 'Higher',
-    CALLE: 'Higher or equal',
-    PUT: 'Lower',
-    PUTE: 'Lower or equal',
-    DIGITMATCH: 'Digit Matches',
-    DIGITDIFF: 'Digit Differs',
-    DIGITODD: 'Digit Odd',
-    DIGITEVEN: 'Digit Even',
-    DIGITOVER: 'Digit Over',
-    DIGITUNDER: 'Digit Under',
-    EXPIRYMISS: 'Ends Outside',
-    EXPIRYRANGE: 'Ends Between',
-    EXPIRYRANGEE: 'Ends Between',
-    LBFLOATCALL: 'Close-Low',
-    LBFLOATPUT: 'High-Close',
-    LBHIGHLOW: 'High-Low',
-    RANGE: 'Stays Between',
-    UPORDOWN: 'Goes Outside',
-    ONETOUCH: 'Touches',
-    NOTOUCH: 'Does Not Touch'
+exports.getContractTypeDisplay = undefined;
+
+var _localize = __webpack_require__(/*! ../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var getContractTypeDisplay = exports.getContractTypeDisplay = function getContractTypeDisplay() {
+    return {
+        ASIANU: (0, _localize.localize)('Asian Up'),
+        ASIAND: (0, _localize.localize)('Asian Down'),
+        CALL: (0, _localize.localize)('Higher'),
+        CALLE: (0, _localize.localize)('Higher or equal'),
+        PUT: (0, _localize.localize)('Lower'),
+        PUTE: (0, _localize.localize)('Lower or equal'),
+        DIGITMATCH: (0, _localize.localize)('Digit Matches'),
+        DIGITDIFF: (0, _localize.localize)('Digit Differs'),
+        DIGITODD: (0, _localize.localize)('Digit Odd'),
+        DIGITEVEN: (0, _localize.localize)('Digit Even'),
+        DIGITOVER: (0, _localize.localize)('Digit Over'),
+        DIGITUNDER: (0, _localize.localize)('Digit Under'),
+        EXPIRYMISS: (0, _localize.localize)('Ends Outside'),
+        EXPIRYRANGE: (0, _localize.localize)('Ends Between'),
+        EXPIRYRANGEE: (0, _localize.localize)('Ends Between'),
+        LBFLOATCALL: (0, _localize.localize)('Close-Low'),
+        LBFLOATPUT: (0, _localize.localize)('High-Close'),
+        LBHIGHLOW: (0, _localize.localize)('High-Low'),
+        RANGE: (0, _localize.localize)('Stays Between'),
+        UPORDOWN: (0, _localize.localize)('Goes Outside'),
+        ONETOUCH: (0, _localize.localize)('Touches'),
+        NOTOUCH: (0, _localize.localize)('Does Not Touch')
+    };
 };
 
 /***/ }),
@@ -10330,8 +10363,6 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _ui = __webpack_require__(/*! ../../../../Stores/Modules/Contract/Constants/ui */ "./src/javascript/app_2/Stores/Modules/Contract/Constants/ui.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -10339,10 +10370,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var DetailsHeader = function DetailsHeader(_ref) {
     var status = _ref.status;
 
-    var title_purchased = (0, _localize.localize)(_ui.header_config.purchased.title);
-    var title_result = (0, _localize.localize)(_ui.header_config[status].title);
-    var icon_purchased = _ui.header_config.purchased.icon;
-    var icon_result = _ui.header_config[status].icon;
+    var header_config = (0, _ui.getHeaderConfig)();
+    var title_purchased = header_config.purchased.title;
+    var title_result = header_config[status].title;
+    var icon_purchased = header_config.purchased.icon;
+    var icon_result = header_config[status].icon;
+
     return _react2.default.createElement(
         'div',
         { className: (0, _classnames2.default)('contract-header', status) },
@@ -11544,8 +11577,6 @@ var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-type
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
 
-var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var _contract = __webpack_require__(/*! ../../../Constants/contract */ "./src/javascript/app_2/Constants/contract.js");
 
 var _Types = __webpack_require__(/*! ../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
@@ -11565,7 +11596,7 @@ var ContractTypeCell = function ContractTypeCell(_ref) {
         _react2.default.createElement(
             'span',
             null,
-            (0, _localize.localize)(_contract.contract_type_display[type] || '')
+            (0, _contract.getContractTypeDisplay)()[type] || ''
         )
     );
 };
@@ -14733,7 +14764,7 @@ var Barrier = function Barrier(_ref) {
     return _react2.default.createElement(
         _fieldset2.default,
         {
-            header: (0, _localize.localize)(barrier_count > 1 ? 'Barriers' : 'Barrier'),
+            header: barrier_count > 1 ? (0, _localize.localize)('Barriers') : (0, _localize.localize)('Barrier'),
             icon: 'barriers'
         },
         _react2.default.createElement(_input_field2.default, {
@@ -14907,6 +14938,7 @@ var Duration = function Duration(_ref) {
             expiry_type === 'duration' ? duration + ' ' + duration_unit_text : moment_expiry.format('ddd - DD MMM, YYYY') + '\n' + expiry_time
         );
     }
+    var datepicker_footer = min_day > 1 ? (0, _localize.localize)('The minimum duration is [_1] days', [min_day]) : (0, _localize.localize)('The minimum duration is [_1] day', [min_day]);
 
     var has_end_time = expiry_list.find(function (expiry) {
         return expiry.value === 'endtime';
@@ -14952,7 +14984,7 @@ var Duration = function Duration(_ref) {
                     is_read_only: true,
                     is_clearable: false,
                     is_nativepicker: is_nativepicker,
-                    footer: (0, _localize.localize)('The minimum duration is [_1] day' + (min_day > 1 ? 's' : ''), [min_day])
+                    footer: datepicker_footer
                 }) : _react2.default.createElement(_input_field2.default, {
                     type: 'number',
                     name: 'duration',
@@ -15608,9 +15640,9 @@ var Purchase = function Purchase(_ref) {
                     _PopConfirm.PopConfirm,
                     {
                         alignment: 'left',
-                        cancel_text: 'Cancel',
-                        confirm_text: 'Purchase',
-                        message: 'Are you sure you want to purchase this contract?'
+                        cancel_text: (0, _localize.localize)('Cancel'),
+                        confirm_text: (0, _localize.localize)('Purchase'),
+                        message: (0, _localize.localize)('Are you sure you want to purchase this contract?')
                     },
                     purchase_button
                 ) : purchase_button
@@ -17891,11 +17923,13 @@ exports.default = WS;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.header_config = undefined;
+exports.getHeaderConfig = undefined;
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 var _icon_flag = __webpack_require__(/*! ../../../../Assets/Contract/icon_flag.jsx */ "./src/javascript/app_2/Assets/Contract/icon_flag.jsx");
 
@@ -17907,10 +17941,12 @@ var _icon_tick2 = _interopRequireDefault(_icon_tick);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var header_config = exports.header_config = {
-    purchased: { title: 'Contract Purchased', icon: _react2.default.createElement(_icon_tick2.default, null) },
-    won: { title: 'Contract Won', icon: _react2.default.createElement(_icon_flag2.default, null) },
-    lost: { title: 'Contract Lost', icon: _react2.default.createElement(_icon_flag2.default, null) }
+var getHeaderConfig = exports.getHeaderConfig = function getHeaderConfig() {
+    return {
+        purchased: { title: (0, _localize.localize)('Contract Purchased'), icon: _react2.default.createElement(_icon_tick2.default, null) },
+        won: { title: (0, _localize.localize)('Contract Won'), icon: _react2.default.createElement(_icon_flag2.default, null) },
+        lost: { title: (0, _localize.localize)('Contract Lost'), icon: _react2.default.createElement(_icon_flag2.default, null) }
+    };
 };
 
 /***/ }),
@@ -18106,7 +18142,7 @@ var getDetailsInfo = exports.getDetailsInfo = function getDetailsInfo(contract_i
     var txt_entry_spot = entry_spot && !is_sold_before_start ? (0, _currency_base.addComma)(entry_spot) : '-';
 
     // TODO: don't localize on every call
-    return _ref = {}, _defineProperty(_ref, (0, _localize.localize)('Contract Type'), _contract.contract_type_display[contract_type]), _defineProperty(_ref, (0, _localize.localize)('Start Time'), txt_start_time), _defineProperty(_ref, (0, _localize.localize)('Entry Spot'), txt_entry_spot), _defineProperty(_ref, (0, _localize.localize)('Purchase Price'), _react2.default.createElement(_money2.default, { amount: buy_price, currency: currency })), _ref;
+    return _ref = {}, _defineProperty(_ref, (0, _localize.localize)('Contract Type'), (0, _contract.getContractTypeDisplay)()[contract_type]), _defineProperty(_ref, (0, _localize.localize)('Start Time'), txt_start_time), _defineProperty(_ref, (0, _localize.localize)('Entry Spot'), txt_entry_spot), _defineProperty(_ref, (0, _localize.localize)('Purchase Price'), _react2.default.createElement(_money2.default, { amount: buy_price, currency: currency })), _ref;
 };
 
 var getDetailsExpiry = exports.getDetailsExpiry = function getDetailsExpiry(store) {
@@ -18617,10 +18653,6 @@ exports.default = ContractStore;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.formatPortfolioPosition = undefined;
-
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
 var formatPortfolioPosition = exports.formatPortfolioPosition = function formatPortfolioPosition(portfolio_pos) {
     var purchase = parseFloat(portfolio_pos.buy_price);
     var payout = parseFloat(portfolio_pos.payout);
@@ -18628,7 +18660,7 @@ var formatPortfolioPosition = exports.formatPortfolioPosition = function formatP
     return {
         reference: +portfolio_pos.transaction_id,
         type: portfolio_pos.contract_type,
-        details: (0, _localize.localize)(portfolio_pos.longcode.replace(/\n/g, '<br />')),
+        details: portfolio_pos.longcode.replace(/\n/g, '<br />'),
         payout: payout,
         purchase: purchase,
         expiry_time: portfolio_pos.expiry_time,
@@ -19695,13 +19727,13 @@ var formatStatementTransaction = exports.formatStatementTransaction = function f
     var should_exclude_currency = true;
 
     return {
-        action: (0, _localize.localize)((0, _string_util.toTitleCase)(transaction.action_type)),
+        action: (0, _localize.localize)((0, _string_util.toTitleCase)(transaction.action_type) /* localize-ignore */), // handled in static_strings_app_2.js: 'Buy', 'Sell', 'Deposit', 'Withdrawal'
         date: date_str + '\n' + time_str,
         refid: transaction.transaction_id,
         payout: isNaN(payout) ? '-' : (0, _currency_base.formatMoney)(currency, payout, should_exclude_currency),
         amount: isNaN(amount) ? '-' : (0, _currency_base.formatMoney)(currency, amount, should_exclude_currency),
         balance: isNaN(balance) ? '-' : (0, _currency_base.formatMoney)(currency, balance, should_exclude_currency),
-        desc: (0, _localize.localize)(transaction.longcode.replace(/\n/g, '<br />')),
+        desc: transaction.longcode.replace(/\n/g, '<br />'),
         id: transaction.contract_id,
         app_id: transaction.app_id
     };
@@ -20224,11 +20256,19 @@ var onChangeSymbolAsync = exports.onChangeSymbolAsync = function () {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getContractCategoriesConfig = exports.getContractTypesConfig = undefined;
+exports.getContractCategoriesConfig = exports.getContractTypesConfig = exports.getLocalizedBasis = undefined;
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var getLocalizedBasis = exports.getLocalizedBasis = function getLocalizedBasis() {
+    return {
+        payout: (0, _localize.localize)('Payout'),
+        stake: (0, _localize.localize)('Stake'),
+        multiplier: (0, _localize.localize)('Multiplier')
+    };
+};
 
 /**
  * components can be undef or an array containing any of: 'start_date', 'barrier', 'last_digit'
@@ -20344,30 +20384,35 @@ var form_components = exports.form_components = [{ name: 'start_date', Component
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-var validation_rules = {
-    amount: [['req', { message: 'Amount is a required field.' }], ['number', { min: 0, type: 'float' }]],
-    barrier_1: [['req', { condition: function condition(store) {
-            return store.barrier_count && store.form_components.indexOf('barrier') > -1;
-        }, message: 'Barrier is a required field.' }], ['barrier', { condition: function condition(store) {
-            return store.contract_expiry_type !== 'daily' && store.barrier_count;
-        } }], ['number', { condition: function condition(store) {
-            return store.contract_expiry_type === 'daily' && store.barrier_count;
-        }, type: 'float' }], ['custom', { func: function func(value, options, store) {
-            return store.barrier_count > 1 ? +value > +store.barrier_2 : true;
-        }, message: 'Higher barrier must be higher than lower barrier.' }]],
-    barrier_2: [['req', { condition: function condition(store) {
-            return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
-        }, message: 'Barrier is a required field.' }], ['barrier', { condition: function condition(store) {
-            return store.contract_expiry_type !== 'daily' && store.barrier_count;
-        } }], ['number', { condition: function condition(store) {
-            return store.contract_expiry_type === 'daily' && store.barrier_count;
-        }, type: 'float' }], ['custom', { func: function func(value, options, store) {
-            return +store.barrier_1 > +value;
-        }, message: 'Lower barrier must be lower than higher barrier.' }]],
-    duration: [['req', { message: 'Duration is a required field.' }]]
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var getValidationRules = function getValidationRules() {
+    return {
+        amount: [['req', { message: (0, _localize.localize)('Amount is a required field.') }], ['number', { min: 0, type: 'float' }]],
+        barrier_1: [['req', { condition: function condition(store) {
+                return store.barrier_count && store.form_components.indexOf('barrier') > -1;
+            }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
+                return store.contract_expiry_type !== 'daily' && store.barrier_count;
+            } }], ['number', { condition: function condition(store) {
+                return store.contract_expiry_type === 'daily' && store.barrier_count;
+            }, type: 'float' }], ['custom', { func: function func(value, options, store) {
+                return store.barrier_count > 1 ? +value > +store.barrier_2 : true;
+            }, message: (0, _localize.localize)('Higher barrier must be higher than lower barrier.') }]],
+        barrier_2: [['req', { condition: function condition(store) {
+                return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
+            }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
+                return store.contract_expiry_type !== 'daily' && store.barrier_count;
+            } }], ['number', { condition: function condition(store) {
+                return store.contract_expiry_type === 'daily' && store.barrier_count;
+            }, type: 'float' }], ['custom', { func: function func(value, options, store) {
+                return +store.barrier_1 > +value;
+            }, message: (0, _localize.localize)('Lower barrier must be lower than higher barrier.') }]],
+        duration: [['req', { message: (0, _localize.localize)('Duration is a required field.') }]]
+    };
 };
 
-exports.default = validation_rules;
+exports.default = getValidationRules;
 
 /***/ }),
 
@@ -20454,8 +20499,6 @@ var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js
 var _moment2 = _interopRequireDefault(_moment);
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _string_util = __webpack_require__(/*! ../../../../../_common/string_util */ "./src/javascript/_common/string_util.js");
 
 var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
@@ -20549,7 +20592,7 @@ var ContractType = function () {
 
                     if (!sub_cats) return;
 
-                    sub_cats[sub_cats.indexOf(type)] = { value: type, text: (0, _localize.localize)(contract_types[type].title) };
+                    sub_cats[sub_cats.indexOf(type)] = { value: type, text: contract_types[type].title };
 
                     // populate available contract types
                     available_contract_types[type] = (0, _utility.cloneObject)(contract_types[type]);
@@ -20778,8 +20821,9 @@ var ContractType = function () {
 
     var getBasis = function getBasis(contract_type, basis) {
         var arr_basis = (0, _utility.getPropertyValue)(available_contract_types, [contract_type, 'basis']) || {};
+        var localized_basis = (0, _contract.getLocalizedBasis)();
         var basis_list = arr_basis.reduce(function (cur, bas) {
-            return [].concat(_toConsumableArray(cur), [{ text: (0, _localize.localize)((0, _string_util.toTitleCase)(bas)), value: bas }]);
+            return [].concat(_toConsumableArray(cur), [{ text: localized_basis[bas], value: bas }]);
         }, []);
 
         return {
@@ -20890,12 +20934,14 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
-var duration_maps = {
-    t: { display: 'ticks', order: 1 },
-    s: { display: 'seconds', order: 2, to_second: 1 },
-    m: { display: 'minutes', order: 3, to_second: 60 },
-    h: { display: 'hours', order: 4, to_second: 60 * 60 },
-    d: { display: 'days', order: 5, to_second: 60 * 60 * 24 }
+var getDurationMaps = function getDurationMaps() {
+    return {
+        t: { display: (0, _localize.localize)('ticks'), order: 1 },
+        s: { display: (0, _localize.localize)('seconds'), order: 2, to_second: 1 },
+        m: { display: (0, _localize.localize)('minutes'), order: 3, to_second: 60 },
+        h: { display: (0, _localize.localize)('hours'), order: 4, to_second: 60 * 60 },
+        d: { display: (0, _localize.localize)('days'), order: 5, to_second: 60 * 60 * 24 }
+    };
 };
 
 var buildDurationConfig = exports.buildDurationConfig = function buildDurationConfig(contract) {
@@ -20916,6 +20962,9 @@ var buildDurationConfig = exports.buildDurationConfig = function buildDurationCo
     durations.units_display[contract.start_type].forEach(function (obj) {
         arr_units.push(obj.value);
     });
+
+    var duration_maps = getDurationMaps();
+
     if (/^tick|daily$/.test(contract.expiry_type)) {
         if (arr_units.indexOf(obj_min.unit) === -1) {
             arr_units.push(obj_min.unit);
@@ -20932,15 +20981,23 @@ var buildDurationConfig = exports.buildDurationConfig = function buildDurationCo
     durations.units_display[contract.start_type] = arr_units.sort(function (a, b) {
         return duration_maps[a].order > duration_maps[b].order ? 1 : -1;
     }).reduce(function (o, c) {
-        return [].concat(_toConsumableArray(o), [{ text: (0, _localize.localize)(duration_maps[c].display), value: c }]);
+        return [].concat(_toConsumableArray(o), [{ text: duration_maps[c].display, value: c }]);
     }, []);
 
     return durations;
 };
 
 var convertDurationUnit = exports.convertDurationUnit = function convertDurationUnit(value, from_unit, to_unit) {
-    if (!value || !from_unit || !to_unit) return null;
-    if (from_unit === to_unit || !('to_second' in duration_maps[from_unit])) return value;
+    if (!value || !from_unit || !to_unit) {
+        return null;
+    }
+
+    var duration_maps = getDurationMaps();
+
+    if (from_unit === to_unit || !('to_second' in duration_maps[from_unit])) {
+        return value;
+    }
+
     return value * duration_maps[from_unit].to_second / duration_maps[to_unit].to_second;
 };
 
@@ -21464,16 +21521,13 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         _classCallCheck(this, TradeStore);
 
-        var session_storage_properties = _query_string.allowed_query_string_variables;
-        var options = {
-            root_store: root_store,
-            session_storage_properties: session_storage_properties,
-            validation_rules: _validation_rules2.default
-        };
-
         _url_helper2.default.pruneQueryString(_query_string.allowed_query_string_variables);
 
-        var _this = _possibleConstructorReturn(this, (TradeStore.__proto__ || Object.getPrototypeOf(TradeStore)).call(this, options));
+        var _this = _possibleConstructorReturn(this, (TradeStore.__proto__ || Object.getPrototypeOf(TradeStore)).call(this, {
+            root_store: root_store,
+            session_storage_properties: _query_string.allowed_query_string_variables,
+            validation_rules: (0, _validation_rules2.default)()
+        }));
 
         _initDefineProp(_this, 'is_trade_component_mounted', _descriptor, _this);
 
@@ -23817,7 +23871,7 @@ exports.default = URLHelper;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.pass_length = exports.pre_build_dvrs = undefined;
+exports.getPasswordLengthConfig = exports.getPreBuildDVRs = undefined;
 
 var _client_base = __webpack_require__(/*! ../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
 
@@ -23940,7 +23994,7 @@ var validNumber = function validNumber(value, opts) {
         message = (0, _localize.localize)('Should be less than [_1]', [(0, _currency_base.addComma)(options.max, options.format_money ? (0, _currency_base.getDecimalPlaces)(_client_base2.default.get('currency')) : undefined)]);
     }
 
-    pre_build_dvrs.number.message = message;
+    getPreBuildDVRs().number.message = message;
     return is_ok;
 };
 
@@ -23948,27 +24002,37 @@ var isMoreThanMax = function isMoreThanMax(value, options) {
     return options.type === 'float' ? +value > +options.max : (0, _string_util.compareBigUnsignedInt)(value, options.max) === 1;
 };
 
-var pre_build_dvrs = exports.pre_build_dvrs = {
-    address: { func: validAddress, message: 'Only letters, numbers, space, and these special characters are allowed: - . \' # ; : ( ) , @ /' },
-    barrier: { func: validBarrier, message: 'Only numbers and these special characters are allowed: + - .' },
-    compare: { func: validCompare, message: 'The two passwords that you entered do not match.' },
-    email: { func: validEmail, message: 'Invalid email address.' },
-    general: { func: validGeneral, message: 'Only letters, numbers, space, hyphen, period, and apostrophe are allowed.' },
-    length: { func: validLength, message: 'You should enter [_1] characters.' },
-    letter_symbol: { func: validLetterSymbol, message: 'Only letters, space, hyphen, period, and apostrophe are allowed.' },
-    min: { func: validMin, message: 'Minimum of [_1] characters required.' },
-    not_equal: { func: validNotEqual, message: '[_1] and [_2] cannot be the same.' },
-    number: { func: validNumber, message: '' },
-    password: { func: validPassword, message: 'Password should have lower and uppercase letters with numbers.' },
-    phone: { func: validPhone, message: 'Only numbers and spaces are allowed.' },
-    postcode: { func: validPostCode, message: 'Only letters, numbers, space, and hyphen are allowed.' },
-    regular: { func: validRegular, message: '' },
-    req: { func: validRequired, message: '' },
-    signup_token: { func: validEmailToken, message: 'The length of token should be 8.' },
-    tax_id: { func: validTaxID, message: 'Should start with letter or number, and may contain hyphen and underscore.' }
+var initPreBuildDVRs = function initPreBuildDVRs() {
+    return {
+        address: { func: validAddress, message: (0, _localize.localize)('Only letters, numbers, space, and these special characters are allowed: [_1]', ['- . \' # ; : ( ) , @ /']) },
+        barrier: { func: validBarrier, message: (0, _localize.localize)('Only numbers and these special characters are allowed: [_1]', ['+ - .']) },
+        compare: { func: validCompare, message: (0, _localize.localize)('The two passwords that you entered do not match.') },
+        email: { func: validEmail, message: (0, _localize.localize)('Invalid email address.') },
+        general: { func: validGeneral, message: (0, _localize.localize)('Only letters, numbers, space, hyphen, period, and apostrophe are allowed.') },
+        length: { func: validLength, message: (0, _localize.localize)('You should enter [_1] characters.', ['[_1]']) },
+        letter_symbol: { func: validLetterSymbol, message: (0, _localize.localize)('Only letters, space, hyphen, period, and apostrophe are allowed.') },
+        min: { func: validMin, message: (0, _localize.localize)('Minimum of [_1] characters required.', ['[_1]']) },
+        not_equal: { func: validNotEqual, message: (0, _localize.localize)('[_1] and [_2] cannot be the same.', ['[_1]', '[_2]']) },
+        number: { func: validNumber, message: '' },
+        password: { func: validPassword, message: (0, _localize.localize)('Password should have lower and uppercase letters with numbers.') },
+        phone: { func: validPhone, message: (0, _localize.localize)('Only numbers and spaces are allowed.') },
+        postcode: { func: validPostCode, message: (0, _localize.localize)('Only letters, numbers, space, and hyphen are allowed.') },
+        regular: { func: validRegular, message: '' },
+        req: { func: validRequired, message: '' },
+        signup_token: { func: validEmailToken, message: (0, _localize.localize)('The length of token should be 8.') },
+        tax_id: { func: validTaxID, message: (0, _localize.localize)('Should start with letter or number, and may contain hyphen and underscore.') }
+    };
 };
 
-var pass_length = exports.pass_length = function pass_length(type) {
+var pre_build_dvrs = void 0;
+var getPreBuildDVRs = exports.getPreBuildDVRs = function getPreBuildDVRs() {
+    if (!pre_build_dvrs) {
+        pre_build_dvrs = initPreBuildDVRs();
+    }
+    return pre_build_dvrs;
+};
+
+var getPasswordLengthConfig = exports.getPasswordLengthConfig = function getPasswordLengthConfig(type) {
     return { min: /^mt$/.test(type) ? 8 : 6, max: 25 };
 };
 
@@ -24087,7 +24151,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js");
+var _utility = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js");
 
 var _declarative_validation_rules = __webpack_require__(/*! ./declarative_validation_rules */ "./src/javascript/app_2/Utils/Validator/declarative_validation_rules.js");
 
@@ -24124,15 +24188,13 @@ var Validator = function () {
     _createClass(Validator, [{
         key: 'addFailure',
         value: function addFailure(attribute, rule) {
-            var message = rule.options.message || _declarative_validation_rules.pre_build_dvrs[rule.name].message;
+            var message = rule.options.message || (0, _declarative_validation_rules.getPreBuildDVRs)()[rule.name].message;
             if (rule.name === 'length') {
-                message = (0, _localize.localize)(message, [rule.options.min === rule.options.max ? rule.options.min : rule.options.min + '-' + rule.options.max]);
+                message = (0, _utility.template)(message, [rule.options.min === rule.options.max ? rule.options.min : rule.options.min + '-' + rule.options.max]);
             } else if (rule.name === 'min') {
-                message = (0, _localize.localize)(message, [rule.options.min]);
+                message = (0, _utility.template)(message, [rule.options.min]);
             } else if (rule.name === 'not_equal') {
-                message = (0, _localize.localize)(message, [(0, _localize.localize)(rule.options.name1), (0, _localize.localize)(rule.options.name2)]);
-            } else {
-                message = (0, _localize.localize)(message);
+                message = (0, _utility.template)(message, [rule.options.name1, rule.options.name2]);
             }
             this.errors.add(attribute, message);
             this.error_count++;
@@ -24207,7 +24269,7 @@ var Validator = function () {
                 options: is_rule_string ? {} : rule[1] || {}
             };
 
-            rule_object.validator = rule_object.name === 'custom' ? rule[1].func : _declarative_validation_rules.pre_build_dvrs[rule_object.name].func;
+            rule_object.validator = rule_object.name === 'custom' ? rule[1].func : (0, _declarative_validation_rules.getPreBuildDVRs)()[rule_object.name].func;
 
             return rule_object;
         }
