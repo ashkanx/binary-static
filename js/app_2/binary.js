@@ -19421,6 +19421,10 @@ var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module
 
 var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
+var _server_time = __webpack_require__(/*! ../../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
+
+var _server_time2 = _interopRequireDefault(_server_time);
+
 var _Services = __webpack_require__(/*! ../../../Services */ "./src/javascript/app_2/Services/index.js");
 
 var _chart_barrier_store = __webpack_require__(/*! ./chart_barrier_store */ "./src/javascript/app_2/Stores/Modules/SmartChart/chart_barrier_store.js");
@@ -19528,6 +19532,14 @@ var SmartChartStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _d
         };
 
         _this.wsSendRequest = function (request_object) {
+            if (request_object.time) {
+                return _server_time2.default.timePromise.then(function () {
+                    return {
+                        msg_type: 'time',
+                        time: _server_time2.default.get().unix()
+                    };
+                });
+            }
             return _Services.WS.sendRequest(request_object);
         };
 
