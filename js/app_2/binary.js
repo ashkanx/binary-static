@@ -1879,6 +1879,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
 var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
 var _drawer_header = __webpack_require__(/*! ./drawer_header.jsx */ "./src/javascript/app_2/App/Components/Elements/Drawer/drawer_header.jsx");
@@ -1946,38 +1948,40 @@ var Drawer = function (_React$Component) {
                 children = _props.children;
 
 
-            var visibility = {
-                visibility: '' + (!is_this_drawer_on ? 'hidden' : 'visible')
-            };
             var drawer_bg_class = (0, _classnames2.default)('drawer-bg', {
                 'show': is_this_drawer_on
             });
-            var drawer_class = (0, _classnames2.default)('drawer', {
-                'visible': is_this_drawer_on
-            }, alignment);
+            var drawer_class = (0, _classnames2.default)('drawer', alignment);
 
             return _react2.default.createElement(
-                'aside',
-                { className: 'drawer-container' },
+                _reactTransitionGroup.CSSTransition,
+                {
+                    'in': is_this_drawer_on,
+                    timeout: 150,
+                    classNames: 'drawer-container',
+                    unmountOnExit: true
+                },
                 _react2.default.createElement(
-                    'div',
-                    {
-                        className: drawer_bg_class,
-                        style: visibility,
-                        onClick: this.handleClickOutside
-                    },
+                    'aside',
+                    { className: 'drawer-container' },
                     _react2.default.createElement(
                         'div',
                         {
-                            ref: this.setRef,
-                            className: drawer_class,
-                            style: visibility
+                            className: drawer_bg_class,
+                            onClick: this.handleClickOutside
                         },
-                        _react2.default.createElement(_drawer_header.DrawerHeader, {
-                            alignment: alignment,
-                            closeBtn: closeBtn
-                        }),
-                        children
+                        _react2.default.createElement(
+                            'div',
+                            {
+                                ref: this.setRef,
+                                className: drawer_class
+                            },
+                            _react2.default.createElement(_drawer_header.DrawerHeader, {
+                                alignment: alignment,
+                                closeBtn: closeBtn
+                            }),
+                            children
+                        )
                     )
                 )
             );
@@ -2608,6 +2612,68 @@ var drawer_component = (0, _connect.connect)(function (_ref2) {
 })(ToggleDrawer);
 
 exports.ToggleDrawer = drawer_component;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/Errors/error_boundary.jsx":
+/*!********************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Errors/error_boundary.jsx ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.default = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ErrorBoundary = function (_React$Component) {
+    _inherits(ErrorBoundary, _React$Component);
+
+    function ErrorBoundary(props) {
+        _classCallCheck(this, ErrorBoundary);
+
+        var _this = _possibleConstructorReturn(this, (ErrorBoundary.__proto__ || Object.getPrototypeOf(ErrorBoundary)).call(this, props));
+
+        _this.componentDidCatch = function (error, info) {
+            _this.setState({
+                hasError: true,
+                error: error,
+                info: info
+            });
+        };
+
+        _this.render = function () {
+            return _this.state.hasError ? _react2.default.createElement(
+                'div',
+                { className: 'error-box' },
+                _this.state.error.message
+            ) : _this.props.children;
+        };
+
+        _this.state = { hasError: false };
+        return _this;
+    }
+
+    return ErrorBoundary;
+}(_react2.default.Component);
+
+exports.default = ErrorBoundary;
 
 /***/ }),
 
@@ -5027,6 +5093,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
 var _Common = __webpack_require__(/*! ../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
@@ -5154,37 +5222,46 @@ var Dropdown = function (_React$Component) {
                 ),
                 _react2.default.createElement(_Common.IconArrow, { className: 'select-arrow' }),
                 _react2.default.createElement(
-                    'div',
-                    { className: 'dropdown-list' },
+                    _reactTransitionGroup.CSSTransition,
+                    {
+                        'in': this.state.is_list_visible,
+                        timeout: 100,
+                        classNames: 'dropdown-list',
+                        unmountOnExit: true
+                    },
                     _react2.default.createElement(
                         'div',
-                        { className: 'list-container' },
-                        (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(Items, {
-                            items: this.props.list,
-                            name: this.props.name,
-                            value: this.props.value,
-                            handleSelect: this.handleSelect
-                        }) : Object.keys(this.props.list).map(function (key) {
-                            return _react2.default.createElement(
-                                _react2.default.Fragment,
-                                { key: key },
-                                _react2.default.createElement(
-                                    'div',
-                                    { className: 'list-label' },
+                        { className: 'dropdown-list' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'list-container' },
+                            (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(Items, {
+                                items: this.props.list,
+                                name: this.props.name,
+                                value: this.props.value,
+                                handleSelect: this.handleSelect
+                            }) : Object.keys(this.props.list).map(function (key) {
+                                return _react2.default.createElement(
+                                    _react2.default.Fragment,
+                                    { key: key },
                                     _react2.default.createElement(
-                                        'span',
-                                        null,
-                                        key
-                                    )
-                                ),
-                                _react2.default.createElement(Items, {
-                                    items: _this2.props.list[key],
-                                    name: _this2.props.name,
-                                    value: _this2.props.value,
-                                    handleSelect: _this2.handleSelect
-                                })
-                            );
-                        })
+                                        'div',
+                                        { className: 'list-label' },
+                                        _react2.default.createElement(
+                                            'span',
+                                            null,
+                                            key
+                                        )
+                                    ),
+                                    _react2.default.createElement(Items, {
+                                        items: _this2.props.list[key],
+                                        name: _this2.props.name,
+                                        value: _this2.props.value,
+                                        handleSelect: _this2.handleSelect
+                                    })
+                                );
+                            })
+                        )
                     )
                 )
             );
@@ -6225,6 +6302,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
 var _Footer = __webpack_require__(/*! ../../../../Assets/Footer */ "./src/javascript/app_2/Assets/Footer/index.js");
 
 var _settings_dialog = __webpack_require__(/*! ../../Elements/SettingsDialog/settings_dialog.jsx */ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings_dialog.jsx");
@@ -6253,11 +6332,20 @@ var ToggleSettings = function ToggleSettings(_ref) {
             },
             _react2.default.createElement(_Footer.IconSettings, { className: 'footer-icon' })
         ),
-        _react2.default.createElement(_settings_dialog2.default, {
-            is_open: is_settings_visible,
-            is_language_dialog_visible: is_language_visible,
-            toggleDialog: toggleSettings
-        })
+        _react2.default.createElement(
+            _reactTransitionGroup.CSSTransition,
+            {
+                'in': is_settings_visible,
+                timeout: 100,
+                classNames: 'settings-dialog',
+                unmountOnExit: true
+            },
+            _react2.default.createElement(_settings_dialog2.default, {
+                is_open: is_settings_visible,
+                is_language_dialog_visible: is_language_visible,
+                toggleDialog: toggleSettings
+            })
+        )
     );
 };
 
@@ -8153,11 +8241,15 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _connect = __webpack_require__(/*! ../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
-
 var _base_name = __webpack_require__(/*! ../Utils/URL/base_name */ "./src/javascript/app_2/Utils/URL/base_name.js");
 
 var _base_name2 = _interopRequireDefault(_base_name);
+
+var _connect = __webpack_require__(/*! ../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+var _error_boundary = __webpack_require__(/*! ./Components/Elements/Errors/error_boundary.jsx */ "./src/javascript/app_2/App/Components/Elements/Errors/error_boundary.jsx");
+
+var _error_boundary2 = _interopRequireDefault(_error_boundary);
 
 var _PortfolioDrawer = __webpack_require__(/*! ./Components/Elements/PortfolioDrawer */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js");
 
@@ -8185,6 +8277,12 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+// Conditionally loading mobx only on development builds.
+// see https://github.com/mobxjs/mobx-react-devtools/issues/66
+var Fragment = _react2.default.Fragment;
+
+var DevTools =  true ? __webpack_require__(/*! mobx-react-devtools */ "./node_modules/mobx-react-devtools/index.js").default : undefined;
+
 var App = function App(_ref) {
     var root_store = _ref.root_store;
     return _react2.default.createElement(
@@ -8202,10 +8300,15 @@ var App = function App(_ref) {
                     _react2.default.createElement(_header2.default, null)
                 ),
                 _react2.default.createElement(
-                    _app_contents2.default,
+                    _error_boundary2.default,
                     null,
-                    _react2.default.createElement(_routes2.default, null),
-                    _react2.default.createElement(_PortfolioDrawer2.default, null)
+                    _react2.default.createElement(
+                        _app_contents2.default,
+                        null,
+                        _react2.default.createElement(_routes2.default, null),
+                        _react2.default.createElement(DevTools, null),
+                        _react2.default.createElement(_PortfolioDrawer2.default, null)
+                    )
                 ),
                 _react2.default.createElement(
                     'footer',
@@ -13477,6 +13580,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
 var _full_screen_dialog = __webpack_require__(/*! ../../Elements/full_screen_dialog.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Elements/full_screen_dialog.jsx");
 
 var _full_screen_dialog2 = _interopRequireDefault(_full_screen_dialog);
@@ -13502,12 +13607,21 @@ var ContractTypeDialog = function ContractTypeDialog(_ref) {
             children
         )
     ) : _react2.default.createElement(
-        'div',
-        { className: 'contracts-popup-list' },
+        _reactTransitionGroup.CSSTransition,
+        {
+            'in': open,
+            timeout: 100,
+            classNames: 'contracts-popup-list',
+            unmountOnExit: true
+        },
         _react2.default.createElement(
             'div',
-            { className: 'list-container' },
-            children
+            { className: 'contracts-popup-list' },
+            _react2.default.createElement(
+                'div',
+                { className: 'list-container' },
+                children
+            )
         )
     );
 };
