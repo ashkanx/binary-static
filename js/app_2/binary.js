@@ -15007,22 +15007,25 @@ var Duration = function Duration(_ref) {
         start_time = _ref.start_time,
         validation_errors = _ref.validation_errors;
 
-    var moment_now = (0, _moment2.default)(server_time);
-    var new_min_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].min, 's', 'd');
-    var new_max_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].max, 's', 'd');
-    if (!now_date || moment_now.date() !== now_date.date() || duration_unit === 'd' && (min_day !== new_min_day || max_day !== new_max_day)) {
-        if (duration_unit === 'd') {
-            min_day = new_min_day;
-            max_day = new_max_day;
+    if (duration_min_max[contract_expiry_type]) {
+        var moment_now = (0, _moment2.default)(server_time);
+        var new_min_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].min, 's', 'd');
+        var new_max_day = (0, _duration.convertDurationUnit)(duration_min_max[contract_expiry_type].max, 's', 'd');
+        if (!now_date || moment_now.date() !== now_date.date() || duration_unit === 'd' && (min_day !== new_min_day || max_day !== new_max_day)) {
+            if (duration_unit === 'd') {
+                min_day = new_min_day;
+                max_day = new_max_day;
+            }
+
+            var moment_today = moment_now.clone().startOf('day');
+
+            now_date = moment_now.clone();
+            min_date_duration = moment_today.clone().add(min_day || 1, 'd');
+            max_date_duration = moment_today.clone().add(max_day || 365, 'd');
+            min_date_expiry = moment_today.clone();
         }
-
-        var moment_today = moment_now.clone().startOf('day');
-
-        now_date = moment_now.clone();
-        min_date_duration = moment_today.clone().add(min_day || 1, 'd');
-        max_date_duration = moment_today.clone().add(max_day || 365, 'd');
-        min_date_expiry = moment_today.clone();
     }
+
     var moment_expiry = _moment2.default.utc(expiry_date);
     var is_same_day = moment_expiry.isSame((0, _moment2.default)(start_date * 1000 || undefined).utc(), 'day');
     if (is_same_day) {
@@ -21506,7 +21509,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33;
 
 var _lodash = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
 
@@ -21721,6 +21724,9 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         _this.chart_id = 1;
         _this.debouncedProposal = (0, _lodash2.default)(_this.requestProposal, 500);
+
+        _initDefineProp(_this, 'init', _descriptor33, _this);
+
         _this.proposal_requests = {};
 
 
@@ -21758,29 +21764,29 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     _createClass(TradeStore, [{
         key: 'prepareTradeStore',
         value: function () {
-            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+            var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
                 var _this2 = this;
 
                 var query_string_values, active_symbols;
-                return regeneratorRuntime.wrap(function _callee$(_context) {
+                return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
-                        switch (_context.prev = _context.next) {
+                        switch (_context2.prev = _context2.next) {
                             case 0:
                                 query_string_values = this.updateQueryString();
 
                                 this.smart_chart = this.root_store.modules.smart_chart;
 
                                 if (this.symbol) {
-                                    _context.next = 8;
+                                    _context2.next = 8;
                                     break;
                                 }
 
-                                _context.next = 5;
+                                _context2.next = 5;
                                 return _Services.WS.activeSymbols();
 
                             case 5:
-                                active_symbols = _context.sent;
-                                _context.next = 8;
+                                active_symbols = _context2.sent;
+                                _context2.next = 8;
                                 return this.processNewValuesAsync(_extends({
                                     symbol: (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols)
                                 }, query_string_values));
@@ -21788,41 +21794,24 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                             case 8:
 
                                 if (this.symbol) {
-                                    _contract_type2.default.buildContractTypesConfig(this.symbol).then((0, _mobx.action)(function () {
-                                        _this2.processNewValuesAsync(_extends({}, _contract_type2.default.getContractValues(_this2), _contract_type2.default.getContractCategories(), query_string_values));
-                                    }));
+                                    _contract_type2.default.buildContractTypesConfig(this.symbol).then((0, _mobx.action)(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                                        return regeneratorRuntime.wrap(function _callee$(_context) {
+                                            while (1) {
+                                                switch (_context.prev = _context.next) {
+                                                    case 0:
+                                                        _context.next = 2;
+                                                        return _this2.processNewValuesAsync(_extends({}, _contract_type2.default.getContractValues(_this2), _contract_type2.default.getContractCategories(), query_string_values));
+
+                                                    case 2:
+                                                    case 'end':
+                                                        return _context.stop();
+                                                }
+                                            }
+                                        }, _callee, _this2);
+                                    }))));
                                 }
 
                             case 9:
-                            case 'end':
-                                return _context.stop();
-                        }
-                    }
-                }, _callee, this);
-            }));
-
-            function prepareTradeStore() {
-                return _ref2.apply(this, arguments);
-            }
-
-            return prepareTradeStore;
-        }()
-    }, {
-        key: 'init',
-        value: function () {
-            var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
-                var _this3 = this;
-
-                return regeneratorRuntime.wrap(function _callee2$(_context2) {
-                    while (1) {
-                        switch (_context2.prev = _context2.next) {
-                            case 0:
-                                // To be sure that the website_status response has been received before processing trading page.
-                                _socket_base2.default.wait('website_status').then(function () {
-                                    return _this3.prepareTradeStore();
-                                });
-
-                            case 1:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -21830,11 +21819,11 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                 }, _callee2, this);
             }));
 
-            function init() {
-                return _ref3.apply(this, arguments);
+            function prepareTradeStore() {
+                return _ref2.apply(this, arguments);
             }
 
-            return init;
+            return prepareTradeStore;
         }()
     }, {
         key: 'onChange',
@@ -21857,21 +21846,21 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     }, {
         key: 'onPurchase',
         value: function onPurchase(proposal_id, price, type) {
-            var _this4 = this;
+            var _this3 = this;
 
             if (proposal_id) {
                 (0, _purchase.processPurchase)(proposal_id, price).then((0, _mobx.action)(function (response) {
-                    if (_this4.proposal_info[type].id !== proposal_id) {
+                    if (_this3.proposal_info[type].id !== proposal_id) {
                         throw new Error('Proposal ID does not match.');
                     }
                     if (response.buy && !_client_base2.default.get('is_virtual')) {
-                        var contract_data = _extends({}, _this4.proposal_requests[type], _this4.proposal_info[type], {
+                        var contract_data = _extends({}, _this3.proposal_requests[type], _this3.proposal_info[type], {
                             buy_price: response.buy.buy_price
                         });
-                        _gtm2.default.pushPurchaseData(contract_data, _this4.root_store);
+                        _gtm2.default.pushPurchaseData(contract_data, _this3.root_store);
                     }
                     _Services.WS.forgetAll('proposal');
-                    _this4.purchase_info = response;
+                    _this3.purchase_info = response;
                 }));
             }
         }
@@ -21891,29 +21880,29 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     }, {
         key: 'updateStore',
         value: function updateStore(new_state) {
-            var _this5 = this;
+            var _this4 = this;
 
             Object.keys((0, _utility.cloneObject)(new_state)).forEach(function (key) {
                 if (key === 'root_store' || ['validation_rules', 'validation_errors'].indexOf(key) > -1) return;
-                if (JSON.stringify(_this5[key]) === JSON.stringify(new_state[key])) {
+                if (JSON.stringify(_this4[key]) === JSON.stringify(new_state[key])) {
                     delete new_state[key];
                 } else {
                     if (key === 'symbol') {
-                        _this5.is_purchase_enabled = false;
-                        _this5.is_trade_enabled = false;
+                        _this4.is_purchase_enabled = false;
+                        _this4.is_trade_enabled = false;
                     }
 
                     // Add changes to queryString of the url
-                    if (_query_string.allowed_query_string_variables.indexOf(key) !== -1 && _this5.is_trade_component_mounted) {
+                    if (_query_string.allowed_query_string_variables.indexOf(key) !== -1 && _this4.is_trade_component_mounted) {
                         _url_helper2.default.setQueryParam(_defineProperty({}, key, new_state[key]));
                     }
 
-                    _this5[key] = new_state[key];
+                    _this4[key] = new_state[key];
 
                     // validation is done in mobx intercept (base_store.js)
                     // when barrier_1 is set, it is compared with store.barrier_2 (which is not updated yet)
                     if (key === 'barrier_2' && new_state.barrier_1) {
-                        _this5.barrier_1 = new_state.barrier_1; // set it again, after barrier_2 is updated in store
+                        _this4.barrier_1 = new_state.barrier_1; // set it again, after barrier_2 is updated in store
                     }
                 }
             });
@@ -21931,8 +21920,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                     while (1) {
                         switch (_context3.prev = _context3.next) {
                             case 0:
-
-                                // Sets the default value to Amount when Currency has changed from Fiat to Crypto and vice versa. The source of default values is the website_status response.
+                                // Sets the default value to Amount when Currency has changed from Fiat to Crypto and vice versa.
+                                // The source of default values is the website_status response.
                                 if (is_changed_by_user && /\bcurrency\b/.test(Object.keys(obj_new_values)) && (0, _currency_base.isCryptocurrency)(obj_new_values.currency) !== (0, _currency_base.isCryptocurrency)(this.currency)) {
                                     obj_new_values.amount = obj_new_values.amount || (0, _currency_base.getMinPayout)(obj_new_values.currency);
                                 }
@@ -22005,10 +21994,9 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     }, {
         key: 'requestProposal',
         value: function requestProposal() {
-            var _this6 = this;
+            var _this5 = this;
 
             var requests = (0, _proposal.createProposalRequests)(this);
-
             if (Object.values(this.validation_errors).some(function (e) {
                 return e.length;
             })) {
@@ -22028,8 +22016,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                 this.purchase_info = {};
 
                 _Services.WS.forgetAll('proposal').then(function () {
-                    Object.keys(_this6.proposal_requests).forEach(function (type) {
-                        _Services.WS.subscribeProposal(_this6.proposal_requests[type], _this6.onProposalResponse);
+                    Object.keys(_this5.proposal_requests).forEach(function (type) {
+                        _Services.WS.subscribeProposal(_this5.proposal_requests[type], _this5.onProposalResponse);
                     });
                 });
             }
@@ -22094,13 +22082,42 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         }
     }, {
         key: 'onMount',
-        value: function onMount() {
-            this.is_trade_component_mounted = true;
-            this.updateQueryString();
-        }
+        value: function () {
+            var _ref5 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee4() {
+                var _this6 = this;
+
+                return regeneratorRuntime.wrap(function _callee4$(_context4) {
+                    while (1) {
+                        switch (_context4.prev = _context4.next) {
+                            case 0:
+                                _context4.next = 2;
+                                return this.prepareTradeStore();
+
+                            case 2:
+                                this.debouncedProposal();
+                                (0, _mobx.runInAction)(function () {
+                                    _this6.is_trade_component_mounted = true;
+                                });
+                                this.updateQueryString();
+
+                            case 5:
+                            case 'end':
+                                return _context4.stop();
+                        }
+                    }
+                }, _callee4, this);
+            }));
+
+            function onMount() {
+                return _ref5.apply(this, arguments);
+            }
+
+            return onMount;
+        }()
     }, {
         key: 'onUnmount',
         value: function onUnmount() {
+            _Services.WS.forgetAll('proposal');
             this.is_trade_component_mounted = false;
         }
     }]);
@@ -22264,7 +22281,28 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     initializer: function initializer() {
         return {};
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'prepareTradeStore', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'prepareTradeStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'init', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'init'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onChange', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'onChange'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onHoverPurchase', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'onHoverPurchase'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onPurchase', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'onPurchase'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onClickNewTrade', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'onClickNewTrade'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateStore', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'updateStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'requestProposal', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'requestProposal'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onProposalResponse', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'onProposalResponse'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onChartBarrierChange', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'onChartBarrierChange'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateQueryString', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'updateQueryString'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'changeDurationValidationRules', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'changeDurationValidationRules'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'prepareTradeStore', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'prepareTradeStore'), _class.prototype), _descriptor33 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec2], {
+    enumerable: true,
+    initializer: function initializer() {
+        var _this7 = this;
+
+        return _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee5() {
+            return regeneratorRuntime.wrap(function _callee5$(_context5) {
+                while (1) {
+                    switch (_context5.prev = _context5.next) {
+                        case 0:
+                            _context5.next = 2;
+                            return _socket_base2.default.wait('website_status');
+
+                        case 2:
+                        case 'end':
+                            return _context5.stop();
+                    }
+                }
+            }, _callee5, _this7);
+        }));
+    }
+}), _applyDecoratedDescriptor(_class.prototype, 'onChange', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'onChange'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onHoverPurchase', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'onHoverPurchase'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onPurchase', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'onPurchase'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onClickNewTrade', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'onClickNewTrade'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateStore', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'updateStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'requestProposal', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'requestProposal'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onProposalResponse', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'onProposalResponse'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onChartBarrierChange', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'onChartBarrierChange'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'updateQueryString', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'updateQueryString'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'changeDurationValidationRules', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'changeDurationValidationRules'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype)), _class));
 exports.default = TradeStore;
 
 /***/ }),
