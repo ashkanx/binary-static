@@ -19364,6 +19364,7 @@ var ChartBarrierStore = exports.ChartBarrierStore = (_dec = _mobx.action.bound, 
     _createClass(ChartBarrierStore, [{
         key: 'updateBarriers',
         value: function updateBarriers(high, low) {
+            this.relative = /^[+-]/.test(high);
             this.high = +high || undefined;
             this.low = +low || undefined;
         }
@@ -20518,26 +20519,39 @@ var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./sr
 
 var getValidationRules = function getValidationRules() {
     return {
-        amount: [['req', { message: (0, _localize.localize)('Amount is a required field.') }], ['number', { min: 0, type: 'float' }]],
-        barrier_1: [['req', { condition: function condition(store) {
-                return store.barrier_count && store.form_components.indexOf('barrier') > -1;
-            }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
-                return store.contract_expiry_type !== 'daily' && store.barrier_count;
-            } }], ['number', { condition: function condition(store) {
-                return store.contract_expiry_type === 'daily' && store.barrier_count;
-            }, type: 'float' }], ['custom', { func: function func(value, options, store) {
-                return store.barrier_count > 1 ? +value > +store.barrier_2 : true;
-            }, message: (0, _localize.localize)('Higher barrier must be higher than lower barrier.') }]],
-        barrier_2: [['req', { condition: function condition(store) {
-                return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
-            }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
-                return store.contract_expiry_type !== 'daily' && store.barrier_count;
-            } }], ['number', { condition: function condition(store) {
-                return store.contract_expiry_type === 'daily' && store.barrier_count;
-            }, type: 'float' }], ['custom', { func: function func(value, options, store) {
-                return +store.barrier_1 > +value;
-            }, message: (0, _localize.localize)('Lower barrier must be lower than higher barrier.') }]],
-        duration: [['req', { message: (0, _localize.localize)('Duration is a required field.') }]]
+        amount: {
+            rules: [['req', { message: (0, _localize.localize)('Amount is a required field.') }], ['number', { min: 0, type: 'float' }]]
+        },
+        barrier_1: {
+            rules: [['req', { condition: function condition(store) {
+                    return store.barrier_count && store.form_components.indexOf('barrier') > -1;
+                }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
+                    return store.contract_expiry_type !== 'daily' && store.barrier_count;
+                } }], ['number', { condition: function condition(store) {
+                    return store.contract_expiry_type === 'daily' && store.barrier_count;
+                }, type: 'float' }], ['custom', { func: function func(value, options, store, inputs) {
+                    return store.barrier_count > 1 ? +value > +inputs.barrier_2 : true;
+                }, message: (0, _localize.localize)('Higher barrier must be higher than lower barrier.') }]],
+            trigger: 'barrier_2'
+        },
+        barrier_2: {
+            rules: [['req', { condition: function condition(store) {
+                    return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
+                }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
+                    return store.contract_expiry_type !== 'daily' && store.barrier_count;
+                } }], ['number', { condition: function condition(store) {
+                    return store.contract_expiry_type === 'daily' && store.barrier_count;
+                }, type: 'float' }], ['custom', { func: function func(value, options, store, inputs) {
+                    return (/^[+-]/g.test(inputs.barrier_1) && /^[+-]/g.test(value) || /^(?![+-])/g.test(inputs.barrier_1) && /^(?![+-])/g.test(value)
+                    );
+                }, message: (0, _localize.localize)('Both barriers should be relative or absolute') }], ['custom', { func: function func(value, options, store, inputs) {
+                    return +inputs.barrier_1 > +value;
+                }, message: (0, _localize.localize)('Lower barrier must be lower than higher barrier.') }]],
+            trigger: 'barrier_1'
+        },
+        duration: {
+            rules: [['req', { message: (0, _localize.localize)('Duration is a required field.') }]]
+        }
     };
 };
 
@@ -22061,7 +22075,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                 return;
             }
 
-            var index = this.validation_rules.duration.findIndex(function (item) {
+            var index = this.validation_rules.duration.rules.findIndex(function (item) {
                 return item[0] === 'number';
             });
             var limits = this.duration_min_max[this.contract_expiry_type] || false;
@@ -22073,9 +22087,9 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                 };
 
                 if (index > -1) {
-                    this.validation_rules.duration[index][1] = duration_options;
+                    this.validation_rules.duration.rules[index][1] = duration_options;
                 } else {
-                    this.validation_rules.duration.push(['number', duration_options]);
+                    this.validation_rules.duration.rules.push(['number', duration_options]);
                 }
                 this.validateProperty('duration', this.duration);
             }
@@ -22673,10 +22687,24 @@ var BaseStore = (_class = (_temp = _class2 = function () {
     }, {
         key: 'validateProperty',
         value: function validateProperty(property, value) {
-            var validator = new _Validator2.default(_defineProperty({}, property, value !== undefined ? value : this[property]), _defineProperty({}, property, this.validation_rules[property]), this);
+            var _this6 = this;
+
+            var trigger = this.validation_rules[property].trigger;
+            var inputs = _defineProperty({}, property, value !== undefined ? value : this[property]);
+            var validation_rules = _defineProperty({}, property, this.validation_rules[property].rules || []);
+
+            if (!!trigger && Object.hasOwnProperty.call(this, trigger)) {
+                inputs[trigger] = this[trigger];
+                validation_rules[trigger] = this.validation_rules[trigger].rules || [];
+            }
+
+            var validator = new _Validator2.default(inputs, validation_rules, this);
 
             validator.isPassed();
-            this.setValidationErrorMessages(property, validator.errors.get(property));
+
+            Object.keys(inputs).forEach(function (key) {
+                _this6.setValidationErrorMessages(key, validator.errors.get(key));
+            });
         }
 
         /**
@@ -22687,11 +22715,11 @@ var BaseStore = (_class = (_temp = _class2 = function () {
     }, {
         key: 'validateAllProperties',
         value: function validateAllProperties() {
-            var _this6 = this;
+            var _this7 = this;
 
             this.validation_errors = {};
             Object.keys(this.validation_rules).forEach(function (p) {
-                _this6.validateProperty(p, _this6[p]);
+                _this7.validateProperty(p, _this7[p]);
             });
         }
     }]);
@@ -24106,7 +24134,7 @@ var validTaxID = function validTaxID(value) {
     );
 };
 var validBarrier = function validBarrier(value) {
-    return (/^[+-]\d+\.?\d*$/.test(value)
+    return (/^[+-]?\d+\.?\d*$/.test(value)
     );
 };
 
@@ -24395,7 +24423,7 @@ var Validator = function () {
                         return;
                     }
 
-                    var is_valid = ruleObject.validator(_this.input[attribute], ruleObject.options, _this.store);
+                    var is_valid = ruleObject.validator(_this.input[attribute], ruleObject.options, _this.store, _this.input);
 
                     if (!is_valid) {
                         _this.addFailure(attribute, ruleObject);
