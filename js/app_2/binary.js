@@ -4288,6 +4288,207 @@ exports.TabsWrapper = TabsWrapper;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Elements/ToastMessage/close_button.jsx":
+/*!************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/ToastMessage/close_button.jsx ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var CloseButton = function CloseButton(_ref) {
+    var onClick = _ref.onClick;
+    return _react2.default.createElement('button', {
+        className: 'toast__body__close-button',
+        type: 'button',
+        onClick: onClick
+    });
+};
+
+CloseButton.propTypes = {
+    onClick: _propTypes2.default.func
+};
+
+exports.default = CloseButton;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/ToastMessage/constants.js":
+/*!********************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/ToastMessage/constants.js ***!
+  \********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var DEFAULT_DELAY = exports.DEFAULT_DELAY = 5000;
+
+var POSITIONS = exports.POSITIONS = {
+    TOP_LEFT: 'toast--top-left',
+    TOP_RIGHT: 'toast--top-right',
+    TOP_CENTER: 'toast--top-center',
+    BOTTOM_LEFT: 'toast--bottom-left',
+    BOTTOM_RIGHT: 'toast--bottom-right',
+    BOTTOM_CENTER: 'toast--bottom-center'
+};
+
+var TYPES = exports.TYPES = {
+    ERROR: 'toast__body--error',
+    INFO: 'toast__body--info',
+    SUCCESS: 'toast__body--success',
+    WARNING: 'toast__body--warning'
+};
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/ToastMessage/index.js":
+/*!****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/ToastMessage/index.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _constants = __webpack_require__(/*! ./constants.js */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/constants.js");
+
+Object.keys(_constants).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _constants[key];
+    }
+  });
+});
+
+var _toast = __webpack_require__(/*! ./toast.jsx */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/toast.jsx");
+
+var _toast2 = _interopRequireDefault(_toast);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _toast2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/ToastMessage/toast.jsx":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/ToastMessage/toast.jsx ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _close_button = __webpack_require__(/*! ./close_button.jsx */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/close_button.jsx");
+
+var _close_button2 = _interopRequireDefault(_close_button);
+
+var _constants = __webpack_require__(/*! ./constants */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/constants.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Toast = function Toast(_ref) {
+    var data = _ref.data,
+        removeToastMessage = _ref.removeToastMessage;
+
+    var destroy = function destroy(is_closed_by_user) {
+        removeToastMessage(data);
+
+        if (typeof data.closeOnClick === 'function') {
+            data.closeOnClick(data, is_closed_by_user);
+        }
+    };
+
+    var onClick = function onClick() {
+        return destroy(true);
+    };
+
+    if (data.is_auto_close || data.is_auto_close === undefined) {
+        setTimeout(destroy, data.delay || _constants.DEFAULT_DELAY);
+    }
+
+    return _react2.default.createElement(
+        'div',
+        {
+            className: (0, _classnames2.default)('toast__body', _constants.POSITIONS.TOP_RIGHT, data.position, _constants.TYPES[data.type.toUpperCase()]),
+            onClick: onClick
+        },
+        _react2.default.createElement(
+            'div',
+            { className: 'toast__body__icon' },
+            _react2.default.createElement('span', { className: 'toast__body__icon--' + data.type.toLowerCase() })
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'toast__body__message' },
+            data.message
+        ),
+        _react2.default.createElement(_close_button2.default, { onClick: onClick })
+    );
+};
+
+Toast.propTypes = {
+    data: _propTypes2.default.shape({
+        closeOnClick: _propTypes2.default.func,
+        delay: _propTypes2.default.number,
+        is_auto_close: _propTypes2.default.bool,
+        message: _propTypes2.default.node,
+        position: _propTypes2.default.string,
+        type: _propTypes2.default.string
+    }),
+    removeToastMessage: _propTypes2.default.func
+};
+
+exports.default = Toast;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/localize.jsx":
 /*!*******************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/localize.jsx ***!
@@ -8152,6 +8353,102 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Containers/toast_message.jsx":
+/*!***************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/toast_message.jsx ***!
+  \***************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _connect = __webpack_require__(/*! ../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+var _ToastMessage = __webpack_require__(/*! ../Components/Elements/ToastMessage */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/index.js");
+
+var _ToastMessage2 = _interopRequireDefault(_ToastMessage);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ToastMessage = function (_React$Component) {
+    _inherits(ToastMessage, _React$Component);
+
+    function ToastMessage() {
+        _classCallCheck(this, ToastMessage);
+
+        return _possibleConstructorReturn(this, (ToastMessage.__proto__ || Object.getPrototypeOf(ToastMessage)).apply(this, arguments));
+    }
+
+    _createClass(ToastMessage, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: (0, _classnames2.default)('toast', this.props.position) },
+                this.props.toast_messages.map(function (toast, id) {
+                    return _react2.default.createElement(_ToastMessage2.default, {
+                        key: id,
+                        data: toast,
+                        removeToastMessage: _this2.props.removeToastMessage
+                    });
+                })
+            );
+        }
+    }]);
+
+    return ToastMessage;
+}(_react2.default.Component);
+
+ToastMessage.propTypes = {
+    position: _propTypes2.default.string,
+    removeToastMessage: _propTypes2.default.func,
+    toast_messages: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+        closeOnClick: _propTypes2.default.func,
+        delay: _propTypes2.default.number,
+        is_auto_close: _propTypes2.default.bool,
+        message: _propTypes2.default.node,
+        position: _propTypes2.default.string,
+        type: _propTypes2.default.string
+    }))
+};
+
+exports.default = (0, _connect.connect)(function (_ref) {
+    var ui = _ref.ui;
+    return {
+        removeToastMessage: ui.removeToastMessage,
+        toast_messages: ui.toast_messages
+    };
+})(ToastMessage);
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/app.js":
 /*!*****************************************!*\
   !*** ./src/javascript/app_2/App/app.js ***!
@@ -8204,10 +8501,10 @@ var initApp = function initApp() {
     var root_store = new _Stores2.default();
 
     _network_monitor2.default.init(root_store);
-
     root_store.modules.trade.init();
 
     var app = document.getElementById('binary_app');
+
     if (app) {
         (0, _reactDom.render)(_react2.default.createElement(_app2.default, { root_store: root_store }), app);
     }
@@ -8254,6 +8551,12 @@ var _error_boundary2 = _interopRequireDefault(_error_boundary);
 var _PortfolioDrawer = __webpack_require__(/*! ./Components/Elements/PortfolioDrawer */ "./src/javascript/app_2/App/Components/Elements/PortfolioDrawer/index.js");
 
 var _PortfolioDrawer2 = _interopRequireDefault(_PortfolioDrawer);
+
+var _ToastMessage = __webpack_require__(/*! ./Components/Elements/ToastMessage */ "./src/javascript/app_2/App/Components/Elements/ToastMessage/index.js");
+
+var _toast_message = __webpack_require__(/*! ./Containers/toast_message.jsx */ "./src/javascript/app_2/App/Containers/toast_message.jsx");
+
+var _toast_message2 = _interopRequireDefault(_toast_message);
 
 var _app_contents = __webpack_require__(/*! ./Containers/Layout/app_contents.jsx */ "./src/javascript/app_2/App/Containers/Layout/app_contents.jsx");
 
@@ -8307,7 +8610,8 @@ var App = function App(_ref) {
                         null,
                         _react2.default.createElement(_routes2.default, null),
                         _react2.default.createElement(DevTools, null),
-                        _react2.default.createElement(_PortfolioDrawer2.default, null)
+                        _react2.default.createElement(_PortfolioDrawer2.default, null),
+                        _react2.default.createElement(_toast_message2.default, { position: _ToastMessage.POSITIONS.TOP_RIGHT })
                     )
                 ),
                 _react2.default.createElement(
@@ -21541,6 +21845,8 @@ var _socket_base = __webpack_require__(/*! ../../../../_common/base/socket_base 
 
 var _socket_base2 = _interopRequireDefault(_socket_base);
 
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
 var _Services = __webpack_require__(/*! ../../../Services */ "./src/javascript/app_2/Services/index.js");
@@ -21781,7 +22087,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2() {
                 var _this2 = this;
 
-                var query_string_values, active_symbols;
+                var query_string_values, active_symbols, is_invalid_symbol;
                 return regeneratorRuntime.wrap(function _callee2$(_context2) {
                     while (1) {
                         switch (_context2.prev = _context2.next) {
@@ -21789,26 +22095,43 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 query_string_values = this.updateQueryString();
 
                                 this.smart_chart = this.root_store.modules.smart_chart;
+                                _context2.next = 4;
+                                return _Services.WS.activeSymbols();
+
+                            case 4:
+                                active_symbols = _context2.sent;
+
+
+                                // Checks for finding out that the current account has access to the defined symbol in quersy string or not.
+                                is_invalid_symbol = !!query_string_values.symbol && !active_symbols.active_symbols.find(function (s) {
+                                    return s.symbol === query_string_values.symbol;
+                                });
+
+                                // Changes the symbol in query string to default symbol since the account doesn't have access to the defined symbol.
+
+                                if (is_invalid_symbol) {
+                                    this.root_store.ui.addToastMessage({
+                                        message: (0, _localize.localize)('Certain trade parameters have been changed due to your account settings.'),
+                                        type: 'info'
+                                    });
+                                    _url_helper2.default.setQueryParam({ 'symbol': (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols) });
+                                    query_string_values = this.updateQueryString();
+                                }
 
                                 if (this.symbol) {
-                                    _context2.next = 8;
+                                    _context2.next = 10;
                                     break;
                                 }
 
-                                _context2.next = 5;
-                                return _Services.WS.activeSymbols();
-
-                            case 5:
-                                active_symbols = _context2.sent;
-                                _context2.next = 8;
+                                _context2.next = 10;
                                 return this.processNewValuesAsync(_extends({
                                     symbol: (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols)
                                 }, query_string_values));
 
-                            case 8:
+                            case 10:
 
                                 if (this.symbol) {
-                                    _contract_type2.default.buildContractTypesConfig(this.symbol).then((0, _mobx.action)(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                                    _contract_type2.default.buildContractTypesConfig(query_string_values.symbol || this.symbol).then((0, _mobx.action)(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
                                         return regeneratorRuntime.wrap(function _callee$(_context) {
                                             while (1) {
                                                 switch (_context.prev = _context.next) {
@@ -21825,7 +22148,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                     }))));
                                 }
 
-                            case 9:
+                            case 11:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -21981,7 +22304,8 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
                                 snapshot.is_trade_enabled = true;
 
-                                this.updateStore(_extends({}, snapshot, this.is_query_string_applied ? {} : query_string_values));
+                                this.updateStore(_extends({}, snapshot, this.is_query_string_applied ? {} : query_string_values) // Applies the query string values again to set barriers.
+                                );
 
                                 this.is_query_string_applied = true;
 
@@ -22011,6 +22335,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             var _this5 = this;
 
             var requests = (0, _proposal.createProposalRequests)(this);
+
             if (Object.values(this.validation_errors).some(function (e) {
                 return e.length;
             })) {
@@ -23228,7 +23553,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -23289,13 +23614,9 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, (_class = function (_BaseStore) {
+var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(UIStore, _BaseStore);
 
-    // SmartCharts Controls
-
-
-    // Purchase Controls
     function UIStore() {
         _classCallCheck(this, UIStore);
 
@@ -23329,12 +23650,20 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         _initDefineProp(_this, 'screen_width', _descriptor13, _this);
 
+        _initDefineProp(_this, 'toast_messages', _descriptor14, _this);
+
         window.addEventListener('resize', _this.handleResize);
         (0, _mobx.autorun)(function () {
             return document.body.classList[_this.is_dark_mode_on ? 'add' : 'remove']('dark');
         });
         return _this;
     }
+
+    // SmartCharts Controls
+
+
+    // Purchase Controls
+
 
     _createClass(UIStore, [{
         key: 'handleResize',
@@ -23421,6 +23750,24 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
             this.is_notifications_drawer_on = false;
         }
     }, {
+        key: 'addToastMessage',
+        value: function addToastMessage(toast_message) {
+            this.toast_messages.push(toast_message);
+        }
+    }, {
+        key: 'removeToastMessage',
+        value: function removeToastMessage(toast_message) {
+            var index = this.toast_messages.indexOf(toast_message);
+            if (index > -1) {
+                this.toast_messages.splice(index, 1);
+            }
+        }
+    }, {
+        key: 'removeAllToastMessages',
+        value: function removeAllToastMessages() {
+            this.toast_messages = [];
+        }
+    }, {
         key: 'is_mobile',
         get: function get() {
             return this.screen_width <= _ui.MAX_MOBILE_WIDTH;
@@ -23498,7 +23845,12 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return window.innerWidth;
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePortfolioDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePortfolioDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype)), _class));
+}), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'toast_messages', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return [];
+    }
+}), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePortfolioDrawer', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePortfolioDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
 exports.default = UIStore;
 
 /***/ }),
@@ -23979,7 +24331,7 @@ var URLHelper = function () {
             if (!url) {
                 window.history.replaceState(null, null, '?' + param_object.toString());
             } else {
-                url_object.seach = param_object.toString();
+                url_object.search = param_object.toString();
             }
 
             return url_object;
