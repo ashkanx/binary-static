@@ -22190,7 +22190,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                     if (_this3.proposal_info[type].id !== proposal_id) {
                         throw new Error('Proposal ID does not match.');
                     }
-                    if (response.buy && !_client_base2.default.get('is_virtual')) {
+                    if (response.buy) {
                         var contract_data = _extends({}, _this3.proposal_requests[type], _this3.proposal_info[type], {
                             buy_price: response.buy.buy_price
                         });
