@@ -12950,7 +12950,8 @@ var Chart = function (_React$Component) {
                     settings: this.props.settings,
                     startEpoch: this.props.start_epoch,
                     symbol: this.props.symbol,
-                    topWidgets: this.topWidgets
+                    topWidgets: this.topWidgets,
+                    isConnectionOpened: this.props.is_socket_opened
                 },
                 this.props.markers_array.map(function (marker, idx) {
                     return _react2.default.createElement(_marker2.default, {
@@ -12988,8 +12989,10 @@ Chart.propTypes = {
 
 exports.default = (0, _connect.connect)(function (_ref2) {
     var modules = _ref2.modules,
-        ui = _ref2.ui;
+        ui = _ref2.ui,
+        common = _ref2.common;
     return {
+        is_socket_opened: common.is_socket_opened,
         barriers_array: modules.smart_chart.barriers_array,
         is_title_enabled: modules.smart_chart.is_title_enabled,
         markers_array: modules.smart_chart.markers_array,
@@ -17807,6 +17810,10 @@ var client_store = void 0,
 
 // TODO: update commented statements to the corresponding functions from app_2
 var BinarySocketGeneral = function () {
+    var onDisconnect = function onDisconnect() {
+        common_store.setIsSocketOpened(false);
+    };
+
     var onOpen = function onOpen(is_ready) {
         // Header.hideNotification();
         if (is_ready) {
@@ -17820,6 +17827,7 @@ var BinarySocketGeneral = function () {
             _server_time2.default.init((0, _mobx.action)('setTime', function () {
                 common_store.server_time = _server_time2.default.get();
             }));
+            common_store.setIsSocketOpened(true);
         }
     };
 
@@ -17944,6 +17952,7 @@ var BinarySocketGeneral = function () {
         common_store = store.common;
 
         return {
+            onDisconnect: onDisconnect,
             onOpen: onOpen,
             onMessage: onMessage
         };
@@ -23288,7 +23297,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
+var _dec, _dec2, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -23353,7 +23362,7 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
+var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(CommonStore, _BaseStore);
 
     function CommonStore() {
@@ -23367,10 +23376,15 @@ var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonStore.__proto__ || Object.getPrototypeOf(CommonStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'server_time', _descriptor, _this), _initDefineProp(_this, 'current_language', _descriptor2, _this), _initDefineProp(_this, 'has_error', _descriptor3, _this), _initDefineProp(_this, 'error', _descriptor4, _this), _initDefineProp(_this, 'network_status', _descriptor5, _this), _initDefineProp(_this, 'is_network_online', _descriptor6, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonStore.__proto__ || Object.getPrototypeOf(CommonStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'server_time', _descriptor, _this), _initDefineProp(_this, 'current_language', _descriptor2, _this), _initDefineProp(_this, 'has_error', _descriptor3, _this), _initDefineProp(_this, 'error', _descriptor4, _this), _initDefineProp(_this, 'network_status', _descriptor5, _this), _initDefineProp(_this, 'is_network_online', _descriptor6, _this), _initDefineProp(_this, 'is_socket_opened', _descriptor7, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(CommonStore, [{
+        key: 'setIsSocketOpened',
+        value: function setIsSocketOpened(is_socket_opened) {
+            this.is_socket_opened = is_socket_opened;
+        }
+    }, {
         key: 'setError',
         value: function setError(has_error, error) {
             this.has_error = has_error;
@@ -23415,7 +23429,12 @@ var CommonStore = (_dec = _mobx.action.bound, (_class = function (_BaseStore) {
     initializer: function initializer() {
         return false;
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype)), _class));
+}), _descriptor7 = _applyDecoratedDescriptor(_class.prototype, 'is_socket_opened', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return false;
+    }
+}), _applyDecoratedDescriptor(_class.prototype, 'setIsSocketOpened', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setIsSocketOpened'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype)), _class));
 exports.default = CommonStore;
 
 /***/ }),
