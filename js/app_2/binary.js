@@ -8611,12 +8611,6 @@ var _routes2 = _interopRequireDefault(_routes);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-// Conditionally loading mobx only on development builds.
-// see https://github.com/mobxjs/mobx-react-devtools/issues/66
-var Fragment = _react2.default.Fragment;
-
-var DevTools =  true ? __webpack_require__(/*! mobx-react-devtools */ "./node_modules/mobx-react-devtools/index.js").default : undefined;
-
 var App = function App(_ref) {
     var root_store = _ref.root_store;
     return _react2.default.createElement(
@@ -8640,7 +8634,6 @@ var App = function App(_ref) {
                         _app_contents2.default,
                         null,
                         _react2.default.createElement(_routes2.default, null),
-                        _react2.default.createElement(DevTools, null),
                         _react2.default.createElement(_PortfolioDrawer2.default, null),
                         _react2.default.createElement(_toast_message2.default, { position: _ToastMessage.POSITIONS.TOP_RIGHT })
                     )
