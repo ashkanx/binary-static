@@ -22178,6 +22178,10 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 active_symbols = _context2.sent;
 
 
+                                if (!active_symbols.active_symbols || active_symbols.active_symbols.length === 0) {
+                                    this.root_store.common.showError((0, _localize.localize)('Trading is unavailable at this time.'));
+                                }
+
                                 // Checks for finding out that the current account has access to the defined symbol in quersy string or not.
                                 is_invalid_symbol = !!query_string_values.symbol && !active_symbols.active_symbols.find(function (s) {
                                     return s.symbol === query_string_values.symbol;
@@ -22195,16 +22199,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                 }
 
                                 if (this.symbol) {
-                                    _context2.next = 10;
+                                    _context2.next = 11;
                                     break;
                                 }
 
-                                _context2.next = 10;
+                                _context2.next = 11;
                                 return this.processNewValuesAsync(_extends({
                                     symbol: (0, _symbol2.pickDefaultSymbol)(active_symbols.active_symbols)
                                 }, query_string_values));
 
-                            case 10:
+                            case 11:
 
                                 if (this.symbol) {
                                     _contract_type2.default.buildContractTypesConfig(query_string_values.symbol || this.symbol).then((0, _mobx.action)(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
@@ -22224,7 +22228,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                                     }))));
                                 }
 
-                            case 11:
+                            case 12:
                             case 'end':
                                 return _context2.stop();
                         }
@@ -23290,7 +23294,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
+var _dec, _dec2, _dec3, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -23355,7 +23359,7 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, (_class = function (_BaseStore) {
+var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(CommonStore, _BaseStore);
 
     function CommonStore() {
@@ -23385,6 +23389,14 @@ var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, (_clas
                 type: error ? error.type : 'info',
                 message: error ? error.message : ''
             };
+        }
+    }, {
+        key: 'showError',
+        value: function showError(message) {
+            this.setError(true, {
+                message: message,
+                type: 'error'
+            });
         }
     }]);
 
@@ -23427,7 +23439,7 @@ var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, (_clas
     initializer: function initializer() {
         return false;
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'setIsSocketOpened', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setIsSocketOpened'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'setIsSocketOpened', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setIsSocketOpened'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showError', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'showError'), _class.prototype)), _class));
 exports.default = CommonStore;
 
 /***/ }),
