@@ -18114,6 +18114,10 @@ var _ws_methods = __webpack_require__(/*! ./ws_methods */ "./src/javascript/app_
 
 var _ws_methods2 = _interopRequireDefault(_ws_methods);
 
+var _gtm = __webpack_require__(/*! ../Utils/gtm */ "./src/javascript/app_2/Utils/gtm.js");
+
+var _gtm2 = _interopRequireDefault(_gtm);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var requestLogout = exports.requestLogout = function requestLogout() {
@@ -18122,6 +18126,7 @@ var requestLogout = exports.requestLogout = function requestLogout() {
 
 var doLogout = function doLogout(response) {
     if (response.logout !== 1) return;
+    _gtm2.default.pushDataLayer({ event: 'log_out' });
     (0, _storage.removeCookies)('affiliate_token', 'affiliate_tracking');
     _client_base2.default.clearAllAccounts();
     _client_base2.default.set('loginid', '');
@@ -25377,6 +25382,7 @@ var GTM = function () {
     var pushPurchaseData = function pushPurchaseData(contract_data, root_store) {
         var data = {
             event: 'buy_contract',
+            bom_ui: 'new',
             contract: {
                 amount: contract_data.amount,
                 barrier1: contract_data.barrier,
