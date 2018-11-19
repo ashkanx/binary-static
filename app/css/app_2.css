@@ -825,6 +825,9 @@ span.tooltip {
     position: relative;
     -webkit-box-sizing: border-box;
             box-sizing: border-box;
+    -webkit-box-align: center;
+        -ms-flex-align: center;
+            align-items: center;
     width: 100%;
     height: 100%; }
     .header .menu-items .navbar-icons {
@@ -846,12 +849,6 @@ span.tooltip {
         -webkit-box-align: center;
             -ms-flex-align: center;
                 align-items: center; }
-      .header .menu-items .navbar-icons img {
-        width: 1.5rem;
-        height: auto; }
-        .header .menu-items .navbar-icons img.logo-img {
-          width: 30px;
-          height: 30px; }
       .header .menu-items .navbar-icons.notify-toggle {
         -webkit-box-ordinal-group: 3;
             -ms-flex-order: 2;

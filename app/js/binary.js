@@ -189,6 +189,466 @@ webpackContext.id = "./node_modules/moment/locale sync recursive ja";
 
 /***/ }),
 
+/***/ "./src/images/app_2/header/symbol.svg":
+/*!********************************************!*\
+  !*** ./src/images/app_2/header/symbol.svg ***!
+  \********************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "46", height: "46", viewBox: "0 0 60.47 60.47" }, props), _react2.default.createElement("path", { fill: "#fff", d: "M51.61 8.85a30.24 30.24 0 1 0 0 42.77 30.26 30.26 0 0 0 0-42.77z" }), _react2.default.createElement("path", { fill: "#2a3052", d: "M21.8 38.17A5.51 5.51 0 0 0 24.33 42l-.58-1.08s1.11-2.92-1.95-2.75z" }), _react2.default.createElement("path", { fill: "#2a3052", d: "M50.08 10.38a28.08 28.08 0 1 0 0 39.72 28.1 28.1 0 0 0 0-39.72zm-2.9 36.81l-.92.87c-6.75 5.5-11.94 2.76-12 2.76-3.52-.7-5.27-.71-6.26-1.37-.25-.17-1-.59-1.23-.49a2.25 2.25 0 0 1-2.72-.16l-.25-.23a1.93 1.93 0 0 1-.37-2.67c.26-.26-.2-1-.2-1s-1.32-2-2.22-3.15a8.79 8.79 0 0 1-1.14-3.91 10.46 10.46 0 0 1-1.46-2.14 5.55 5.55 0 0 0-.78-.94 5 5 0 0 1-.47-.51.21.21 0 0 1 0-.16 5.65 5.65 0 0 1 1.55-2c.32-.21 1.68-1 1.68-1a2.71 2.71 0 0 1 2.08-1.21 9.93 9.93 0 0 1 3.93.6l.84.27c1.42.45 2.67 1 3.66 1.42a16.55 16.55 0 0 0 2 .79c1.75.46 4.85-1 5.5-1.56 1.07-1 1.53-1.63 1.54-2.16a1.2 1.2 0 0 0-.43-.88c-.16-.14-.36-.42-.62-.67a1.12 1.12 0 0 0-.14-.12c-3-3.15-2.46-5.13-2.45-5.16.13-1.42-.69-2.33-1.56-3.27l-.14-.18a1 1 0 0 1-.1-.11 37.8 37.8 0 0 0 4.59 1 8.79 8.79 0 0 0 2.08.11c1.54 0 2.77-.18 2.85-.54a21.27 21.27 0 0 1-4.11-1.21 65.92 65.92 0 0 0-2.72-1c-1.24-.42-2.58-1-2.58-1 5.35 1.4 7.1 2 9.54 2A7.68 7.68 0 0 0 46 18c.35-.06 1.43-.31 1.55-.68a8.74 8.74 0 0 1-3-.48c-6.24-2.06-6.77-3.09-10.23-4.44a31.17 31.17 0 0 0-5.25-1.67 10.13 10.13 0 0 0-4.54 0c-4.73-1.11-5.81-1-7.2-.69a24 24 0 0 1 29.86 3.23 24.46 24.46 0 0 1 2.92 3.54l.11.17a24 24 0 0 1-3 30.19zM31.46 20.13a5.51 5.51 0 0 1 3.1 3.34c-3 .68-2.36-2.37-2.36-2.37z" }));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-account-password.svg":
+/*!***********************************************************!*\
+  !*** ./src/images/app_2/settings/ic-account-password.svg ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M8 19.02v4.96h16v-4.96H8zM8 18h16c.55 0 1 .46 1 1.02v4.96A1.01 1.01 0 0 1 24 25H8c-.55 0-1-.46-1-1.02v-4.96c0-.56.45-1.02 1-1.02zm12.5 2.8l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zm-4.5 0l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zm-4.5 0l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zM18 9.97v-.92c0-1.13-.9-2.04-2-2.04s-2 .91-2 2.04v.92h4zM16 6c1.66 0 3 1.37 3 3.06V11h-6V9.06A3.03 3.03 0 0 1 16 6zm-4 5.02v4.96h8v-4.96h-8zM12 10h8c.55 0 1 .46 1 1.02v4.96A1.01 1.01 0 0 1 20 17h-8c-.55 0-1-.46-1-1.02v-4.96c0-.56.45-1.02 1-1.02zm3.5 3.87a1 1 0 1 1 1 0v.63a.5.5 0 1 1-1 0v-.63z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-api-token.svg":
+/*!****************************************************!*\
+  !*** ./src/images/app_2/settings/ic-api-token.svg ***!
+  \****************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M7 19v5h18v-5H7zm0-1h18a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1zm13.5 2.8l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zm-4.5 0l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zm-4.5 0l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zM16 11c1.14 0 2-.72 2-1.5S17.14 8 16 8c-1.14 0-2 .72-2 1.5s.86 1.5 2 1.5zm0 1c-1.66 0-3-1.12-3-2.5S14.34 7 16 7s3 1.12 3 2.5-1.34 2.5-3 2.5zm0-1a.5.5 0 0 1 .5.5v5a.5.5 0 1 1-1 0v-5a.5.5 0 0 1 .5-.5zm0 5h2a.5.5 0 1 1 0 1h-2a.5.5 0 1 1 0-1zm0-2h1a.5.5 0 1 1 0 1h-1a.5.5 0 1 1 0-1z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-authorised-applications.svg":
+/*!******************************************************************!*\
+  !*** ./src/images/app_2/settings/ic-authorised-applications.svg ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M9 14v2h14v-2H9zm0-1h14a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zm0 7v2h5v-2H9zm0-1h5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zm9 1v2h5v-2h-5zm0-1h5a1 1 0 0 1 1 1v2a1 1 0 0 1-1 1h-5a1 1 0 0 1-1-1v-2a1 1 0 0 1 1-1zM7 7v18h18V7H7zm0-1h18a1 1 0 0 1 1 1v18a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1zm-1 4h20v1H6v-1zm17.5-1a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm-2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1zm-2 0a.5.5 0 1 0 0-1 .5.5 0 0 0 0 1z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-cashier-password.svg":
+/*!***********************************************************!*\
+  !*** ./src/images/app_2/settings/ic-cashier-password.svg ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M7 7v10h15V7H7zm16 7h-1v3h-5v1H7a1 1 0 0 1-1-1V7a1 1 0 0 1 1-1h15a1 1 0 0 1 1 1v7zM6 8h17v2H6V8zm3 4h6v1H9v-1zm0 2h6v1H9v-1zm9.5 1a1.5 1.5 0 1 0 0-3 1.5 1.5 0 0 0 0 3zm.5 4h4v-1a2 2 0 1 0-4 0v1zm2-4a3 3 0 0 1 3 3v2h-6v-2a3 3 0 0 1 3-3zm-4 5v5h8v-5h-8zm0-1h8a1 1 0 0 1 1 1v5a1 1 0 0 1-1 1h-8a1 1 0 0 1-1-1v-5a1 1 0 0 1 1-1zm3.5 3.87a1 1 0 1 1 1 0v.63a.5.5 0 1 1-1 0v-.63z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-financial-assesment.svg":
+/*!**************************************************************!*\
+  !*** ./src/images/app_2/settings/ic-financial-assesment.svg ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M9 25h13.59L24 23.59V7H10a1 1 0 0 0-1 1v17zm1-19h15v18l-2 2H8V8a2 2 0 0 1 2-2zm6.5 10h5a.5.5 0 1 1 0 1h-5a.5.5 0 1 1 0-1zm0 2h5a.5.5 0 1 1 0 1h-5a.5.5 0 1 1 0-1zm-5.35 4.85a.5.5 0 0 1 .7-.7l1 1a.5.5 0 0 1-.7.7l-1-1zm1.7 1a.5.5 0 0 1-.7-.7l2-2a.5.5 0 0 1 .7.7l-2 2zM16.5 21h5a.5.5 0 1 1 0 1h-5a.5.5 0 1 1 0-1zm0 2h5a.5.5 0 1 1 0 1h-5a.5.5 0 1 1 0-1zm-5.35-5.15a.5.5 0 0 1 .7-.7l1 1a.5.5 0 0 1-.7.7l-1-1zm1.7 1a.5.5 0 0 1-.7-.7l2-2a.5.5 0 0 1 .7.7l-2 2zm4.54-6.4a.63.63 0 0 0-.16-.44c-.1-.1-.28-.21-.53-.3a6.23 6.23 0 0 1-.64-.28 2.05 2.05 0 0 1-.46-.32 1.28 1.28 0 0 1-.3-.42 1.42 1.42 0 0 1-.11-.58c0-.39.12-.7.37-.95.24-.24.57-.39.98-.43V8h.55v.74c.4.06.71.23.94.5.23.29.34.65.34 1.1h-.98c0-.28-.06-.49-.17-.62a.56.56 0 0 0-.46-.2c-.18 0-.33.05-.43.15a.6.6 0 0 0-.15.44c0 .18.05.31.15.42.1.1.28.21.55.32.28.11.5.21.68.31.17.1.32.2.44.33a1.28 1.28 0 0 1 .37.96c0 .39-.12.7-.36.94s-.57.39-1 .43v.68h-.54v-.68a1.64 1.64 0 0 1-1.08-.5A1.6 1.6 0 0 1 15 12.2h.99c0 .27.06.48.2.63.12.14.3.21.55.21.2 0 .36-.05.47-.15a.55.55 0 0 0 .18-.43z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-limits.svg":
+/*!*************************************************!*\
+  !*** ./src/images/app_2/settings/ic-limits.svg ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M16 18a2 2 0 1 1 0-4 2 2 0 0 1 0 4zm0-1a1 1 0 1 0 0-2 1 1 0 0 0 0 2zm-6 5.7a8.97 8.97 0 0 0 6 2.3 8.97 8.97 0 0 0 6-2.3l-.85-.85a.5.5 0 0 1 .7-.7l.86.85a8.96 8.96 0 0 0 2.28-5.5H24a.5.5 0 1 1 0-1h.99A8.96 8.96 0 0 0 22.7 10l-.86.85a.5.5 0 0 1-.7-.7l.85-.86a8.96 8.96 0 0 0-5.5-2.28V8a.5.5 0 1 1-1 0v-.99A8.96 8.96 0 0 0 10 9.3l.85.86a.5.5 0 0 1-.7.7L9.29 10a8.96 8.96 0 0 0-2.28 5.5H8a.5.5 0 1 1 0 1h-.99A8.96 8.96 0 0 0 9.3 22l.86-.85a.5.5 0 0 1 .7.7l-.85.86zm6 3.3a10 10 0 1 1 0-20 10 10 0 0 1 0 20zm-3.85-13.15a.5.5 0 0 1 .7-.7l2.12 2.12a.5.5 0 1 1-.7.7l-2.12-2.12z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-login-history.svg":
+/*!********************************************************!*\
+  !*** ./src/images/app_2/settings/ic-login-history.svg ***!
+  \********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M9 14v3h5v-3H9zm0-1h5a1 1 0 0 1 1 1v3a1 1 0 0 1-1 1H9a1 1 0 0 1-1-1v-3a1 1 0 0 1 1-1zm3.5-.5a1 1 0 0 0-2 0h2zm-1-2a2 2 0 0 1 2 2v1h-4v-1a2 2 0 0 1 2-2zM7 8v13h18V8H7zm0-1h18a1 1 0 0 1 1 1v13a1 1 0 0 1-1 1H7a1 1 0 0 1-1-1V8a1 1 0 0 1 1-1zm5 14h1v4h-1v-4zm7 0h1v4h-1v-4zm-8.5 3h11a.5.5 0 1 1 0 1h-11a.5.5 0 1 1 0-1zM6 19h20v1H6v-1zm11-9v1h6v-1h-6zm0-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1zm0 5v1h6v-1h-6zm0-1h6a1 1 0 0 1 1 1v1a1 1 0 0 1-1 1h-6a1 1 0 0 1-1-1v-1a1 1 0 0 1 1-1zm-.5 4h1a.5.5 0 1 1 0 1h-1a.5.5 0 1 1 0-1zm3 0a.5.5 0 1 1 0 1 .5.5 0 1 1 0-1zm2 0a.5.5 0 1 1 0 1 .5.5 0 1 1 0-1z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-personal-details.svg":
+/*!***********************************************************!*\
+  !*** ./src/images/app_2/settings/ic-personal-details.svg ***!
+  \***********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M22.02 20.61l-1.54-.31-.96-1.67a8.25 8.25 0 0 0 1.53-3.22.4.4 0 0 0 0-.1v-.45c.74-.55.96-2.5 1-2.93a6.1 6.1 0 0 0-1.85-4.26A5.04 5.04 0 0 0 16.63 6h-.28c-.04 0-4.43.22-5.27 4.62a4.37 4.37 0 0 0 .9 3.97v.66a.4.4 0 0 0 0 .1 7.67 7.67 0 0 0 1.64 3.32l-1.18 1.63-1.46.3a5.06 5.06 0 0 0-3.97 5c0 .22.18.4.4.4h18.2a.4.4 0 0 0 .4-.4 5.04 5.04 0 0 0-3.98-4.99zm-6.8 1.74a3.1 3.1 0 0 1-2.06-1.67l1.02-1.45a3.7 3.7 0 0 0 1.9.83l-.68 2.33a.38.38 0 0 0-.18-.05zm1.3-.95l1.32 3.75h-2.4l1.08-3.75zm.4-1.29a3.66 3.66 0 0 0 2-.9l.83 1.44a3.1 3.1 0 0 1-2.06 1.67l-.77-2.2zm-5.07-9.29a4.88 4.88 0 0 1 4.5-3.99h.26a4.41 4.41 0 0 1 3.05 1.39 5.27 5.27 0 0 1 1.64 3.64 8.9 8.9 0 0 1-.22 1.25v-.5a.5.5 0 0 0-.07-.26c-.15-.21-.38-.25-1.01-.34a10.7 10.7 0 0 1-3.28-.88 5.79 5.79 0 0 1-2.17-2.3.4.4 0 0 0-.35-.2.43.43 0 0 0-.35.2C13.15 10 12 12.1 12 12.6v.58a4.23 4.23 0 0 1-.14-2.37zm.94 1.84a19.12 19.12 0 0 1 1.39-2.81 5.97 5.97 0 0 0 2.17 1.98 11.4 11.4 0 0 0 3.52.96l.4.05v2.36c-.41 1.62-1.43 4.12-3.75 4.12-1.93 0-3.28-2.12-3.73-4.1v-2.56zm-1.64 8.76l1.3-.27a3.84 3.84 0 0 0 2.6 2.02h.14l-.58 1.98H7.85a4.24 4.24 0 0 1 3.32-3.76l-.02.03zm7.54 3.73l-.72-2.07a3.88 3.88 0 0 0 2.46-1.98l1.44.29c1.8.37 3.15 1.9 3.33 3.76h-6.51zM24 28l4-4 2 2-4 4h-2v-2zm5-5l1-1 2 2-1 1-2-2z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/ic-self-exclusion.svg":
+/*!*********************************************************!*\
+  !*** ./src/images/app_2/settings/ic-self-exclusion.svg ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "32", height: "32" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("path", { d: "M0 0h32v32H0z" }), _react2.default.createElement("path", { stroke: "#333", d: "M10.27 23.5h.23v-4.33l-2.05-2.74a.73.73 0 0 0-1.1-.08 1.46 1.46 0 0 0-.27 1.69l1.34 2.68a.5.5 0 0 0 .03.05l1.82 2.73z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M11 16v8a1 1 0 0 0 1 1h9v-9H11zm0-1h10a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1h-9a2 2 0 0 1-2-2v-8a1 1 0 0 1 1-1zm9 0h2v-4a1 1 0 0 0-2 0v4zm1-6a2 2 0 0 1 2 2v5h-4v-5a2 2 0 0 1 2-2zm-4 6h2v-5a1 1 0 0 0-2 0v5zm1-7a2 2 0 0 1 2 2v6h-4v-6a2 2 0 0 1 2-2zm-4 7h2V8a1 1 0 0 0-2 0v7zm1-9a2 2 0 0 1 2 2v8h-4V8a2 2 0 0 1 2-2zm-4 9h2V9a1 1 0 0 0-2 0v6zm1-8a2 2 0 0 1 2 2v7h-4V9a2 2 0 0 1 2-2z" }), _react2.default.createElement("path", { fill: "#FFF", d: "M22 16v10h-5V16h-6v-1h11v1z" }), _react2.default.createElement("path", { fill: "#333", d: "M13 7.5h1v8a.5.5 0 1 1-1 0v-8zm3 1h1v7a.5.5 0 1 1-1 0v-7zm3 1h1v6a.5.5 0 1 1-1 0v-6z" }), _react2.default.createElement("path", { fill: "#333", fillRule: "nonzero", d: "M21.5 20.8l.65-.65a.5.5 0 0 1 .7.7l-.64.65.64.65a.5.5 0 0 1-.7.7l-.65-.64-.65.64a.5.5 0 0 1-.7-.7l.64-.65-.64-.65a.5.5 0 0 1 .7-.7l.65.64zm0 4.2a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7zm0 1a4.5 4.5 0 1 1 0-9 4.5 4.5 0 0 1 0 9z" })));
+};
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/AccountSwitcher/account_switcher.jsx":
 /*!*******************************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/AccountSwitcher/account_switcher.jsx ***!
@@ -7193,9 +7653,9 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _url = __webpack_require__(/*! ../../../../../_common/url */ "./src/javascript/_common/url.js");
+var _symbol = __webpack_require__(/*! ../../../../../../images/app_2/header/symbol.svg */ "./src/images/app_2/header/symbol.svg");
 
-var _url2 = _interopRequireDefault(_url);
+var _symbol2 = _interopRequireDefault(_symbol);
 
 var _InkBar = __webpack_require__(/*! ../../Elements/InkBar */ "./src/javascript/app_2/App/Components/Elements/InkBar/index.js");
 
@@ -7213,7 +7673,7 @@ var MenuLinks = function MenuLinks(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'navbar-icons binary-logo' },
-            _react2.default.createElement('img', { className: 'logo-img', src: _url2.default.urlForStatic('images/header/symbol.svg'), alt: 'Binary.com' })
+            _react2.default.createElement(_symbol2.default, { width: '30px', height: '30px' })
         ),
         !!items.length && _react2.default.createElement(
             _InkBar2.default,
@@ -17053,23 +17513,19 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
 
-var _url = __webpack_require__(/*! ../../../../../_common/url */ "./src/javascript/_common/url.js");
-
-var _url2 = _interopRequireDefault(_url);
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 // TODO: use BinaryLink once it supports nested routes
 var MenuItem = function MenuItem(_ref) {
     var title = _ref.title,
+        Icon = _ref.Icon,
         description = _ref.description,
-        img_src = _ref.img_src,
         path = _ref.path;
 
     var itemContent = _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        _react2.default.createElement('img', { className: 'menu-item__img', src: _url2.default.urlForStatic(img_src) }),
+        _react2.default.createElement(Icon, null),
         _react2.default.createElement(
             'div',
             { className: 'menu-item__content' },
@@ -17099,7 +17555,7 @@ var MenuItem = function MenuItem(_ref) {
 
 MenuItem.propTypes = {
     description: _propTypes2.default.string,
-    img_src: _propTypes2.default.string,
+    Icon: _propTypes2.default.element,
     path: _propTypes2.default.string,
     title: _propTypes2.default.string
 };
@@ -17144,13 +17600,13 @@ var MenuList = function MenuList(_ref) {
         items.map(function (_ref2, i) {
             var title = _ref2.title,
                 description = _ref2.description,
-                img_src = _ref2.img_src,
+                Icon = _ref2.Icon,
                 path = _ref2.path;
             return _react2.default.createElement(_menu_item2.default, {
                 key: i,
                 title: title,
                 description: description,
-                img_src: img_src,
+                Icon: Icon,
                 path: path
             });
         })
@@ -17160,7 +17616,7 @@ var MenuList = function MenuList(_ref) {
 MenuList.propTypes = {
     items: _propTypes2.default.arrayOf(_propTypes2.default.shape({
         description: _propTypes2.default.string,
-        img_src: _propTypes2.default.string,
+        Icon: _propTypes2.default.element,
         path: _propTypes2.default.string,
         title: _propTypes2.default.string
     }))
@@ -17263,7 +17719,7 @@ var MobileDropdown = function (_React$Component) {
                             var title = _ref2.title,
                                 description = _ref2.description,
                                 path = _ref2.path,
-                                img_src = _ref2.img_src;
+                                Icon = _ref2.Icon;
                             return _react2.default.createElement(_reactRouterDom.Route, {
                                 key: path,
                                 path: path,
@@ -17271,7 +17727,7 @@ var MobileDropdown = function (_React$Component) {
                                     return _react2.default.createElement(_menu_item2.default, {
                                         title: title,
                                         description: description,
-                                        img_src: img_src
+                                        Icon: Icon
                                     });
                                 }
                             });
@@ -17294,7 +17750,7 @@ var MobileDropdown = function (_React$Component) {
 MobileDropdown.propTypes = {
     all_items: _propTypes2.default.arrayOf(_propTypes2.default.shape({
         description: _propTypes2.default.string,
-        img_src: _propTypes2.default.string,
+        Icon: _propTypes2.default.element,
         path: _propTypes2.default.string,
         title: _propTypes2.default.string
     })),
@@ -17896,6 +18352,42 @@ Object.defineProperty(exports, "__esModule", {
 
 var _localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _icPersonalDetails = __webpack_require__(/*! ../../../../images/app_2/settings/ic-personal-details.svg */ "./src/images/app_2/settings/ic-personal-details.svg");
+
+var _icPersonalDetails2 = _interopRequireDefault(_icPersonalDetails);
+
+var _icFinancialAssesment = __webpack_require__(/*! ../../../../images/app_2/settings/ic-financial-assesment.svg */ "./src/images/app_2/settings/ic-financial-assesment.svg");
+
+var _icFinancialAssesment2 = _interopRequireDefault(_icFinancialAssesment);
+
+var _icAccountPassword = __webpack_require__(/*! ../../../../images/app_2/settings/ic-account-password.svg */ "./src/images/app_2/settings/ic-account-password.svg");
+
+var _icAccountPassword2 = _interopRequireDefault(_icAccountPassword);
+
+var _icCashierPassword = __webpack_require__(/*! ../../../../images/app_2/settings/ic-cashier-password.svg */ "./src/images/app_2/settings/ic-cashier-password.svg");
+
+var _icCashierPassword2 = _interopRequireDefault(_icCashierPassword);
+
+var _icSelfExclusion = __webpack_require__(/*! ../../../../images/app_2/settings/ic-self-exclusion.svg */ "./src/images/app_2/settings/ic-self-exclusion.svg");
+
+var _icSelfExclusion2 = _interopRequireDefault(_icSelfExclusion);
+
+var _icLimits = __webpack_require__(/*! ../../../../images/app_2/settings/ic-limits.svg */ "./src/images/app_2/settings/ic-limits.svg");
+
+var _icLimits2 = _interopRequireDefault(_icLimits);
+
+var _icLoginHistory = __webpack_require__(/*! ../../../../images/app_2/settings/ic-login-history.svg */ "./src/images/app_2/settings/ic-login-history.svg");
+
+var _icLoginHistory2 = _interopRequireDefault(_icLoginHistory);
+
+var _icApiToken = __webpack_require__(/*! ../../../../images/app_2/settings/ic-api-token.svg */ "./src/images/app_2/settings/ic-api-token.svg");
+
+var _icApiToken2 = _interopRequireDefault(_icApiToken);
+
+var _icAuthorisedApplications = __webpack_require__(/*! ../../../../images/app_2/settings/ic-authorised-applications.svg */ "./src/images/app_2/settings/ic-authorised-applications.svg");
+
+var _icAuthorisedApplications2 = _interopRequireDefault(_icAuthorisedApplications);
+
 var _account_password = __webpack_require__(/*! ./sections/account_password.jsx */ "./src/javascript/app_2/Modules/settings/sections/account_password.jsx");
 
 var _account_password2 = _interopRequireDefault(_account_password);
@@ -17939,12 +18431,12 @@ var data = [{
     items: [{
         title: (0, _localize.localize)('Personal Details'),
         description: (0, _localize.localize)('View your personal information.'),
-        img_src: 'images/settings/ic-personal-details.svg',
+        Icon: _icPersonalDetails2.default,
         Component: _personal_details2.default
     }, {
         title: (0, _localize.localize)('Financial Assessment'),
         description: (0, _localize.localize)('View your financial assessment settings'),
-        img_src: 'images/settings/ic-financial-assesment.svg',
+        Icon: _icFinancialAssesment2.default,
         Component: _financial_assessment2.default
     }]
 }, {
@@ -17952,37 +18444,37 @@ var data = [{
     items: [{
         title: (0, _localize.localize)('Account Password'),
         description: (0, _localize.localize)('Change your main login password.'),
-        img_src: 'images/settings/ic-account-password.svg',
+        Icon: _icAccountPassword2.default,
         Component: _account_password2.default
     }, {
         title: (0, _localize.localize)('Cashier Password'),
         description: (0, _localize.localize)('Change the password used for deposits and withdrawals'),
-        img_src: 'images/settings/ic-cashier-password.svg',
+        Icon: _icCashierPassword2.default,
         Component: _cashier_password2.default
     }, {
         title: (0, _localize.localize)('Self Exclusion'),
         description: (0, _localize.localize)('Facility that allows you to set limits on your account.'),
-        img_src: 'images/settings/ic-self-exclusion.svg',
+        Icon: _icSelfExclusion2.default,
         Component: _self_exclusion2.default
     }, {
         title: (0, _localize.localize)('Limits'),
         description: (0, _localize.localize)('View your trading and withdrawal limits'),
-        img_src: 'images/settings/ic-limits.svg',
+        Icon: _icLimits2.default,
         Component: _limits2.default
     }, {
         title: (0, _localize.localize)('Login History'),
         description: (0, _localize.localize)('View your login history'),
-        img_src: 'images/settings/ic-login-history.svg',
+        Icon: _icLoginHistory2.default,
         Component: _login_history2.default
     }, {
         title: (0, _localize.localize)('API Token'),
         description: (0, _localize.localize)('API token for third party applications'),
-        img_src: 'images/settings/ic-api-token.svg',
+        Icon: _icApiToken2.default,
         Component: _api_token2.default
     }, {
         title: (0, _localize.localize)('Authorized Applications'),
         description: (0, _localize.localize)('Manage your authorised applications'),
-        img_src: 'images/settings/ic-authorised-applications.svg',
+        Icon: _icAuthorisedApplications2.default,
         Component: _authorized_applications2.default
     }]
 }];
