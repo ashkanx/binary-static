@@ -31949,7 +31949,6 @@ var RealityCheckUI = function () {
                 if (response.error && !/user\/statementws\.html/.test(window.location.pathname)) {
                     // don't block statement page for reality check error, but block all other pages
                     $('#content').empty().html($('<div/>', { class: 'container' }).append($('<p/>', { class: 'notice-msg center-text', text: response.error.message })));
-                    window.location.reload();
                 } else if (response.reality_check) {
                     getAjax(RealityCheckData.summaryData(response.reality_check));
                 }
@@ -33140,9 +33139,6 @@ var ViewPopup = function () {
         if (response.error) {
             if (response.error.code !== 'AlreadySubscribed' && response.echo_req.contract_id === contract_id) {
                 showErrorPopup(response, response.error.message);
-                if (response.error.code === 'InvalidToken') {
-                    window.location.reload();
-                }
             }
             return;
         }
