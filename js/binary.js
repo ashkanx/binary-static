@@ -28094,6 +28094,9 @@ var PersonalDetails = function () {
                     if (should_update_value || should_show_label) {
                         // if should show label, set the value of the non-label so that it doesn't count as missing information
                         $(should_show_label ? '#' + key : el_key).val(get_settings[key] ? get_settings[key].split(',') : '').trigger('change');
+                        if (should_show_label) {
+                            CommonFunctions.getElementById('row_' + key).setVisibility(0);
+                        }
                     }
                 }
             }
@@ -32918,7 +32921,7 @@ var ViewPopup = function () {
         var link = Utility.createElement('a', { class: 'previous-wrapper' });
 
         link.appendChild(Utility.createElement('span', { class: 'previous align-self-center' }));
-        link.appendChild(Utility.createElement('span', { class: 'nowrap', text: localize('View Chart') }));
+        link.appendChild(Utility.createElement('span', { class: 'nowrap', text: localize('View chart') }));
         link.addEventListener('click', function () {
             setAuditVisibility(0);
         });
