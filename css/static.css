@@ -884,7 +884,7 @@ div.kineticjs-content {
       display: none; }
     #payment_methods table tr .th-list, #payment_methods table tr .td-list {
       display: grid;
-      grid-template-columns: 2fr 1.3fr 1.3fr 3fr 1fr;
+      grid-template-columns: 2fr 1.3fr 1.3fr 3fr 0.8fr;
       grid-column-gap: 10px; }
       #payment_methods table tr .th-list .th, #payment_methods table tr .th-list .td, #payment_methods table tr .td-list .th, #payment_methods table tr .td-list .td {
         -ms-flex-item-align: center;
@@ -912,25 +912,19 @@ div.kineticjs-content {
       min-width: 100px; }
   #payment_methods table tbody tr td {
     position: relative;
-    padding: 10px 0; }
-    @media (max-width: 600px) {
-      #payment_methods table tbody tr td {
-        padding: 10px 0 !important; } }
+    padding: 10px; }
     #payment_methods table tbody tr td div.td-list, #payment_methods table tbody tr td div.td-description {
       overflow: hidden;
       position: absolute;
       top: 0; }
       #payment_methods table tbody tr td div.td-list.td-list, #payment_methods table tbody tr td div.td-description.td-list {
         height: 0;
-        opacity: 0;
-        margin-left: 8px; }
+        opacity: 0; }
         #payment_methods table tbody tr td div.td-list.td-list.active, #payment_methods table tbody tr td div.td-description.td-list.active {
           -webkit-transition: all 0.2s 0.2s;
           transition: all 0.2s 0.2s;
           height: 100%;
-          opacity: 1;
-          -ms-flex-line-pack: center;
-              align-content: center; }
+          opacity: 1; }
       #payment_methods table tbody tr td div.td-list.td-description, #payment_methods table tbody tr td div.td-description.td-description {
         height: 100%;
         opacity: 0;
@@ -1183,9 +1177,6 @@ body #_elev_io ._elevio_articlelink > div {
 .location-cyberjaya .introduction h4.subheader, .location-labuan .introduction h4.subheader, .location-malta .introduction h4.subheader {
   font-style: italic;
   font-size: 1.15rem; }
-
-.location-cyberjaya .introduction p.no-margin-top, .location-labuan .introduction p.no-margin-top, .location-malta .introduction p.no-margin-top {
-  margin-top: 0; }
 
 @media (max-width: 768px) {
   .location-cyberjaya .introduction p, .location-labuan .introduction p, .location-malta .introduction p {

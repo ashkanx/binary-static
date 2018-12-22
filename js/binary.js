@@ -14720,6 +14720,8 @@ var getPaWithdrawalLimit = __webpack_require__(/*! ../../common/currency */ "./s
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var validEmailToken = __webpack_require__(/*! ../../common/form_validation */ "./src/javascript/app/common/form_validation.js").validEmailToken;
 var handleVerifyCode = __webpack_require__(/*! ../../common/verification_code */ "./src/javascript/app/common/verification_code.js").handleVerifyCode;
+var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var isVisible = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").isVisible;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
 var isBinaryApp = __webpack_require__(/*! ../../../config */ "./src/javascript/config.js").isBinaryApp;
@@ -14735,7 +14737,8 @@ var PaymentAgentWithdraw = function () {
     var field_ids = {
         ddl_agents: '#ddlAgents',
         txt_amount: '#txtAmount',
-        txt_desc: '#txtDescription'
+        txt_desc: '#txtDescription',
+        frm_msg: '#withdrawFormMessage'
     };
 
     var $views = void 0,
@@ -14793,6 +14796,12 @@ var PaymentAgentWithdraw = function () {
                 fnc_additional_check: setAgentName,
                 enable_button: true
             });
+
+            $(field_ids.txt_desc).off().on('keyup', function () {
+                if (isVisible(getElementById('withdrawFormMessage'))) {
+                    $(field_ids.frm_msg).setVisibility(0);
+                }
+            });
         }
     };
 
@@ -14837,7 +14846,7 @@ var PaymentAgentWithdraw = function () {
                 // error
                 if (response.echo_req.dry_run === 1) {
                     setActiveView(view_ids.form);
-                    $('#withdrawFormMessage').setVisibility(1).html(response.error.message);
+                    $(field_ids.frm_msg).setVisibility(1).html(response.error.message);
                 } else if (response.error.code === 'InvalidToken') {
                     showPageError(localize('Your token has expired or is invalid. Please click [_1]here[_2] to restart the verification process.', ['<a href="javascript:;" onclick="var url = location.href.split(\'#\')[0]; window.history.replaceState({ url }, document.title, url); window.location.reload();">', '</a>']));
                 } else {
@@ -33654,7 +33663,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = '1108'; // you can insert Application ID of your registered application here
+    var user_app_id = ''; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
