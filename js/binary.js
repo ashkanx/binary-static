@@ -12374,18 +12374,14 @@ var eu_country_rule = 'eucountry';
 var ContentVisibility = function () {
     var init = function init() {
         var arr_mt5fin_shortcodes = void 0;
-        var mt_company_type = 'financial';
 
         BinarySocket.wait('authorize', 'landing_company', 'website_status').then(function () {
             var current_landing_company_shortcode = State.getResponse('authorize.landing_company_name') || 'default';
-            var landing_company_id = State.getResponse('landing_company.id');
+            var mt_financial_company = State.getResponse('landing_company.mt_financial_company');
+            var mt_gaming_company = State.getResponse('landing_company.mt_gaming_company');
 
-            // check if landing_company id is be or no, since belgium and norway are the only countries that have malta landing company shortcode but no mt_financial_company offered
-            if (/^(be|no)$/.test(landing_company_id)) {
-                mt_company_type = 'gaming';
-            }
-
-            var mt_landing_company = State.getResponse('landing_company.mt_' + mt_company_type + '_company');
+            // Check if mt_financial_company is offered, if not found, switch to mt_gaming_company
+            var mt_landing_company = mt_financial_company || mt_gaming_company;
 
             // Check mt_financial_company by account type, since we are offering different landing companies for standard and advanced
             arr_mt5fin_shortcodes = mt_landing_company ? Object.keys(mt_landing_company).map(function (key) {
@@ -22107,15 +22103,19 @@ var TradingEvents = function () {
             }
             var id = this.getAttribute('data-purchase-id');
             var ask_price = this.getAttribute('data-ask-price');
-
             var params = { buy: id, price: ask_price, passthrough: {} };
-            Object.keys(this.attributes).forEach(function (attr) {
-                if (attr && this.attributes[attr] && this.attributes[attr].name && !/data-balloon/.test(this.attributes[attr].name)) {
-                    // do not send tooltip data
-                    var m = this.attributes[attr].name.match(/data-(.+)/);
 
-                    if (m && m[1] && m[1] !== 'purchase-id' && m[1] !== 'passthrough') {
-                        params.passthrough[m[1]] = this.attributes[attr].value;
+            Object.keys(this.attributes).forEach(function (attr) {
+                if (attr && this.attributes[attr] && this.attributes[attr].name) {
+                    if (/^data-balloon$/.test(this.attributes[attr].name)) {
+                        // Force removal of attribute for Safari
+                        this.removeAttribute(this.attributes[attr].name);
+                    } else if (!/data-balloon/.test(this.attributes[attr].name)) {
+                        // Do not send tooltip data
+                        var m = this.attributes[attr].name.match(/data-(.+)/);
+                        if (m && m[1] && m[1] !== 'purchase-id' && m[1] !== 'passthrough') {
+                            params.passthrough[m[1]] = this.attributes[attr].value;
+                        }
                     }
                 }
             }, this);
@@ -30650,15 +30650,11 @@ var MetaTrader = function () {
     };
 
     var setMTCompanies = function setMTCompanies() {
-        var mt_company_type = 'financial';
-        var landing_company_id = State.getResponse('landing_company.id');
+        var mt_financial_company = State.getResponse('landing_company.mt_financial_company');
+        var mt_gaming_company = State.getResponse('landing_company.mt_gaming_company');
 
-        // check if landing_company id is be or no, since belgium and norway are the only countries that have malta landing company shortcode but no mt_financial_company offered
-        if (/^(be|no)$/.test(landing_company_id)) {
-            mt_company_type = 'gaming';
-        }
-
-        var mt_landing_company = State.getResponse('landing_company.mt_' + mt_company_type + '_company');
+        // Check if mt_financial_company is offered, if not found, switch to mt_gaming_company
+        var mt_landing_company = mt_financial_company || mt_gaming_company;
 
         // Check if any of the account type shortcodes from mt_landing_company account is maltainvest
         var is_financial = mt_landing_company ? Object.keys(mt_landing_company).some(function (key) {
