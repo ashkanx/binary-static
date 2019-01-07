@@ -9157,7 +9157,10 @@ var BinaryLoader = function () {
         }
 
         ContentVisibility.init();
-        ScrollToAnchor.init();
+
+        BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+            ScrollToAnchor.init();
+        });
     };
 
     var error_messages = {
@@ -14764,8 +14767,6 @@ var getPaWithdrawalLimit = __webpack_require__(/*! ../../common/currency */ "./s
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var validEmailToken = __webpack_require__(/*! ../../common/form_validation */ "./src/javascript/app/common/form_validation.js").validEmailToken;
 var handleVerifyCode = __webpack_require__(/*! ../../common/verification_code */ "./src/javascript/app/common/verification_code.js").handleVerifyCode;
-var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
-var isVisible = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").isVisible;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
 var isBinaryApp = __webpack_require__(/*! ../../../config */ "./src/javascript/config.js").isBinaryApp;
@@ -14781,8 +14782,7 @@ var PaymentAgentWithdraw = function () {
     var field_ids = {
         ddl_agents: '#ddlAgents',
         txt_amount: '#txtAmount',
-        txt_desc: '#txtDescription',
-        frm_msg: '#withdrawFormMessage'
+        txt_desc: '#txtDescription'
     };
 
     var $views = void 0,
@@ -14840,12 +14840,6 @@ var PaymentAgentWithdraw = function () {
                 fnc_additional_check: setAgentName,
                 enable_button: true
             });
-
-            $(field_ids.txt_desc).off().on('keyup', function () {
-                if (isVisible(getElementById('withdrawFormMessage'))) {
-                    $(field_ids.frm_msg).setVisibility(0);
-                }
-            });
         }
     };
 
@@ -14890,7 +14884,7 @@ var PaymentAgentWithdraw = function () {
                 // error
                 if (response.echo_req.dry_run === 1) {
                     setActiveView(view_ids.form);
-                    $(field_ids.frm_msg).setVisibility(1).html(response.error.message);
+                    $('#withdrawFormMessage').setVisibility(1).html(response.error.message);
                 } else if (response.error.code === 'InvalidToken') {
                     showPageError(localize('Your token has expired or is invalid. Please click [_1]here[_2] to restart the verification process.', ['<a href="javascript:;" onclick="var url = location.href.split(\'#\')[0]; window.history.replaceState({ url }, document.title, url); window.location.reload();">', '</a>']));
                 } else {
@@ -31937,28 +31931,25 @@ module.exports = VirtualAccOpening;
 
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
-var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
-var createElement = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").createElement;
 var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
+var createElement = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").createElement;
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 
 var WelcomePage = function () {
     var onLoad = function onLoad() {
         BinarySocket.wait('authorize', 'landing_company', 'get_settings').then(function () {
-            var welcome_msg = getElementById('welcome_container');
-
+            var el_welcome_container = getElementById('welcome_container');
             if (Client.hasAccountType('real')) {
                 window.location.href = Client.defaultRedirectUrl();
-                showLoadingImage(welcome_msg, 'dark');
+                showLoadingImage(el_welcome_container, 'dark');
             }
 
             var upgrade_info = Client.getUpgradeInfo();
-            if (welcome_msg) {
-                var upgrade_title_el = getElementById('upgrade_title');
-                upgrade_title_el.html(upgrade_info.type === 'financial' ? localize('Financial Account') : localize('Real Account'));
-                welcome_msg.setVisibility(1);
-            }
+            var el_upgrade_title = getElementById('upgrade_title');
+            el_upgrade_title.html(upgrade_info.type === 'financial' ? localize('Financial Account') : localize('Real Account'));
+            el_welcome_container.setVisibility(1);
 
             if (upgrade_info.can_upgrade) {
                 var upgrade_btn = getElementById('upgrade_btn');
