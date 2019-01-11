@@ -912,7 +912,7 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var GTM = function () {
     var isGtmApplicable = function isGtmApplicable() {
-        return (/^(1|1098|14473|15284)$/.test(getAppId())
+        return (/^(1|1098|14473|15284|1108)$/.test(getAppId())
         );
     };
 
@@ -2155,67 +2155,108 @@ module.exports = Crowdin;
 
 /* global google */
 var scriptjs = __webpack_require__(/*! scriptjs */ "./node_modules/scriptjs/dist/script.js");
-var localize = __webpack_require__(/*! ./localize */ "./src/javascript/_common/localize.js").localize;
+var getElementById = __webpack_require__(/*! ./common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var applyToAllElements = __webpack_require__(/*! ./utility */ "./src/javascript/_common/utility.js").applyToAllElements;
-var createElement = __webpack_require__(/*! ./utility */ "./src/javascript/_common/utility.js").createElement;
 var Client = __webpack_require__(/*! ../app/base/client */ "./src/javascript/app/base/client.js");
 
 var Geocoder = function () {
     var el_btn_validate = void 0,
-        el_error = void 0;
+        el_error = void 0,
+        el_geocode_status = void 0,
+        el_loader = void 0,
+        el_postcode_row = void 0,
+        el_success = void 0,
+        is_states_el_select = void 0;
     var validated = false;
 
     var init = function init(form_id) {
+        // TODO: We should store the Google API key in an unstaged file so it doesn't get committed to the public repository
         scriptjs('https://maps.googleapis.com/maps/api/js?key=AIzaSyAEha6-HeZuI95L9JWmX3m6o-AxQr_oFqU&libraries=places', 'gMaps');
 
-        var form = document.getElementById(form_id.split('#')[1]);
+        var form = getElementById(form_id.split('#')[1]);
         var addr_1 = '#address_line_1';
         var addr_2 = '#address_line_2';
         var city = '#address_city';
         var state = '#address_state';
         var postcode = '#address_postcode';
-        var residence = Client.get('residence');
+        var residence = Client.get('residence').toUpperCase();
 
-        var getValue = function getValue(id) {
-            return document.getElementById(id.split('#')[1]).value || '';
-        };
+        is_states_el_select = form.querySelector(state).tagName === 'SELECT';
+
         var getAddress = function getAddress() {
-            return getValue(addr_1) + ' ' + getValue(addr_2) + ', ' + getValue(city) + ', ' + getValue(state) + ' ' + getValue(postcode) + ', ' + residence;
+            return getValue(addr_1) + ', ' + getValue(addr_2) + ', ' + getValue(city) + ', ' + getValue(postcode) + ' ' + (is_states_el_select ? getStateText(state) : getValue(state)) + ', ' + residence + ' ';
         };
 
-        form.querySelector(city).addEventListener('change', function () {
-            if (getValue(addr_1).length && getValue(city).length && !validated) {
+        el_btn_validate = form.querySelector('#geocode_validate');
+        el_geocode_status = form.querySelector('#geocode_status');
+        el_error = form.querySelector('#geocode_error');
+        el_postcode_row = form.querySelector('.postcode-form-row');
+        el_success = form.querySelector('#geocode_success');
+        el_loader = form.querySelector('.barspinner');
+
+        if (el_btn_validate) {
+            applyToAllElements(addr_1 + ', ' + addr_2 + ', ' + postcode + ', ' + (!is_states_el_select ? state : undefined) + ' ,' + city, function (element) {
+                // List of fields that will trigger event onChange but will allow empty values as they are non-required fields
+                var non_required_fields = ['addr_2', 'postcode', '' + (!is_states_el_select ? 'state' : undefined)];
+
+                element.addEventListener('keyup', function () {
+                    var value = element.value;
+                    // Check if address_line_1, address_state and address city have values
+                    var has_met_conditions = getValue(city).trim().length > 0 && getValue(addr_1).trim().length > 0;
+
+                    if (value.length > 0 && !non_required_fields.includes(element.id) && has_met_conditions) {
+                        el_btn_validate.classList.remove('geocode-btn-disabled');
+                    } else if (!non_required_fields.includes(element.id) && has_met_conditions) {
+                        el_btn_validate.classList.remove('geocode-btn-disabled');
+                    } else {
+                        el_btn_validate.classList.add('geocode-btn-disabled');
+                    }
+                });
+            }, '', form);
+
+            el_btn_validate.addEventListener('click', function (e) {
+                e.preventDefault();
+                if (el_btn_validate.classList.contains('geocode-btn-disabled')) {
+                    return;
+                }
                 validator(getAddress()).then(function () {
                     validated = true;
                 });
-            }
-        });
-
-        el_error = form.querySelector('#geocode_error');
-        applyToAllElements(addr_1 + ', ' + addr_2 + ', ' + city + ', ' + postcode, function (element) {
-            element.addEventListener('keyup', function () {
-                if (!validated && !el_btn_validate) {
-                    el_btn_validate = createElement('button', {
-                        id: 'geocode_validate',
-                        class: 'button-secondary',
-                        text: localize('Validate address')
-                    });
-                    el_btn_validate.addEventListener('click', function (e) {
-                        e.preventDefault();
-                        validator(getAddress()).then(function () {
-                            validated = true;
-                        });
-                    });
-                    el_error.parentNode.appendChild(el_btn_validate);
-                }
-                if (el_btn_validate) el_btn_validate.setVisibility(1);
-                el_error.setVisibility(0);
             });
-        }, '', form);
+
+            // using jQuery here because for some reason vanilla javascript eventListener isn't working for select input onChange events
+            $(state).on('change', function () {
+                if (getValue(city).length > 0 && getValue(addr_1).length > 0) {
+                    el_btn_validate.classList.remove('geocode-btn-disabled');
+                } else {
+                    el_btn_validate.classList.add('geocode-btn-disabled');
+                }
+            });
+
+            el_btn_validate.setVisibility(1);
+
+            if (validated || !getValue(addr_1).length || !getValue(state)) {
+                el_btn_validate.classList.add('geocode-btn-disabled');
+            }
+        }
+
+        el_postcode_row.parentNode.appendChild(el_geocode_status);
+
+        if (el_error) {
+            el_error.setVisibility(0);
+        }
 
         return {
             address: getAddress()
         };
+    };
+
+    var getValue = function getValue(selector) {
+        return getElementById(selector.split('#')[1]).value || '';
+    };
+    var getStateText = function getStateText(selector) {
+        var states_list_el = getElementById(selector.split('#')[1]);
+        return states_list_el.options[states_list_el.selectedIndex].text;
     };
 
     var validate = function validate(form_id) {
@@ -2229,26 +2270,76 @@ var Geocoder = function () {
         return new Promise(function (resolve) {
             scriptjs.ready('gMaps', function () {
                 var geocoder = new google.maps.Geocoder();
+                el_btn_validate.classList.add('geocode-btn-disabled');
+                el_success.setVisibility(0);
+                el_error.setVisibility(0);
+                el_loader.setVisibility(1);
                 geocoder.geocode({
-                    address: address
+                    address: address,
+                    // Restrict Geolocation to client's country of residence and state
+                    componentRestrictions: {
+                        country: Client.get('residence').toUpperCase(),
+                        administrativeArea: is_states_el_select ? getStateText('#address_state') : getValue('#address_state')
+                    }
                 }, function (result, status) {
                     // Geocoding status reference:
                     // https://developers.google.com/maps/documentation/javascript/geocoding#GeocodingStatusCodes
-                    handleResponse(status);
-                    resolve(status);
+                    var data = { result: result, status: status };
+                    handleResponse(data);
+                    resolve(data);
                 });
             });
         });
     };
 
-    var handleResponse = function handleResponse(status) {
-        if (/ZERO_RESULTS|INVALID_REQUEST/.test(status)) {
+    var isAddressFound = function isAddressFound(user_address, user_city, geoloc_address) {
+        var result = void 0;
+        var trimSpaces = function trimSpaces(string) {
+            return string.replace(/^\s+|\s+$/g, '');
+        };
+
+        if (geoloc_address.length && getValue('#address_city')) {
+            var item_idx = geoloc_address.length - 1;
+
+            var country_longname = getElementById('country').innerHTML;
+            var input_city = trimSpaces(user_city).toLowerCase();
+            var user_address_str = trimSpaces(user_address);
+            var arr_input_address = user_address_str.replace(/[\s]-[\s]|\/\w+/g, ' ').toLowerCase().split(', ');
+
+            var arr_address_components = geoloc_address[item_idx].address_components;
+            var arr_address_list = [];
+
+            // Create address dictionary string based on returned long and short named address components by Geolocation API
+            arr_address_components.filter(function (address) {
+                arr_address_list.push(address.long_name.replace(/ - /g, ' '));
+                arr_address_list.push(address.short_name.replace(/ - /g, ' '));
+            });
+
+            // Filter out duplicates in address components
+            var address_list_dictionary = arr_address_list.filter(function (elem, pos, arr) {
+                return arr.indexOf(elem) === pos;
+            }).join(' ').toLowerCase();
+
+            // Check if city exists, if true, check if first line of address exists
+            if (address_list_dictionary.indexOf(input_city) !== -1 && user_address.toLowerCase() !== country_longname.toLowerCase()) {
+                result = arr_input_address.some(function (address) {
+                    return address_list_dictionary.includes(address);
+                });
+            }
+        }
+        return result;
+    };
+
+    var handleResponse = function handleResponse(data) {
+        var is_address_found = isAddressFound(getValue('#address_line_1'), getValue('#address_city'), data.result);
+        if (/ZERO_RESULTS|INVALID_REQUEST|UNKNOWN_ERROR/.test(data.status) || !is_address_found) {
             el_error.setVisibility(1);
-            if (el_btn_validate) el_btn_validate.setVisibility(0);
+            el_success.setVisibility(0);
         } else {
             el_error.setVisibility(0);
-            if (el_btn_validate) el_btn_validate.setVisibility(0);
+            el_success.setVisibility(1);
         }
+        el_loader.setVisibility(0);
     };
 
     return {
@@ -11206,7 +11297,6 @@ var AccountOpening = function () {
         if (getPropertyValue(landing_company, ['financial_company', 'shortcode']) === 'maltainvest') {
             professionalClient.init(is_financial, false);
         }
-        Geocoder.init(form_id);
     };
 
     var getResidence = function getResidence(form_id, getValidations) {
@@ -11359,6 +11449,7 @@ var AccountOpening = function () {
             if (form_id && typeof getValidations === 'function') {
                 FormManager.init(form_id, getValidations());
             }
+            Geocoder.init(form_id);
         });
     };
     var handleNewAccount = function handleNewAccount(response, message_type) {
@@ -12187,7 +12278,6 @@ var ChartSettings = function () {
         labels = labels || { // needs to be inside setLabels function so localize works
             barrier_line: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_horizontal_line_style + ' border-color: green; border-style: solid;"></span>' + localize('Barrier') + '&nbsp;</div>',
             barrier_spot: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_horizontal_line_style + ' border-color: green; border-style: dotted;"></span>' + localize('Barrier') + '&nbsp;</div>',
-            end_time: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #e98024; border-style: dashed;"></span>' + localize('End Time') + '&nbsp;</div>',
             entry_spot: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_spot_style + ' border: 3px solid orange; width: 4px; height: 4px;"></span>' + localize('Entry Spot') + '&nbsp;</div>',
             exit_spot: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_spot_style + ' background-color: orange; width:10px; height: 10px;"></span>' + localize('Exit Spot') + '&nbsp;</div>',
             delay: '<div class=\'nowrap gr-padding-10 gr-parent delay\'><span class="chart-delay">' + localize('Charting for this underlying is delayed') + '&nbsp;</span></div>',
@@ -12197,17 +12287,23 @@ var ChartSettings = function () {
             purchase_time: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #7cb5ec; border-style: solid;"></span>' + localize('Purchase Time') + '&nbsp;</div>',
             reset_barrier: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_horizontal_line_style + ' border-color: green; border-style: solid;"></span>' + localize('Reset Barrier') + '&nbsp;</div>',
             reset_time: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #e98024; border-color: #000; border-style: solid;"></span>' + localize('Reset Time') + '&nbsp;</div>',
-            start_end_time: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #e98024; border-style: solid;"></span>' + localize('Start/End Time') + '&nbsp;</div>',
             selected_tick: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="margin-left: 10px; margin-right: 5px; display: inline-block; border-radius: 6px; background-color: orange; width:10px; height: 10px;"></span>' + localize('Selected Tick') + '&nbsp;</div>',
-            start_time: '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #e98024; border-style: solid;"></span>' + localize('Start Time') + '&nbsp;</div>'
+
+            // need to pass is_tick_trade params explicitly to return correct label when switching between ticks and non-ticks charts
+            getEndTime: function getEndTime(is_tick_trade) {
+                return '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #e98024; border-style: dashed;"></span>' + (is_tick_trade ? localize('Exit Spot') : localize('End Time')) + '&nbsp;</div>';
+            },
+            getStartTime: function getStartTime(is_tick_trade) {
+                return '<div class=\'nowrap gr-padding-10 gr-parent\'><span style="' + common_vertical_line_style + ' border-color: #e98024; border-style: solid;"></span>' + (is_tick_trade ? localize('Entry Spot') : localize('Start Time')) + '&nbsp;</div>';
+            }
         };
 
         var is_high_low_ticks = params.contract_type === 'highlowticks';
         var barrier_style = params.is_tick_trade ? labels.barrier_line : labels.barrier_spot;
         var barrier = params.is_reset_barrier ? labels.reset_barrier : barrier_style;
-        var start_time = is_high_low_ticks ? labels.start_end_time : labels.start_time;
+        var start_time = labels.getStartTime(params.is_tick_trade);
         var highest_lowest = /^tickhigh_/i.test(params.shortcode) ? labels.highest_tick : labels.lowest_tick;
-        txt_subtitle = (params.is_chart_delayed ? labels.delay : '') + (params.is_forward_starting ? labels.purchase_time : '') + (params.is_sold_before_start ? '' : start_time) + (history ? params.is_sold_before_start || params.is_tick_trade ? '' : labels.entry_spot : '') + (params.has_barrier && !params.is_sold_before_start ? barrier : '') + (history ? params.is_user_sold || params.is_tick_trade ? '' : labels.exit_spot : '') + (isReset(params.contract_type) ? labels.reset_time : '') + (is_high_low_ticks ? labels.selected_tick : '') + (is_high_low_ticks ? '' : labels.end_time) + (is_high_low_ticks ? highest_lowest : '') + (isCallputspread(params.contract_type) ? labels.payout_range : '');
+        txt_subtitle = (params.is_chart_delayed ? labels.delay : '') + (params.is_forward_starting ? labels.purchase_time : '') + (params.is_sold_before_start ? '' : start_time) + (history ? params.is_sold_before_start || params.is_tick_trade ? '' : labels.entry_spot : '') + (params.has_barrier && !params.is_sold_before_start ? barrier : '') + (history ? params.is_user_sold || params.is_tick_trade ? '' : labels.exit_spot : '') + (isReset(params.contract_type) ? labels.reset_time : '') + (is_high_low_ticks ? labels.selected_tick : '') + (is_high_low_ticks ? highest_lowest : '') + (params.show_end_time ? labels.getEndTime(params.is_tick_trade) : '') + (isCallputspread(params.contract_type) ? labels.payout_range : '');
     };
 
     var setChartOptions = function setChartOptions(params) {
@@ -14830,6 +14926,7 @@ var PaymentAgentWithdraw = function () {
             var max = getPaWithdrawalLimit(currency, 'max');
 
             $(form_id).find('label[for="txtAmount"]').text(localize('Amount') + ' ' + currency);
+            trimDescriptionContent();
             FormManager.init(form_id, [{ selector: field_ids.ddl_agents, validations: ['req'], request_field: 'paymentagent_loginid' }, { selector: field_ids.txt_amount, validations: ['req', ['number', { type: 'float', decimals: getDecimalPlaces(currency), min: min, max: max }], ['custom', { func: function func() {
                         return +Client.get('balance') >= +$(field_ids.txt_amount).val();
                     }, message: localize('Insufficient balance.') }]], request_field: 'amount' }, { selector: field_ids.txt_desc, validations: ['general'], request_field: 'description' }, { request_field: 'currency', value: currency }, { request_field: 'paymentagent_withdraw', value: 1 }, { request_field: 'dry_run', value: 1 }], true);
@@ -14841,6 +14938,13 @@ var PaymentAgentWithdraw = function () {
                 enable_button: true
             });
         }
+    };
+
+    // Remove multiline and excess whitespaces from description text.
+    var trimDescriptionContent = function trimDescriptionContent() {
+        document.getElementById('txtDescription').addEventListener('change', function (e) {
+            e.srcElement.value = e.target.value.replace(/\s+/g, ' ');
+        });
     };
 
     var insertListOption = function insertListOption($ddl_object, item_text, item_value) {
@@ -18984,7 +19088,9 @@ var Highchart = function () {
             is_forward_starting: purchase_time !== start_time,
             is_sold_before_start: sell_time < start_time,
             is_user_sold: contract.status === 'sold',
-            has_barrier: !!(contract.barrier || contract.high_barrier)
+            has_barrier: !!(contract.barrier || contract.high_barrier),
+            is_tick_trade: false,
+            show_end_time: contract.contract_type !== 'highlowticks'
         };
     };
 
@@ -24820,6 +24926,7 @@ module.exports = Tick;
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+var HighchartUI = __webpack_require__(/*! ./charts/highchart.ui */ "./src/javascript/app/pages/trade/charts/highchart.ui.js");
 var requireHighstock = __webpack_require__(/*! ./common */ "./src/javascript/app/pages/trade/common.js").requireHighstock;
 var Reset = __webpack_require__(/*! ./reset */ "./src/javascript/app/pages/trade/reset.js");
 var Tick = __webpack_require__(/*! ./tick */ "./src/javascript/app/pages/trade/tick.js");
@@ -24978,7 +25085,8 @@ var TickDisplay = function () {
             };
             x_indicators['_' + exit_tick_index] = {
                 label: localize('Exit Spot'),
-                id: 'exit_tick'
+                id: 'exit_tick',
+                dashStyle: 'Dash'
             };
         } else {
             x_indicators = {};
@@ -24987,18 +25095,19 @@ var TickDisplay = function () {
 
     var initializeChart = function initializeChart(config, data) {
         var has_reset_barrier = contract.entry_spot && contract.barrier && Reset.isReset(contract_category) && Reset.isNewBarrier(contract.entry_spot, contract.barrier);
-        ChartSettings.setLabels({
-            contract_type: contract_category,
-            has_barrier: should_set_barrier && contract_category !== 'highlowticks',
-            is_reset_barrier: has_reset_barrier,
-            is_tick_trade: true,
-            shortcode: contract.shortcode
-        });
         Highcharts.setOptions({
             lang: { thousandsSep: ',' }
         });
         ChartSettings.setChartOptions(config);
         chart = new Highcharts.Chart(ChartSettings.getChartOptions());
+        HighchartUI.updateLabels(chart, {
+            contract_type: contract_category,
+            has_barrier: should_set_barrier && contract_category !== 'highlowticks',
+            is_reset_barrier: has_reset_barrier,
+            is_tick_trade: true,
+            shortcode: contract.shortcode,
+            show_end_time: contract_category !== 'highlowticks'
+        });
         if (data) {
             dispatch(data);
         }
@@ -25266,6 +25375,15 @@ var TickDisplay = function () {
                             label: localize('Exit Spot'),
                             dashStyle: 'Dash'
                         };
+                    } else if (current_tick_count === ticks_needed && contract_category === 'highlowticks') {
+                        HighchartUI.updateLabels(chart, {
+                            contract_type: contract_category,
+                            has_barrier: false,
+                            is_reset_barrier: false,
+                            is_tick_trade: true,
+                            shortcode: contract.shortcode,
+                            show_end_time: true
+                        });
                     }
 
                     if (typeof x_indicators[indicator_key] !== 'undefined') {
@@ -25322,16 +25440,14 @@ var TickDisplay = function () {
 
             CommonFunctions.elementInnerHtml(CommonFunctions.getElementById('contract_purchase_barrier'), localize('Reset Barrier') + ': ' + reset_barrier);
             reset_spot_plotted = true;
-            ChartSettings.setLabels({
+            HighchartUI.updateLabels(chart, {
                 contract_type: contract_category,
                 has_barrier: true,
                 is_reset_barrier: true,
                 is_tick_trade: true,
-                shortcode: contract.shortcode
+                shortcode: contract.shortcode,
+                show_end_time: true
             });
-            if (chart) {
-                chart.setTitle(null, { text: ChartSettings.getSubtitle() });
-            }
         }
 
         evaluateContractOutcome();
@@ -26181,18 +26297,26 @@ var PaymentAgentTransfer = function () {
         });
     };
 
+    // Remove multiline and excess whitespaces from description text.
+    var trimDescriptionContent = function trimDescriptionContent() {
+        document.getElementById('description').addEventListener('change', function (e) {
+            e.srcElement.value = e.target.value.replace(/\s+/g, ' ');
+        });
+    };
+
     var init = function init(pa, currency) {
         var form_id = '#frm_paymentagent_transfer';
         $form_error = $('#form_error');
 
         setFormVisibility(true);
         PaymentAgentTransferUI.updateFormView(currency);
+        trimDescriptionContent();
 
         common_request_fields = [{ request_field: 'paymentagent_transfer', value: 1 }, { request_field: 'currency', value: currency }];
 
         FormManager.init(form_id, [{ selector: '#client_id', validations: ['req', ['regular', { regex: /^\w+\d+$/, message: localize('Please enter a valid Login ID.') }]], request_field: 'transfer_to' }, { selector: '#amount', validations: ['req', ['number', { type: 'float', decimals: getDecimalPlaces(currency), min: pa ? pa.min_withdrawal : 10, max: pa ? pa.max_withdrawal : 2000 }], ['custom', { func: function func() {
                     return +Client.get('balance') >= +$('#amount').val();
-                }, message: localize('Insufficient balance.') }]] }, { request_field: 'dry_run', value: 1 }].concat(common_request_fields));
+                }, message: localize('Insufficient balance.') }]] }, { selector: '#description', validations: ['general'] }, { request_field: 'dry_run', value: 1 }].concat(common_request_fields));
 
         FormManager.handleSubmit({
             form_selector: form_id,
@@ -26247,7 +26371,7 @@ var PaymentAgentTransfer = function () {
     var initConfirm = function initConfirm(req) {
         var confirm_form_id = '#frm_confirm_transfer';
 
-        FormManager.init(confirm_form_id, [{ request_field: 'transfer_to', value: req.transfer_to }, { request_field: 'amount', value: req.amount }].concat(common_request_fields));
+        FormManager.init(confirm_form_id, [{ request_field: 'transfer_to', value: req.transfer_to }, { request_field: 'amount', value: req.amount }, { request_field: 'description', value: req.description }].concat(common_request_fields));
 
         FormManager.handleSubmit({
             form_selector: confirm_form_id,
@@ -28189,9 +28313,6 @@ var PersonalDetails = function () {
             fnc_additional_check: additionalCheck,
             enable_button: true
         });
-        if (!is_virtual) {
-            Geocoder.validate(form_id);
-        }
         showHideMissingDetails();
     };
 
@@ -28340,6 +28461,7 @@ var PersonalDetails = function () {
                 if (additionalCheck(get_settings)) {
                     getDetailsResponse(get_settings);
                     showFormMessage(localize('Your settings have been updated successfully.'), true);
+                    Geocoder.validate(form_id);
                 }
             });
         } else {
@@ -28451,6 +28573,9 @@ var PersonalDetails = function () {
                             BinarySocket.send({ states_list: residence }).then(function (response_state) {
                                 populateStates(response_state).then(function () {
                                     getDetailsResponse(get_settings_data, response.residence_list);
+                                    if (!is_virtual) {
+                                        Geocoder.validate(form_id);
+                                    }
                                 });
                             });
                         } else {
@@ -28516,6 +28641,12 @@ var professionalClient = function () {
         populateProfessionalClient(is_financial);
     };
 
+    var setVisible = function setVisible(selector) {
+        $('#loading').remove();
+        $('#frm_professional').setVisibility(0);
+        $(selector).setVisibility(1);
+    };
+
     var populateProfessionalClient = function populateProfessionalClient(is_financial) {
         var has_maltainvest = State.getResponse('landing_company.financial_company.shortcode') === 'maltainvest';
         if (!has_maltainvest || !is_financial) {
@@ -28527,10 +28658,14 @@ var professionalClient = function () {
         }
 
         var status = State.getResponse('get_account_status.status') || [];
-        if (is_in_page && /professional/.test(status)) {
-            $('#loading').remove();
-            $('#frm_professional').setVisibility(0);
-            $('#' + (/professional_requested/.test(status) ? 'processing' : 'professional')).setVisibility(1);
+        if (is_in_page && status.includes('professional')) {
+            setVisible('#professional');
+            return;
+        } else if (is_in_page && status.includes('professional_requested')) {
+            setVisible('#processing');
+            return;
+        } else if (is_in_page && status.includes('professional_rejected')) {
+            setVisible('#rejected');
             return;
         }
 
@@ -29501,7 +29636,6 @@ var StatementUI = function () {
         var credit_debit_type = parseFloat(transaction.amount) >= 0 ? 'profit' : 'loss';
 
         var $statement_row = Table.createFlexTableRow([statement_data.date, '<span ' + showTooltip(statement_data.app_id, oauth_apps[statement_data.app_id]) + '>' + statement_data.ref + '</span>', statement_data.payout, statement_data.localized_action, '', statement_data.amount, statement_data.balance, ''], columns, 'data');
-
         $statement_row.children('.credit').addClass(credit_debit_type);
         $statement_row.children('.date').addClass('pre');
         $statement_row.children('.desc').html(statement_data.desc + '<br>');
