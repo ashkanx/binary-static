@@ -32968,6 +32968,7 @@ var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javasc
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var Header = __webpack_require__(/*! ../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var Dialog = __webpack_require__(/*! ../../common/attach_dom/dialog */ "./src/javascript/app/common/attach_dom/dialog.js");
 var getCurrencyName = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getCurrencyName;
 var isCryptocurrency = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").isCryptocurrency;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -33001,6 +33002,7 @@ var SetCurrency = function () {
         BinarySocket.wait('payout_currencies', 'landing_company').then(function () {
             var landing_company = State.getResponse('landing_company');
             var currencies = State.getResponse('payout_currencies');
+
             if (Client.get('landing_company_shortcode') === 'costarica') {
                 currencies = getCurrencies(landing_company);
             }
@@ -33024,15 +33026,9 @@ var SetCurrency = function () {
             $('#set_currency, .select_currency').setVisibility(1);
 
             var $currency_list = $('.currency_list');
-            $('.currency_wrapper').on('click', function () {
-                $currency_list.find('> div').removeClass('selected');
-                $(this).addClass('selected');
-            });
+            var $error = $('#set_currency').find('.error-msg');
 
-            var $form = $('#frm_set_currency');
-            var $error = $form.find('.error-msg');
-            $form.on('submit', function (evt) {
-                evt.preventDefault();
+            var onConfirm = function onConfirm() {
                 $error.setVisibility(0);
                 var $selected_currency = $currency_list.find('.selected');
                 if ($selected_currency.length) {
@@ -33074,6 +33070,32 @@ var SetCurrency = function () {
                 } else {
                     $error.text(localize('Please choose a currency')).setVisibility(1);
                 }
+            };
+
+            $('.currency_wrapper').on('click', function () {
+                var $clicked_currency = $(this);
+                var currency = $clicked_currency.attr('id');
+                var localized_message = '';
+                $error.setVisibility(0);
+                $currency_list.find('> div').removeClass('selected');
+                $clicked_currency.addClass('selected');
+                if (isCryptocurrency(currency)) {
+                    localized_message = localize('You have chosen [_1] as the currency for this account. You cannot change this later. You can have more than one cryptocurrency account.', '<strong>' + getCurrencyName(currency) + ' (' + currency + ')</strong>');
+                } else {
+                    localized_message = localize('You have chosen [_1] as the currency for this account. You cannot change this later. You can have one fiat currency account only.', '<strong>' + currency + '</strong>');
+                }
+
+                Dialog.confirm({
+                    id: 'set_currency_popup_container',
+                    ok_text: localize('Confirm'),
+                    cancel_text: localize('Back'),
+                    localized_title: localize('Are you sure?'),
+                    localized_message: localized_message,
+                    onConfirm: onConfirm,
+                    onAbort: function onAbort() {
+                        return $currency_list.find('> div').removeClass('selected');
+                    }
+                });
             });
         });
     };
@@ -34346,7 +34368,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = '1108'; // you can insert Application ID of your registered application here
+    var user_app_id = ''; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
