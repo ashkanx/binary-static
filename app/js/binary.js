@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"1f20d1cb6ffbf53419ed","account_password":"67c66084bc424d34b10b","api_toke":"7c72ca04a060c6e8363d","authorized_application":"97635409ac3488b8a4dc","cashier_password":"0061f340e2203b85c4de","contract":"d5ff3abe544011cd2843","financial_assessment":"fa615b65ab7d51a072e8","limits":"6122a66075b7120f5152","login_history":"f73b0e94430bafb6dff4","personal_details":"8c2c516db1200e2e67f1","portfolio":"1a4425be49f4fd7f85cc","self_exclusion":"10c70715aab8e89cdf0f","settings":"b65a79071afa6712cab7","statement":"d0b9847e8e35ffae3f6e","vendors~smart_chart":"e29bce83a9f50024f42a","smart_chart":"3bd5fe29258265801823"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"1f20d1cb6ffbf53419ed","account_password":"67c66084bc424d34b10b","api_toke":"7c72ca04a060c6e8363d","authorized_application":"97635409ac3488b8a4dc","cashier_password":"0061f340e2203b85c4de","contract":"d5ff3abe544011cd2843","financial_assessment":"fa615b65ab7d51a072e8","limits":"6122a66075b7120f5152","login_history":"f73b0e94430bafb6dff4","personal_details":"8c2c516db1200e2e67f1","portfolio":"16052a629104e3c26ee7","self_exclusion":"10c70715aab8e89cdf0f","settings":"b65a79071afa6712cab7","statement":"df0f87e87ef416986955","vendors~smart_chart":"e29bce83a9f50024f42a","smart_chart":"3bd5fe29258265801823"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -3124,9 +3124,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _simplebarReact = __webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js");
-
-var _simplebarReact2 = _interopRequireDefault(_simplebarReact);
+var _ttReactCustomScrollbars = __webpack_require__(/*! tt-react-custom-scrollbars */ "./node_modules/tt-react-custom-scrollbars/lib/index.js");
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
@@ -3225,8 +3223,11 @@ var PortfolioDrawer = function (_React$Component) {
                     'div',
                     { className: 'portfolio-drawer__body' },
                     _react2.default.createElement(
-                        _simplebarReact2.default,
-                        { style: { height: '100%' } },
+                        _ttReactCustomScrollbars.Scrollbars,
+                        {
+                            style: { width: '100%', height: 'calc(100vh - 35px)' },
+                            autoHide: true
+                        },
                         body_content
                     )
                 )
@@ -4940,9 +4941,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
 
-var _simplebarReact = __webpack_require__(/*! simplebar-react */ "./node_modules/simplebar-react/dist/simplebar-react.esm.js");
-
-var _simplebarReact2 = _interopRequireDefault(_simplebarReact);
+var _ttReactCustomScrollbars = __webpack_require__(/*! tt-react-custom-scrollbars */ "./node_modules/tt-react-custom-scrollbars/lib/index.js");
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
@@ -5131,8 +5130,12 @@ var Dropdown = function (_React$Component) {
                             'div',
                             { className: 'list-container' },
                             _react2.default.createElement(
-                                _simplebarReact2.default,
-                                { style: { 'height': '100%' } },
+                                _ttReactCustomScrollbars.Scrollbars,
+                                {
+                                    autoHeight: true,
+                                    autoHide: true,
+                                    autoHeightMax: 200
+                                },
                                 (0, _mobx.isArrayLike)(this.props.list) ? _react2.default.createElement(Items, {
                                     highlightedIdx: this.state.curr_index,
                                     items: this.props.list,
@@ -5511,6 +5514,7 @@ var RangeSlider = function RangeSlider(_ref) {
         )
     );
 };
+// Keypress events do not trigger on Safari due to the way it handles input type='range' elements, using focus on the input element also doesn't work for Safari.
 
 RangeSlider.propTypes = {
     className: _propTypes2.default.string,
@@ -11376,6 +11380,77 @@ exports.IconLock = IconLock;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/Assets/Trading/icon_price_move.jsx":
+/*!*****************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Trading/icon_price_move.jsx ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconPriceMove = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconPriceMove = function IconPriceMove(_ref) {
+    var type = _ref.type,
+        className = _ref.className;
+
+    var IconType = void 0;
+    if (type) {
+        switch (type) {
+            case 'profit':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { fill: '#2BC8A5', fillRule: 'nonzero', d: 'M8 4l6 8H2z' })
+                );
+                break;
+            case 'loss':
+                IconType = _react2.default.createElement(
+                    'g',
+                    { fill: 'none', fillRule: 'evenodd' },
+                    _react2.default.createElement('path', { fill: '#E31C4B', fillRule: 'nonzero', d: 'M8 12l6-8H2z' })
+                );
+                break;
+            default:
+                IconType = _react2.default.createElement('path', { fill: '#B0B3BF', fillRule: 'evenodd', d: 'M7 10.4L7.4 9 8 7.9l1-1c.4-.5.6-1 .6-1.5 0-.6-.1-1-.4-1.3-.2-.3-.6-.4-1.2-.4-.5 0-.9.1-1.2.4-.3.3-.4.6-.4 1H5c0-.7.3-1.4.9-1.9.5-.5 1.2-.7 2.1-.7 1 0 1.7.3 2.2.8.5.5.8 1.1.8 2 0 .9-.4 1.7-1.2 2.6l-.8.8c-.4.4-.5 1-.5 1.7H7zm0 2.3c0-.2 0-.4.2-.5l.6-.3c.3 0 .5.1.6.3.2.1.2.3.2.5 0 .3 0 .4-.2.6l-.6.2c-.2 0-.4 0-.6-.2a.8.8 0 0 1-.2-.6z' });
+                break;
+        }
+    }
+    return _react2.default.createElement(
+        'svg',
+        { className: (0, _classnames2.default)('inline-icon', className), width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
+        IconType
+    );
+};
+
+IconPriceMove.propTypes = {
+    className: _propTypes2.default.string,
+    type: _propTypes2.default.string
+};
+
+exports.IconPriceMove = IconPriceMove;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/Constants/contract.js":
 /*!****************************************************!*\
   !*** ./src/javascript/app_2/Constants/contract.js ***!
@@ -14110,36 +14185,17 @@ var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/to
 
 var _tooltip2 = _interopRequireDefault(_tooltip);
 
-var _Types = __webpack_require__(/*! ../../../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
+var _icon_price_move = __webpack_require__(/*! ../../../../../Assets/Trading/icon_price_move.jsx */ "./src/javascript/app_2/Assets/Trading/icon_price_move.jsx");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractInfo = function ContractInfo(_ref) {
-    var barrier_count = _ref.barrier_count,
-        contract_title = _ref.contract_title,
-        contract_type = _ref.contract_type,
-        currency = _ref.currency,
+    var currency = _ref.currency,
+        has_increased = _ref.has_increased,
         proposal_info = _ref.proposal_info;
-
-    var icon_type = ('' + contract_type + (/^(call|put)$/i.test(contract_type) && barrier_count > 0 ? '_barrier' : '')).toLowerCase();
-
     return _react2.default.createElement(
-        'div',
-        { className: 'box' },
-        _react2.default.createElement(
-            'div',
-            { className: 'left-column' },
-            _react2.default.createElement(
-                'div',
-                { className: 'type-wrapper' },
-                _react2.default.createElement(_Types.IconTradeType, { type: icon_type, className: 'type' })
-            ),
-            _react2.default.createElement(
-                'h4',
-                { className: 'trade-type' },
-                contract_title
-            )
-        ),
+        _react2.default.Fragment,
+        null,
         proposal_info.has_error || !proposal_info.id ? _react2.default.createElement(
             'div',
             { className: proposal_info.has_error ? 'error-info-wrapper' : '' },
@@ -14152,79 +14208,36 @@ var ContractInfo = function ContractInfo(_ref) {
             'div',
             { className: 'purchase-info-wrapper' },
             _react2.default.createElement(
+                'div',
+                { className: 'info-wrapper' },
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    (0, _localize.localize)('[_1]', proposal_info.obj_contract_basis.text)
+                ),
+                _react2.default.createElement(
+                    'div',
+                    null,
+                    _react2.default.createElement(_money2.default, { amount: proposal_info.obj_contract_basis.value, currency: currency })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'icon_price_move_container' },
+                    has_increased !== null && _react2.default.createElement(_icon_price_move.IconPriceMove, { type: has_increased ? 'profit' : 'loss' })
+                )
+            ),
+            _react2.default.createElement(
                 'span',
                 { className: 'purchase-tooltip' },
                 _react2.default.createElement(_tooltip2.default, { alignment: 'left', icon: 'info', message: proposal_info.message })
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Stake'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.stake, currency: currency })
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Payout'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.payout, currency: currency })
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Net Profit'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.profit, currency: currency })
-                )
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'info-wrapper' },
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    (0, _localize.localize)('Return'),
-                    ':'
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    proposal_info.returns
-                )
             )
         )
     );
 };
 
 ContractInfo.propTypes = {
-    barrier_count: _propTypes2.default.number,
-    contract_title: _propTypes2.default.string,
-    contract_type: _propTypes2.default.string,
     currency: _propTypes2.default.string,
+    has_increased: _propTypes2.default.bool,
     proposal_info: _propTypes2.default.object
 };
 
@@ -15301,6 +15314,10 @@ var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/j
 
 var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
+var _money = __webpack_require__(/*! ../../../App/Components/Elements/money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
+
+var _money2 = _interopRequireDefault(_money);
+
 var _PopConfirm = __webpack_require__(/*! ../../../App/Components/Elements/PopConfirm */ "./src/javascript/app_2/App/Components/Elements/PopConfirm/index.js");
 
 var _ui_loader = __webpack_require__(/*! ../../../App/Components/Elements/ui_loader.jsx */ "./src/javascript/app_2/App/Components/Elements/ui_loader.jsx");
@@ -15314,6 +15331,8 @@ var _button2 = _interopRequireDefault(_button);
 var _fieldset = __webpack_require__(/*! ../../../App/Components/Form/fieldset.jsx */ "./src/javascript/app_2/App/Components/Form/fieldset.jsx");
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
+
+var _Types = __webpack_require__(/*! ../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
 
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
@@ -15332,8 +15351,7 @@ var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Purchase = function Purchase(_ref) {
-    var barrier_count = _ref.barrier_count,
-        currency = _ref.currency,
+    var currency = _ref.currency,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
         is_purchase_confirm_on = _ref.is_purchase_confirm_on,
         is_purchase_enabled = _ref.is_purchase_enabled,
@@ -15350,17 +15368,53 @@ var Purchase = function Purchase(_ref) {
         var info = proposal_info[type] || {};
         var is_disabled = !is_purchase_enabled || !is_trade_enabled || !info.id || !is_client_allowed_to_visit;
 
-        var purchase_button = _react2.default.createElement(_button2.default, {
-            is_disabled: is_disabled,
-            id: 'purchase_' + type,
-            className: 'primary green',
-            has_effect: true,
-            text: (0, _localize.localize)('Purchase'),
-            onClick: function onClick() {
-                onClickPurchase(info.id, info.stake, type);
+        var purchase_button = _react2.default.createElement(
+            _button2.default,
+            {
+                is_disabled: is_disabled,
+                id: 'purchase_' + type,
+                className: 'primary green btn-purchase',
+                has_effect: true,
+                onClick: function onClick() {
+                    onClickPurchase(info.id, info.stake, type);
+                },
+                wrapperClassName: 'submit-section'
             },
-            wrapperClassName: 'submit-section'
-        });
+            _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                _react2.default.createElement('div', { className: 'btn-purchase__effect-main' }),
+                _react2.default.createElement('div', { className: 'btn-purchase__effect-detail' }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'btn-purchase__content' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'btn-purchase__trade-type' },
+                        _react2.default.createElement(_Types.IconTradeType, { type: type.toLowerCase() }),
+                        _react2.default.createElement(
+                            'span',
+                            null,
+                            (0, _localize.localize)('[_1]', trade_types[type])
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'btn-purchase__info' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'btn-purchase__return' },
+                        is_disabled ? '---,-' : info.returns
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'btn-purchase__profit' },
+                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info.profit, currency: currency })
+                    )
+                )
+            )
+        );
 
         var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
 
@@ -15386,11 +15440,9 @@ var Purchase = function Purchase(_ref) {
                 null,
                 !is_purchase_enabled && idx === 0 && _react2.default.createElement(_ui_loader2.default, null),
                 _react2.default.createElement(_contract_info2.default, {
-                    barrier_count: barrier_count,
-                    contract_title: trade_types[type],
-                    contract_type: type,
                     currency: currency,
-                    proposal_info: info
+                    proposal_info: info,
+                    has_increased: info.has_increased
                 }),
                 is_purchase_confirm_on ? _react2.default.createElement(
                     _PopConfirm.PopConfirm,
@@ -15408,7 +15460,6 @@ var Purchase = function Purchase(_ref) {
 };
 
 Purchase.propTypes = {
-    barrier_count: _propTypes2.default.number,
     currency: _propTypes2.default.string,
     is_client_allowed_to_visit: _propTypes2.default.bool,
     is_purchase_confirm_on: _propTypes2.default.bool,
@@ -15431,7 +15482,6 @@ exports.default = (0, _connect.connect)(function (_ref2) {
     return {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
-        barrier_count: modules.trade.barrier_count,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,
@@ -19938,19 +19988,39 @@ var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/
 
 var _query_string = __webpack_require__(/*! ../Constants/query_string */ "./src/javascript/app_2/Stores/Modules/Trading/Constants/query_string.js");
 
-var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, response) {
+var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, response, obj_prev_contract_basis) {
     var proposal = response.proposal || {};
     var profit = proposal.payout - proposal.ask_price || 0;
     var returns = profit * 100 / (proposal.ask_price || 1);
+    var stake = proposal.display_value;
+    var basis_list = store.basis_list;
+
+    var contract_basis = basis_list.find(function (o) {
+        return o.value !== store.basis;
+    });
+    var is_stake = contract_basis.text === 'Stake';
+    var price = is_stake ? stake : proposal[contract_basis.value];
+    var has_increased = price > obj_prev_contract_basis.value;
+
+    if (price === obj_prev_contract_basis.value) {
+        has_increased = null;
+    }
+
+    var obj_contract_basis = {
+        text: contract_basis.text || '',
+        value: price || ''
+    };
 
     return {
+        id: proposal.id || '',
+        has_error: !!response.error,
+        has_increased: has_increased,
+        message: proposal.longcode || response.error.message,
+        obj_contract_basis: obj_contract_basis,
+        payout: proposal.payout,
         profit: profit.toFixed((0, _currency_base.getDecimalPlaces)(store.currency)),
         returns: returns.toFixed(2) + '%',
-        stake: proposal.display_value,
-        payout: proposal.payout,
-        id: proposal.id || '',
-        message: proposal.longcode || response.error.message,
-        has_error: !!response.error
+        stake: stake
     };
 };
 
@@ -20681,7 +20751,10 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
         key: 'onProposalResponse',
         value: function onProposalResponse(response) {
             var contract_type = response.echo_req.contract_type;
-            this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response)));
+            var prev_proposal_info = (0, _utility.getPropertyValue)(this.proposal_info, contract_type) || {};
+            var obj_prev_contract_basis = (0, _utility.getPropertyValue)(prev_proposal_info, 'obj_contract_basis') || {};
+
+            this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response, obj_prev_contract_basis)));
 
             if (!this.smart_chart.is_contract_mode) {
                 (0, _chart.setChartBarrier)(this.smart_chart, response, this.onChartBarrierChange);
