@@ -1155,7 +1155,7 @@ var Login = function () {
         var date_first_contact = LocalStore.get('date_first_contact');
         var marketing_queries = '&signup_device=' + signup_device + (date_first_contact ? '&date_first_contact=' + date_first_contact : '');
 
-        return server_url && /qa/.test(server_url) ? 'https://www.' + server_url.split('.')[1] + '.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language + marketing_queries : urlForCurrentDomain('https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language + marketing_queries);
+        return server_url && /qa/.test(server_url) ? 'https://' + server_url + '/oauth2/authorize?app_id=' + getAppId() + '&l=' + language + marketing_queries : urlForCurrentDomain('https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language + marketing_queries);
     };
 
     var isLoginPages = function isLoginPages() {
@@ -23712,8 +23712,9 @@ var Price = function () {
         }
 
         if (multiplier && CommonFunctions.isVisible(multiplier) && multiplier.value) {
-            proposal.amount = multiplier.value;
-            if (multiplier.value > 1000) {
+            var multiplier_value = parseFloat(multiplier.value);
+            proposal.amount = multiplier_value;
+            if (multiplier_value > 1000) {
                 proposal.error = {
                     message: localize('Maximum multiplier of 1000.')
                 };
