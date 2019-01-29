@@ -13026,9 +13026,16 @@ var isIndonesia = function isIndonesia() {
     return State.getResponse('website_status.clients_country') === 'id';
 };
 
+var isExcludedFromCfd = function isExcludedFromCfd() {
+    var cfd_excluded_regex = new RegExp('^fr$');
+    var clients_country = Client.get('residence') || State.getResponse('website_status.clients_country');
+    return cfd_excluded_regex.test(clients_country);
+};
+
 module.exports = {
     isEuCountry: isEuCountry,
-    isIndonesia: isIndonesia
+    isIndonesia: isIndonesia,
+    isExcludedFromCfd: isExcludedFromCfd
 };
 
 /***/ }),
@@ -35592,6 +35599,10 @@ module.exports = Platforms;
 "use strict";
 
 
+var BinarySocket = __webpack_require__(/*! ../../app/base/socket */ "./src/javascript/app/base/socket.js");
+var isExcludedFromCfd = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isExcludedFromCfd;
+var getElementById = __webpack_require__(/*! ../../../javascript/_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+
 var Regulation = function () {
     var onLoad = function onLoad() {
         $(function () {
@@ -35613,6 +35624,14 @@ var Regulation = function () {
                 // if EU passport rights tab is active, call relocateLinks to initialize map coordinates
                 if (!$accordion.accordion('option', 'active')) {
                     relocateLinks();
+                }
+            });
+
+            BinarySocket.wait('website_status', 'authorize').then(function () {
+                if (isExcludedFromCfd()) {
+                    var el_cfd_fillbox = getElementById('cfd_fillbox');
+                    el_cfd_fillbox.nextSibling.classList.remove('margin-left-0');
+                    el_cfd_fillbox.remove();
                 }
             });
         });

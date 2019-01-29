@@ -3023,8 +3023,9 @@ var PopConfirm = function (_React$Component) {
                 _react2.default.Children.map(this.props.children, function (child) {
                     return _react2.default.cloneElement(child, {
                         onClick: _this2.handleOpen
-                    }, popconfirm_element);
-                })
+                    });
+                }),
+                popconfirm_element
             );
         }
     }]);
