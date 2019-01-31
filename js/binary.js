@@ -1166,10 +1166,19 @@ var Login = function () {
         return loginUrl() + '&social_signup=' + brand;
     };
 
+    var initOneAll = function initOneAll() {
+        ['google', 'facebook'].forEach(function (provider) {
+            $('#button_' + provider).off('click').on('click', function (e) {
+                e.preventDefault();
+                window.location.href = socialLoginUrl(provider);
+            });
+        });
+    };
+
     return {
         redirectToLogin: redirectToLogin,
         isLoginPages: isLoginPages,
-        socialLoginUrl: socialLoginUrl
+        initOneAll: initOneAll
     };
 }();
 
@@ -17550,7 +17559,6 @@ var isBinaryApp = __webpack_require__(/*! ../../config */ "./src/javascript/conf
 
 var NewAccount = function () {
     var clients_country = void 0,
-        $google_btn = void 0,
         $login_btn = void 0,
         $verify_email = void 0;
 
@@ -17559,7 +17567,6 @@ var NewAccount = function () {
     var onLoad = function onLoad() {
         getElementById('footer').setVisibility(0); // always hide footer in this page
 
-        $google_btn = $('#google-signup');
         $login_btn = $('#login');
         $verify_email = $('#verify_email');
 
@@ -17578,14 +17585,11 @@ var NewAccount = function () {
             }
         });
 
-        $google_btn.off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = Login.socialLoginUrl('google');
-        });
         $login_btn.off('click').on('click', function (e) {
             e.preventDefault();
             Login.redirectToLogin();
         });
+        Login.initOneAll();
     };
 
     var verifyEmailHandler = function verifyEmailHandler(response) {
@@ -33533,7 +33537,7 @@ var ResetPassword = function () {
         generateBirthDate();
 
         $('#have_real_account').off('click').on('click', function () {
-            if ($(this).is(':checked')) {
+            if ($('#have_real_account_option_0').is(':checked')) {
                 $('#dob_field').setVisibility(1);
             } else {
                 $('#dob_field').setVisibility(0);
@@ -33541,7 +33545,7 @@ var ResetPassword = function () {
         });
 
         var form_id = '#frm_reset_password';
-        FormManager.init(form_id, [{ selector: '#new_password', validations: ['req', 'password'], re_check_field: '#repeat_password' }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]], exclude_request: 1 }, { selector: '#date_of_birth', validations: ['req'] }, { request_field: 'reset_password', value: 1 }], true);
+        FormManager.init(form_id, [{ selector: '#have_real_account', validations: ['req'], exclude_request: 1 }, { selector: '#date_of_birth', validations: ['req'] }, { selector: '#new_password', validations: ['req', 'password'], re_check_field: '#repeat_password' }, { selector: '#repeat_password', validations: ['req', ['compare', { to: '#new_password' }]], exclude_request: 1 }, { request_field: 'reset_password', value: 1 }], true);
 
         FormManager.handleSubmit({
             form_selector: form_id,
@@ -35344,6 +35348,7 @@ var Home = function () {
     var clients_country = void 0;
 
     var onLoad = function onLoad() {
+        Login.initOneAll();
         TabSelector.onLoad();
 
         BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
@@ -35359,17 +35364,9 @@ var Home = function () {
                 fnc_response_handler: handler,
                 fnc_additional_check: checkCountry
             });
-            socialLogin();
             if (isEuCountry()) {
                 $('.mfsa_message').slideDown(300);
             }
-        });
-    };
-
-    var socialLogin = function socialLogin() {
-        $('#google-signup').off('click').on('click', function (e) {
-            e.preventDefault();
-            window.location.href = Login.socialLoginUrl('google');
         });
     };
 

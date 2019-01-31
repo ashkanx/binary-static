@@ -9665,7 +9665,7 @@ var IconBack = function IconBack(_ref) {
     return _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
-        _react2.default.createElement('path', { fill: '#333', fillRule: 'nonzero', d: 'M3.6 8.5L7 12.2a.5.5 0 1 1-.8.6l-4-4.5a.5.5 0 0 1 0-.6l4-4.5a.5.5 0 0 1 .8.6L3.6 7.5h9.9a.5.5 0 1 1 0 1H3.6z' })
+        _react2.default.createElement('path', { fill: '#5C5C5C', fillRule: 'evenodd', d: 'M3.613 8.5l3.26 3.668a.5.5 0 1 1-.747.664l-4-4.5a.5.5 0 0 1 0-.664l4-4.5a.5.5 0 0 1 .748.664L3.614 7.5H13.5a.5.5 0 1 1 0 1H3.613z' })
     );
 };
 
@@ -10247,6 +10247,58 @@ IconPlus.propTypes = {
 };
 
 exports.IconPlus = IconPlus;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx":
+/*!*******************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx ***!
+  \*******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconTooltipLight = undefined;
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconTooltipLight = function IconTooltipLight(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        { className: className, xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('circle', { cx: '8', cy: '8', r: '7.5', stroke: '#B0B3BF' }),
+            _react2.default.createElement(
+                'g',
+                { fill: '#B0B3BF', transform: 'translate(6.5 4)' },
+                _react2.default.createElement('circle', { cx: '1.5', cy: '1.25', r: '1' }),
+                _react2.default.createElement('rect', { width: '1', height: '5', x: '1', y: '3', rx: '.5' })
+            )
+        )
+    );
+};
+
+IconTooltipLight.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconTooltipLight = IconTooltipLight;
 
 /***/ }),
 
@@ -11582,6 +11634,255 @@ Object.keys(_icon_trade_categories).forEach(function (key) {
     }
   });
 });
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Trading/Categories/trade_categories.jsx":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Trading/Categories/trade_categories.jsx ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.TradeCategories = undefined;
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Templates are from Binary 1.0, it should be checked if they need change or not and add all of trade types
+
+var TradeCategories = function TradeCategories(_ref) {
+    var category = _ref.category;
+
+    var TradeTypeTemplate = void 0;
+    if (category) {
+        switch (category) {
+            case 'rise_fall':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Higher", you win the payout if the exit spot is strictly higher than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Lower", you win the payout if the exit spot is strictly lower than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Higher". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Lower".')
+                    )
+                );
+                break;
+            case 'rise_fall_equal':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Higher", you win the payout if the exit spot is strictly higher than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Lower", you win the payout if the exit spot is strictly lower than the entry spot.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Allow equals", you win the payout if exit spot is higher than or equal to entry spot for "Higher". Similarly, you win the payout if exit spot is lower than or equal to entry spot for "Lower".')
+                    )
+                );
+                break;
+            case 'high_low':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Higher", you win the payout if the exit spot is strictly higher than the barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Lower", you win the payout if the exit spot is strictly lower than the barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If the exit spot is equal to the barrier, you don\'t win the payout.')
+                    )
+                );
+                break;
+            case 'end':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Ends Between", you win the payout if the exit spot is strictly higher than the Low barrier AND strictly lower than the High barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Ends Outside", you win the payout if the exit spot is EITHER strictly higher than the High barrier, OR strictly lower than the Low barrier.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If the exit spot is equal to either the Low barrier or the High barrier, you don\'t win the payout.')
+                    )
+                );
+                break;
+            case 'stay':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Stays Between", you win the payout if the market stays between (does not touch) either the High barrier or the Low barrier at any time during the contract period')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Goes Outside", you win the payout if the market touches either the High barrier or the Low barrier at any time during the contract period.')
+                    )
+                );
+                break;
+            case 'match_diff':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Matches", you will win the payout if the last digit of the last tick is the same as your prediction.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Differs", you will win the payout if the last digit of the last tick is not the same as your prediction.')
+                    )
+                );
+                break;
+            case 'even_odd':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Even", you will win the payout if the last digit of the last tick is an even number (i.e., 2, 4, 6, 8, or 0).')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Odd", you will win the payout if the last digit of the last tick is an odd number (i.e., 1, 3, 5, 7, or 9).')
+                    )
+                );
+                break;
+            case 'over_under':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Over", you will win the payout if the last digit of the last tick is greater than your prediction.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Under", you will win the payout if the last digit of the last tick is less than your prediction.')
+                    )
+                );
+                break;
+            case 'touch':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Touches", you win the payout if the market touches the barrier at any time during the contract period.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Does Not Touch", you win the payout if the market never touches the barrier at any time during the contract period.')
+                    )
+                );
+                break;
+            case 'asian':
+                TradeTypeTemplate = _react2.default.createElement(
+                    _react2.default.Fragment,
+                    null,
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('Asian options settle by comparing the last tick with the average spot over the period.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Asian Rise", you will win the payout if the last tick is higher than the average of the ticks.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If you select "Asian Fall", you will win the payout if the last tick is lower than the average of the ticks.')
+                    ),
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        (0, _localize.localize)('If the last tick is equal to the average of the ticks, you don\'t win the payout.')
+                    )
+                );
+                break;
+            default:
+                TradeTypeTemplate = _react2.default.createElement(
+                    'p',
+                    null,
+                    'not found'
+                );
+                break;
+        }
+    }
+    return _react2.default.createElement(
+        'div',
+        null,
+        TradeTypeTemplate
+    );
+};
+
+TradeCategories.propTypes = {
+    category: _propTypes2.default.string
+};
+
+exports.TradeCategories = TradeCategories;
 
 /***/ }),
 
@@ -13605,7 +13906,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var FullScreenDialog = function FullScreenDialog(props) {
     var title = props.title,
         visible = props.visible,
-        children = props.children;
+        children = props.children,
+        wrapperClassName = props.wrapperClassName;
 
 
     var checkVisibility = function checkVisibility() {
@@ -13674,7 +13976,7 @@ var FullScreenDialog = function FullScreenDialog(props) {
             { className: 'fullscreen-dialog__content' },
             _react2.default.createElement(
                 'div',
-                { className: 'contracts-modal-list' },
+                { className: '' + (wrapperClassName || 'contracts-modal-list') },
                 children
             )
         )
@@ -13685,7 +13987,8 @@ FullScreenDialog.propTypes = {
     children: _propTypes2.default.any,
     onClose: _propTypes2.default.func,
     title: _propTypes2.default.string,
-    visible: _propTypes2.default.bool
+    visible: _propTypes2.default.bool,
+    wrapperClassName: _propTypes2.default.string
 };
 
 exports.default = FullScreenDialog;
@@ -13892,11 +14195,9 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _icon_tooltip_light = __webpack_require__(/*! ../../../../../Assets/Common/icon_tooltip_light.jsx */ "./src/javascript/app_2/Assets/Common/icon_tooltip_light.jsx");
+
 var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
-
-var _tooltip = __webpack_require__(/*! ../../../../../App/Components/Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
-
-var _tooltip2 = _interopRequireDefault(_tooltip);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -13904,6 +14205,7 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
     var contracts = _ref.contracts,
         name = _ref.name,
         value = _ref.value,
+        handleInfoClick = _ref.handleInfoClick,
         handleSelect = _ref.handleSelect;
     return contracts.map(function (contract, idx) {
         return contract.value !== 'rise_fall_equal' && _react2.default.createElement(
@@ -13913,8 +14215,8 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 className: 'list-item ' + (value === contract.value ? 'selected' : ''),
                 name: name,
                 value: contract.value,
-                onClick: function onClick() {
-                    return handleSelect(contract);
+                onClick: function onClick(e) {
+                    return handleSelect(contract, e);
                 }
             },
             _react2.default.createElement(_Categories.IconTradeCategory, { category: contract.value }),
@@ -13923,16 +14225,20 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
                 { className: 'contract-title' },
                 contract.text
             ),
-            _react2.default.createElement(_tooltip2.default, {
-                alignment: 'left',
-                icon: 'info'
-            })
+            _react2.default.createElement(
+                'div',
+                { id: 'info-icon', className: 'trade-type-info-icon', onClick: function onClick() {
+                        return handleInfoClick(contract);
+                    } },
+                _react2.default.createElement(_icon_tooltip_light.IconTooltipLight, null)
+            )
         );
     });
 };
 
 ContractTypeItem.propTypes = {
     contracts: _mobxReact.PropTypes.arrayOrObservableArray,
+    handleInfoClick: _propTypes2.default.func,
     handleSelect: _propTypes2.default.func,
     name: _propTypes2.default.string,
     value: _propTypes2.default.string
@@ -13973,7 +14279,8 @@ var _contract_type_item2 = _interopRequireDefault(_contract_type_item);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractTypeList = function ContractTypeList(_ref) {
-    var handleSelect = _ref.handleSelect,
+    var handleInfoClick = _ref.handleInfoClick,
+        handleSelect = _ref.handleSelect,
         list = _ref.list,
         name = _ref.name,
         value = _ref.value;
@@ -14002,7 +14309,8 @@ var ContractTypeList = function ContractTypeList(_ref) {
                             contracts: list[key],
                             name: name,
                             value: value,
-                            handleSelect: handleSelect
+                            handleSelect: handleSelect,
+                            handleInfoClick: handleInfoClick
                         })
                     )
                 )
@@ -14012,6 +14320,7 @@ var ContractTypeList = function ContractTypeList(_ref) {
 };
 
 ContractTypeList.propTypes = {
+    handleInfoClick: _propTypes2.default.func,
     handleSelect: _propTypes2.default.func,
     list: _mobxReact.PropTypes.objectOrObservableObject,
     name: _propTypes2.default.string,
@@ -14056,6 +14365,14 @@ var _contract_type_list = __webpack_require__(/*! ./contract_type_list.jsx */ ".
 
 var _contract_type_list2 = _interopRequireDefault(_contract_type_list);
 
+var _trade_type_info_dialog = __webpack_require__(/*! ../TradeTypeInfo/trade_type_info_dialog.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_dialog.jsx");
+
+var _trade_type_info_dialog2 = _interopRequireDefault(_trade_type_info_dialog);
+
+var _trade_type_info_item = __webpack_require__(/*! ../TradeTypeInfo/trade_type_info_item.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_item.jsx");
+
+var _trade_type_info_item2 = _interopRequireDefault(_trade_type_info_item);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -14072,11 +14389,56 @@ var ContractTypeWidget = function (_React$PureComponent) {
 
         var _this = _possibleConstructorReturn(this, (ContractTypeWidget.__proto__ || Object.getPrototypeOf(ContractTypeWidget)).call(this, props));
 
-        _this.handleSelect = function (item) {
-            if (item.value !== _this.props.value) {
+        _this.handleSelect = function (item, e) {
+            if (item.value !== _this.props.value && e.target.id !== 'info-icon') {
                 _this.props.onChange({ target: { name: _this.props.name, value: item.value } });
             }
             _this.handleVisibility();
+        };
+
+        _this.onSubmitButtonClick = function (item) {
+            if (item.value !== _this.props.value) {
+                _this.props.onChange({ target: { name: _this.props.name, value: item.value } });
+            }
+            _this.handleInfoVisibility();
+        };
+
+        _this.handleInfoClick = function (item) {
+            _this.setState({ item: item });
+            _this.handleInfoVisibility();
+            _this.handleVisibility();
+        };
+
+        _this.handleNavigationClick = function (item) {
+            _this.setState({ item: item });
+        };
+
+        _this.handleNextClick = function (navigationList) {
+            var navigationLength = navigationList.length;
+            var item = _this.state.item;
+            var currentIndex = navigationList.findIndex(function (list_item) {
+                return list_item.value === item.value;
+            });
+            var nextIndex = currentIndex + 1;
+            if (nextIndex < navigationLength) {
+                _this.handleNavigationClick(navigationList[nextIndex]);
+            } else {
+                _this.handleNavigationClick(navigationList[0]);
+            }
+        };
+
+        _this.handlePrevClick = function (navigationList) {
+            var navigationLength = navigationList.length;
+            var item = _this.state.item;
+            var currentIndex = navigationList.findIndex(function (list_item) {
+                return list_item.value === item.value;
+            });
+            var prevIndex = currentIndex - 1;
+            if (prevIndex > -1) {
+                _this.handleNavigationClick(navigationList[prevIndex]);
+            } else {
+                _this.handleNavigationClick(navigationList[navigationLength - 1]);
+            }
         };
 
         _this.setWrapperRef = function (node) {
@@ -14086,11 +14448,33 @@ var ContractTypeWidget = function (_React$PureComponent) {
         _this.handleClickOutside = function (event) {
             if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target) && _this.state.is_dialog_open) {
                 _this.setState({ is_dialog_open: false });
+            } else if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target) && _this.state.is_info_dialog_open) {
+                _this.setState({ is_info_dialog_open: false, is_dialog_open: true });
             }
+        };
+
+        _this.handleInfoVisibility = function () {
+            _this.setState(function (state) {
+                return {
+                    is_info_dialog_open: !state.is_info_dialog_open
+                };
+            });
         };
 
         _this.handleVisibility = function () {
             _this.setState({ is_dialog_open: !_this.state.is_dialog_open });
+        };
+
+        _this.onWidgetClick = function () {
+            _this.setState(function (state) {
+                return { is_dialog_open: !state.is_dialog_open, is_info_dialog_open: false };
+            });
+        };
+
+        _this.onBackButtonClick = function () {
+            _this.setState(function (state) {
+                return { is_dialog_open: !state.is_dialog_open, is_info_dialog_open: false };
+            });
         };
 
         _this.getDisplayText = function () {
@@ -14124,8 +14508,23 @@ var ContractTypeWidget = function (_React$PureComponent) {
             return container_classes;
         };
 
+        _this.getNavigationList = function () {
+            var navigationList = [];
+            var list = _this.props.list;
+            /* eslint-disable */
+            Object.keys(list).map(function (key) {
+                !['In/Out', 'Asians'].includes(key) && list[key].map(function (contract) {
+                    contract.value !== 'rise_fall_equal' && navigationList.push(contract);
+                });
+            });
+            /* eslint-disable */
+            return navigationList;
+        };
+
         _this.state = {
-            is_dialog_open: false
+            is_dialog_open: false,
+            is_info_dialog_open: false,
+            item: {}
         };
         return _this;
     }
@@ -14156,7 +14555,7 @@ var ContractTypeWidget = function (_React$PureComponent) {
                     'div',
                     {
                         className: 'contracts-popup-display ' + (this.state.is_dialog_open ? 'clicked' : ''),
-                        onClick: this.handleVisibility
+                        onClick: this.onWidgetClick
                     },
                     _react2.default.createElement(_Categories.IconTradeCategory, { category: this.props.value }),
                     _react2.default.createElement(
@@ -14176,7 +14575,27 @@ var ContractTypeWidget = function (_React$PureComponent) {
                         list: this.props.list,
                         name: this.props.name,
                         value: this.props.value,
-                        handleSelect: this.handleSelect
+                        handleSelect: this.handleSelect,
+                        handleInfoClick: this.handleInfoClick
+                    })
+                ),
+                _react2.default.createElement(
+                    _trade_type_info_dialog2.default,
+                    {
+                        is_mobile: this.props.is_mobile,
+                        onClose: this.handleInfoClick,
+                        open: this.state.is_info_dialog_open,
+                        title: this.state.item.text
+                    },
+                    _react2.default.createElement(_trade_type_info_item2.default, {
+                        handleNavigationClick: this.handleNavigationClick,
+                        handleNextClick: this.handleNextClick,
+                        handlePrevClick: this.handlePrevClick,
+                        is_mobile: this.props.is_mobile,
+                        item: this.state.item,
+                        navigationList: this.getNavigationList(),
+                        onBackButtonClick: this.onBackButtonClick,
+                        onSubmitButtonClick: this.onSubmitButtonClick
                     })
                 )
             );
@@ -15606,6 +16025,214 @@ StartDate.propTypes = {
 };
 
 exports.default = (0, _mobxReact.observer)(StartDate);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_dialog.jsx":
+/*!*******************************************************************************************************!*\
+  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_dialog.jsx ***!
+  \*******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
+var _full_screen_dialog = __webpack_require__(/*! ../../Elements/full_screen_dialog.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Elements/full_screen_dialog.jsx");
+
+var _full_screen_dialog2 = _interopRequireDefault(_full_screen_dialog);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var TradeTypeInfoDialog = function TradeTypeInfoDialog(_ref) {
+    var children = _ref.children,
+        is_mobile = _ref.is_mobile,
+        open = _ref.open,
+        onClose = _ref.onClose,
+        title = _ref.title;
+    return is_mobile ? _react2.default.createElement(
+        _full_screen_dialog2.default,
+        {
+            visible: open,
+            onClose: onClose,
+            title: title,
+            wrapperClassName: 'trade-type-info-modal'
+        },
+        children
+    ) : _react2.default.createElement(
+        _reactTransitionGroup.CSSTransition,
+        {
+            classNames: 'trade-type-info-popup',
+            'in': open,
+            timeout: 100,
+            unmountOnExit: true
+        },
+        _react2.default.createElement(
+            'div',
+            { className: 'trade-type-info-popup' },
+            _react2.default.createElement(
+                'div',
+                { className: 'trade-type-info' },
+                children
+            )
+        )
+    );
+};
+
+TradeTypeInfoDialog.propTypes = {
+    children: _propTypes2.default.element,
+    is_mobile: _propTypes2.default.bool,
+    onClose: _propTypes2.default.func,
+    open: _propTypes2.default.bool,
+    title: _propTypes2.default.string
+};
+
+exports.default = TradeTypeInfoDialog;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_item.jsx":
+/*!*****************************************************************************************************!*\
+  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/TradeTypeInfo/trade_type_info_item.jsx ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _icon_back = __webpack_require__(/*! ../../../../../Assets/Common/icon_back.jsx */ "./src/javascript/app_2/Assets/Common/icon_back.jsx");
+
+var _icon_chevron_left = __webpack_require__(/*! ../../../../../Assets/Common/icon_chevron_left.jsx */ "./src/javascript/app_2/Assets/Common/icon_chevron_left.jsx");
+
+var _icon_chevron_right = __webpack_require__(/*! ../../../../../Assets/Common/icon_chevron_right.jsx */ "./src/javascript/app_2/Assets/Common/icon_chevron_right.jsx");
+
+var _trade_categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories/trade_categories.jsx */ "./src/javascript/app_2/Assets/Trading/Categories/trade_categories.jsx");
+
+var _button = __webpack_require__(/*! ../../../../../App/Components/Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
+
+var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ContractTypeItem = function ContractTypeItem(_ref) {
+    var handleNavigationClick = _ref.handleNavigationClick,
+        handleNextClick = _ref.handleNextClick,
+        handlePrevClick = _ref.handlePrevClick,
+        is_mobile = _ref.is_mobile,
+        item = _ref.item,
+        navigationList = _ref.navigationList,
+        onBackButtonClick = _ref.onBackButtonClick,
+        onSubmitButtonClick = _ref.onSubmitButtonClick;
+    return _react2.default.createElement(
+        _react2.default.Fragment,
+        null,
+        !is_mobile && _react2.default.createElement(
+            'div',
+            { className: 'info-header' },
+            _react2.default.createElement(
+                'span',
+                { onClick: function onClick() {
+                        return onBackButtonClick();
+                    } },
+                _react2.default.createElement(_icon_back.IconBack, null)
+            ),
+            _react2.default.createElement(
+                'span',
+                { className: 'title' },
+                item.text
+            )
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-gif' },
+            'gif explanation'
+        ),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-content' },
+            _react2.default.createElement(_trade_categories.TradeCategories, { category: item.value })
+        ),
+        _react2.default.createElement(_button2.default, { className: 'info-choose', text: (0, _localize.localize)('CHOOSE'), onClick: function onClick() {
+                return onSubmitButtonClick(item);
+            } }),
+        _react2.default.createElement(
+            'div',
+            { className: 'info-navigation' },
+            _react2.default.createElement(
+                'div',
+                { className: 'info-navigation__icon', onClick: function onClick() {
+                        return handlePrevClick(navigationList);
+                    } },
+                _react2.default.createElement(_icon_chevron_left.IconChevronLeft, null)
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'info-navigation__list' },
+                navigationList.map(function (contract, idx) {
+                    return _react2.default.createElement(
+                        _react2.default.Fragment,
+                        { key: idx },
+                        _react2.default.createElement('div', {
+                            className: 'circle-button ' + (contract.value === item.value ? 'active' : ''),
+                            onClick: function onClick() {
+                                return handleNavigationClick(contract);
+                            }
+                        })
+                    );
+                })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'info-navigation__icon', onClick: function onClick() {
+                        return handleNextClick(navigationList);
+                    } },
+                _react2.default.createElement(_icon_chevron_right.IconChevronRight, null)
+            )
+        )
+    );
+};
+
+ContractTypeItem.propTypes = {
+    handleNavigationClick: _propTypes2.default.func,
+    handleNextClick: _propTypes2.default.func,
+    handlePrevClick: _propTypes2.default.func,
+    is_mobile: _propTypes2.default.bool,
+    item: _propTypes2.default.object,
+    navigationList: _propTypes2.default.array,
+    onBackButtonClick: _propTypes2.default.func,
+    onSubmitButtonClick: _propTypes2.default.func
+};
+
+exports.default = ContractTypeItem;
 
 /***/ }),
 
