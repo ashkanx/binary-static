@@ -821,6 +821,8 @@ var Elevio = function () {
             var current_language = getLanguage().toLowerCase();
             if (available_elev_languages.indexOf(current_language) !== -1) {
                 window._elev.setLanguage(current_language); // eslint-disable-line no-underscore-dangle
+            } else {
+                window._elev.setLanguage('en');
             }
             setUserInfo(elev);
             setTranslations(elev);
@@ -12687,7 +12689,7 @@ var ChartSettings = function () {
         var barrier = params.is_reset_barrier ? labels.reset_barrier : barrier_style;
         var start_time = labels.getStartTime(params.is_tick_trade);
         var highest_lowest = /^tickhigh_/i.test(params.shortcode) ? labels.highest_tick : labels.lowest_tick;
-        txt_subtitle = (params.is_chart_delayed ? labels.delay : '') + (params.is_forward_starting ? labels.purchase_time : '') + (params.is_sold_before_start ? '' : start_time) + (history ? params.is_sold_before_start || params.is_tick_trade ? '' : labels.entry_spot : '') + (params.has_barrier && !params.is_sold_before_start ? barrier : '') + (history ? params.is_user_sold || params.is_tick_trade ? '' : labels.exit_spot : '') + (isReset(params.contract_type) ? labels.reset_time : '') + (is_high_low_ticks ? labels.selected_tick : '') + (is_high_low_ticks ? highest_lowest : '') + (params.show_end_time ? labels.getEndTime(params.is_tick_trade) : '') + (isCallputspread(params.contract_type) ? labels.payout_range : '');
+        txt_subtitle = (params.is_chart_delayed ? labels.delay : '') + (params.is_forward_starting ? labels.purchase_time : '') + (params.is_sold_before_start ? '' : start_time) + (params.is_tick_type ? params.is_sold_before_start || params.is_tick_trade ? '' : labels.entry_spot : '') + (params.has_barrier && !params.is_sold_before_start ? barrier : '') + (params.is_tick_type ? params.is_user_sold || params.is_tick_trade ? '' : labels.exit_spot : '') + (isReset(params.contract_type) ? labels.reset_time : '') + (is_high_low_ticks ? labels.selected_tick : '') + (is_high_low_ticks ? highest_lowest : '') + (params.show_end_time ? labels.getEndTime(params.is_tick_trade) : '') + (isCallputspread(params.contract_type) ? labels.payout_range : '');
     };
 
     var setChartOptions = function setChartOptions(params) {
@@ -19320,6 +19322,7 @@ var addComma = __webpack_require__(/*! ../../../common/currency */ "./src/javasc
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
 var getPropertyValue = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
+var isEmptyObject = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").isEmptyObject;
 
 var Highchart = function () {
     var chart = void 0,
@@ -19350,13 +19353,14 @@ var Highchart = function () {
         is_history_send = void 0,
         is_entry_tick_barrier_selected = void 0,
         is_response_id_set = void 0,
+        is_tick_type = void 0,
         prev_barriers = void 0; // For checking if barrier was updated
 
     var initOnce = function initOnce() {
         chart = options = response_id = request = min_point = max_point = '';
         lines_drawn = new Set();
 
-        is_initialized = is_chart_delayed = is_chart_subscribed = stop_streaming = is_response_id_set = is_contracts_for_send = is_history_send = is_entry_tick_barrier_selected = false;
+        is_initialized = is_chart_delayed = is_chart_subscribed = stop_streaming = is_response_id_set = is_contracts_for_send = is_history_send = is_entry_tick_barrier_selected = is_tick_type = false;
     };
 
     var initializeValues = function initializeValues() {
@@ -19476,6 +19480,7 @@ var Highchart = function () {
         return {
             is_chart_delayed: is_chart_delayed,
             is_reset_barrier: is_reset_barrier,
+            is_tick_type: is_tick_type,
             contract_type: contract.contract_type,
             is_forward_starting: purchase_time !== start_time,
             is_sold_before_start: sell_time < start_time,
@@ -19525,6 +19530,7 @@ var Highchart = function () {
             var tick = response.tick;
             var ohlc = response.ohlc;
             response_id = response[type].id;
+            is_tick_type = !isEmptyObject(history) || !isEmptyObject(tick);
             // send view popup the response ID so view popup can forget the calls if it's closed before contract ends
             if (response_id && !is_response_id_set) {
                 if (State.get('is_trading') || State.get('is_mb_trading')) {
@@ -21717,7 +21723,8 @@ var DigitTicker = function () {
 
     // Calculate peek-box left offset.
     var calculateOffset = function calculateOffset() {
-        var left_offset = document.querySelector('.digit-' + current_spot).offsetLeft;
+        var current_spot_digit = document.querySelector('.digit-' + current_spot);
+        var left_offset = current_spot_digit ? current_spot_digit.offsetLeft : 0;
         return left_offset - style_offset_correction;
     };
 
@@ -21775,6 +21782,9 @@ var DigitTicker = function () {
         var quote = _ref.quote,
             epoch = _ref.epoch;
 
+        if (current_tick_count > total_tick_count) {
+            return;
+        }
         setElements(epoch);
         el_container.classList.remove('invisible');
         adjustBoxSizes();
@@ -24983,7 +24993,8 @@ var Purchase = function () {
     var payout_value = void 0,
         cost_value = void 0,
         profit_value = void 0,
-        status = void 0;
+        status = void 0,
+        contract_duration = void 0;
 
     var replaceElement = function replaceElement(container, child) {
         container.querySelectorAll('.row').forEach(function (item) {
@@ -25030,6 +25041,7 @@ var Purchase = function () {
         var error = details.error;
         var has_chart = !/^(digits|highlowticks)$/.test(Contract.form());
         var show_chart = !error && passthrough.duration <= 10 && passthrough.duration_unit === 't';
+        contract_duration = details.echo_req.passthrough.duration;
 
         if (error) {
             var balance = State.getResponse('balance.balance');
@@ -25207,11 +25219,15 @@ var Purchase = function () {
 
                         // force to sell the expired contract, in order to get the final status
                         if (+contract.is_settleable === 1 && !contract.is_sold) {
-                            BinarySocket.send({ sell_expired: 1 });
+                            sellExpired();
                         }
                     }
                 } });
         }
+    };
+
+    var sellExpired = function sellExpired() {
+        return BinarySocket.send({ sell_expired: 1 });
     };
 
     var makeBold = function makeBold(d) {
@@ -25276,6 +25292,11 @@ var Purchase = function () {
 
             if (CommonFunctions.isVisible(spots) && tick_d.epoch && tick_d.epoch > purchase_data.buy.start_time) {
                 var current_tick_count = spots.getElementsByClassName('row').length + 1;
+                if (contract_duration && +contract_duration < current_tick_count) {
+                    sellExpired();
+                    duration = 0;
+                    break;
+                }
 
                 var is_winning_tick = false;
                 if (tick_config.is_tick_high || tick_config.is_tick_low) {
