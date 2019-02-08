@@ -1465,6 +1465,7 @@ var BinarySocketBase = function () {
     var wrong_app_id = 0;
     var is_available = true;
     var is_disconnect_called = false;
+    var is_connected_before = false;
 
     var socket_url = getSocketURL() + '?app_id=' + getAppId() + '&l=' + getLanguage();
     var timeouts = {};
@@ -1677,6 +1678,14 @@ var BinarySocketBase = function () {
             if (typeof config.onOpen === 'function') {
                 config.onOpen(isReady());
             }
+
+            if (typeof config.onReconnect === 'function' && is_connected_before) {
+                config.onReconnect();
+            }
+
+            if (!is_connected_before) {
+                is_connected_before = true;
+            }
         };
 
         binary_socket.onmessage = function (msg) {
@@ -1753,6 +1762,12 @@ var BinarySocketBase = function () {
         },
         setOnDisconnect: function setOnDisconnect(onDisconnect) {
             config.onDisconnect = onDisconnect;
+        },
+        setOnReconnect: function setOnReconnect(onReconnect) {
+            config.onReconnect = onReconnect;
+        },
+        removeOnReconnect: function removeOnReconnect() {
+            delete config.onReconnect;
         },
         removeOnDisconnect: function removeOnDisconnect() {
             delete config.onDisconnect;
@@ -9509,6 +9524,7 @@ var BinaryLoader = function () {
     var beforeContentChange = function beforeContentChange() {
         if (active_script) {
             BinarySocket.removeOnDisconnect();
+            BinarySocket.removeOnReconnect();
             if (typeof active_script.onUnload === 'function') {
                 active_script.onUnload();
             }
@@ -9541,6 +9557,7 @@ var BinaryLoader = function () {
 
             ScrollToAnchor.init();
         });
+        BinarySocket.setOnReconnect(active_script.onReconnect);
     };
 
     var error_messages = {
@@ -11209,8 +11226,8 @@ var Page = function () {
             window.addEventListener('storage', function (evt) {
                 switch (evt.key) {
                     case 'active_loginid':
-                        // not the active tab and logged out or loginid switch
-                        if (document.hidden && (evt.newValue === '' || !window.is_logging_in)) {
+                        // reload the page when the client changes account on other pages.
+                        if (evt.newValue === '' || !window.is_logging_in) {
                             reload();
                         }
                         break;
@@ -27688,7 +27705,20 @@ var PortfolioInit = function () {
         is_initialized = false;
     };
 
+    var onReconnect = function onReconnect() {
+        BinarySocket.wait('authorize', 'website_status').then(function () {
+            BinarySocket.send({ forget_all: ['proposal_open_contract'] });
+            SubscriptionManager.forgetAll('transaction').then(function () {
+                $('#portfolio-body').empty();
+                $('#portfolio-content').setVisibility(0);
+                is_initialized = false;
+                init();
+            });
+        });
+    };
+
     return {
+        onReconnect: onReconnect,
         updateBalance: updateBalance,
         onLoad: onLoad,
         onUnload: onUnload
@@ -28705,7 +28735,12 @@ var FinancialAssessment = function () {
             var data = { set_financial_assessment: 1 };
             showLoadingImage(getElementById('msg_form'));
             $(form_selector).find('select').each(function () {
-                financial_assessment[$(this).attr('id')] = data[$(this).attr('id')] = $(this).val() || null;
+                var $this = $(this);
+                var value = $this.val();
+                var id = $this.attr('id');
+                if (value.length) {
+                    financial_assessment[id] = data[id] = value;
+                }
             });
             BinarySocket.send(data).then(function (response) {
                 $btn_submit.removeAttr('disabled');
@@ -35020,7 +35055,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = ''; // you can insert Application ID of your registered application here
+    var user_app_id = '1108'; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {

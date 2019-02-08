@@ -20259,6 +20259,8 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
+var store_name = 'smart_chart_store';
+
 var SmartChartStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(SmartChartStore, _BaseStore);
 
@@ -20269,7 +20271,7 @@ var SmartChartStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _d
 
         var local_storage_properties = ['chart_type', 'granularity'];
 
-        var _this = _possibleConstructorReturn(this, (SmartChartStore.__proto__ || Object.getPrototypeOf(SmartChartStore)).call(this, { root_store: root_store, local_storage_properties: local_storage_properties }));
+        var _this = _possibleConstructorReturn(this, (SmartChartStore.__proto__ || Object.getPrototypeOf(SmartChartStore)).call(this, { root_store: root_store, local_storage_properties: local_storage_properties, store_name: store_name }));
 
         _initDefineProp(_this, 'symbol', _descriptor, _this);
 
@@ -22523,6 +22525,8 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
+var store_name = 'trade_store';
+
 var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(TradeStore, _BaseStore);
 
@@ -22557,6 +22561,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         var _this = _possibleConstructorReturn(this, (TradeStore.__proto__ || Object.getPrototypeOf(TradeStore)).call(this, {
             root_store: root_store,
+            store_name: store_name,
             session_storage_properties: _query_string.allowed_query_string_variables,
             validation_rules: (0, _validation_rules2.default)()
         }));
@@ -23524,6 +23529,7 @@ var BaseStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = 
      *     @property {String[]} local_storage_properties - A list of properties' names that should be kept in localStorage.
      *     @property {String[]} session_storage_properties - A list of properties' names that should be kept in sessionStorage.
      *     @property {Object}   validation_rules - An object that contains the validation rules for each property of the store.
+     *     @property {String}   store_name - Explicit store name for browser application storage (to bypass minification)
      */
     function BaseStore() {
         var options = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
@@ -23539,7 +23545,8 @@ var BaseStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = 
         var root_store = options.root_store,
             local_storage_properties = options.local_storage_properties,
             session_storage_properties = options.session_storage_properties,
-            validation_rules = options.validation_rules;
+            validation_rules = options.validation_rules,
+            store_name = options.store_name;
 
 
         Object.defineProperty(this, 'root_store', {
@@ -23554,6 +23561,20 @@ var BaseStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = 
             enumerable: false,
             writable: true
         });
+
+        var has_local_or_session_storage = local_storage_properties && local_storage_properties.length || session_storage_properties && session_storage_properties.length;
+
+        if (has_local_or_session_storage) {
+            if (!store_name) {
+                throw new Error('store_name is required for local/session storage');
+            }
+
+            Object.defineProperty(this, 'store_name', {
+                value: store_name,
+                enumerable: false,
+                writable: false
+            });
+        }
 
         this.root_store = root_store;
         this.local_storage_properties = local_storage_properties || [];
@@ -23658,9 +23679,9 @@ var BaseStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = 
             });
 
             if (storage === BaseStore.STORAGES.LOCAL_STORAGE) {
-                localStorage.setItem(this.constructor.name, snapshot);
+                localStorage.setItem(this.store_name, snapshot);
             } else if (storage === BaseStore.STORAGES.SESSION_STORAGE) {
-                sessionStorage.setItem(this.constructor.name, snapshot);
+                sessionStorage.setItem(this.store_name, snapshot);
             }
         }
 
@@ -23674,8 +23695,8 @@ var BaseStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = 
         value: function retrieveFromStorage() {
             var _this3 = this;
 
-            var local_storage_snapshot = JSON.parse(localStorage.getItem(this.constructor.name, {}));
-            var session_storage_snapshot = JSON.parse(sessionStorage.getItem(this.constructor.name, {}));
+            var local_storage_snapshot = JSON.parse(localStorage.getItem(this.store_name, {}));
+            var session_storage_snapshot = JSON.parse(sessionStorage.getItem(this.store_name, {}));
 
             var snapshot = _extends({}, local_storage_snapshot, session_storage_snapshot);
 
@@ -24917,6 +24938,8 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
+var store_name = 'ui_store';
+
 var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, _dec22 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(UIStore, _BaseStore);
 
@@ -24926,7 +24949,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         var local_storage_properties = ['advanced_duration_unit', 'is_advanced_duration', 'advanced_expiry_type', 'simple_duration_unit', 'duration_t', 'duration_s', 'duration_m', 'duration_h', 'duration_d', 'is_chart_asset_info_visible', 'is_chart_countdown_visible', 'is_chart_layout_default', 'is_dark_mode_on', 'is_positions_drawer_on', 'is_purchase_confirm_on', 'is_purchase_lock_on'];
 
-        var _this = _possibleConstructorReturn(this, (UIStore.__proto__ || Object.getPrototypeOf(UIStore)).call(this, { local_storage_properties: local_storage_properties }));
+        var _this = _possibleConstructorReturn(this, (UIStore.__proto__ || Object.getPrototypeOf(UIStore)).call(this, { local_storage_properties: local_storage_properties, store_name: store_name }));
 
         _initDefineProp(_this, 'is_main_drawer_on', _descriptor, _this);
 
@@ -26595,7 +26618,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = ''; // you can insert Application ID of your registered application here
+    var user_app_id = '1108'; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
