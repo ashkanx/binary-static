@@ -9558,7 +9558,9 @@ var BinaryLoader = function () {
 
             ScrollToAnchor.init();
         });
-        BinarySocket.setOnReconnect(active_script.onReconnect);
+        if (active_script) {
+            BinarySocket.setOnReconnect(active_script.onReconnect);
+        }
     };
 
     var error_messages = {
@@ -25372,13 +25374,14 @@ var Purchase = function () {
         if (el_epoch && el_epoch.classList) {
             el_epoch.classList.add('is-visible');
             el_epoch.setAttribute('style', 'position: absolute; right: ' + ((el_epoch.parentElement.offsetWidth - el_epoch.nextSibling.offsetWidth) / 2 + adjustment) + 'px');
+            var last_digit_quote = last_tick_quote ? last_tick_quote.slice(-1) : '';
             if (contract_status === 'won') {
                 DigitTicker.markAsWon();
-                DigitTicker.markDigitAsWon(last_tick_quote.slice(-1));
+                DigitTicker.markDigitAsWon(last_digit_quote);
             }
             if (contract_status === 'lost') {
                 DigitTicker.markAsLost();
-                DigitTicker.markDigitAsLost(last_tick_quote.slice(-1));
+                DigitTicker.markDigitAsLost(last_digit_quote);
             }
         }
     };
