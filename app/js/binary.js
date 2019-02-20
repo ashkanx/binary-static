@@ -2513,6 +2513,65 @@ exports.default = FullPageModal;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Elements/Notifications/empty_notification.jsx":
+/*!*******************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Notifications/empty_notification.jsx ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.EmptyNotification = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _NavBar = __webpack_require__(/*! ../../../../Assets/Header/NavBar */ "./src/javascript/app_2/Assets/Header/NavBar/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var EmptyNotification = function EmptyNotification() {
+    return _react2.default.createElement(
+        'div',
+        { className: 'no-notifications-container' },
+        _react2.default.createElement(
+            'div',
+            { className: 'notification-message' },
+            _react2.default.createElement(
+                'div',
+                { className: 'bell-icon' },
+                _react2.default.createElement(_NavBar.IconBell, null)
+            ),
+            _react2.default.createElement(
+                'div',
+                null,
+                _react2.default.createElement(
+                    'h4',
+                    null,
+                    (0, _localize.localize)('No Notifications')
+                ),
+                _react2.default.createElement(
+                    'span',
+                    { className: 'no-notifications-message' },
+                    (0, _localize.localize)('You have yet to receive any notifications')
+                )
+            )
+        )
+    );
+};
+
+exports.EmptyNotification = EmptyNotification;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/Notifications/index.js":
 /*!*****************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/Notifications/index.js ***!
@@ -2564,9 +2623,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _NavBar = __webpack_require__(/*! ../../../../Assets/Header/NavBar */ "./src/javascript/app_2/Assets/Header/NavBar/index.js");
+var _empty_notification = __webpack_require__(/*! ./empty_notification.jsx */ "./src/javascript/app_2/App/Components/Elements/Notifications/empty_notification.jsx");
 
 var _Drawer = __webpack_require__(/*! ../Drawer */ "./src/javascript/app_2/App/Components/Elements/Drawer/index.js");
 
@@ -2583,38 +2640,12 @@ var Notifications = function Notifications(_ref) {
                 { key: idx },
                 _react2.default.createElement(_Drawer.DrawerItem, { text: item[idx] })
             );
-        }) : _react2.default.createElement(
-            'div',
-            { className: 'no-notifications-container' },
-            _react2.default.createElement(
-                'div',
-                { className: 'notification-message' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'bell-icon' },
-                    _react2.default.createElement(_NavBar.IconBell, null)
-                ),
-                _react2.default.createElement(
-                    'div',
-                    null,
-                    _react2.default.createElement(
-                        'h4',
-                        null,
-                        (0, _localize.localize)('No Notifications')
-                    ),
-                    _react2.default.createElement(
-                        'span',
-                        { className: 'no-notifications-message' },
-                        (0, _localize.localize)('You have yet to receive any notifications')
-                    )
-                )
-            )
-        )
+        }) : _react2.default.createElement(_empty_notification.EmptyNotification, null)
     );
 };
 
 Notifications.propTypes = {
-    'list': _propTypes2.default.object
+    list: _propTypes2.default.object
 };
 
 exports.Notifications = Notifications;
@@ -3863,7 +3894,7 @@ var CloseButton = function CloseButton(_ref) {
 };
 
 CloseButton.propTypes = {
-    onClick: _propTypes2.default.func
+    onClick: _propTypes2.default.func.isRequired
 };
 
 exports.default = CloseButton;
