@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"65bbc216d15848354232","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"8b3665b7e8bf3e4a7c08","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio":"27783daaa5e678e49540","self_exclusion":"226ac0134b0354423868","settings":"897ff546fbd9f45f9d55","statement":"abc9ff34c0540fd8fbb7","vendors~smart_chart":"e00c4fa67e114c9fe365","smart_chart":"914a40831d33d765d320"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"65bbc216d15848354232","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"8b3665b7e8bf3e4a7c08","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio":"27783daaa5e678e49540","self_exclusion":"226ac0134b0354423868","settings":"897ff546fbd9f45f9d55","statement":"abc9ff34c0540fd8fbb7","vendors~smart_chart":"c2ded38486a6d9befede","smart_chart":"914a40831d33d765d320"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -12826,6 +12826,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.IconTradeCategory = undefined;
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -12839,7 +12843,8 @@ var _Types = __webpack_require__(/*! ../Types */ "./src/javascript/app_2/Assets/
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var IconTradeCategory = function IconTradeCategory(_ref) {
-    var category = _ref.category;
+    var category = _ref.category,
+        className = _ref.className;
 
     var IconCategory = void 0;
     if (category) {
@@ -13108,13 +13113,14 @@ var IconTradeCategory = function IconTradeCategory(_ref) {
     }
     return _react2.default.createElement(
         'div',
-        { className: 'categories-container' },
+        { className: (0, _classnames2.default)('categories-container', className) },
         IconCategory
     );
 };
 
 IconTradeCategory.propTypes = {
-    category: _propTypes2.default.string
+    category: _propTypes2.default.string,
+    className: _propTypes2.default.string
 };
 
 exports.IconTradeCategory = IconTradeCategory;
@@ -15718,7 +15724,7 @@ var ContractTypeDialog = function ContractTypeDialog(_ref) {
     return is_mobile ? _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        _react2.default.createElement('span', { className: 'select-arrow' }),
+        _react2.default.createElement('span', { className: 'contract-type-widget__select-arrow' }),
         _react2.default.createElement(
             _fullScreenDialog2.default,
             {
@@ -15733,15 +15739,19 @@ var ContractTypeDialog = function ContractTypeDialog(_ref) {
         {
             'in': open,
             timeout: 100,
-            classNames: 'contracts-popup-list',
+            classNames: {
+                enter: 'contracts-type-dialog--enter',
+                enterDone: 'contracts-type-dialog--enterDone',
+                exit: 'contracts-type-dialog--exit'
+            },
             unmountOnExit: true
         },
         _react2.default.createElement(
             'div',
-            { className: 'contracts-popup-list' },
+            { className: 'contracts-type-dialog' },
             _react2.default.createElement(
                 'div',
-                { className: 'list-container' },
+                { className: 'contracts-type-dialog__list-wrapper' },
                 children
             )
         )
@@ -15800,22 +15810,22 @@ var ContractTypeItem = function ContractTypeItem(_ref) {
             'div',
             {
                 key: idx,
-                className: 'list-item ' + (value === contract.value ? 'selected' : ''),
+                className: 'contract-type-item ' + (value === contract.value ? 'contract-type-item--selected' : ''),
                 name: name,
                 value: contract.value,
                 onClick: function onClick(e) {
                     return handleSelect(contract, e);
                 }
             },
-            _react2.default.createElement(_Categories.IconTradeCategory, { category: contract.value }),
+            _react2.default.createElement(_Categories.IconTradeCategory, { category: contract.value, className: 'contract-type-item__icon-wrapper' }),
             _react2.default.createElement(
                 'span',
-                { className: 'contract-title' },
+                { className: 'contract-type-item__title' },
                 contract.text
             ),
             _react2.default.createElement(
                 'div',
-                { id: 'info-icon', className: 'trade-type-info-icon', onClick: function onClick() {
+                { id: 'info-icon', className: 'contract-type-item__icon', onClick: function onClick() {
                         return handleInfoClick(contract);
                     } },
                 _react2.default.createElement(_Common.IconInfoOutline, null)
@@ -15880,10 +15890,10 @@ var ContractTypeList = function ContractTypeList(_ref) {
                 { key: key },
                 _react2.default.createElement(
                     'div',
-                    { className: 'list-group' },
+                    { className: 'contract-type-list' },
                     _react2.default.createElement(
                         'div',
-                        { className: 'list-label' },
+                        { className: 'contract-type-list__label' },
                         _react2.default.createElement(
                             'span',
                             null,
@@ -15892,7 +15902,7 @@ var ContractTypeList = function ContractTypeList(_ref) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'list-items' },
+                        { className: 'contract-type-list__contracts-wrapper' },
                         _react2.default.createElement(_contractTypeItem2.default, {
                             contracts: list[key],
                             name: name,
@@ -15934,6 +15944,10 @@ Object.defineProperty(exports, "__esModule", {
 });
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
@@ -16085,17 +16099,6 @@ var ContractTypeWidget = function (_React$PureComponent) {
             return text;
         };
 
-        _this.getStyles = function () {
-            var container_classes = ['contracts-popup-container'];
-            if (_this.props.is_mobile) {
-                container_classes.push('mobile-only');
-            } else {
-                container_classes.push('desktop-only');
-            }
-            if (_this.state.is_dialog_open) container_classes.push('show');
-            return container_classes;
-        };
-
         _this.getNavigationList = function () {
             var navigationList = [];
             var list = _this.props.list;
@@ -16130,22 +16133,22 @@ var ContractTypeWidget = function (_React$PureComponent) {
     }, {
         key: 'render',
         value: function render() {
-            var container_classes = this.getStyles();
-
             return _react2.default.createElement(
                 'div',
                 {
                     ref: this.setWrapperRef,
-                    className: container_classes.join(' '),
+                    className: 'contract-type-widget',
                     tabIndex: '0'
                 },
                 _react2.default.createElement(
                     'div',
                     {
-                        className: 'contracts-popup-display ' + (this.state.is_dialog_open ? 'clicked' : ''),
+                        className: (0, _classnames2.default)('contract-type-widget__display', {
+                            'contract-type-widget__display--clicked': this.state.is_dialog_open
+                        }),
                         onClick: this.onWidgetClick
                     },
-                    _react2.default.createElement(_Categories.IconTradeCategory, { category: this.props.value }),
+                    _react2.default.createElement(_Categories.IconTradeCategory, { category: this.props.value, className: 'contract-type-widget__icon-wrapper' }),
                     _react2.default.createElement(
                         'span',
                         { name: this.props.name, value: this.props.value },
@@ -18415,17 +18418,21 @@ var TradeTypeInfoDialog = function TradeTypeInfoDialog(_ref) {
     ) : _react2.default.createElement(
         _reactTransitionGroup.CSSTransition,
         {
-            classNames: 'trade-type-info-popup',
+            classNames: {
+                enter: 'trade-type-info-dialog--enter',
+                enterDone: 'trade-type-info-dialog--enterDone',
+                exit: 'trade-type-info-dialog--exit'
+            },
             'in': open,
             timeout: 100,
             unmountOnExit: true
         },
         _react2.default.createElement(
             'div',
-            { className: 'trade-type-info-popup' },
+            { className: 'trade-type-info-dialog' },
             _react2.default.createElement(
                 'div',
-                { className: 'trade-type-info' },
+                { className: 'trade-type-info-dialog__info-wrapper' },
                 children
             )
         )
@@ -18457,6 +18464,10 @@ exports.default = TradeTypeInfoDialog;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
@@ -18498,7 +18509,7 @@ var TradeTypeInfoItem = function TradeTypeInfoItem(_ref) {
         null,
         !is_mobile && _react2.default.createElement(
             'div',
-            { className: 'info-header' },
+            { className: 'trade-type-info-dialog__header' },
             _react2.default.createElement(
                 'span',
                 { onClick: function onClick() {
@@ -18514,12 +18525,12 @@ var TradeTypeInfoItem = function TradeTypeInfoItem(_ref) {
         ),
         _react2.default.createElement(
             'div',
-            { className: 'info-gif' },
+            { className: 'trade-type-info-dialog__gif' },
             'gif explanation'
         ),
         _react2.default.createElement(
             'div',
-            { className: 'info-content' },
+            { className: 'trade-type-info-dialog__content' },
             _react2.default.createElement(
                 _ttReactCustomScrollbars.Scrollbars,
                 {
@@ -18531,30 +18542,32 @@ var TradeTypeInfoItem = function TradeTypeInfoItem(_ref) {
         ),
         _react2.default.createElement(
             'div',
-            { className: 'info-choose' },
-            _react2.default.createElement(_button2.default, { text: (0, _localize.localize)('Choose'), onClick: function onClick() {
+            null,
+            _react2.default.createElement(_button2.default, { className: 'trade-type-info-dialog__choose-button', text: (0, _localize.localize)('Choose'), onClick: function onClick() {
                     return onSubmitButtonClick(item);
                 } })
         ),
         _react2.default.createElement(
             'div',
-            { className: 'info-navigation' },
+            { className: 'trade-type-info-navigation' },
             _react2.default.createElement(
                 'div',
-                { className: 'info-navigation__icon', onClick: function onClick() {
+                { className: 'trade-type-info-navigation__icon', onClick: function onClick() {
                         return handlePrevClick(navigationList);
                     } },
                 _react2.default.createElement(_iconChevronLeft.IconChevronLeft, null)
             ),
             _react2.default.createElement(
                 'div',
-                { className: 'info-navigation__list' },
+                { className: 'trade-type-info-navigation__list' },
                 navigationList.map(function (contract, idx) {
                     return _react2.default.createElement(
                         _react2.default.Fragment,
                         { key: idx },
                         _react2.default.createElement('div', {
-                            className: 'circle-button ' + (contract.value === item.value ? 'active' : ''),
+                            className: (0, _classnames2.default)('trade-type-info-navigation__circle-button', {
+                                'trade-type-info-navigation__circle-button--active': contract.value === item.value
+                            }),
                             onClick: function onClick() {
                                 return handleNavigationClick(contract);
                             }
@@ -18564,7 +18577,7 @@ var TradeTypeInfoItem = function TradeTypeInfoItem(_ref) {
             ),
             _react2.default.createElement(
                 'div',
-                { className: 'info-navigation__icon', onClick: function onClick() {
+                { className: 'trade-type-info-navigation__icon', onClick: function onClick() {
                         return handleNextClick(navigationList);
                     } },
                 _react2.default.createElement(_iconChevronRight.IconChevronRight, null)
