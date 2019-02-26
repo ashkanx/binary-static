@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"65bbc216d15848354232","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"8b3665b7e8bf3e4a7c08","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio":"27783daaa5e678e49540","self_exclusion":"226ac0134b0354423868","settings":"897ff546fbd9f45f9d55","statement":"abc9ff34c0540fd8fbb7","vendors~smart_chart":"c2ded38486a6d9befede","smart_chart":"914a40831d33d765d320"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio":"portfolio","self_exclusion":"self_exclusion","settings":"settings","statement":"statement","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"a07416dc903d3942d9a3","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"8b3665b7e8bf3e4a7c08","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio":"27783daaa5e678e49540","self_exclusion":"226ac0134b0354423868","settings":"897ff546fbd9f45f9d55","statement":"fedc491c185e8c17849d","vendors~smart_chart":"c2ded38486a6d9befede","smart_chart":"0ed58ff43f746c8e010e"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -298,6 +298,98 @@ exports.default = function (_ref) {
       props = _objectWithoutProperties(_ref, ["styles"]);
 
   return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "46", height: "46", viewBox: "0 0 60.47 60.47" }, props), _react2.default.createElement("path", { fill: "#fff", d: "M51.61 8.85a30.24 30.24 0 1 0 0 42.77 30.26 30.26 0 0 0 0-42.77z" }), _react2.default.createElement("path", { fill: "#2a3052", d: "M21.8 38.17A5.51 5.51 0 0 0 24.33 42l-.58-1.08s1.11-2.92-1.95-2.75z" }), _react2.default.createElement("path", { fill: "#2a3052", d: "M50.08 10.38a28.08 28.08 0 1 0 0 39.72 28.1 28.1 0 0 0 0-39.72zm-2.9 36.81l-.92.87c-6.75 5.5-11.94 2.76-12 2.76-3.52-.7-5.27-.71-6.26-1.37-.25-.17-1-.59-1.23-.49a2.25 2.25 0 0 1-2.72-.16l-.25-.23a1.93 1.93 0 0 1-.37-2.67c.26-.26-.2-1-.2-1s-1.32-2-2.22-3.15a8.79 8.79 0 0 1-1.14-3.91 10.46 10.46 0 0 1-1.46-2.14 5.55 5.55 0 0 0-.78-.94 5 5 0 0 1-.47-.51.21.21 0 0 1 0-.16 5.65 5.65 0 0 1 1.55-2c.32-.21 1.68-1 1.68-1a2.71 2.71 0 0 1 2.08-1.21 9.93 9.93 0 0 1 3.93.6l.84.27c1.42.45 2.67 1 3.66 1.42a16.55 16.55 0 0 0 2 .79c1.75.46 4.85-1 5.5-1.56 1.07-1 1.53-1.63 1.54-2.16a1.2 1.2 0 0 0-.43-.88c-.16-.14-.36-.42-.62-.67a1.12 1.12 0 0 0-.14-.12c-3-3.15-2.46-5.13-2.45-5.16.13-1.42-.69-2.33-1.56-3.27l-.14-.18a1 1 0 0 1-.1-.11 37.8 37.8 0 0 0 4.59 1 8.79 8.79 0 0 0 2.08.11c1.54 0 2.77-.18 2.85-.54a21.27 21.27 0 0 1-4.11-1.21 65.92 65.92 0 0 0-2.72-1c-1.24-.42-2.58-1-2.58-1 5.35 1.4 7.1 2 9.54 2A7.68 7.68 0 0 0 46 18c.35-.06 1.43-.31 1.55-.68a8.74 8.74 0 0 1-3-.48c-6.24-2.06-6.77-3.09-10.23-4.44a31.17 31.17 0 0 0-5.25-1.67 10.13 10.13 0 0 0-4.54 0c-4.73-1.11-5.81-1-7.2-.69a24 24 0 0 1 29.86 3.23 24.46 24.46 0 0 1 2.92 3.54l.11.17a24 24 0 0 1-3 30.19zM31.46 20.13a5.51 5.51 0 0 1 3.1 3.34c-3 .68-2.36-2.37-2.36-2.37z" }));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/portfolio/ic-check.svg":
+/*!*************************************************!*\
+  !*** ./src/images/app_2/portfolio/ic-check.svg ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewBox: "0 0 16 16" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("circle", { cx: "8", cy: "8", r: "8", fill: "#4BBFAB" }), _react2.default.createElement("path", { fill: "#FFF", fillRule: "nonzero", d: "M6.5 10.8l5.65-5.65a.5.5 0 0 1 .7.7l-6 6a.5.5 0 0 1-.7 0l-3-3a.5.5 0 1 1 .7-.7l2.65 2.64z" })));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/portfolio/ic-cross.svg":
+/*!*************************************************!*\
+  !*** ./src/images/app_2/portfolio/ic-cross.svg ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ xmlns: "http://www.w3.org/2000/svg", width: "16", height: "16", viewBox: "0 0 16 16" }, props), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("circle", { cx: "8", cy: "8", r: "8", fill: "#E31C4B", fillRule: "nonzero" }), _react2.default.createElement("path", { stroke: "#FFF", strokeLinecap: "round", d: "M10.5 5.5l-5 5m5 0l-5-5" })));
 };
 
 /***/ }),
@@ -2345,8 +2437,6 @@ var _react2 = _interopRequireDefault(_react);
 
 var _iconError = __webpack_require__(/*! ../../../../Assets/Common/icon-error.jsx */ "./src/javascript/app_2/Assets/Common/icon-error.jsx");
 
-var _iconError2 = _interopRequireDefault(_iconError);
-
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 var _localize2 = __webpack_require__(/*! ../localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
@@ -2371,7 +2461,7 @@ var ErrorComponent = function ErrorComponent(_ref) {
     return _react2.default.createElement(
         'div',
         { className: 'error-container' },
-        _react2.default.createElement(_iconError2.default, { type: type }),
+        _react2.default.createElement(_iconError.IconError, { type: type }),
         _react2.default.createElement(
             'p',
             null,
@@ -2473,7 +2563,7 @@ var FullPageModal = function FullPageModal(_ref) {
                     _react2.default.createElement(
                         'div',
                         {
-                            className: 'full-page-modal__button btn flat effect primary',
+                            className: 'full-page-modal__button btn btn--flat effect btn--primary',
                             onClick: onCancel
                         },
                         _react2.default.createElement(
@@ -2485,7 +2575,7 @@ var FullPageModal = function FullPageModal(_ref) {
                     _react2.default.createElement(
                         'div',
                         {
-                            className: 'full-page-modal__button btn flat effect primary',
+                            className: 'full-page-modal__button btn btn--flat effect btn--primary',
                             onClick: onConfirm
                         },
                         _react2.default.createElement(
@@ -2759,7 +2849,7 @@ var PopConfirmElement = function PopConfirmElement(_ref) {
             _react2.default.createElement(
                 'div',
                 {
-                    className: 'popconfirm__button btn flat effect',
+                    className: 'popconfirm__button btn btn--flat effect',
                     onClick: onClose
                 },
                 _react2.default.createElement(
@@ -2771,7 +2861,7 @@ var PopConfirmElement = function PopConfirmElement(_ref) {
             _react2.default.createElement(
                 'div',
                 {
-                    className: 'popconfirm__button btn flat effect',
+                    className: 'popconfirm__button btn btn--flat effect',
                     onClick: onConfirm
                 },
                 _react2.default.createElement(
@@ -2918,6 +3008,259 @@ exports.PopConfirm = PopConfirm;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/index.js":
+/*!**********************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/index.js ***!
+  \**********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _positionsProgressSlider = __webpack_require__(/*! ./positions-progress-slider.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/positions-progress-slider.jsx");
+
+var _positionsProgressSlider2 = _interopRequireDefault(_positionsProgressSlider);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _positionsProgressSlider2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/positions-progress-slider.jsx":
+/*!*******************************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/positions-progress-slider.jsx ***!
+  \*******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _positionsProgressTicks = __webpack_require__(/*! ./positions-progress-ticks.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/positions-progress-ticks.jsx");
+
+var _positionsProgressTicks2 = _interopRequireDefault(_positionsProgressTicks);
+
+var _remainingTime = __webpack_require__(/*! ../../../../Containers/remaining-time.jsx */ "./src/javascript/app_2/App/Containers/remaining-time.jsx");
+
+var _remainingTime2 = _interopRequireDefault(_remainingTime);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ProgressSlider = function ProgressSlider(_ref) {
+    var className = _ref.className,
+        has_result = _ref.has_result,
+        ticks_count = _ref.ticks_count,
+        current_tick = _ref.current_tick,
+        percentage = _ref.percentage,
+        remaining_time = _ref.remaining_time;
+
+    if (!percentage && !ticks_count || has_result || !remaining_time) return _react2.default.createElement('div', { className: 'progress-slider--completed' });
+    return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)('progress-slider', className) },
+        ticks_count < -1 ? _react2.default.createElement(_positionsProgressTicks2.default, {
+            current_tick: current_tick,
+            ticks_count: ticks_count
+        }) : _react2.default.createElement(
+            _react2.default.Fragment,
+            null,
+            _react2.default.createElement(
+                'span',
+                { className: 'positions-drawer-card__remaining-time' },
+                _react2.default.createElement(_remainingTime2.default, { end_time: remaining_time })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'progress-slider__track' },
+                _react2.default.createElement('div', {
+                    className: (0, _classnames2.default)('progress-slider__line', {
+                        'progress-slider__line--green': percentage >= 50,
+                        'progress-slider__line--orange': percentage < 50 && percentage >= 20,
+                        'progress-slider__line--red': percentage < 20
+                    }),
+                    style: { width: percentage + '%' }
+                })
+            )
+        )
+    );
+};
+// Keypress events do not trigger on Safari due to the way it handles input type='range' elements, using focus on the input element also doesn't work for Safari.
+
+ProgressSlider.propTypes = {
+    className: _propTypes2.default.string,
+    current_tick: _propTypes2.default.number,
+    has_result: _propTypes2.default.bool,
+    percentage: _propTypes2.default.number,
+    remaining_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    ticks_count: _propTypes2.default.number
+};
+
+exports.default = ProgressSlider;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/positions-progress-ticks.jsx":
+/*!******************************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/positions-progress-ticks.jsx ***!
+  \******************************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
+
+var ProgressTicks = function ProgressTicks(_ref) {
+    var current_tick = _ref.current_tick,
+        ticks_count = _ref.ticks_count;
+
+    var arr_ticks = [].concat(_toConsumableArray(Array(ticks_count).keys()));
+    return (
+        // TODO: Update and show once design for ticks progress bar is finalized
+        _react2.default.createElement(
+            'div',
+            { style: { display: 'none' } },
+            _react2.default.createElement(
+                'span',
+                { className: 'progress-slider__ticks-caption' },
+                (0, _localize.localize)('Tick [_1]', current_tick)
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'progress-slider__track--ticks' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'progress-slider__ticks' },
+                    arr_ticks.map(function (idx) {
+                        return _react2.default.createElement('span', {
+                            key: idx,
+                            className: (0, _classnames2.default)('ticks__step', {
+                                'ticks__step--active': idx + 1 === parseInt(current_tick),
+                                'ticks__step--marked': idx + 1 < parseInt(current_tick)
+                            })
+                        });
+                    })
+                )
+            )
+        )
+    );
+};
+
+ProgressTicks.propTypes = {
+    current_tick: _propTypes2.default.number,
+    ticks_count: _propTypes2.default.number
+};
+
+exports.default = ProgressTicks;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/duration-percentage.js":
+/*!*****************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/duration-percentage.js ***!
+  \*****************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getTimePercentage = undefined;
+
+var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// TODO: Refactor and simplify, handle tick duration
+var getTimePercentage = exports.getTimePercentage = function getTimePercentage(start_time, purchase_time, expiry_time) {
+    var duration_from_purchase = _moment2.default.duration(_moment2.default.unix(expiry_time).diff(_moment2.default.unix(purchase_time)));
+    var duration_from_now = _moment2.default.duration(_moment2.default.unix(expiry_time).diff(start_time));
+    var percentage = duration_from_now.asMilliseconds() / duration_from_purchase.asMilliseconds() * 100;
+
+    if (percentage < 0.5) percentage = 1;
+
+    return Math.round(percentage);
+};
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/index.js":
+/*!***************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/index.js ***!
+  \***************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _durationPercentage = __webpack_require__(/*! ./duration-percentage */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/duration-percentage.js");
+
+Object.keys(_durationPercentage).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _durationPercentage[key];
+    }
+  });
+});
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js":
 /*!*******************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/index.js ***!
@@ -2940,6 +3283,264 @@ var _positionsDrawer2 = _interopRequireDefault(_positionsDrawer);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.default = _positionsDrawer2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions-drawer-card.jsx":
+/*!************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions-drawer-card.jsx ***!
+  \************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _contractTypeCell = __webpack_require__(/*! ../../../../Modules/Portfolio/Components/contract-type-cell.jsx */ "./src/javascript/app_2/Modules/Portfolio/Components/contract-type-cell.jsx");
+
+var _contractTypeCell2 = _interopRequireDefault(_contractTypeCell);
+
+var _ProgressSlider = __webpack_require__(/*! ./ProgressSlider */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/ProgressSlider/index.js");
+
+var _ProgressSlider2 = _interopRequireDefault(_ProgressSlider);
+
+var _resultDetails = __webpack_require__(/*! ./result-details.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-details.jsx");
+
+var _resultDetails2 = _interopRequireDefault(_resultDetails);
+
+var _resultOverlay = __webpack_require__(/*! ./result-overlay.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-overlay.jsx");
+
+var _resultOverlay2 = _interopRequireDefault(_resultOverlay);
+
+var _helpers = __webpack_require__(/*! ./helpers */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/index.js");
+
+var _money = __webpack_require__(/*! ../money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
+
+var _money2 = _interopRequireDefault(_money);
+
+var _binaryLink = __webpack_require__(/*! ../../Routes/binary-link.jsx */ "./src/javascript/app_2/App/Components/Routes/binary-link.jsx");
+
+var _binaryLink2 = _interopRequireDefault(_binaryLink);
+
+var _helpers2 = __webpack_require__(/*! ../../Routes/helpers */ "./src/javascript/app_2/App/Components/Routes/helpers.js");
+
+var _button = __webpack_require__(/*! ../../Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// TODO: Break into smaller components once design is finalized
+var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
+    var active_position = _ref.active_position,
+        barrier = _ref.barrier,
+        className = _ref.className,
+        currency = _ref.currency,
+        duration = _ref.duration,
+        duration_unit = _ref.duration_unit,
+        entry_spot = _ref.entry_spot,
+        expiry_time = _ref.expiry_time,
+        id = _ref.id,
+        id_sell = _ref.id_sell,
+        indicative = _ref.indicative,
+        is_valid_to_sell = _ref.is_valid_to_sell,
+        profit_loss = _ref.profit_loss,
+        purchase = _ref.purchase,
+        purchase_time = _ref.purchase_time,
+        onClickSell = _ref.onClickSell,
+        onClickRemove = _ref.onClickRemove,
+        result = _ref.result,
+        sell_time = _ref.sell_time,
+        server_time = _ref.server_time,
+        status = _ref.status,
+        tick_count = _ref.tick_count,
+        type = _ref.type,
+        underlying_code = _ref.underlying_code,
+        underlying_name = _ref.underlying_name;
+
+    var percentage = (0, _helpers.getTimePercentage)(server_time, purchase_time, expiry_time);
+    return _react2.default.createElement(
+        'div',
+        { className: (0, _classnames2.default)('positions-drawer-card__wrapper', className) },
+        _react2.default.createElement(_resultOverlay2.default, {
+            id: id,
+            onClickRemove: onClickRemove,
+            result: result
+        }),
+        _react2.default.createElement(
+            _binaryLink2.default,
+            {
+                className: (0, _classnames2.default)('positions-drawer-card', {
+                    'positions-drawer-card--active': parseInt(active_position) === id,
+                    'positions-drawer-card--green': percentage >= 50 && !result,
+                    'positions-drawer-card--orange': percentage < 50 && percentage >= 20 && !result,
+                    'positions-drawer-card--red': percentage < 20 && !result
+                }),
+                to: (0, _helpers2.getContractPath)(id)
+            },
+            _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                _react2.default.createElement(
+                    'div',
+                    { className: (0, _classnames2.default)('positions-drawer-card__grid', 'positions-drawer-card__grid-underlying-trade')
+                    },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'positions-drawer-card__underlying-name' },
+                        _react2.default.createElement('div', {
+                            className: (0, _classnames2.default)('icons-underlying', 'icons-underlying__ic-' + (underlying_code || 'unknown'))
+                        }),
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'positions-drawer-card__symbol' },
+                            underlying_name
+                        )
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'positions-drawer-card__type' },
+                        _react2.default.createElement(_contractTypeCell2.default, { type: type })
+                    )
+                ),
+                _react2.default.createElement(_ProgressSlider2.default, {
+                    remaining_time: expiry_time,
+                    percentage: percentage,
+                    ticks_count: tick_count,
+                    has_result: !!result
+                }),
+                _react2.default.createElement(
+                    'div',
+                    { className: (0, _classnames2.default)('positions-drawer-card__grid', 'positions-drawer-card__grid-profit-payout')
+                    },
+                    _react2.default.createElement(
+                        'div',
+                        { className: (0, _classnames2.default)('positions-drawer-card__profit-loss', 'positions-drawer-card__profit-loss-label')
+                        },
+                        (0, _localize.localize)('Potential P/L:')
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: (0, _classnames2.default)('positions-drawer-card__indicative', 'positions-drawer-card__indicative-label')
+                        },
+                        (0, _localize.localize)('Potential Payout:')
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: (0, _classnames2.default)('positions-drawer-card__profit-loss', {
+                                'positions-drawer-card__profit-loss--negative': profit_loss < 0,
+                                'positions-drawer-card__profit-loss--positive': profit_loss > 0
+                            })
+                        },
+                        _react2.default.createElement(_money2.default, { amount: Math.abs(profit_loss), currency: currency })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
+                        _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'positions-drawer-card__purchase-price' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'positions-drawer-card__purchase-label' },
+                        (0, _localize.localize)('Purchase price')
+                    ),
+                    _react2.default.createElement(_money2.default, { amount: purchase, currency: currency })
+                )
+            )
+        ),
+        _react2.default.createElement(
+            _reactTransitionGroup.CSSTransition,
+            {
+                'in': !!is_valid_to_sell,
+                timeout: 250,
+                classNames: {
+                    enter: 'positions-drawer-card__sell-button--enter',
+                    enterDone: 'positions-drawer-card__sell-button--enter-done',
+                    exit: 'positions-drawer-card__sell-button--exit'
+                },
+                unmountOnExit: true
+            },
+            _react2.default.createElement(
+                'div',
+                { className: 'positions-drawer-card__sell-button' },
+                _react2.default.createElement(_button2.default, {
+                    className: 'btn--primary btn--primary--orange',
+                    is_disabled: !is_valid_to_sell,
+                    text: (0, _localize.localize)('Sell contract'),
+                    onClick: function onClick() {
+                        return onClickSell(id);
+                    }
+                })
+            )
+        ),
+        _react2.default.createElement(_resultDetails2.default, {
+            barrier: barrier,
+            contract_end_time: sell_time,
+            contract_start_time: purchase_time,
+            duration: duration,
+            duration_unit: duration_unit,
+            entry_spot: entry_spot,
+            tick_count: tick_count,
+            has_result: !!result,
+            id_sell: id_sell
+        })
+    );
+};
+
+PositionsDrawerCard.propTypes = {
+    active_position: _propTypes2.default.string,
+    barrier: _propTypes2.default.number,
+    className: _propTypes2.default.string,
+    currency: _propTypes2.default.string,
+    duration: _propTypes2.default.number,
+    duration_unit: _propTypes2.default.string,
+    entry_spot: _propTypes2.default.number,
+    exit_spot: _propTypes2.default.number,
+    expiry_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    id: _propTypes2.default.number,
+    id_sell: _propTypes2.default.number,
+    indicative: _propTypes2.default.number,
+    is_valid_to_sell: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.bool]),
+    onClickRemove: _propTypes2.default.func,
+    onClickSell: _propTypes2.default.func,
+    profit_loss: _propTypes2.default.number,
+    purchase: _propTypes2.default.number,
+    purchase_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    result: _propTypes2.default.string,
+    sell_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    server_time: _propTypes2.default.object,
+    status: _propTypes2.default.string,
+    tick_count: _propTypes2.default.number,
+    type: _propTypes2.default.string,
+    underlying_code: _propTypes2.default.string,
+    underlying_name: _propTypes2.default.string
+};
+
+exports.default = PositionsDrawerCard;
 
 /***/ }),
 
@@ -2975,6 +3576,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
 var _ttReactCustomScrollbars = __webpack_require__(/*! tt-react-custom-scrollbars */ "./node_modules/tt-react-custom-scrollbars/lib/index.js");
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
@@ -2987,9 +3590,9 @@ var _emptyPortfolioMessage2 = _interopRequireDefault(_emptyPortfolioMessage);
 
 var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
-var _positions_drawer_card = __webpack_require__(/*! ./positions_drawer_card.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx");
+var _positionsDrawerCard = __webpack_require__(/*! ./positions-drawer-card.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions-drawer-card.jsx");
 
-var _positions_drawer_card2 = _interopRequireDefault(_positions_drawer_card);
+var _positionsDrawerCard2 = _interopRequireDefault(_positionsDrawerCard);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -3022,12 +3625,16 @@ var PositionsDrawer = function (_React$Component) {
         key: 'render',
         value: function render() {
             var _props = this.props,
+                active_contract_id = _props.active_contract_id,
                 active_positions = _props.active_positions,
                 error = _props.error,
                 currency = _props.currency,
                 is_empty = _props.is_empty,
                 is_positions_drawer_on = _props.is_positions_drawer_on,
-                toggleDrawer = _props.toggleDrawer;
+                onClickSell = _props.onClickSell,
+                onClickRemove = _props.onClickRemove,
+                toggleDrawer = _props.toggleDrawer,
+                server_time = _props.server_time;
 
 
             var body_content = void 0;
@@ -3041,11 +3648,30 @@ var PositionsDrawer = function (_React$Component) {
             } else if (is_empty) {
                 body_content = _react2.default.createElement(_emptyPortfolioMessage2.default, null);
             } else {
-                body_content = active_positions.map(function (portfolio_position) {
-                    return _react2.default.createElement(_positions_drawer_card2.default, _extends({
-                        key: portfolio_position.id,
-                        currency: currency
-                    }, portfolio_position));
+                // Show only 4 most recent open contracts
+                body_content = active_positions.slice(0, 4).map(function (portfolio_position) {
+                    return _react2.default.createElement(
+                        _reactTransitionGroup.CSSTransition,
+                        {
+                            key: portfolio_position.id,
+                            'in': !!portfolio_position.underlying_code,
+                            timeout: 150,
+                            classNames: {
+                                enter: 'positions-drawer-card__wrapper--enter',
+                                enterDone: 'positions-drawer-card__wrapper--enter-done',
+                                exit: 'positions-drawer-card__wrapper--exit'
+                            },
+                            unmountOnExit: true
+                        },
+                        _react2.default.createElement(_positionsDrawerCard2.default, _extends({
+                            active_position: active_contract_id,
+                            onClickSell: onClickSell,
+                            onClickRemove: onClickRemove,
+                            server_time: server_time,
+                            key: portfolio_position.id,
+                            currency: currency
+                        }, portfolio_position))
+                    );
                 });
             }
 
@@ -3080,6 +3706,19 @@ var PositionsDrawer = function (_React$Component) {
                         },
                         body_content
                     )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'positions-drawer__footer' },
+                    _react2.default.createElement(
+                        'a',
+                        { className: 'btn btn--link btn--alternate', href: 'javascript:;' },
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'btn__text' },
+                            (0, _localize.localize)('Go to Reports')
+                        )
+                    )
                 )
             );
         }
@@ -3089,6 +3728,7 @@ var PositionsDrawer = function (_React$Component) {
 }(_react2.default.Component);
 
 PositionsDrawer.propTypes = {
+    active_contract_id: _propTypes2.default.string,
     active_positions: _mobxReact.PropTypes.arrayOrObservableArray,
     children: _propTypes2.default.any,
     currency: _propTypes2.default.string,
@@ -3096,23 +3736,31 @@ PositionsDrawer.propTypes = {
     is_empty: _propTypes2.default.bool,
     is_loading: _propTypes2.default.bool,
     is_positions_drawer_on: _propTypes2.default.bool,
+    onClickRemove: _propTypes2.default.func,
+    onClickSell: _propTypes2.default.func,
     onMount: _propTypes2.default.func,
     onUnmount: _propTypes2.default.func,
+    server_time: _propTypes2.default.object,
     toggleDrawer: _propTypes2.default.func
 };
 
 exports.default = (0, _connect.connect)(function (_ref) {
-    var modules = _ref.modules,
+    var common = _ref.common,
+        modules = _ref.modules,
         client = _ref.client,
         ui = _ref.ui;
     return {
+        server_time: common.server_time,
+        currency: client.currency,
+        active_contract_id: modules.contract.contract_id,
         active_positions: modules.portfolio.active_positions,
-        is_loading: modules.portfolio.is_loading,
         error: modules.portfolio.error,
         is_empty: modules.portfolio.is_empty,
+        is_loading: modules.portfolio.is_loading,
+        onClickSell: modules.portfolio.onClickSell,
+        onClickRemove: modules.portfolio.removePositionById,
         onMount: modules.portfolio.onMount,
         onUnmount: modules.portfolio.onUnmount,
-        currency: client.currency,
         is_positions_drawer_on: ui.is_positions_drawer_on,
         toggleDrawer: ui.togglePositionsDrawer
     };
@@ -3120,10 +3768,10 @@ exports.default = (0, _connect.connect)(function (_ref) {
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx":
-/*!************************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/positions_drawer_card.jsx ***!
-  \************************************************************************************************/
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-details.jsx":
+/*!*****************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-details.jsx ***!
+  \*****************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -3134,6 +3782,12 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -3142,78 +3796,311 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _contractTypeCell = __webpack_require__(/*! ../../../../Modules/Portfolio/Components/contract-type-cell.jsx */ "./src/javascript/app_2/Modules/Portfolio/Components/contract-type-cell.jsx");
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
 
-var _contractTypeCell2 = _interopRequireDefault(_contractTypeCell);
+var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
-var _money = __webpack_require__(/*! ../money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
-var _money2 = _interopRequireDefault(_money);
-
-var _binaryLink = __webpack_require__(/*! ../../Routes/binary-link.jsx */ "./src/javascript/app_2/App/Components/Routes/binary-link.jsx");
-
-var _binaryLink2 = _interopRequireDefault(_binaryLink);
-
-var _helpers = __webpack_require__(/*! ../../Routes/helpers */ "./src/javascript/app_2/App/Components/Routes/helpers.js");
-
-var _remainingTime = __webpack_require__(/*! ../../../Containers/remaining-time.jsx */ "./src/javascript/app_2/App/Containers/remaining-time.jsx");
-
-var _remainingTime2 = _interopRequireDefault(_remainingTime);
+var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
-    var currency = _ref.currency,
-        expiry_time = _ref.expiry_time,
-        id = _ref.id,
-        indicative = _ref.indicative,
-        status = _ref.status,
-        type = _ref.type,
-        underlying = _ref.underlying;
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var ResultDetails = function (_React$PureComponent) {
+    _inherits(ResultDetails, _React$PureComponent);
+
+    function ResultDetails() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, ResultDetails);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = ResultDetails.__proto__ || Object.getPrototypeOf(ResultDetails)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
+            is_open: false
+        }, _this.toggleDetails = function () {
+            _this.setState({ is_open: !_this.state.is_open });
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(ResultDetails, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                barrier = _props.barrier,
+                contract_end_time = _props.contract_end_time,
+                contract_start_time = _props.contract_start_time,
+                duration = _props.duration,
+                duration_unit = _props.duration_unit,
+                entry_spot = _props.entry_spot,
+                has_result = _props.has_result,
+                id_sell = _props.id_sell,
+                tick_count = _props.tick_count;
+
+            if (!has_result) return null;
+            return _react2.default.createElement(
+                _react2.default.Fragment,
+                null,
+                _react2.default.createElement('div', { className: 'result-details__separator' }),
+                _react2.default.createElement(
+                    _reactTransitionGroup.CSSTransition,
+                    {
+                        'in': this.state.is_open,
+                        timeout: 250,
+                        classNames: {
+                            enter: 'result-details__wrapper--enter',
+                            enterDone: 'result-details__wrapper--enter-done',
+                            exit: 'result-details__wrapper--exit'
+                        },
+                        unmountOnExit: true
+                    },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'result-details__wrapper' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'result-details__grid' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'result-details__item' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__label' },
+                                    (0, _localize.localize)('Reference ID')
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__value' },
+                                    id_sell
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'result-details__item' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__label' },
+                                    (0, _localize.localize)('Duration')
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__value' },
+                                    tick_count ? tick_count + ' ' + (0, _localize.localize)('ticks') : duration + ' ' + duration_unit
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'result-details__grid' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'result-details__item' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__label' },
+                                    (0, _localize.localize)('Barrier')
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__value' },
+                                    barrier.toFixed(2)
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'result-details__item' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__label' },
+                                    (0, _localize.localize)('Entry spot')
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__value' },
+                                    entry_spot.toFixed(2)
+                                )
+                            )
+                        ),
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'result-details__grid' },
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'result-details__item' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__label' },
+                                    (0, _localize.localize)('Start time')
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__value' },
+                                    (0, _Date.toGMTFormat)((0, _Date.epochToMoment)(contract_start_time))
+                                )
+                            ),
+                            _react2.default.createElement(
+                                'div',
+                                { className: 'result-details__item' },
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__label' },
+                                    (0, _localize.localize)('End time')
+                                ),
+                                _react2.default.createElement(
+                                    'span',
+                                    { className: 'result-details__value' },
+                                    (0, _Date.toGMTFormat)((0, _Date.epochToMoment)(contract_end_time))
+                                )
+                            )
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    {
+                        className: (0, _classnames2.default)('result-details__toggle', {
+                            'result-details__toggle--is-open': this.state.is_open
+                        }),
+                        onClick: this.toggleDetails
+                    },
+                    _react2.default.createElement(_Common.IconArrow, null)
+                )
+            );
+        }
+    }]);
+
+    return ResultDetails;
+}(_react2.default.PureComponent);
+
+ResultDetails.propTypes = {
+    barrier: _propTypes2.default.number,
+    contract_end_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    contract_start_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    duration: _propTypes2.default.number,
+    duration_unit: _propTypes2.default.string,
+    entry_spot: _propTypes2.default.number,
+    has_result: _propTypes2.default.bool,
+    id_sell: _propTypes2.default.number,
+    tick_count: _propTypes2.default.number
+};
+
+exports.default = ResultDetails;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-overlay.jsx":
+/*!*****************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-overlay.jsx ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
+var _icCheck = __webpack_require__(/*! ../../../../../../images/app_2/portfolio/ic-check.svg */ "./src/images/app_2/portfolio/ic-check.svg");
+
+var _icCheck2 = _interopRequireDefault(_icCheck);
+
+var _icCross = __webpack_require__(/*! ../../../../../../images/app_2/portfolio/ic-cross.svg */ "./src/images/app_2/portfolio/ic-cross.svg");
+
+var _icCross2 = _interopRequireDefault(_icCross);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ResultOverlay = function ResultOverlay(_ref) {
+    var id = _ref.id,
+        onClickRemove = _ref.onClickRemove,
+        result = _ref.result;
     return _react2.default.createElement(
-        _binaryLink2.default,
-        {
-            className: 'positions-drawer-card',
-            to: (0, _helpers.getContractPath)(id)
-        },
+        _react2.default.Fragment,
+        null,
         _react2.default.createElement(
-            _react2.default.Fragment,
-            null,
+            _reactTransitionGroup.CSSTransition,
+            {
+                'in': !!result,
+                timeout: 250,
+                classNames: {
+                    enter: 'positions-drawer-card__result--enter',
+                    enterDone: 'positions-drawer-card__result--enter-done',
+                    exit: 'positions-drawer-card__result--exit'
+                },
+                unmountOnExit: true
+            },
             _react2.default.createElement(
                 'div',
-                { className: 'positions-drawer-card__type' },
-                _react2.default.createElement(_contractTypeCell2.default, { type: type })
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
-                _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
-            ),
-            _react2.default.createElement(
-                'span',
-                { className: 'positions-drawer-card__symbol' },
-                underlying
-            ),
-            _react2.default.createElement(
-                'span',
-                { className: 'positions-drawer-card__remaining-time' },
-                _react2.default.createElement(_remainingTime2.default, { end_time: expiry_time })
+                { className: (0, _classnames2.default)('positions-drawer-card__result', {
+                        'positions-drawer-card__result--won': result === 'won',
+                        'positions-drawer-card__result--lost': result === 'lost'
+                    })
+                },
+                _react2.default.createElement('span', {
+                    className: 'result__close-btn',
+                    onClick: function onClick() {
+                        return onClickRemove(id);
+                    }
+                }),
+                _react2.default.createElement(
+                    'span',
+                    { className: (0, _classnames2.default)('result__caption', {
+                            'result__caption--won': result === 'won',
+                            'result__caption--lost': result === 'lost'
+                        })
+                    },
+                    result === 'won' ? _react2.default.createElement(
+                        _react2.default.Fragment,
+                        null,
+                        (0, _localize.localize)('won'),
+                        _react2.default.createElement(_icCheck2.default, { className: 'result__icon' })
+                    ) : _react2.default.createElement(
+                        _react2.default.Fragment,
+                        null,
+                        (0, _localize.localize)('lost'),
+                        _react2.default.createElement(_icCross2.default, { className: 'result__icon' })
+                    )
+                )
             )
         )
     );
 };
 
-PositionsDrawerCard.propTypes = {
-    currency: _propTypes2.default.string,
-    expiry_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+ResultOverlay.propTypes = {
     id: _propTypes2.default.number,
-    indicative: _propTypes2.default.number,
-    status: _propTypes2.default.string,
-    type: _propTypes2.default.string,
-    underlying: _propTypes2.default.string
+    onClickRemove: _propTypes2.default.func,
+    result: _propTypes2.default.string
 };
 
-exports.default = PositionsDrawerCard;
+exports.default = ResultOverlay;
 
 /***/ }),
 
@@ -5229,9 +6116,9 @@ var Dropdown = function (_React$Component) {
                 {
                     ref: this.setWrapperRef,
                     className: (0, _classnames2.default)('dropdown-container', this.props.className, {
-                        'dropdown-container--left': this.props.is_alignment_left,
-                        'dropdown-container--show': this.state.is_list_visible,
-                        'dropdown-container--disabled': is_single_option
+                        'dropdown--left': this.props.is_alignment_left,
+                        'dropdown--show': this.state.is_list_visible,
+                        'dropdown--disabled': is_single_option
                     })
                 },
                 _react2.default.createElement(
@@ -5246,12 +6133,12 @@ var Dropdown = function (_React$Component) {
                     },
                     _react2.default.createElement(
                         'span',
-                        { name: this.props.name, value: this.props.value },
+                        { name: this.props.name, value: this.props.value, className: 'dropdown__display-text' },
                         (0, _helpers.getDisplayText)(this.props.list, this.props.value)
                     )
                 ),
-                !is_single_option && _react2.default.createElement(_Common.IconArrow, { className: (0, _classnames2.default)('select-arrow', {
-                        'select-arrow--left': this.props.is_alignment_left
+                !is_single_option && _react2.default.createElement(_Common.IconArrow, { className: (0, _classnames2.default)('dropdown__select-arrow', {
+                        'dropdown__select-arrow--left': this.props.is_alignment_left
                     })
                 }),
                 _react2.default.createElement(
@@ -5260,9 +6147,9 @@ var Dropdown = function (_React$Component) {
                         'in': this.state.is_list_visible,
                         timeout: 100,
                         classNames: {
-                            enter: 'dropdown__list--enter',
-                            enterDone: 'dropdown__list--enter--done',
-                            exit: 'dropdown__list--exit'
+                            enter: 'dropdown__list--enter ' + (this.props.is_alignment_left ? 'dropdown__list--left--enter' : ''),
+                            enterDone: 'dropdown__list--enter-done ' + (this.props.is_alignment_left ? 'dropdown__list--left--enter-done' : ''),
+                            exit: 'dropdown__list--exit ' + (this.props.is_alignment_left ? 'dropdown__list--left--exit' : '')
                         },
                         onEntered: setListWidth,
                         unmountOnExit: true
@@ -5308,11 +6195,7 @@ var Dropdown = function (_React$Component) {
                                         _react2.default.createElement(
                                             'div',
                                             { className: 'list__label' },
-                                            _react2.default.createElement(
-                                                'span',
-                                                null,
-                                                key
-                                            )
+                                            key
                                         ),
                                         _react2.default.createElement(_items2.default, {
                                             highlightedIdx: _this2.state.curr_index,
@@ -5506,7 +6389,7 @@ var Items = function Items(_ref) {
                 },
                 _react2.default.createElement(
                     'span',
-                    null,
+                    { className: 'list__item-text' },
                     item.text
                 )
             )
@@ -5852,6 +6735,8 @@ var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var Dialog = function Dialog(_ref) {
@@ -5895,16 +6780,16 @@ var Dialog = function Dialog(_ref) {
 
     return _react2.default.createElement(
         'div',
-        { className: (0, _classnames2.default)(preClass + '-dialog', '' + className) },
+        { className: (0, _classnames2.default)(preClass + '__dialog', '' + className) },
         _react2.default.createElement(
             'div',
-            { className: preClass + '-selector' },
+            { className: preClass + '__selector' },
             _react2.default.createElement(
                 'div',
-                { className: preClass + '-hours' },
+                { className: preClass + '__selector--hours' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'list-title center-text' },
+                    { className: (0, _classnames2.default)(preClass + '__selector-list-title', 'center-text') },
                     _react2.default.createElement(
                         'strong',
                         null,
@@ -5913,14 +6798,14 @@ var Dialog = function Dialog(_ref) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'list-container' },
+                    null,
                     hours.map(function (h, key) {
                         to_compare_moment.hour(h).minute(minute);
                         var is_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment);
                         return _react2.default.createElement(
                             'div',
                             {
-                                className: (0, _classnames2.default)('list-item', { 'selected': hour === h }, { 'disabled': !is_enabled }),
+                                className: (0, _classnames2.default)(preClass + '__selector-list-item', _defineProperty({}, preClass + '__selector-list-item--selected', hour === h), _defineProperty({}, preClass + '__selector-list-item--disabled', !is_enabled)),
                                 key: key,
                                 onClick: function onClick() {
                                     selectOption('h', h, value, is_enabled);
@@ -5933,10 +6818,10 @@ var Dialog = function Dialog(_ref) {
             ),
             _react2.default.createElement(
                 'div',
-                { className: preClass + '-minutes' },
+                { className: preClass + '__selector--minutes' },
                 _react2.default.createElement(
                     'div',
-                    { className: 'list-title center-text' },
+                    { className: (0, _classnames2.default)(preClass + '__selector-list-title', 'center-text') },
                     _react2.default.createElement(
                         'strong',
                         null,
@@ -5945,14 +6830,14 @@ var Dialog = function Dialog(_ref) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    { className: 'list-container' },
+                    null,
                     minutes.map(function (mm, key) {
                         to_compare_moment.hour(hour).minute(mm);
                         var is_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment, 'minute');
                         return _react2.default.createElement(
                             'div',
                             {
-                                className: (0, _classnames2.default)('list-item', { 'selected': minute === mm }, { 'disabled': !is_enabled }),
+                                className: (0, _classnames2.default)(preClass + '__selector-list-item', _defineProperty({}, preClass + '__selector-list-item--selected', minute === mm), _defineProperty({}, preClass + '__selector-list-item--disabled', !is_enabled)),
                                 key: key,
                                 onClick: function onClick() {
                                     selectOption('m', mm, value, is_enabled);
@@ -6051,6 +6936,8 @@ var _iconClock = __webpack_require__(/*! ../../../../Assets/Common/icon-clock.js
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -6125,7 +7012,7 @@ var TimePicker = function (_React$Component) {
                 'div',
                 {
                     ref: this.saveRef,
-                    className: (0, _classnames2.default)(prefix_class, { 'padding': this.props.padding })
+                    className: (0, _classnames2.default)(prefix_class, _defineProperty({}, prefix_class + '--padding', this.props.padding))
                 },
                 is_nativepicker ? _react2.default.createElement('input', {
                     type: 'time',
@@ -6138,7 +7025,6 @@ var TimePicker = function (_React$Component) {
                 }) : _react2.default.createElement(
                     _react2.default.Fragment,
                     null,
-                    _react2.default.createElement(_iconClock.IconClock, { className: 'time-picker-icon' }),
                     _react2.default.createElement(_inputField2.default, {
                         error_messages: validation_errors,
                         type: 'text',
@@ -6150,14 +7036,15 @@ var TimePicker = function (_React$Component) {
                         name: name,
                         placeholder: placeholder
                     }),
+                    _react2.default.createElement(_iconClock.IconClock, { className: prefix_class + '__icon' }),
                     _react2.default.createElement(
                         _reactTransitionGroup.CSSTransition,
                         {
                             'in': this.state.is_open,
                             classNames: {
-                                enter: 'time-picker-dialog-enter',
-                                enterDone: 'time-picker-dialog-enter-done',
-                                exit: 'time-picker-dialog-exit'
+                                enter: 'time-picker__dialog--enter',
+                                enterDone: 'time-picker__dialog--enter-done',
+                                exit: 'time-picker__dialog--exit'
                             },
                             timeout: 100,
                             unmountOnExit: true
@@ -6321,7 +7208,7 @@ var Button = function Button(_ref) {
         },
         _react2.default.createElement(
             'span',
-            { className: classNameSpan || undefined },
+            { className: (0, _classnames2.default)('btn__text', classNameSpan) },
             text
         ),
         children
@@ -6565,9 +7452,11 @@ var InputField = function InputField(_ref) {
         display_value = is_unit_at_right ? value + ' ' + unit : unit + ' ' + value;
     }
 
+    var is_increment_input = is_incrementable && type === 'number';
+
     var input = _react2.default.createElement('input', {
         checked: checked ? 'checked' : '',
-        className: (0, _classnames2.default)('input', { error: has_error }, classNameInput),
+        className: (0, _classnames2.default)(is_increment_input ? 'input-wrapper__input' : '', 'input', { 'input--error': has_error }, classNameInput),
         disabled: is_disabled,
         'data-for': 'error_tooltip_' + name,
         'data-value': data_value,
@@ -6622,16 +7511,16 @@ var InputField = function InputField(_ref) {
             { className: (0, _classnames2.default)('', { 'with-label': label }), alignment: 'left', message: has_error ? error_messages[0] : null },
             !!label && _react2.default.createElement(
                 'label',
-                { htmlFor: name, className: 'input-label' },
+                { htmlFor: name, className: 'input-field__label' },
                 label
             ),
             !!prefix && _react2.default.createElement('span', { className: (0, _classnames2.default)(classNamePrefix, 'symbols', prefix.toLowerCase()) }),
             !!helper && _react2.default.createElement(
                 'span',
-                { className: 'input-helper' },
+                { className: 'input-field__helper' },
                 helper
             ),
-            is_incrementable && type === 'number' ? input_increment : input
+            is_increment_input ? input_increment : input
         )
     );
 };
@@ -6859,7 +7748,12 @@ var NetworkStatus = function NetworkStatus(_ref) {
         _react2.default.createElement(
             _tooltip2.default,
             { alignment: 'top', message: (0, _localize.localize)('Network status: [_1]', [status.tooltip || (0, _localize.localize)('Connecting to server')]) },
-            _react2.default.createElement('div', { className: (0, _classnames2.default)('network-status-circle', status.class) })
+            _react2.default.createElement('div', { className: (0, _classnames2.default)('network-status-circle', {
+                    'network-status-circle--offline': status.class === 'offline',
+                    'network-status-circle--online': status.class === 'online',
+                    'network-status-circle--blinker': status.class === 'blinker'
+                })
+            })
         )
     );
 };
@@ -7287,7 +8181,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var DepositButton = function DepositButton(_ref) {
     var className = _ref.className;
     return _react2.default.createElement(_button2.default, {
-        className: (0, _classnames2.default)(className, 'primary orange'),
+        className: (0, _classnames2.default)(className, 'btn--primary btn--primary--orange'),
         has_effect: true,
         text: (0, _localize.localize)('Deposit')
         // TODO: Redirect to Deposit page in Cashier
@@ -7468,7 +8362,7 @@ var InstallPWAButton = function InstallPWAButton(_ref) {
     };
 
     return _react2.default.createElement(_button2.default, {
-        className: (0, _classnames2.default)(className, 'primary orange'),
+        className: (0, _classnames2.default)(className, 'btn--primary btn--primary--orange'),
         has_effect: true,
         text: (0, _localize.localize)('Install'),
         onClick: showPrompt
@@ -7525,7 +8419,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var LoginButton = function LoginButton(_ref) {
     var className = _ref.className;
     return _react2.default.createElement(_button2.default, {
-        className: (0, _classnames2.default)(className, 'secondary orange'),
+        className: (0, _classnames2.default)(className, 'btn--secondary btn--secondary--orange'),
         has_effect: true,
         text: (0, _localize.localize)('Log in'),
         onClick: _login.redirectToLogin
@@ -7742,7 +8636,7 @@ var UpgradeButton = function UpgradeButton(_ref) {
         onClick = _ref.onClick;
     return _react2.default.createElement(_button2.default, {
         id: 'acc-balance-btn',
-        className: (0, _classnames2.default)(className, 'primary orange'),
+        className: (0, _classnames2.default)(className, 'btn--primary btn--primary--orange'),
         has_effect: true,
         text: (0, _localize.localize)('Upgrade'),
         onClick: onClick
@@ -7798,9 +8692,10 @@ function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in ob
 // when binary link is imported into components present in routes config
 // or into their descendants
 var BinaryLink = function BinaryLink(_ref) {
-    var to = _ref.to,
+    var active_class = _ref.active_class,
+        to = _ref.to,
         children = _ref.children,
-        props = _objectWithoutProperties(_ref, ['to', 'children']);
+        props = _objectWithoutProperties(_ref, ['active_class', 'to', 'children']);
 
     var path = (0, _helpers.normalizePath)(to);
     var route = (0, _helpers.findRouteByPath)(path, (0, _routesConfig2.default)());
@@ -7811,7 +8706,7 @@ var BinaryLink = function BinaryLink(_ref) {
 
     return to ? _react2.default.createElement(
         _reactRouterDom.NavLink,
-        _extends({ to: path, activeClassName: 'active', exact: route.exact }, props),
+        _extends({ to: path, activeClassName: active_class || 'active', exact: route.exact }, props),
         children
     ) : _react2.default.createElement(
         'a',
@@ -7821,6 +8716,7 @@ var BinaryLink = function BinaryLink(_ref) {
 };
 
 BinaryLink.propTypes = {
+    active_class: _propTypes2.default.string,
     children: _propTypes2.default.object,
     to: _propTypes2.default.string
 };
@@ -7920,7 +8816,7 @@ var ButtonLink = function ButtonLink(_ref) {
     return _react2.default.createElement(
         _reactRouterDom.Link,
         {
-            className: (0, _classnames2.default)('btn is-link', className, 'effect'),
+            className: (0, _classnames2.default)('btn btn--link', className, 'effect'),
             to: to
         },
         children
@@ -9132,7 +10028,7 @@ var Header = function Header(_ref) {
 Header.propTypes = {
     balance: _propTypes2.default.string,
     can_upgrade: _propTypes2.default.bool,
-    can_upgrade_to: _propTypes2.default.bool,
+    can_upgrade_to: _propTypes2.default.string,
     currency: _propTypes2.default.string,
     hideInstallButton: _propTypes2.default.func,
     is_acc_switcher_on: _propTypes2.default.bool,
@@ -11509,6 +12405,18 @@ Object.keys(_iconClose).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _iconClose[key];
+    }
+  });
+});
+
+var _iconError = __webpack_require__(/*! ./icon-error.jsx */ "./src/javascript/app_2/Assets/Common/icon-error.jsx");
+
+Object.keys(_iconError).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _iconError[key];
     }
   });
 });
@@ -14758,7 +15666,7 @@ var SellButton = function SellButton(_ref) {
         null,
         _react2.default.createElement(_tooltip2.default, { alignment: 'left', icon: 'question', message: sell_message }),
         _react2.default.createElement(_button2.default, {
-            className: 'secondary green',
+            className: 'btn--secondary btn--secondary--green',
             is_disabled: !is_valid_to_sell || is_sell_requested,
             text: (0, _localize.localize)('Sell'),
             onClick: onClickSell
@@ -15024,13 +15932,13 @@ var ContractDetails = function (_React$Component) {
                         _react2.default.createElement(
                             _reactRouterDom.Link,
                             {
-                                className: 'btn secondary orange',
+                                className: 'btn btn--link btn--secondary btn--secondary--orange',
                                 to: _routes2.default.trade,
                                 onClick: this.props.onClickNewTrade
                             },
                             _react2.default.createElement(
                                 'span',
-                                null,
+                                { className: 'btn__text' },
                                 (0, _localize.localize)('Start a new trade')
                             )
                         )
@@ -16399,7 +17307,7 @@ var ErrorBalance = function ErrorBalance() {
             (0, _localize.localize)('You have an insufficient amount of balance.')
         ),
         _react2.default.createElement(_button2.default, {
-            className: 'purchase-container__error-login-btn secondary orange',
+            className: 'purchase-container__error-login-btn btn--secondary btn--secondary--orange',
             classNameSpan: 'purchase-container__error-login-btn-span',
             has_effect: true,
             text: (0, _localize.localize)('Deposit')
@@ -16496,7 +17404,7 @@ var ErrorLogin = function ErrorLogin() {
             (0, _localize.localize)('Please log in to purchase the contract')
         ),
         _react2.default.createElement(_button2.default, {
-            className: 'purchase-container__error-login-btn secondary orange',
+            className: 'purchase-container__error-login-btn btn--secondary btn--secondary--orange',
             classNameSpan: 'purchase-container__error-login-btn-span',
             has_effect: true,
             text: (0, _localize.localize)('log in'),
@@ -16893,7 +17801,7 @@ var PurchaseLock = function PurchaseLock(_ref) {
             (0, _localize.localize)('Purchase Locked')
         ),
         _react2.default.createElement(_button2.default, {
-            className: 'purchase-container__lock-button flat secondary orange',
+            className: 'purchase-container__lock-button btn--flat btn--secondary btn--secondary--orange',
             has_effect: true,
             onClick: onClick,
             text: (0, _localize.localize)('Unlock')
@@ -18106,7 +19014,7 @@ var Amount = function Amount(_ref) {
                 name: 'basis',
                 value: basis,
                 onChange: onChange,
-                className: 'no-margin'
+                className: 'dropdown--no-margin'
             }),
             !is_single_currency && _react2.default.createElement(_DropDown2.default, {
                 is_alignment_left: true,
@@ -18951,7 +19859,7 @@ var Purchase = function Purchase(_ref) {
             {
                 is_disabled: is_disabled,
                 id: 'purchase_' + type,
-                className: 'primary btn-purchase',
+                className: 'btn--primary btn-purchase',
                 has_effect: true,
                 onClick: function onClick() {
                     onClickPurchase(info.id, info.stake, type);
@@ -19404,6 +20312,7 @@ var Trade = function (_React$Component) {
         value: function render() {
             var contract_id = (0, _utility.getPropertyValue)(this.props.purchase_info, ['buy', 'contract_id']);
             var form_wrapper_class = this.props.is_mobile ? 'mobile-wrapper' : 'sidebar-container desktop-only';
+            var should_show_last_digit_stats = ['match_diff', 'even_odd', 'over_under'].includes(this.props.contract_type);
 
             return _react2.default.createElement(
                 'div',
@@ -19422,7 +20331,8 @@ var Trade = function (_React$Component) {
                             chart_type: this.props.chart_type,
                             granularity: this.props.granularity,
                             updateChartType: this.props.updateChartType,
-                            updateGranularity: this.props.updateGranularity
+                            updateGranularity: this.props.updateGranularity,
+                            should_show_last_digit_stats: should_show_last_digit_stats
                         })
                     ),
                     _react2.default.createElement(_test2.default, null)
@@ -19464,6 +20374,7 @@ var Trade = function (_React$Component) {
 
 Trade.propTypes = {
     chart_id: _propTypes2.default.number,
+    contract_type: _propTypes2.default.string,
     is_contract_mode: _propTypes2.default.bool,
     is_mobile: _propTypes2.default.bool,
     is_trade_enabled: _propTypes2.default.bool,
@@ -19485,6 +20396,7 @@ exports.default = (0, _connect.connect)(function (_ref) {
         updateChartType: modules.smart_chart.updateChartType,
         updateGranularity: modules.smart_chart.updateGranularity,
         chart_id: modules.trade.chart_id,
+        contract_type: modules.trade.contract_type,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickNewTrade: modules.trade.onClickNewTrade,
         onMount: modules.trade.onMount,
@@ -20946,6 +21858,62 @@ exports.default = ContractStore;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/details.js":
+/*!**************************************************************************!*\
+  !*** ./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/details.js ***!
+  \**************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getDurationUnitText = exports.getDurationUnitValue = undefined;
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var getDurationUnitValue = exports.getDurationUnitValue = function getDurationUnitValue(obj_duration) {
+    var duration_ms = obj_duration.asMilliseconds() / 1000;
+
+    if (duration_ms >= 86400000) {
+        return Math.floor(duration_ms / (1000 * 60 * 60 * 24));
+    } else if (duration_ms >= 3600000 && duration_ms < 86400000) {
+        return Math.floor(duration_ms / (1000 * 60 * 60));
+    } else if (duration_ms >= 60000 && duration_ms < 3600000) {
+        return Math.floor(duration_ms / (1000 * 60));
+    } else if (duration_ms >= 1000 && duration_ms < 60000) {
+        return Math.floor(duration_ms / 1000);
+    }
+    return Math.floor(duration_ms / 1000);
+};
+
+var getDurationUnitText = exports.getDurationUnitText = function getDurationUnitText(obj_duration) {
+    var unit_map = {
+        s: { name: (0, _localize.localize)('seconds') },
+        m: { name: (0, _localize.localize)('minutes') },
+        h: { name: (0, _localize.localize)('hours') },
+        d: { name: (0, _localize.localize)('days') }
+    };
+    var duration_ms = obj_duration.asMilliseconds() / 1000;
+    if (duration_ms) {
+        if (duration_ms >= 86400000) {
+            return unit_map.d.name;
+        } else if (duration_ms >= 3600000 && duration_ms < 86400000) {
+            return unit_map.h.name;
+        } else if (duration_ms >= 60000 && duration_ms < 3600000) {
+            return unit_map.m.name;
+        } else if (duration_ms >= 1000 && duration_ms < 60000) {
+            return unit_map.s.name;
+        }
+    }
+    return unit_map.s.name;
+};
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/format-response.js":
 /*!**********************************************************************************!*\
   !*** ./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/format-response.js ***!
@@ -20964,14 +21932,14 @@ var formatPortfolioPosition = exports.formatPortfolioPosition = function formatP
     var payout = parseFloat(portfolio_pos.payout);
 
     return {
-        reference: +portfolio_pos.transaction_id,
-        type: portfolio_pos.contract_type,
         details: portfolio_pos.longcode.replace(/\n/g, '<br />'),
-        payout: payout,
-        purchase: purchase,
         expiry_time: portfolio_pos.expiry_time,
         id: portfolio_pos.contract_id,
-        indicative: 0
+        indicative: 0,
+        payout: payout,
+        purchase: purchase,
+        reference: +portfolio_pos.transaction_id,
+        type: portfolio_pos.contract_type
     };
 };
 
@@ -20994,13 +21962,19 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
 var _Services = __webpack_require__(/*! ../../../Services */ "./src/javascript/app_2/Services/index.js");
 
+var _Date = __webpack_require__(/*! ../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
+
 var _formatResponse = __webpack_require__(/*! ./Helpers/format-response */ "./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/format-response.js");
+
+var _details = __webpack_require__(/*! ./Helpers/details */ "./src/javascript/app_2/Stores/Modules/Portfolio/Helpers/details.js");
+
+var _logic = __webpack_require__(/*! ../Contract/Helpers/logic */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/logic.js");
 
 var _baseStore = __webpack_require__(/*! ../../base-store */ "./src/javascript/app_2/Stores/base-store.js");
 
@@ -21057,7 +22031,7 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, (_class = function (_BaseStore) {
+var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(PortfolioStore, _BaseStore);
 
     function PortfolioStore() {
@@ -21071,13 +22045,13 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PortfolioStore.__proto__ || Object.getPrototypeOf(PortfolioStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'data', _descriptor, _this), _initDefineProp(_this, 'is_loading', _descriptor2, _this), _initDefineProp(_this, 'error', _descriptor3, _this), _initDefineProp(_this, 'initializePortfolio', _descriptor4, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PortfolioStore.__proto__ || Object.getPrototypeOf(PortfolioStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'positions', _descriptor, _this), _initDefineProp(_this, 'is_loading', _descriptor2, _this), _initDefineProp(_this, 'error', _descriptor3, _this), _initDefineProp(_this, 'initializePortfolio', _descriptor4, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(PortfolioStore, [{
         key: 'clearTable',
         value: function clearTable() {
-            this.data = [];
+            this.positions = [];
             this.is_loading = false;
             this.error = '';
         }
@@ -21091,7 +22065,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             }
             this.error = '';
             if (response.portfolio.contracts) {
-                this.data = response.portfolio.contracts.map(function (pos) {
+                this.positions = response.portfolio.contracts.map(function (pos) {
                     return (0, _formatResponse.formatPortfolioPosition)(pos);
                 }).sort(function (pos1, pos2) {
                     return pos2.reference - pos1.reference;
@@ -21123,7 +22097,11 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
                 // subscribe to new contract:
                 _Services.WS.subscribeProposalOpenContract(contract_id, this.proposalOpenContractHandler, false);
             } else if (act === 'sell') {
-                this.removePositionById(contract_id);
+                // TODO: Refactor with contract-store and use common helpers to handle contract result
+                _Services.WS.proposalOpenContract(contract_id).then((0, _mobx.action)(function (proposal_response) {
+                    // populate result details box for specified positions card
+                    _this2.populateResultDetails(proposal_response);
+                }));
             }
         }
     }, {
@@ -21132,7 +22110,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             if ('error' in response) return;
 
             var proposal = response.proposal_open_contract;
-            var portfolio_position = this.data.find(function (position) {
+            var portfolio_position = this.positions.find(function (position) {
                 return +position.id === +proposal.contract_id;
             });
 
@@ -21140,9 +22118,17 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
 
             var prev_indicative = portfolio_position.indicative;
             var new_indicative = +proposal.bid_price;
+            var profit_loss = +proposal.profit;
 
+            portfolio_position.purchase_time = proposal.is_forward_starting === 1 ? proposal.date_start : proposal.purchase_time;
+
+            portfolio_position.bid_price = proposal.bid_price;
             portfolio_position.indicative = new_indicative;
-            portfolio_position.underlying = proposal.display_name;
+            portfolio_position.underlying_code = proposal.underlying;
+            portfolio_position.underlying_name = proposal.display_name;
+            portfolio_position.profit_loss = profit_loss;
+            portfolio_position.tick_count = proposal.tick_count;
+            portfolio_position.is_valid_to_sell = (0, _logic.isValidToSell)(proposal);
 
             if (!proposal.is_valid_to_sell) {
                 portfolio_position.status = 'no-resale';
@@ -21155,34 +22141,95 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             }
         }
     }, {
+        key: 'onClickSell',
+        value: function onClickSell(contract_id) {
+            var i = this.positions.findIndex(function (pos) {
+                return +pos.id === +contract_id;
+            });
+            var bid_price = this.positions[i].bid_price;
+            if (contract_id && bid_price) {
+                _Services.WS.sell(contract_id, bid_price).then(this.handleSell);
+            }
+        }
+    }, {
+        key: 'handleSell',
+        value: function handleSell(response) {
+            var _this3 = this;
+
+            var is_contract_mode = this.root_store.modules.smart_chart.is_contract_mode;
+            // TODO: Refactor with ContractStore for re-drawing of chart markers and barriers
+            // Toast messages are temporary UI for prompting user of sold contracts
+            if (!is_contract_mode && response.error) {
+                // If unable to sell due to error, give error via toast message if not in contract mode
+                this.root_store.ui.addToastMessage({
+                    message: response.error.message,
+                    type: 'error'
+                });
+                // Check if still in contract_mode
+            } else if (is_contract_mode && !response.error) {
+                _Services.WS.forget('proposal_open_contract', this.root_store.modules.contract.updateProposal, { contract_id: response.sell.contract_id });
+                _Services.WS.proposalOpenContract(response.sell.contract_id).then((0, _mobx.action)(function (proposal_response) {
+                    // update contract store proposal after sell
+                    _this3.root_store.modules.contract.updateProposal(proposal_response);
+                    _this3.populateResultDetails(proposal_response);
+                }));
+                // update contract store sell info after sell
+                this.root_store.modules.contract.sell_info = {
+                    sell_price: response.sell.sold_for,
+                    transaction_id: response.sell.transaction_id
+                };
+            }
+        }
+    }, {
+        key: 'populateResultDetails',
+        value: function populateResultDetails(response) {
+            var contract_response = response.proposal_open_contract;
+            var i = this.positions.findIndex(function (pos) {
+                return +pos.id === +contract_response.contract_id;
+            });
+            var sell_time = (0, _logic.isUserSold)(contract_response) ? +contract_response.date_expiry : (0, _logic.getEndSpotTime)(contract_response);
+            var duration_diff = (0, _Date.getDiffDuration)((0, _Date.epochToMoment)(this.positions[i].purchase_time || this.positions[i].date_start), (0, _Date.epochToMoment)(this.positions[i].expiry_time));
+            var duration = this.positions[i].tick_count ? this.positions[i].tick_count : (0, _details.getDurationUnitValue)(duration_diff);
+
+            this.positions[i].id_sell = +contract_response.transaction_ids.sell;
+            this.positions[i].barrier = +contract_response.barrier;
+            this.positions[i].duration = duration;
+            this.positions[i].duration_unit = (0, _details.getDurationUnitText)(duration_diff);
+            this.positions[i].entry_spot = +contract_response.entry_spot;
+            this.positions[i].sell_time = sell_time;
+            this.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
+        }
+    }, {
         key: 'pushNewPosition',
         value: function pushNewPosition(new_pos) {
-            this.data.unshift((0, _formatResponse.formatPortfolioPosition)(new_pos));
+            this.positions.unshift((0, _formatResponse.formatPortfolioPosition)(new_pos));
         }
     }, {
         key: 'removePositionById',
         value: function removePositionById(contract_id) {
-            var i = this.data.findIndex(function (pos) {
+            var i = this.positions.findIndex(function (pos) {
                 return +pos.id === +contract_id;
             });
-            this.data.splice(i, 1);
+            // check if position to be removed is out of range from the maximum amount rendered in drawer
+            if (this.positions.length > 4) i += 1;
+            this.positions.splice(i, 1);
         }
     }, {
         key: 'accountSwitcherListener',
         value: function accountSwitcherListener() {
-            var _this3 = this;
+            var _this4 = this;
 
             return new Promise(function (resolve) {
-                if (_this3.data.length === 0) {
-                    resolve(_this3.initializePortfolio());
-                }
+                _this4.clearTable();
+                _Services.WS.forgetAll('proposal_open_contract', 'transaction');
+                return resolve(_this4.initializePortfolio());
             });
         }
     }, {
         key: 'onMount',
         value: function onMount() {
-            this.onSwitchAccount(this.accountSwitcherListener);
-            if (this.data.length === 0) {
+            this.onSwitchAccount(this.accountSwitcherListener.bind(null));
+            if (this.positions.length === 0) {
                 this.initializePortfolio();
             }
         }
@@ -21203,7 +22250,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             var payout = 0;
             var purchase = 0;
 
-            this.data.forEach(function (portfolio_pos) {
+            this.positions.forEach(function (portfolio_pos) {
                 indicative += +portfolio_pos.indicative;
                 payout += +portfolio_pos.payout;
                 purchase += +portfolio_pos.purchase;
@@ -21217,12 +22264,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
     }, {
         key: 'active_positions',
         get: function get() {
-            var _this4 = this;
-
-            return this.data.filter(function (portfolio_pos) {
-                var server_epoch = _this4.root_store.common.server_time.unix();
-                return portfolio_pos.expiry_time > server_epoch;
-            });
+            return this.positions;
         }
     }, {
         key: 'is_empty',
@@ -21232,7 +22274,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
     }]);
 
     return PortfolioStore;
-}(_baseStore2.default), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'data', [_mobx.observable], {
+}(_baseStore2.default), (_descriptor = _applyDecoratedDescriptor(_class.prototype, 'positions', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return [];
@@ -21261,7 +22303,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             _Services.WS.subscribeTransaction(_this5.transactionHandler, false);
         };
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'clearTable', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'clearTable'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'portfolioHandler', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'portfolioHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'transactionHandler', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'transactionHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'proposalOpenContractHandler', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'proposalOpenContractHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'clearTable', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'clearTable'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'portfolioHandler', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'portfolioHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'transactionHandler', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'transactionHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'proposalOpenContractHandler', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'proposalOpenContractHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onClickSell', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'onClickSell'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleSell', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'handleSell'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
 exports.default = PortfolioStore;
 
 /***/ }),

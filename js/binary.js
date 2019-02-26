@@ -12113,7 +12113,7 @@ var generateBirthDate = function generateBirthDate() {
         DatePicker.init({
             selector: date_of_birth,
             minDate: -100 * 365,
-            maxDate: -18 * 365 - 5,
+            maxDate: -18 * 365 - 4,
             yearRange: '-100:-18'
         });
         $(date_of_birth).attr('data-value', toISOFormat(moment())).change(function () {
@@ -23056,8 +23056,8 @@ var TradingEvents = function () {
                 // as submarket change has modified the underlying list so we need to manually
                 // fire change event for underlying
                 document.querySelectorAll('#underlying option:enabled')[0].selected = 'selected';
-                var _event = new Event('change');
-                elem.dispatchEvent(_event);
+                var event = new Event('change');
+                elem.dispatchEvent(event);
             }
         });
 
@@ -23084,7 +23084,7 @@ var TradingEvents = function () {
             var id = e.currentTarget.getAttribute('data-purchase-id');
             var ask_price = e.currentTarget.getAttribute('data-ask-price');
             var params = { buy: id, price: ask_price, passthrough: {} };
-            Array.prototype.slice.call(event.currentTarget.attributes).filter(function (attr) {
+            Array.prototype.slice.call(e.currentTarget.attributes).filter(function (attr) {
                 if (!/^data/.test(attr.name) || /^data-balloon$/.test(attr.name) || /data-balloon/.test(attr.name)) {
                     return false;
                 }
