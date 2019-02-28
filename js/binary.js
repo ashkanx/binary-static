@@ -15174,13 +15174,18 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
-var urlForStatic = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js").urlForStatic;
+var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
 
 var PaymentAgentList = function () {
     var $pa_list_container = void 0,
         $agent_template = void 0;
 
     var onLoad = function onLoad() {
+        if (!Client.get('currency')) {
+            BinaryPjax.load('' + Url.urlFor('user/set-currency'));
+            return;
+        }
+
         $(function () {
             $('#accordion').accordion({
                 heightStyle: 'content',
@@ -15228,7 +15233,7 @@ var PaymentAgentList = function () {
             if (agent.supported_banks && agent.supported_banks.length > 0) {
                 var banks = agent.supported_banks.split(',');
                 banks.map(function (bank) {
-                    supported_banks += bank.length === 0 ? '' : '<img src="' + urlForStatic('images/pages/payment_agent/banks/' + bank.toLowerCase() + '.png') + '" alt="' + bank + '" title="' + bank + '" />';
+                    supported_banks += bank.length === 0 ? '' : '<img src="' + Url.urlForStatic('images/pages/payment_agent/banks/' + bank.toLowerCase() + '.png') + '" alt="' + bank + '" title="' + bank + '" />';
                 });
             }
 
@@ -15270,6 +15275,7 @@ module.exports = PaymentAgentList;
 "use strict";
 
 
+var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var getDecimalPlaces = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getDecimalPlaces;
@@ -15433,6 +15439,10 @@ var PaymentAgentWithdraw = function () {
     };
 
     var onLoad = function onLoad() {
+        if (!Client.get('currency')) {
+            BinaryPjax.load('' + Url.urlFor('user/set-currency'));
+            return;
+        }
         BinarySocket.wait('get_account_status').then(function (data) {
             $views = $('#paymentagent_withdrawal').find('.viewItem');
             $views.setVisibility(0);

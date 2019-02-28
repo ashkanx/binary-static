@@ -524,22 +524,32 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var CalendarFooter = function CalendarFooter(_ref) {
     var footer = _ref.footer,
         has_today_btn = _ref.has_today_btn,
+        has_range_selection = _ref.has_range_selection,
+        duration_date = _ref.duration_date,
+        is_minimum = _ref.is_minimum,
         onClick = _ref.onClick;
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        (has_today_btn || footer) && _react2.default.createElement(
+        (has_today_btn || footer || has_range_selection) && _react2.default.createElement(
             'div',
             { className: 'calendar__footer' },
             footer && _react2.default.createElement(
                 'span',
                 { className: 'calendar__text' },
                 footer
+            ),
+            has_range_selection && _react2.default.createElement(
+                'span',
+                { className: 'calendar__text' },
+                '' + (!is_minimum ? (0, _localize.localize)('Duration: ') : '') + duration_date
             ),
             has_today_btn && _react2.default.createElement(_Common.IconCalendarToday, {
                 className: 'calendar__icon',
@@ -550,8 +560,11 @@ var CalendarFooter = function CalendarFooter(_ref) {
 };
 
 CalendarFooter.propTypes = {
+    duration_date: _propTypes2.default.string,
     footer: _propTypes2.default.string,
+    has_range_selection: _propTypes2.default.bool,
     has_today_btn: _propTypes2.default.bool,
+    is_minimum: _propTypes2.default.bool,
     onClick: _propTypes2.default.func
 };
 
@@ -760,6 +773,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 var _calendarBody = __webpack_require__(/*! ./calendar-body.jsx */ "./src/javascript/app_2/App/Components/Elements/Calendar/calendar-body.jsx");
 
 var _calendarBody2 = _interopRequireDefault(_calendarBody);
@@ -798,7 +813,9 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
         _this.state = {
             calendar_date: current_date, // calendar date reference
             selected_date: value, // selected date
-            calendar_view: 'date'
+            calendar_view: 'date',
+            hovered_date: '',
+            duration_date: ''
         };
         return _this;
     }
@@ -808,16 +825,28 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
         value: function render() {
             var _props = this.props,
                 date_format = _props.date_format,
+                duration_date = _props.duration_date,
                 footer = _props.footer,
                 has_today_btn = _props.has_today_btn,
-                start_date = _props.start_date,
+                has_range_selection = _props.has_range_selection,
                 holidays = _props.holidays,
+                start_date = _props.start_date,
                 weekends = _props.weekends;
             var _state = this.state,
                 calendar_date = _state.calendar_date,
                 calendar_view = _state.calendar_view,
                 selected_date = _state.selected_date;
 
+            var default_message = void 0,
+                is_minimum = void 0;
+
+            if (duration_date) {
+                default_message = duration_date + ' ' + (duration_date === 1 ? (0, _localize.localize)('Day') : (0, _localize.localize)('Days'));
+                is_minimum = false;
+            } else {
+                default_message = (0, _localize.localize)('Minimum duration is 1 day');
+                is_minimum = true;
+            }
 
             return _react2.default.createElement(
                 'div',
@@ -838,11 +867,18 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
                     selected_date: selected_date,
                     updateSelected: this.updateSelected,
                     holidays: holidays,
-                    weekends: weekends
+                    has_range_selection: has_range_selection,
+                    hovered_date: this.state.hovered_date,
+                    weekends: weekends,
+                    onMouseOver: this.onMouseOver,
+                    onMouseLeave: this.onMouseLeave
                 }),
                 _react2.default.createElement(_calendarFooter2.default, {
                     footer: footer,
+                    duration_date: this.state.duration_date || default_message,
+                    is_minimum: is_minimum,
                     has_today_btn: has_today_btn,
+                    has_range_selection: has_range_selection,
                     onClick: this.setToday
                 })
             );
@@ -866,6 +902,31 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
                 _this2.props.onChangeCalendarMonth(start_of_month);
             }
         });
+    };
+
+    this.onMouseOver = function (event) {
+        var target = event.currentTarget;
+
+        if (!target.classList.contains('calendar__cell--disabled') && !target.classList.contains('calendar__cell--hover')) {
+            target.className += ' calendar__cell--hover';
+            _this2.setState({
+                hovered_date: target.getAttribute('data-date'),
+                duration_date: target.getAttribute('data-duration')
+            });
+        }
+    };
+
+    this.onMouseLeave = function (event) {
+        var target = event.currentTarget;
+
+        if (target.classList.contains('calendar__cell--hover')) {
+            target.classList.remove('calendar__cell--hover');
+
+            _this2.setState({
+                hovered_date: null,
+                duration_date: null
+            });
+        }
     };
 
     this.updateSelectedDate = function (e) {
@@ -976,7 +1037,9 @@ Calendar.defaultProps = {
 
 Calendar.propTypes = {
     date_format: _propTypes2.default.string,
+    duration_date: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     footer: _propTypes2.default.string,
+    has_range_selection: _propTypes2.default.bool,
     has_today_btn: _propTypes2.default.bool,
     holidays: _propTypes2.default.arrayOf(_propTypes2.default.shape({
         dates: _propTypes2.default.array,
@@ -1082,6 +1145,8 @@ var _dateTime = __webpack_require__(/*! ../../../../../Constants/date-time */ ".
 
 var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
+var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
 var _types = __webpack_require__(/*! ./types */ "./src/javascript/app_2/App/Components/Elements/Calendar/panels/types.js");
 
 var _types2 = _interopRequireDefault(_types);
@@ -1095,12 +1160,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var getDays = function getDays(_ref) {
     var calendar_date = _ref.calendar_date,
         date_format = _ref.date_format,
+        has_range_selection = _ref.has_range_selection,
         holidays = _ref.holidays,
+        hovered_date = _ref.hovered_date,
         isPeriodDisabled = _ref.isPeriodDisabled,
         start_date = _ref.start_date,
         selected_date = _ref.selected_date,
         updateSelected = _ref.updateSelected,
-        weekends = _ref.weekends;
+        weekends = _ref.weekends,
+        onMouseOver = _ref.onMouseOver,
+        onMouseLeave = _ref.onMouseLeave;
 
     // adjust Calendar week by 1 day so that Calendar week starts on Monday
     // change to zero to set Calendar week to start on Sunday
@@ -1140,6 +1209,7 @@ var getDays = function getDays(_ref) {
 
     dates.map(function (date) {
         var moment_date = (0, _Date.toMoment)(date).startOf('day');
+        var moment_hovered = (0, _Date.toMoment)(hovered_date).startOf('day');
         var is_active = selected_date && moment_date.isSame(moment_selected);
         var is_today = moment_date.isSame(moment_today, 'day');
 
@@ -1158,7 +1228,9 @@ var getDays = function getDays(_ref) {
         var message = events.map(function (event) {
             return event.descrip;
         })[0] || '';
-
+        var duration_from_today = (0, _Date.daysFromTodayTo)(date);
+        var is_between = moment_date.isBetween(moment_today, moment_selected);
+        var is_between_hover = moment_date.isBetween(moment_today, moment_hovered);
         var is_before_min_or_after_max_date = isPeriodDisabled(moment_date, 'day');
         var is_disabled =
         // check if date is before min_date or after_max_date
@@ -1180,15 +1252,22 @@ var getDays = function getDays(_ref) {
             {
                 key: date,
                 className: (0, _classnames2.default)('calendar__cell', {
-                    'calendar__cell--active': is_active && !is_disabled,
+                    'calendar__cell--active': is_active,
                     'calendar__cell--today': is_today,
+                    'calendar__cell--active-duration': is_active && has_range_selection && !is_today,
+                    'calendar__cell--today-duration': is_today && has_range_selection,
                     'calendar__cell--disabled': is_disabled,
-                    'calendar__cell--other': is_other_month
+                    'calendar__cell--other': is_other_month,
+                    'calendar__cell--between-hover': is_between_hover && has_range_selection,
+                    'calendar__cell--between': is_between && has_range_selection
                 }),
                 onClick: is_disabled ? undefined : function (e) {
                     return updateSelected(e, 'day');
                 },
-                'data-date': date
+                'data-date': date,
+                'data-duration': duration_from_today + ' ' + (duration_from_today === 1 ? (0, _localize.localize)('Day') : (0, _localize.localize)('Days')),
+                onMouseOver: onMouseOver,
+                onMouseLeave: onMouseLeave
             },
             (has_events || is_closes_early) && !is_other_month && !is_before_min_or_after_max_date && _react2.default.createElement(_tooltip2.default, {
                 alignment: 'top',
@@ -1230,10 +1309,14 @@ CalendarDays.defaultProps = {
 
 CalendarDays.propTypes = _extends({}, _types2.default, {
     date_format: _propTypes2.default.string,
+    has_range_selection: _propTypes2.default.bool,
     holidays: _propTypes2.default.arrayOf(_propTypes2.default.shape({
         dates: _propTypes2.default.array,
         descrip: _propTypes2.default.string
     })),
+    hovered_date: _propTypes2.default.string,
+    onMouseLeave: _propTypes2.default.func,
+    onMouseOver: _propTypes2.default.func,
     start_date: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     weekends: _propTypes2.default.arrayOf(_propTypes2.default.number)
 });
@@ -5491,7 +5574,9 @@ var DatePicker = function (_React$Component) {
             }
         }, _this.onMouseLeave = function () {
             _this.setState({ is_clear_btn_visible: false });
-        }, _this.onSelectCalendar = function (selected_date, is_datepicker_visible) {
+        }, _this.onSelectCalendar = function (selected_date) {
+            var is_datepicker_visible = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+
             var value = selected_date;
             if (!(0, _Date.isDateValid)(value)) {
                 value = '';
@@ -5664,7 +5749,7 @@ var DatePicker = function (_React$Component) {
                 }, _callee, this);
             }));
 
-            function onChangeCalendarMonth(_x) {
+            function onChangeCalendarMonth(_x2) {
                 return _ref2.apply(this, arguments);
             }
 
@@ -5762,8 +5847,10 @@ var DatePicker = function (_React$Component) {
                             onChangeCalendarMonth: this.props.disable_trading_events ? this.onChangeCalendarMonth.bind(this) : undefined,
                             holidays: this.state.holidays,
                             weekends: this.state.weekends,
+                            duration_date: this.state.value,
                             date_format: this.props.date_format,
                             has_today_btn: this.props.has_today_btn,
+                            has_range_selection: this.props.has_range_selection,
                             footer: this.props.footer,
                             max_date: this.props.max_date,
                             min_date: this.props.min_date,
@@ -6741,9 +6828,9 @@ function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr
 
 var Dialog = function Dialog(_ref) {
     var preClass = _ref.preClass,
-        value = _ref.value,
-        start_time = _ref.start_time,
+        selected_time = _ref.selected_time,
         end_time = _ref.end_time,
+        start_time = _ref.start_time,
         onChange = _ref.onChange,
         className = _ref.className;
 
@@ -6751,10 +6838,10 @@ var Dialog = function Dialog(_ref) {
     var end_time_moment = end_time ? (0, _Date.toMoment)(end_time) : (0, _Date.toMoment)().hour('23').minute('59').seconds('59').milliseconds('999');
     var to_compare_moment = (0, _Date.toMoment)();
 
-    var _value$split = value.split(':'),
-        _value$split2 = _slicedToArray(_value$split, 2),
-        hour = _value$split2[0],
-        minute = _value$split2[1];
+    var _selected_time$split = selected_time.split(':'),
+        _selected_time$split2 = _slicedToArray(_selected_time$split, 2),
+        hour = _selected_time$split2[0],
+        minute = _selected_time$split2[1];
 
     var hours = [].concat(_toConsumableArray(Array(24).keys())).map(function (a) {
         return ('0' + a).slice(-2);
@@ -6801,14 +6888,14 @@ var Dialog = function Dialog(_ref) {
                     null,
                     hours.map(function (h, key) {
                         to_compare_moment.hour(h).minute(minute);
-                        var is_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment);
+                        var is_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment) && to_compare_moment.isBetween(start_time_moment, end_time_moment, 'minute');
                         return _react2.default.createElement(
                             'div',
                             {
                                 className: (0, _classnames2.default)(preClass + '__selector-list-item', _defineProperty({}, preClass + '__selector-list-item--selected', hour === h), _defineProperty({}, preClass + '__selector-list-item--disabled', !is_enabled)),
                                 key: key,
                                 onClick: function onClick() {
-                                    selectOption('h', h, value, is_enabled);
+                                    selectOption('h', h, selected_time, is_enabled);
                                 }
                             },
                             h
@@ -6840,7 +6927,7 @@ var Dialog = function Dialog(_ref) {
                                 className: (0, _classnames2.default)(preClass + '__selector-list-item', _defineProperty({}, preClass + '__selector-list-item--selected', minute === mm), _defineProperty({}, preClass + '__selector-list-item--disabled', !is_enabled)),
                                 key: key,
                                 onClick: function onClick() {
-                                    selectOption('m', mm, value, is_enabled);
+                                    selectOption('m', mm, selected_time, is_enabled);
                                 }
                             },
                             mm
@@ -6857,8 +6944,8 @@ Dialog.propTypes = {
     end_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
     onChange: _propTypes2.default.func,
     preClass: _propTypes2.default.string,
-    start_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
-    value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object])
+    selected_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
+    start_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object])
 };
 
 exports.default = Dialog;
@@ -6964,9 +7051,9 @@ var TimePicker = function (_React$Component) {
             });
         }, _this.handleChange = function (arg) {
             // To handle nativepicker;
-            var value = (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object' ? arg.target.value : arg;
+            var value = (typeof arg === 'undefined' ? 'undefined' : _typeof(arg)) === 'object' ? arg.target.selected_time : arg;
 
-            if (value !== _this.props.value) {
+            if (value !== _this.props.selected_time) {
                 _this.props.onChange({ target: { name: _this.props.name, value: value } });
             }
         }, _this.saveRef = function (node) {
@@ -7000,12 +7087,12 @@ var TimePicker = function (_React$Component) {
         value: function render() {
             var prefix_class = 'time-picker';
             var _props = this.props,
-                value = _props.value,
+                selected_time = _props.selected_time,
                 name = _props.name,
                 is_nativepicker = _props.is_nativepicker,
                 placeholder = _props.placeholder,
-                start_time = _props.start_time,
                 end_time = _props.end_time,
+                start_time = _props.start_time,
                 validation_errors = _props.validation_errors;
 
             return _react2.default.createElement(
@@ -7017,7 +7104,7 @@ var TimePicker = function (_React$Component) {
                 is_nativepicker ? _react2.default.createElement('input', {
                     type: 'time',
                     id: prefix_class + '-input',
-                    value: value,
+                    value: selected_time,
                     onChange: this.handleChange,
                     name: name,
                     min: start_time,
@@ -7031,7 +7118,7 @@ var TimePicker = function (_React$Component) {
                         is_read_only: true,
                         id: prefix_class + '-input',
                         className: (0, _classnames2.default)(prefix_class + '-input'),
-                        value: value,
+                        value: selected_time,
                         onClick: this.toggleDropDown,
                         name: name,
                         placeholder: placeholder
@@ -7050,12 +7137,12 @@ var TimePicker = function (_React$Component) {
                             unmountOnExit: true
                         },
                         _react2.default.createElement(_dialog2.default, {
+                            end_time: end_time,
+                            start_time: start_time,
                             className: 'from-left',
                             onChange: this.handleChange,
                             preClass: prefix_class,
-                            start_time: start_time,
-                            end_time: end_time,
-                            value: value
+                            selected_time: selected_time
                         })
                     )
                 )
@@ -7074,8 +7161,8 @@ TimePicker.propTypes = {
     onChange: _propTypes2.default.func,
     padding: _propTypes2.default.string,
     placeholder: _propTypes2.default.string,
-    start_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object]),
-    value: _propTypes2.default.string
+    selected_time: _propTypes2.default.string,
+    start_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object])
 };
 
 exports.default = (0, _mobxReact.observer)(TimePicker);
@@ -17323,7 +17410,6 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var TradingDatePicker = function TradingDatePicker(_ref) {
     var duration_min_max = _ref.duration_min_max,
         duration_units_list = _ref.duration_units_list,
-        validation_errors = _ref.validation_errors,
         expiry_date = _ref.expiry_date,
         expiry_type = _ref.expiry_type,
         is_24_hours_contract = _ref.is_24_hours_contract,
@@ -17333,13 +17419,14 @@ var TradingDatePicker = function TradingDatePicker(_ref) {
         server_time = _ref.server_time,
         start_time = _ref.start_time,
         start_date = _ref.start_date,
-        symbol = _ref.symbol;
+        symbol = _ref.symbol,
+        validation_errors = _ref.validation_errors;
 
     var max_date_duration = void 0,
         min_date_expiry = void 0,
         has_today_btn = void 0,
         is_read_only = void 0;
-    var moment_contract_start_date_time = (0, _Date.setTime)((0, _Date.toMoment)(start_date || server_time), (0, _Date.isTimeValid)(start_time) ? start_time : server_time.format('HH:mm'));
+    var moment_contract_start_date_time = (0, _Date.setTime)((0, _Date.toMoment)(start_date || server_time), (0, _Date.isTimeValid)(start_time) ? start_time : server_time.format('HH:mm:ss'));
 
     var max_daily_duration = duration_min_max.daily ? duration_min_max.daily.max : 365 * 24 * 3600;
 
@@ -17365,6 +17452,7 @@ var TradingDatePicker = function TradingDatePicker(_ref) {
         disable_trading_events: true,
         error_messages: validation_errors.duration || [],
         has_today_btn: has_today_btn,
+        has_range_selection: mode === 'duration',
         is_nativepicker: false,
         is_read_only: is_read_only,
         label: duration_units_list.length === 1 ? duration_units_list[0].text : null,
@@ -18124,35 +18212,33 @@ var _TimePicker = __webpack_require__(/*! ../../../../../App/Components/Form/Tim
 
 var _TimePicker2 = _interopRequireDefault(_TimePicker);
 
+var _endTime = __webpack_require__(/*! ../../../../../Stores/Modules/Trading/Helpers/end-time */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/end-time.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var TradingTimePicker = function TradingTimePicker(_ref) {
     var expiry_date = _ref.expiry_date,
         expiry_time = _ref.expiry_time,
         market_close_times = _ref.market_close_times,
+        market_open_times = _ref.market_open_times,
         onChange = _ref.onChange,
-        server_time = _ref.server_time,
-        start_date = _ref.start_date,
-        start_time = _ref.start_time;
+        server_time = _ref.server_time;
 
-    var moment_expiry = (0, _Date.toMoment)(expiry_date || server_time);
-    var moment_contract_start_date_time = (0, _Date.setTime)((0, _Date.toMoment)(start_date || server_time), (0, _Date.isTimeValid)(start_time) ? start_time : server_time.format('HH:mm'));
-    var expiry_date_time = (0, _Date.setTime)(moment_expiry.clone(), moment_contract_start_date_time.clone().add(5, 'minute').format('HH:mm'));
-    var expiry_date_market_close = (0, _Date.setTime)(expiry_date_time.clone(), market_close_times.slice(-1)[0]);
-    var is_expired_next_day = expiry_date_time.diff(moment_contract_start_date_time, 'day') === 1;
-    var min_date_expiry = moment_contract_start_date_time.clone().startOf('day');
-    var expiry_time_sessions = [{
-        open: is_expired_next_day ? expiry_date_time.clone().startOf('day') : expiry_date_time.clone(),
-        close: is_expired_next_day ? (0, _Date.minDate)(expiry_date_time.clone().subtract(10, 'minute'), expiry_date_market_close) : expiry_date_market_close.clone()
-    }];
+    var moment_expiry_date = (0, _Date.toMoment)(expiry_date);
+    var market_open_datetime = (0, _Date.setTime)(moment_expiry_date.clone(), market_open_times[0]);
+    var market_close_datetime = (0, _Date.setTime)(moment_expiry_date.clone(), market_close_times.slice(-1)[0]);
+    var expiry_datetime = (0, _Date.setTime)(moment_expiry_date.clone(), expiry_time);
+    var server_datetime = (0, _Date.toMoment)(server_time);
 
+    var boundaries = (0, _endTime.getBoundaries)(server_datetime.clone(), market_open_datetime.clone(), market_close_datetime);
+    var selected_time = (0, _endTime.getSelectedTime)(server_datetime.clone(), expiry_datetime, market_open_datetime);
     return _react2.default.createElement(_TimePicker2.default, {
-        end_time: expiry_time_sessions[0].close,
+        end_time: boundaries.end,
         onChange: onChange,
         name: 'expiry_time',
         placeholder: '12:00',
-        start_time: expiry_time_sessions[0].open,
-        value: expiry_time || min_date_expiry.format('HH:mm')
+        start_time: boundaries.start,
+        selected_time: selected_time
     });
 };
 
@@ -18162,9 +18248,7 @@ TradingTimePicker.propTypes = {
     market_close_times: _propTypes2.default.array,
     name: _propTypes2.default.string,
     onChange: _propTypes2.default.func,
-    server_time: _propTypes2.default.object,
-    start_date: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-    start_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string, _propTypes2.default.object])
+    server_time: _propTypes2.default.object
 };
 
 exports.default = (0, _connect.connect)(function (_ref2) {
@@ -18172,13 +18256,12 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         common = _ref2.common;
     return {
         duration_units_list: modules.trade.duration_units_list,
-        expiry_date: modules.trade.expiry_date,
         expiry_time: modules.trade.expiry_time,
+        expiry_date: modules.trade.expiry_date,
         market_close_times: modules.trade.market_close_times,
+        market_open_times: modules.trade.market_open_times,
         onChange: modules.trade.onChange,
-        server_time: common.server_time,
-        start_date: modules.trade.start_date,
-        start_time: modules.trade.start_time
+        server_time: common.server_time
     };
 })(TradingTimePicker);
 
@@ -18261,12 +18344,11 @@ var AdvancedDuration = function AdvancedDuration(_ref) {
         shared_input_props = _ref.shared_input_props,
         start_date = _ref.start_date;
 
-    var moment_expiry = (0, _Date.toMoment)(expiry_date || server_time);
     var is_24_hours_contract = false;
 
     if (expiry_type === 'endtime') {
         var has_intraday_duration_unit = (0, _duration.hasIntradayDurationUnit)(duration_units_list);
-        is_24_hours_contract = (!!start_date || moment_expiry.isSame((0, _Date.toMoment)(server_time), 'day')) && has_intraday_duration_unit;
+        is_24_hours_contract = (!!start_date || (0, _Date.toMoment)(expiry_date || server_time).isSame((0, _Date.toMoment)(server_time), 'day')) && has_intraday_duration_unit;
     }
 
     var endtime_container_class = (0, _classnames2.default)('endtime-container', {
@@ -18352,7 +18434,6 @@ AdvancedDuration.propTypes = {
     expiry_list: _propTypes2.default.array,
     expiry_type: _propTypes2.default.string,
     getDurationFromUnit: _propTypes2.default.func,
-    is_nativepicker: _propTypes2.default.bool,
     number_input_props: _propTypes2.default.object,
     onChange: _propTypes2.default.func,
     onChangeUiStore: _propTypes2.default.func,
@@ -18581,7 +18662,7 @@ DurationWrapper.propTypes = {
     getDurationFromUnit: _propTypes2.default.func,
     is_advanced_duration: _propTypes2.default.bool,
     is_minimized: _propTypes2.default.bool,
-    market_close_times: _propTypes2.default.array,
+    market_open_times: _propTypes2.default.array,
     onChange: _propTypes2.default.func,
     onChangeMultiple: _propTypes2.default.func,
     onChangeUiStore: _propTypes2.default.func,
@@ -18674,7 +18755,8 @@ var Duration = function Duration(_ref) {
         simple_duration_unit = _ref.simple_duration_unit,
         server_time = _ref.server_time,
         start_date = _ref.start_date,
-        validation_errors = _ref.validation_errors;
+        validation_errors = _ref.validation_errors,
+        market_open_times = _ref.market_open_times;
 
     var expiry_list = [{ text: (0, _localize.localize)('Duration'), value: 'duration' }];
 
@@ -18801,6 +18883,7 @@ var Duration = function Duration(_ref) {
                 expiry_list: expiry_list,
                 expiry_type: expiry_type,
                 getDurationFromUnit: getDurationFromUnit,
+                market_open_times: market_open_times,
                 number_input_props: props.number_input,
                 onChange: onChange,
                 onChangeUiStore: onChangeUiStore,
@@ -18842,6 +18925,7 @@ Duration.propTypes = {
     hasDurationUnit: _propTypes2.default.func,
     is_advanced_duration: _propTypes2.default.bool,
     is_minimized: _propTypes2.default.bool,
+    market_open_times: _propTypes2.default.array,
     onChange: _propTypes2.default.func,
     onChangeUiStore: _propTypes2.default.func,
     server_time: _propTypes2.default.object,
@@ -23704,7 +23788,7 @@ function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, a
 
 var onChangeStartDate = exports.onChangeStartDate = function () {
     var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(store) {
-        var contract_type, duration_unit, expiry_time, start_date, symbol, server_time, start_time, expiry_date, expiry_type, obj_contract_start_type, contract_start_type, obj_sessions, sessions, obj_start_time, obj_duration_units_list, duration_units_list, obj_duration_unit, obj_expiry_type, obj_expiry_date, obj_market_close_times, market_close_times, obj_expiry_time, obj_duration_min_max;
+        var contract_type, duration_unit, expiry_time, start_date, symbol, server_time, start_time, expiry_date, expiry_type, obj_contract_start_type, contract_start_type, obj_sessions, sessions, obj_start_time, obj_duration_units_list, duration_units_list, obj_duration_unit, obj_expiry_type, obj_expiry_date, trading_times, obj_market_open_times, obj_market_close_times, market_close_times, obj_expiry_time, obj_duration_min_max;
         return regeneratorRuntime.wrap(function _callee$(_context) {
             while (1) {
                 switch (_context.prev = _context.next) {
@@ -23738,16 +23822,15 @@ var onChangeStartDate = exports.onChangeStartDate = function () {
                         return _contractType2.default.getTradingTimes(expiry_date, symbol);
 
                     case 19:
-                        _context.t0 = _context.sent;
-                        obj_market_close_times = {
-                            market_close_times: _context.t0
-                        };
+                        trading_times = _context.sent;
+                        obj_market_open_times = { market_open_times: trading_times.open };
+                        obj_market_close_times = { market_close_times: trading_times.close };
                         market_close_times = obj_market_close_times.market_close_times;
                         obj_expiry_time = _contractType2.default.getExpiryTime(expiry_date, expiry_time, expiry_type, market_close_times, sessions, start_date, start_time);
                         obj_duration_min_max = _contractType2.default.getDurationMinMax(contract_type, contract_start_type);
-                        return _context.abrupt('return', _extends({}, obj_contract_start_type, obj_duration_units_list, obj_duration_min_max, obj_duration_unit, obj_sessions, obj_start_time, obj_expiry_date, obj_expiry_time, obj_expiry_type, obj_market_close_times));
+                        return _context.abrupt('return', _extends({}, obj_contract_start_type, obj_duration_units_list, obj_duration_min_max, obj_duration_unit, obj_sessions, obj_start_time, obj_expiry_date, obj_expiry_time, obj_expiry_type, obj_market_open_times, obj_market_close_times));
 
-                    case 25:
+                    case 26:
                     case 'end':
                         return _context.stop();
                 }
@@ -24455,7 +24538,10 @@ var ContractType = function () {
                                                     if (!trading_times[trading_times_response.echo_req.trading_times]) {
                                                         trading_times[trading_times_response.echo_req.trading_times] = {};
                                                     }
-                                                    trading_times[trading_times_response.echo_req.trading_times][symbol.symbol] = symbol.times.close;
+                                                    trading_times[trading_times_response.echo_req.trading_times][symbol.symbol] = {
+                                                        'open': symbol.times.open,
+                                                        'close': symbol.times.close
+                                                    };
                                                 }
                                             }
                                         }
@@ -24807,6 +24893,42 @@ var hasIntradayDurationUnit = exports.hasIntradayDurationUnit = function hasIntr
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/end-time.js":
+/*!*************************************************************************!*\
+  !*** ./src/javascript/app_2/Stores/Modules/Trading/Helpers/end-time.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var getClosestTime = function getClosestTime(time, interval) {
+    return time.minute(Math.round(time.minute() / interval) * interval);
+};
+
+var getSelectedTime = exports.getSelectedTime = function getSelectedTime(server_time, selected_time, market_open_time) {
+    var value = selected_time.isBefore(market_open_time) ? market_open_time.isBefore(server_time) ? server_time : market_open_time : selected_time;
+
+    value = getClosestTime(value, 5);
+    return value.format('HH:mm');
+};
+
+var getBoundaries = exports.getBoundaries = function getBoundaries(server_time, market_open_time, market_close_time) {
+    var boundaries = {
+        start: server_time.isBefore(market_open_time) ? market_open_time : server_time,
+        end: market_close_time
+    };
+
+    boundaries.start = getClosestTime(boundaries.start, 5);
+    return boundaries;
+};
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/process.js":
 /*!************************************************************************!*\
   !*** ./src/javascript/app_2/Stores/Modules/Trading/Helpers/process.js ***!
@@ -25152,7 +25274,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28, _descriptor29, _descriptor30, _descriptor31, _descriptor32, _descriptor33, _descriptor34, _descriptor35;
 
 var _lodash = __webpack_require__(/*! lodash.debounce */ "./node_modules/lodash.debounce/index.js");
 
@@ -25279,7 +25401,6 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
     // Purchase
 
-
     // End Date Time
     /**
      * An array that contains market closing time.
@@ -25287,15 +25408,16 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
      * e.g. ["04:00:00", "08:00:00"]
      *
      */
+    // Number(0) refers to 'now'
 
 
-    // Start Time
+    // Barrier
 
 
-    // Duration
+    // Amount
 
 
-    // Underlying
+    // Contract Type
     function TradeStore(_ref) {
         var root_store = _ref.root_store;
 
@@ -25368,19 +25490,21 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
         _initDefineProp(_this, 'sessions', _descriptor29, _this);
 
-        _initDefineProp(_this, 'market_close_times', _descriptor30, _this);
+        _initDefineProp(_this, 'market_open_times', _descriptor30, _this);
 
-        _initDefineProp(_this, 'last_digit', _descriptor31, _this);
+        _initDefineProp(_this, 'market_close_times', _descriptor31, _this);
 
-        _initDefineProp(_this, 'proposal_info', _descriptor32, _this);
+        _initDefineProp(_this, 'last_digit', _descriptor32, _this);
 
-        _initDefineProp(_this, 'purchase_info', _descriptor33, _this);
+        _initDefineProp(_this, 'proposal_info', _descriptor33, _this);
+
+        _initDefineProp(_this, 'purchase_info', _descriptor34, _this);
 
         _this.chart_id = 1;
         _this.debouncedProposal = (0, _lodash2.default)(_this.requestProposal, 500);
         _this.proposal_requests = {};
 
-        _initDefineProp(_this, 'init', _descriptor34, _this);
+        _initDefineProp(_this, 'init', _descriptor35, _this);
 
         Object.defineProperty(_this, 'is_query_string_applied', {
             enumerable: false,
@@ -25402,16 +25526,15 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     }
 
     // Last Digit
-    // Number(0) refers to 'now'
 
 
-    // Barrier
+    // Start Time
 
 
-    // Amount
+    // Duration
 
 
-    // Contract Type
+    // Underlying
 
 
     _createClass(TradeStore, [{
@@ -26062,27 +26185,32 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     initializer: function initializer() {
         return [];
     }
-}), _descriptor30 = _applyDecoratedDescriptor(_class.prototype, 'market_close_times', [_mobx.observable], {
+}), _descriptor30 = _applyDecoratedDescriptor(_class.prototype, 'market_open_times', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return [];
     }
-}), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, 'last_digit', [_mobx.observable], {
+}), _descriptor31 = _applyDecoratedDescriptor(_class.prototype, 'market_close_times', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return [];
+    }
+}), _descriptor32 = _applyDecoratedDescriptor(_class.prototype, 'last_digit', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 5;
     }
-}), _descriptor32 = _applyDecoratedDescriptor(_class.prototype, 'proposal_info', [_mobx.observable], {
+}), _descriptor33 = _applyDecoratedDescriptor(_class.prototype, 'proposal_info', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return {};
     }
-}), _descriptor33 = _applyDecoratedDescriptor(_class.prototype, 'purchase_info', [_mobx.observable], {
+}), _descriptor34 = _applyDecoratedDescriptor(_class.prototype, 'purchase_info', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return {};
     }
-}), _descriptor34 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec], {
+}), _descriptor35 = _applyDecoratedDescriptor(_class.prototype, 'init', [_dec], {
     enumerable: true,
     initializer: function initializer() {
         var _this9 = this;
