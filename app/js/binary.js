@@ -2610,6 +2610,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
@@ -2617,6 +2621,10 @@ var _react2 = _interopRequireDefault(_react);
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _button = __webpack_require__(/*! ../../Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -2649,30 +2657,18 @@ var FullPageModal = function FullPageModal(_ref) {
                 _react2.default.createElement(
                     'div',
                     { className: 'full-page-modal__footer' },
-                    _react2.default.createElement(
-                        'div',
-                        {
-                            className: 'full-page-modal__button btn btn--flat effect btn--primary',
-                            onClick: onCancel
-                        },
-                        _react2.default.createElement(
-                            'span',
-                            { className: 'full-page-modal__button-text' },
-                            cancel_button_text
-                        )
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        {
-                            className: 'full-page-modal__button btn btn--flat effect btn--primary',
-                            onClick: onConfirm
-                        },
-                        _react2.default.createElement(
-                            'span',
-                            { className: 'full-page-modal__button-text' },
-                            confirm_button_text
-                        )
-                    )
+                    _react2.default.createElement(_button2.default, {
+                        className: (0, _classnames2.default)('full-page-modal__button', 'btn--secondary btn--secondary--orange'),
+                        has_effect: true,
+                        text: cancel_button_text,
+                        onClick: onCancel
+                    }),
+                    _react2.default.createElement(_button2.default, {
+                        className: (0, _classnames2.default)('full-page-modal__button', 'btn--primary btn--primary--orange'),
+                        has_effect: true,
+                        text: confirm_button_text,
+                        onClick: onConfirm
+                    })
                 )
             )
         );
@@ -18049,7 +18045,7 @@ var PurchaseLock = function PurchaseLock(_ref) {
             (0, _localize.localize)('Purchase Locked')
         ),
         _react2.default.createElement(_button2.default, {
-            className: 'purchase-container__lock-button btn--flat btn--secondary btn--secondary--orange',
+            className: 'purchase-container__lock-button btn--secondary btn--secondary--orange',
             has_effect: true,
             onClick: onClick,
             text: (0, _localize.localize)('Unlock')
@@ -18142,7 +18138,7 @@ var ContractInfo = function ContractInfo(_ref) {
                 ),
                 _react2.default.createElement(
                     'div',
-                    null,
+                    { className: 'trade-container__price-info-value' },
                     _react2.default.createElement(_money2.default, { amount: proposal_info.obj_contract_basis.value, className: 'trade-container__price-info-currency', currency: currency })
                 ),
                 _react2.default.createElement(
