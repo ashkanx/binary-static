@@ -497,7 +497,8 @@ var ClientBase = function () {
         var can_open_multi = false;
         var type = void 0,
             can_upgrade_to = void 0;
-        if ((upgradeable_landing_companies || []).length) {
+        if ((upgradeable_landing_companies || []).length && !/^(py|ae)$/i.test(get('residence'))) {
+            // TODO: remove py and ae exceptions when API block is implemented
             var current_landing_company = get('landing_company_shortcode');
 
             can_open_multi = upgradeable_landing_companies.indexOf(current_landing_company) !== -1;
@@ -14310,6 +14311,56 @@ module.exports = DatePicker;
 
 /***/ }),
 
+/***/ "./src/javascript/app/components/loading-spinner.js":
+/*!**********************************************************!*\
+  !*** ./src/javascript/app/components/loading-spinner.js ***!
+  \**********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+var assertContainerExists = function assertContainerExists(content_id) {
+    if (!content_id) {
+        throw new Error('Loading spinner content id is missing or undefined.');
+    }
+};
+/**
+ * Accepts a DOM element ID and renders loading spinner inside of it.
+ *
+ * @param content_id
+ */
+var show = exports.show = function show(content_id) {
+    assertContainerExists(content_id);
+    var $container = $('#' + content_id);
+    $container.append($('<div />', { class: 'barspinner dark' }).append($('<div />', { class: 'rect1' })).append($('<div />', { class: 'rect2' })).append($('<div />', { class: 'rect3' })).append($('<div />', { class: 'rect4' })).append($('<div />', { class: 'rect5' })));
+};
+
+/**
+ * Remove Loading spinner inside the container, does nothing if there is no spinner loading.
+ *
+ * @param content_id
+ */
+var hide = exports.hide = function hide(content_id) {
+    assertContainerExists(content_id);
+    var $container = $('#' + content_id);
+    var $spinner = $container.find('.barspinner');
+    if ($spinner) {
+        $spinner.remove();
+    }
+};
+
+exports.default = {
+    showLoadingSpinner: show,
+    hideLoadingSpinner: hide
+};
+
+/***/ }),
+
 /***/ "./src/javascript/app/components/time_picker.js":
 /*!******************************************************!*\
   !*** ./src/javascript/app/components/time_picker.js ***!
@@ -21929,6 +21980,7 @@ var DigitTicker = __webpack_require__(/*! ./digit_ticker */ "./src/javascript/ap
 var ViewPopupUI = __webpack_require__(/*! ../user/view_popup/view_popup.ui */ "./src/javascript/app/pages/user/view_popup/view_popup.ui.js");
 var showLocalTimeOnHover = __webpack_require__(/*! ../../base/clock */ "./src/javascript/app/base/clock.js").showLocalTimeOnHover;
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
+var LoadingSpinner = __webpack_require__(/*! ../../components/loading-spinner */ "./src/javascript/app/components/loading-spinner.js");
 var addComma = __webpack_require__(/*! ../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
@@ -21956,12 +22008,15 @@ var DigitDisplay = function () {
     };
 
     var init = function init(id_render, proposal_open_contract) {
+        var calculated_height = (proposal_open_contract.tick_count + 1) * 40;
+
         tick_count = 1;
         contract = proposal_open_contract;
         spot_times = [];
 
         $container = $('#' + id_render);
-        $container.addClass('normal-font').html($('<h5 />', { text: contract.display_name, class: 'center-text' })).append($('<div />', { class: 'gr-8 gr-centered gr-12-m' }).append($('<div />', { class: 'gr-row', id: 'table_digits' }).append($('<strong />', { class: 'gr-3', text: localize('Tick') })).append($('<strong />', { class: 'gr-3', text: localize('Spot') })).append($('<strong />', { class: 'gr-6', text: localize('Spot Time (GMT)') })))).append($('<div />', { class: 'digit-ticker invisible', id: 'digit_ticker_container' }));
+        $container.addClass('normal-font').html($('<h5 />', { text: contract.display_name, class: 'center-text' })).append($('<div />', { class: 'gr-8 gr-centered gr-12-m', style: 'height: ' + calculated_height + 'px;' }).append($('<div />', { class: 'gr-row', id: 'table_digits' }).append($('<strong />', { class: 'gr-3', text: localize('Tick') })).append($('<strong />', { class: 'gr-3', text: localize('Spot') })).append($('<strong />', { class: 'gr-6', text: localize('Spot Time (GMT)') })))).append($('<div />', { class: 'digit-ticker invisible', id: 'digit_ticker_container' }));
+        LoadingSpinner.show('table_digits');
 
         DigitTicker.init('digit_ticker_container', contract.contract_type, contract.shortcode, contract.tick_count, contract.status);
 
@@ -22010,7 +22065,7 @@ var DigitDisplay = function () {
         if (getPropertyValue(response, ['tick', 'id']) && document.getElementById('sell_content_wrapper')) {
             ViewPopupUI.storeSubscriptionID(response.tick.id);
         }
-
+        LoadingSpinner.hide('table_digits');
         if (response.history) {
             response.history.times.some(function (time, idx) {
                 if (+time >= +contract.entry_tick_time) {
@@ -29688,7 +29743,8 @@ var PersonalDetails = function () {
                     $options_with_disabled.append(CommonFunctions.makeOption({
                         text: res.text,
                         value: res.value,
-                        is_disabled: res.disabled
+                        // is_disabled: res.disabled,
+                        is_disabled: res.disabled || /^(py|ae)$/i.test(res.value) ? 'disabled' : '' // TODO: remove py and ae exceptions when API block is implemented
                     }));
                 });
                 if (residence) {
@@ -33386,7 +33442,8 @@ var VirtualAccOpening = function () {
                 $options_with_disabled.append(makeOption({
                     text: res.text,
                     value: res.value,
-                    is_disabled: res.disabled
+                    // is_disabled: res.disabled,
+                    is_disabled: res.disabled || /^(py|ae)$/i.test(res.value) ? 'disabled' : '' // TODO: remove py and ae exceptions when API block is implemented
                 }));
             });
             $residence.html($options_with_disabled.html());

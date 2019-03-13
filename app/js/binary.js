@@ -394,6 +394,98 @@ exports.default = function (_ref) {
 
 /***/ }),
 
+/***/ "./src/images/app_2/settings/img-theme-dark.svg":
+/*!******************************************************!*\
+  !*** ./src/images/app_2/settings/img-theme-dark.svg ***!
+  \******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ width: "236", height: "180", xmlnsXlink: "http://www.w3.org/1999/xlink" }, props), _react2.default.createElement("defs", null, _react2.default.createElement("path", { id: "a", d: "M0 0h236v180H0z" }), _react2.default.createElement("linearGradient", { x1: "50%", y1: "147.77%", x2: "50%", y2: "10.76%", id: "c" }, _react2.default.createElement("stop", { stopColor: "#101320", stopOpacity: "0", offset: "0%" }), _react2.default.createElement("stop", { stopColor: "#FFF", stopOpacity: ".16", offset: "100%" }))), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("mask", { id: "b", fill: "#fff" }, _react2.default.createElement("use", { xlinkHref: "#a" })), _react2.default.createElement("use", { fill: "#101320", xlinkHref: "#a" }), _react2.default.createElement("path", { d: "M155.5 123H61v57h-1v-57H0v-1h60V32H0v-1h60V0h1v31h94.5V0h1v31H236v1h-79.5v90H236v1h-79.5v57h-1v-57zm0-1V32H61v90h94.5z", fill: "#191C31", fillRule: "nonzero", mask: "url(#b)" }), _react2.default.createElement("g", { mask: "url(#b)" }, _react2.default.createElement("path", { fill: "url(#c)", d: "M156 81l-6.5 6.5-5 32-3-15-2-75-2-15-16-14-9 15-14 14h-11l-5 15-2-30-3 30h-4l-5 30-2-15-12-15-2-14-23 14-4 15-3-29-9 44H0V165h156z", transform: "translate(0 15)" }), _react2.default.createElement("path", { d: "M149 102.42a.5.5 0 0 1 .15-.27l6.5-6.5a.5.5 0 1 1 .7.7l-6.38 6.39-4.98 31.84c-.08.55-.87.57-.98.02L141 119.5l-2-74.94-1.97-14.82-15.4-13.48-8.7 14.49-.08.1-14 14a.5.5 0 0 1-.35.14H87.86l-4.89 14.66c-.17.52-.93.42-.97-.13l-1.6-24L78 59.54a.5.5 0 0 1-.5.45h-3.58L69 89.58c-.1.57-.91.56-.99-.01L66.02 74.7 54.11 59.81a.5.5 0 0 1-.1-.24l-1.9-13.25-22.18 13.5-3.95 14.8c-.14.55-.92.48-.98-.07L22.34 48.8 13.99 89.6a.5.5 0 0 1-.49.4H0v-1h13.1L22 45.4c.11-.56.93-.52.99.05l2.72 26.3 3.3-12.38a.5.5 0 0 1 .22-.3l23-14a.5.5 0 0 1 .75.36l1.98 13.86L66.9 74.2a.5.5 0 0 1 .1.24l1.57 11.7L73 59.42a.5.5 0 0 1 .49-.42h3.55L80 29.45c.06-.61.96-.6 1 .02l1.83 27.46 4.2-12.59a.5.5 0 0 1 .47-.34h10.8l13.8-13.81 8.97-14.95a.5.5 0 0 1 .76-.12l16 14a.5.5 0 0 1 .17.31l2 15.06 1.99 74.91 2.45 12.25 4.57-29.23z", fill: "#FFF", fillRule: "nonzero" })), _react2.default.createElement("g", { mask: "url(#b)", fill: "#F93", fillRule: "nonzero" }, _react2.default.createElement("g", { transform: "translate(153 84)" }, _react2.default.createElement("path", { d: "M52 0h31v24H52L42 12z" }), _react2.default.createElement("path", { d: "M38 11.5h6v1h-6zm-8 0h4v1h-4zm-8 0h4v1h-4zm-8 0h4v1h-4zm-10 0h6v1H4z" }), _react2.default.createElement("circle", { cx: "3", cy: "12", r: "3" })))));
+};
+
+/***/ }),
+
+/***/ "./src/images/app_2/settings/img-theme-light.svg":
+/*!*******************************************************!*\
+  !*** ./src/images/app_2/settings/img-theme-light.svg ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var _extends = Object.assign || function (target) {
+  for (var i = 1; i < arguments.length; i++) {
+    var source = arguments[i];for (var key in source) {
+      if (Object.prototype.hasOwnProperty.call(source, key)) {
+        target[key] = source[key];
+      }
+    }
+  }return target;
+};
+
+function _objectWithoutProperties(obj, keys) {
+  var target = {};for (var i in obj) {
+    if (keys.indexOf(i) >= 0) continue;if (!Object.prototype.hasOwnProperty.call(obj, i)) continue;target[i] = obj[i];
+  }return target;
+}
+
+exports.default = function (_ref) {
+  var _ref$styles = _ref.styles,
+      styles = _ref$styles === undefined ? {} : _ref$styles,
+      props = _objectWithoutProperties(_ref, ["styles"]);
+
+  return _react2.default.createElement("svg", _extends({ width: "236", height: "180", xmlnsXlink: "http://www.w3.org/1999/xlink" }, props), _react2.default.createElement("defs", null, _react2.default.createElement("path", { id: "a", d: "M0 0h236v180H0z" }), _react2.default.createElement("linearGradient", { x1: "50%", y1: "126.02%", x2: "50%", y2: "32.91%", id: "c" }, _react2.default.createElement("stop", { stopColor: "#FFF", stopOpacity: "0", offset: "0%" }), _react2.default.createElement("stop", { stopColor: "#999CAC", stopOpacity: ".16", offset: "100%" }))), _react2.default.createElement("g", { fill: "none", fillRule: "evenodd" }, _react2.default.createElement("mask", { id: "b", fill: "#fff" }, _react2.default.createElement("use", { xlinkHref: "#a" })), _react2.default.createElement("use", { fill: "#FFF", xlinkHref: "#a" }), _react2.default.createElement("path", { d: "M155.5 123H61v57h-1v-57H0v-1h60V32H0v-1h60V0h1v31h94.5V0h1v31H236v1h-79.5v90H236v1h-79.5v57h-1v-57zm0-1V32H61v90h94.5z", fill: "#F4F4F6", fillRule: "nonzero", mask: "url(#b)" }), _react2.default.createElement("g", { mask: "url(#b)" }, _react2.default.createElement("path", { fill: "url(#c)", d: "M156 81l-6.5 6.5-5 32-3-15-2-75-2-15-16-14-9 15-14 14h-11l-5 15-2-30-3 30h-4l-5 30-2-15-12-15-2-14-23 14-4 15-3-29-9 44H0V165h156z", transform: "translate(0 15)" }), _react2.default.createElement("path", { d: "M149 102.42a.5.5 0 0 1 .15-.27l6.5-6.5a.5.5 0 1 1 .7.7l-6.38 6.39-4.98 31.84c-.08.55-.87.57-.98.02L141 119.5l-2-74.94-1.97-14.82-15.4-13.48-8.7 14.49-.08.1-14 14a.5.5 0 0 1-.35.14H87.86l-4.89 14.66c-.17.52-.93.42-.97-.13l-1.6-24L78 59.54a.5.5 0 0 1-.5.45h-3.58L69 89.58c-.1.57-.91.56-.99-.01L66.02 74.7 54.11 59.81a.5.5 0 0 1-.1-.24l-1.9-13.25-22.18 13.5-3.95 14.8c-.14.55-.92.48-.98-.07L22.34 48.8 13.99 89.6a.5.5 0 0 1-.49.4H0v-1h13.1L22 45.4c.11-.56.93-.52.99.05l2.72 26.3 3.3-12.38a.5.5 0 0 1 .22-.3l23-14a.5.5 0 0 1 .75.36l1.98 13.86L66.9 74.2a.5.5 0 0 1 .1.24l1.57 11.7L73 59.42a.5.5 0 0 1 .49-.42h3.55L80 29.45c.06-.61.96-.6 1 .02l1.83 27.46 4.2-12.59a.5.5 0 0 1 .47-.34h10.8l13.8-13.81 8.97-14.95a.5.5 0 0 1 .76-.12l16 14a.5.5 0 0 1 .17.31l2 15.06 1.99 74.91 2.45 12.25 4.57-29.23z", fill: "#999CAC", fillRule: "nonzero" })), _react2.default.createElement("g", { mask: "url(#b)", fill: "#F93", fillRule: "nonzero" }, _react2.default.createElement("g", { transform: "translate(153 84)" }, _react2.default.createElement("path", { d: "M52 0h31v24H52L42 12z" }), _react2.default.createElement("path", { d: "M38 11.5h6v1h-6zm-8 0h4v1h-4zm-8 0h4v1h-4zm-8 0h4v1h-4zm-10 0h6v1H4z" }), _react2.default.createElement("circle", { cx: "3", cy: "12", r: "3" })))));
+};
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/Calendar/calendar-body.jsx":
 /*!*********************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/Calendar/calendar-body.jsx ***!
@@ -2690,6 +2782,194 @@ exports.default = FullPageModal;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Elements/Media/index.js":
+/*!*********************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Media/index.js ***!
+  \*********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _mediaDescription = __webpack_require__(/*! ./media-description.jsx */ "./src/javascript/app_2/App/Components/Elements/Media/media-description.jsx");
+
+Object.keys(_mediaDescription).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _mediaDescription[key];
+    }
+  });
+});
+
+var _mediaHeading = __webpack_require__(/*! ./media-heading.jsx */ "./src/javascript/app_2/App/Components/Elements/Media/media-heading.jsx");
+
+Object.keys(_mediaHeading).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _mediaHeading[key];
+    }
+  });
+});
+
+var _mediaIcon = __webpack_require__(/*! ./media-icon.jsx */ "./src/javascript/app_2/App/Components/Elements/Media/media-icon.jsx");
+
+Object.keys(_mediaIcon).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _mediaIcon[key];
+    }
+  });
+});
+
+var _mediaItem = __webpack_require__(/*! ./media-item.jsx */ "./src/javascript/app_2/App/Components/Elements/Media/media-item.jsx");
+
+var _mediaItem2 = _interopRequireDefault(_mediaItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _mediaItem2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/Media/media-description.jsx":
+/*!**********************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Media/media-description.jsx ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MediaDescription = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MediaDescription = function MediaDescription(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'media__description' },
+        props.children
+    );
+};
+
+exports.MediaDescription = MediaDescription;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/Media/media-heading.jsx":
+/*!******************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Media/media-heading.jsx ***!
+  \******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MediaHeading = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MediaHeading = function MediaHeading(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'media__heading' },
+        props.children
+    );
+};
+
+exports.MediaHeading = MediaHeading;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/Media/media-icon.jsx":
+/*!***************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Media/media-icon.jsx ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.MediaIcon = undefined;
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MediaIcon = function MediaIcon() {
+    return _react2.default.createElement('div', { className: 'media__icon' });
+};
+
+exports.MediaIcon = MediaIcon;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/Media/media-item.jsx":
+/*!***************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/Media/media-item.jsx ***!
+  \***************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MediaItem = function MediaItem(props) {
+    return _react2.default.createElement(
+        'div',
+        { className: 'media' },
+        props.children
+    );
+};
+
+exports.default = MediaItem;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Elements/Notifications/empty-notification.jsx":
 /*!*******************************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/Notifications/empty-notification.jsx ***!
@@ -4278,7 +4558,9 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+var _localize = __webpack_require__(/*! ../localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
+
+var _localize2 = _interopRequireDefault(_localize);
 
 var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
 
@@ -4301,11 +4583,10 @@ var LanguageDialog = function LanguageDialog(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'settings-dialog__language-header', onClick: hide },
-            _react2.default.createElement(_Common.IconBack, { className: 'settings-dialog__arrow-back' }),
             _react2.default.createElement(
                 'span',
                 null,
-                (0, _localize.localize)('language')
+                _react2.default.createElement(_localize2.default, { str: 'Select language' })
             )
         ),
         _react2.default.createElement(
@@ -4313,24 +4594,26 @@ var LanguageDialog = function LanguageDialog(_ref) {
             { className: 'settings-dialog__language-container' },
             Object.keys((0, _Language.getAllowedLanguages)()).map(function (key) {
                 return _react2.default.createElement(
-                    _react2.default.Fragment,
-                    { key: key },
+                    'a',
+                    {
+                        key: key,
+                        className: (0, _classnames2.default)('settings-dialog__language-link', {
+                            'settings-dialog__language-link--active': key === _Language.currentLanguage
+                        }),
+                        href: (0, _Language.getURL)(key)
+                    },
+                    _react2.default.createElement(_Common.IconCountryFlag, {
+                        className: 'settings-dialog__language-link-flag settings-dialog__language-flag',
+                        type: key.replace(/(\s|_)/, '-').toLowerCase()
+                    }),
                     _react2.default.createElement(
-                        'div',
-                        { className: 'settings-dialog__language-row' },
-                        _react2.default.createElement(
-                            'a',
-                            { className: 'settings-dialog__language-link', href: (0, _Language.getURL)(key) },
-                            _react2.default.createElement(_Common.IconCountryFlag, {
-                                className: 'settings-dialog__language-row-flag settings-dialog__language-flag',
-                                type: key.replace(/(\s|_)/, '-').toLowerCase()
-                            }),
-                            _react2.default.createElement(
-                                'span',
-                                { className: 'settings-dialog__language-name' },
-                                (0, _Language.getAllowedLanguages)()[key]
-                            )
-                        )
+                        'span',
+                        {
+                            className: (0, _classnames2.default)('settings-dialog__language-name', {
+                                'settings-dialog__language-name--active': key === _Language.currentLanguage
+                            })
+                        },
+                        (0, _Language.getAllowedLanguages)()[key]
                     )
                 );
             })
@@ -4348,69 +4631,6 @@ exports.default = LanguageDialog;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-control.jsx":
-/*!******************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-control.jsx ***!
-  \******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _switchButton = __webpack_require__(/*! ../switch-button.jsx */ "./src/javascript/app_2/App/Components/Elements/switch-button.jsx");
-
-var _switchButton2 = _interopRequireDefault(_switchButton);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SettingsControl = function SettingsControl(_ref) {
-    var children = _ref.children,
-        name = _ref.name,
-        onClick = _ref.onClick,
-        style = _ref.style,
-        to_toggle = _ref.to_toggle,
-        toggle = _ref.toggle;
-    return _react2.default.createElement(
-        'div',
-        { className: 'settings-dialog__row', onClick: toggle || onClick },
-        _react2.default.createElement(
-            'span',
-            { className: 'settings-dialog__row-name' },
-            name
-        ),
-        toggle ? _react2.default.createElement(_switchButton2.default, {
-            toggled: to_toggle,
-            style: style
-        }) : children
-    );
-};
-
-SettingsControl.propTypes = {
-    children: _propTypes2.default.node,
-    name: _propTypes2.default.string,
-    onClick: _propTypes2.default.func,
-    style: _propTypes2.default.string,
-    to_toggle: _propTypes2.default.bool,
-    toggle: _propTypes2.default.func
-};
-
-exports.default = SettingsControl;
-
-/***/ }),
-
 /***/ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-dialog.jsx":
 /*!*****************************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-dialog.jsx ***!
@@ -4424,6 +4644,7 @@ exports.default = SettingsControl;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.SettingsDialog = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
@@ -4439,11 +4660,19 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactDom = __webpack_require__(/*! react-dom */ "./node_modules/react-dom/index.js");
+
+var _reactDom2 = _interopRequireDefault(_reactDom);
+
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
-var _Tabs = __webpack_require__(/*! ../Tabs */ "./src/javascript/app_2/App/Components/Elements/Tabs/index.js");
+var _VerticalTabs = __webpack_require__(/*! ../VerticalTabs */ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/index.js");
+
+var _VerticalTabs2 = _interopRequireDefault(_VerticalTabs);
 
 var _SettingsDialog = __webpack_require__(/*! ../../../Containers/SettingsDialog */ "./src/javascript/app_2/App/Containers/SettingsDialog/index.js");
+
+var _Settings = __webpack_require__(/*! ../../../../Assets/Settings */ "./src/javascript/app_2/Assets/Settings/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -4456,72 +4685,100 @@ function _inherits(subClass, superClass) { if (typeof superClass !== "function" 
 var SettingsDialog = function (_React$PureComponent) {
     _inherits(SettingsDialog, _React$PureComponent);
 
-    function SettingsDialog() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
+    function SettingsDialog(props) {
         _classCallCheck(this, SettingsDialog);
 
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
+        var _this = _possibleConstructorReturn(this, (SettingsDialog.__proto__ || Object.getPrototypeOf(SettingsDialog)).call(this, props));
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = SettingsDialog.__proto__ || Object.getPrototypeOf(SettingsDialog)).call.apply(_ref, [this].concat(args))), _this), _this.setWrapperRef = function (node) {
-            _this.wrapper_ref = node;
-        }, _this.handleClickOutside = function (event) {
+        _this.handleClickOutside = function (event) {
             var footer_settings_btn = !event.target.classList.contains('ic-settings', 'ic-settings ic-settings--active');
             if (_this.wrapper_ref && !_this.wrapper_ref.contains(event.target) && _this.props.is_open && footer_settings_btn) {
                 _this.props.toggleDialog();
             }
-        }, _temp), _possibleConstructorReturn(_this, _ret);
+        };
+
+        _this.setWrapperRef = function (node) {
+            _this.wrapper_ref = node;
+        };
+
+        _this.settings_content = function () {
+            return [{
+                icon: _Settings.IconTheme,
+                label: (0, _localize.localize)('Themes'),
+                value: _SettingsDialog.ThemeSelectSettings
+            }, {
+                icon: _Settings.IconLanguage,
+                label: (0, _localize.localize)('Language'),
+                value: _SettingsDialog.LanguageSettings
+            }, {
+                icon: _Settings.IconCharts,
+                label: (0, _localize.localize)('Charts'),
+                value: _SettingsDialog.ChartSettings
+            }, {
+                icon: _Settings.IconPurchase,
+                label: (0, _localize.localize)('Purchase Section'),
+                value: _SettingsDialog.PurchaseSettings
+            }];
+        };
+
+        _this.el = document.createElement('div');
+        _this.state = {
+            modal_root: document.getElementById('modal_root')
+        };
+        return _this;
     }
-
-    // TODO - Simplify this
-
 
     _createClass(SettingsDialog, [{
         key: 'componentDidMount',
         value: function componentDidMount() {
             document.addEventListener('mousedown', this.handleClickOutside);
+            this.el.classList.add('settings-dialog');
+            this.props.showBlur();
+            this.state.modal_root.appendChild(this.el);
         }
     }, {
         key: 'componentWillUnmount',
         value: function componentWillUnmount() {
             document.removeEventListener('mousedown', this.handleClickOutside);
+            this.state.modal_root.removeChild(this.el);
+            this.props.hideBlur();
         }
+
+        // TODO - Simplify this
+
     }, {
         key: 'render',
         value: function render() {
-            var settings_dialog_class = (0, _classnames2.default)('settings-dialog', {
-                'settings-dialog__container--show': this.props.is_open
-            });
             var settings_dialog_container_class = (0, _classnames2.default)('settings-dialog__container', {
                 'settings-dialog__container--hide': this.props.is_language_dialog_visible
             });
-            return _react2.default.createElement(
+            return _reactDom2.default.createPortal(_react2.default.createElement(
                 'div',
-                { ref: this.setWrapperRef, className: settings_dialog_class },
+                { ref: this.setWrapperRef, className: settings_dialog_container_class },
                 _react2.default.createElement(
                     'div',
-                    { className: settings_dialog_container_class },
+                    { className: 'dialog-header' },
                     _react2.default.createElement(
-                        'span',
-                        { className: 'settings-dialog__header' },
-                        (0, _localize.localize)('Settings')
+                        'h3',
+                        { className: 'dialog-header__sidebar' },
+                        (0, _localize.localize)('Platform settings')
                     ),
-                    _react2.default.createElement(_Tabs.Tabs, { alignment: 'center', classNameHeader: 'settings-dialog__tab-header', list: SettingsDialog.settings_content })
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'dialog-header__main' },
+                        _react2.default.createElement(
+                            'div',
+                            { className: 'dialog-header__close', onClick: this.props.toggleDialog },
+                            _react2.default.createElement(_Settings.IconClose, null)
+                        )
+                    )
                 ),
-                _react2.default.createElement(_SettingsDialog.LanguageSettings, null)
-            );
-        }
-    }], [{
-        key: 'settings_content',
-        get: function get() {
-            return {
-                1: { header: (0, _localize.localize)('General'), content: _SettingsDialog.GeneralSettings },
-                2: { header: (0, _localize.localize)('Chart'), content: _SettingsDialog.ChartSettings }
-            };
+                _react2.default.createElement(_VerticalTabs2.default, {
+                    alignment: 'center',
+                    classNameHeader: 'settings-dialog__tab-header',
+                    list: this.settings_content()
+                })
+            ), this.el);
         }
     }]);
 
@@ -4529,377 +4786,15 @@ var SettingsDialog = function (_React$PureComponent) {
 }(_react2.default.PureComponent);
 
 SettingsDialog.propTypes = {
+    hideBlur: _propTypes2.default.func,
+    is_dark_mode: _propTypes2.default.bool,
     is_language_dialog_visible: _propTypes2.default.bool,
     is_open: _propTypes2.default.bool,
+    showBlur: _propTypes2.default.func,
     toggleDialog: _propTypes2.default.func
 };
 
-exports.default = SettingsDialog;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Elements/Tabs/index.js":
-/*!********************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/Tabs/index.js ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _tabs = __webpack_require__(/*! ./tabs.jsx */ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs.jsx");
-
-Object.keys(_tabs).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _tabs[key];
-    }
-  });
-});
-
-var _tabsItem = __webpack_require__(/*! ./tabs-item.jsx */ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs-item.jsx");
-
-Object.keys(_tabsItem).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _tabsItem[key];
-    }
-  });
-});
-
-var _tabsWrapper = __webpack_require__(/*! ./tabs-wrapper.jsx */ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs-wrapper.jsx");
-
-Object.keys(_tabsWrapper).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _tabsWrapper[key];
-    }
-  });
-});
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs-item.jsx":
-/*!*************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/Tabs/tabs-item.jsx ***!
-  \*************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.TabsItem = undefined;
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var TabsItem = function TabsItem(_ref) {
-    var active = _ref.active,
-        children = _ref.children,
-        elements = _ref.elements,
-        onChange = _ref.onChange;
-    return _react2.default.Children.map(children, function (child) {
-        var tab_class = (0, _classnames2.default)('tab', { 'tab--active': child.key === active });
-        return _react2.default.createElement(
-            'div',
-            {
-                className: tab_class,
-                ref: function ref(el) {
-                    return elements[child.key] = el;
-                },
-                onClick: function onClick() {
-                    onChange(child.key);
-                }
-            },
-            child
-        );
-    });
-};
-
-TabsItem.propTypes = {
-    active: _propTypes2.default.string,
-    children: _propTypes2.default.node,
-    elements: _propTypes2.default.object,
-    onChange: _propTypes2.default.func
-};
-
-exports.TabsItem = TabsItem;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs-wrapper.jsx":
-/*!****************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/Tabs/tabs-wrapper.jsx ***!
-  \****************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.TabsWrapper = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _tabsItem = __webpack_require__(/*! ./tabs-item.jsx */ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs-item.jsx");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var TabsWrapper = function (_React$PureComponent) {
-    _inherits(TabsWrapper, _React$PureComponent);
-
-    function TabsWrapper(props) {
-        _classCallCheck(this, TabsWrapper);
-
-        var _this = _possibleConstructorReturn(this, (TabsWrapper.__proto__ || Object.getPrototypeOf(TabsWrapper)).call(this, props));
-
-        _this.getSizes = function () {
-            var rootBounds = _this.root.getBoundingClientRect();
-            var sizes = {};
-            Object.keys(_this.els).forEach(function (key) {
-                var el = _this.els[key];
-                var bounds = el.getBoundingClientRect();
-
-                var left = bounds.left - rootBounds.left;
-                var right = rootBounds.right - bounds.right;
-
-                sizes[key] = { left: left, right: right };
-            });
-            _this.setState({ sizes: sizes });
-        };
-
-        _this.getUnderlineStyle = function () {
-            if (_this.props.active == null || Object.keys(_this.state.sizes).length === 0) {
-                return { left: '0', right: '100%' };
-            }
-            var size = _this.state.sizes[_this.props.active];
-            return {
-                left: size.left + 'px',
-                right: size.right + 'px',
-                transition: 'left 0.2s, right 0.25s'
-            };
-        };
-
-        _this.state = {
-            sizes: {}
-        };
-        _this.els = {};
-        return _this;
-    }
-
-    _createClass(TabsWrapper, [{
-        key: 'componentDidMount',
-        value: function componentDidMount() {
-            this.getSizes();
-            window.addEventListener('resize', this.getSizes);
-        }
-    }, {
-        key: 'componentWillUnmount',
-        value: function componentWillUnmount() {
-            window.removeEventListener('resize', this.getSizes);
-        }
-    }, {
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            return _react2.default.createElement(
-                'div',
-                {
-                    className: 'tab-wrapper',
-                    ref: function ref(el) {
-                        return _this2.root = el;
-                    }
-                },
-                _react2.default.createElement(
-                    _tabsItem.TabsItem,
-                    {
-                        active: this.props.active,
-                        onChange: this.props.onChange,
-                        elements: this.els
-                    },
-                    this.props.children
-                ),
-                _react2.default.createElement('div', {
-                    className: 'tab-underline',
-                    style: this.getUnderlineStyle()
-                })
-            );
-        }
-    }]);
-
-    return TabsWrapper;
-}(_react2.default.PureComponent);
-
-TabsWrapper.propTypes = {
-    active: _propTypes2.default.string,
-    children: _propTypes2.default.node,
-    onChange: _propTypes2.default.func,
-    toggleDialog: _propTypes2.default.func
-};
-
-exports.TabsWrapper = TabsWrapper;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs.jsx":
-/*!********************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/Tabs/tabs.jsx ***!
-  \********************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.Tabs = undefined;
-
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
-
-var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
-
-var _classnames2 = _interopRequireDefault(_classnames);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _tabsWrapper = __webpack_require__(/*! ./tabs-wrapper.jsx */ "./src/javascript/app_2/App/Components/Elements/Tabs/tabs-wrapper.jsx");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
-function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
-
-function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
-
-var Tabs = function (_React$PureComponent) {
-    _inherits(Tabs, _React$PureComponent);
-
-    function Tabs() {
-        var _ref;
-
-        var _temp, _this, _ret;
-
-        _classCallCheck(this, Tabs);
-
-        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
-            args[_key] = arguments[_key];
-        }
-
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Tabs.__proto__ || Object.getPrototypeOf(Tabs)).call.apply(_ref, [this].concat(args))), _this), _this.state = {
-            active_tab_index: '1'
-        }, _this.setActiveTab = function (index) {
-            _this.setState({ active_tab_index: index });
-        }, _temp), _possibleConstructorReturn(_this, _ret);
-    }
-
-    _createClass(Tabs, [{
-        key: 'render',
-        value: function render() {
-            var _this2 = this;
-
-            var TabContents = this.props.list[this.state.active_tab_index].content;
-            var tab_container_class = (0, _classnames2.default)('tab-container', 'tab-container--' + this.props.alignment);
-            var tab_header_class = function tab_header_class(icon_name) {
-                return (0, _classnames2.default)(_this2.props.classNameHeader, 'tab__header', { 'tab__icon': icon_name }, icon_name);
-            };
-
-            return _react2.default.createElement(
-                'div',
-                { className: tab_container_class },
-                _react2.default.createElement(
-                    _tabsWrapper.TabsWrapper,
-                    {
-                        active: this.state.active_tab_index,
-                        onChange: function onChange(active) {
-                            return _this2.setActiveTab(active);
-                        }
-                    },
-                    Object.keys(this.props.list).map(function (key) {
-                        return _react2.default.createElement(
-                            _react2.default.Fragment,
-                            { key: key },
-                            _react2.default.createElement(
-                                'span',
-                                {
-                                    className: tab_header_class(_this2.props.list[key].icon),
-                                    title: _this2.props.list[key].header
-                                },
-                                _this2.props.list[key].header
-                            )
-                        );
-                    })
-                ),
-                _react2.default.createElement(TabContents, null)
-            );
-        }
-    }]);
-
-    return Tabs;
-}(_react2.default.PureComponent);
-
-Tabs.propTypes = {
-    alignment: _propTypes2.default.string,
-    classNameHeader: _propTypes2.default.string,
-    list: _propTypes2.default.shape({
-        header: _propTypes2.default.string,
-        icon: _propTypes2.default.string
-    })
-};
-
-exports.Tabs = Tabs;
+exports.SettingsDialog = SettingsDialog;
 
 /***/ }),
 
@@ -5112,6 +5007,299 @@ Toast.propTypes = {
 };
 
 exports.default = Toast;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/index.js":
+/*!****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/VerticalTabs/index.js ***!
+  \****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _verticalTabContentContainer = __webpack_require__(/*! ./vertical-tab-content-container.jsx */ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-content-container.jsx");
+
+Object.keys(_verticalTabContentContainer).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _verticalTabContentContainer[key];
+    }
+  });
+});
+
+var _verticalTabHeaders = __webpack_require__(/*! ./vertical-tab-headers.jsx */ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-headers.jsx");
+
+Object.keys(_verticalTabHeaders).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _verticalTabHeaders[key];
+    }
+  });
+});
+
+var _verticalTab = __webpack_require__(/*! ./vertical-tab.jsx */ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab.jsx");
+
+var _verticalTab2 = _interopRequireDefault(_verticalTab);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _verticalTab2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-content-container.jsx":
+/*!******************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-content-container.jsx ***!
+  \******************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.VerticalTabContentContainer = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var VerticalTabContentContainer = function (_React$PureComponent) {
+    _inherits(VerticalTabContentContainer, _React$PureComponent);
+
+    function VerticalTabContentContainer() {
+        _classCallCheck(this, VerticalTabContentContainer);
+
+        return _possibleConstructorReturn(this, (VerticalTabContentContainer.__proto__ || Object.getPrototypeOf(VerticalTabContentContainer)).apply(this, arguments));
+    }
+
+    _createClass(VerticalTabContentContainer, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var selected = this.props.items.find(function (item) {
+                return item.label === _this2.props.selected.label;
+            });
+            var TabContent = selected.value;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'vertical-tab__content' },
+                _react2.default.createElement(TabContent, {
+                    key: selected.label,
+                    className: 'item-id'
+                })
+            );
+        }
+    }]);
+
+    return VerticalTabContentContainer;
+}(_react2.default.PureComponent);
+
+exports.VerticalTabContentContainer = VerticalTabContentContainer;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-headers.jsx":
+/*!********************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-headers.jsx ***!
+  \********************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.VerticalTabHeaders = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var VerticalTabHeaders = function (_React$PureComponent) {
+    _inherits(VerticalTabHeaders, _React$PureComponent);
+
+    function VerticalTabHeaders() {
+        _classCallCheck(this, VerticalTabHeaders);
+
+        return _possibleConstructorReturn(this, (VerticalTabHeaders.__proto__ || Object.getPrototypeOf(VerticalTabHeaders)).apply(this, arguments));
+    }
+
+    _createClass(VerticalTabHeaders, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'vertical-tab__tab' },
+                this.props.items.map(function (item) {
+                    var IconComponent = item.icon;
+                    return _react2.default.createElement(
+                        'div',
+                        {
+                            className: (0, _classnames2.default)('vertical-tab__header', {
+                                'vertical-tab__header--active': _this2.props.selected.label === item.label
+                            }),
+                            key: item.label,
+                            onClick: function onClick() {
+                                return _this2.props.onChange(item);
+                            }
+                        },
+                        _react2.default.createElement(IconComponent, { className: (0, _classnames2.default)('vertical-tab__header__icon', {
+                                'vertical-tab__header__icon--active': _this2.props.selected.label === item.label
+                            })
+                        }),
+                        _react2.default.createElement(
+                            'a',
+                            {
+                                key: item.label,
+                                className: 'vertical-tab__header__link'
+                            },
+                            item.label
+                        )
+                    );
+                })
+            );
+        }
+    }]);
+
+    return VerticalTabHeaders;
+}(_react2.default.PureComponent);
+
+exports.VerticalTabHeaders = VerticalTabHeaders;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab.jsx":
+/*!************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab.jsx ***!
+  \************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _verticalTabContentContainer = __webpack_require__(/*! ./vertical-tab-content-container.jsx */ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-content-container.jsx");
+
+var _verticalTabHeaders = __webpack_require__(/*! ./vertical-tab-headers.jsx */ "./src/javascript/app_2/App/Components/Elements/VerticalTabs/vertical-tab-headers.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var VerticalTab = function (_React$PureComponent) {
+    _inherits(VerticalTab, _React$PureComponent);
+
+    function VerticalTab(props) {
+        _classCallCheck(this, VerticalTab);
+
+        var _this = _possibleConstructorReturn(this, (VerticalTab.__proto__ || Object.getPrototypeOf(VerticalTab)).call(this, props));
+
+        _this.changeSelected = function (e) {
+            _this.setState({
+                selected: e
+            });
+        };
+
+        _this.state = {
+            selected: props.list[0]
+        };
+        return _this;
+    }
+
+    _createClass(VerticalTab, [{
+        key: 'render',
+        value: function render() {
+            return _react2.default.createElement(
+                'div',
+                { className: 'vertical-tab' },
+                _react2.default.createElement(_verticalTabHeaders.VerticalTabHeaders, {
+                    items: this.props.list,
+                    onChange: this.changeSelected,
+                    selected: this.state.selected
+                }),
+                _react2.default.createElement(_verticalTabContentContainer.VerticalTabContentContainer, {
+                    items: this.props.list,
+                    selected: this.state.selected
+                })
+            );
+        }
+    }]);
+
+    return VerticalTab;
+}(_react2.default.PureComponent);
+
+VerticalTab.propTypes = {
+    list: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+        icon: _propTypes2.default.func,
+        label: _propTypes2.default.string,
+        value: _propTypes2.default.func
+    })).isRequired
+};
+
+exports.default = VerticalTab;
 
 /***/ }),
 
@@ -5538,6 +5726,124 @@ UILoader.propTypes = {
 };
 
 exports.default = UILoader;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/Checkbox/checkbox.jsx":
+/*!************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/Checkbox/checkbox.jsx ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Checkbox = function (_React$PureComponent) {
+    _inherits(Checkbox, _React$PureComponent);
+
+    function Checkbox() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Checkbox);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Checkbox.__proto__ || Object.getPrototypeOf(Checkbox)).call.apply(_ref, [this].concat(args))), _this), _this.onClick = function () {
+            _this.props.onClick(!_this.props.value);
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Checkbox, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                value = _props.value,
+                label = _props.label;
+
+            return _react2.default.createElement(
+                'div',
+                {
+                    className: 'checkbox',
+                    onClick: this.onClick
+                },
+                _react2.default.createElement('div', { className: (0, _classnames2.default)('checkbox__box', {
+                        'checkbox__box--active': value
+                    })
+                }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'checkbox__label' },
+                    label
+                )
+            );
+        }
+    }]);
+
+    return Checkbox;
+}(_react2.default.PureComponent);
+
+Checkbox.propTypes = {
+    label: _propTypes2.default.string,
+    value: _propTypes2.default.bool
+};
+
+exports.default = Checkbox;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/Checkbox/index.js":
+/*!********************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/Checkbox/index.js ***!
+  \********************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _checkbox = __webpack_require__(/*! ./checkbox.jsx */ "./src/javascript/app_2/App/Components/Form/Checkbox/checkbox.jsx");
+
+var _checkbox2 = _interopRequireDefault(_checkbox);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _checkbox2.default;
 
 /***/ }),
 
@@ -7150,6 +7456,230 @@ exports.default = Input;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Components/Form/Radio/index.js":
+/*!*****************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/Radio/index.js ***!
+  \*****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _radio = __webpack_require__(/*! ./radio.jsx */ "./src/javascript/app_2/App/Components/Form/Radio/radio.jsx");
+
+Object.keys(_radio).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _radio[key];
+    }
+  });
+});
+
+var _radioGroup = __webpack_require__(/*! ./radio-group.jsx */ "./src/javascript/app_2/App/Components/Form/Radio/radio-group.jsx");
+
+var _radioGroup2 = _interopRequireDefault(_radioGroup);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _radioGroup2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/Radio/radio-group.jsx":
+/*!************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/Radio/radio-group.jsx ***!
+  \************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../Elements/localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
+
+var _localize2 = _interopRequireDefault(_localize);
+
+var _radio = __webpack_require__(/*! ./radio.jsx */ "./src/javascript/app_2/App/Components/Form/Radio/radio.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var RadioGroup = function (_React$PureComponent) {
+    _inherits(RadioGroup, _React$PureComponent);
+
+    function RadioGroup() {
+        _classCallCheck(this, RadioGroup);
+
+        return _possibleConstructorReturn(this, (RadioGroup.__proto__ || Object.getPrototypeOf(RadioGroup)).apply(this, arguments));
+    }
+
+    _createClass(RadioGroup, [{
+        key: 'render',
+        value: function render() {
+            var _this2 = this;
+
+            var _props = this.props,
+                selected = _props.selected,
+                items = _props.items;
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'radio-group' },
+                items.map(function (item) {
+                    return _react2.default.createElement(
+                        _radio.Radio,
+                        {
+                            key: item.label,
+                            value: item.value,
+                            selected: selected === item.value,
+                            onClick: _this2.props.onToggle
+                        },
+                        item.label && _react2.default.createElement(_localize2.default, { str: item.label })
+                    );
+                })
+            );
+        }
+    }]);
+
+    return RadioGroup;
+}(_react2.default.PureComponent);
+
+RadioGroup.propTypes = {
+    items: _propTypes2.default.arrayOf(_propTypes2.default.shape({
+        label: _propTypes2.default.string.isRequired,
+        value: _propTypes2.default.bool.isRequired
+    })),
+    onToggle: _propTypes2.default.func,
+    selected: _propTypes2.default.bool
+};
+
+exports.default = RadioGroup;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Form/Radio/radio.jsx":
+/*!******************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Form/Radio/radio.jsx ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.Radio = undefined;
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var Radio = function (_React$PureComponent) {
+    _inherits(Radio, _React$PureComponent);
+
+    function Radio() {
+        var _ref;
+
+        var _temp, _this, _ret;
+
+        _classCallCheck(this, Radio);
+
+        for (var _len = arguments.length, args = Array(_len), _key = 0; _key < _len; _key++) {
+            args[_key] = arguments[_key];
+        }
+
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = Radio.__proto__ || Object.getPrototypeOf(Radio)).call.apply(_ref, [this].concat(args))), _this), _this.clickHandler = function () {
+            if (!_this.props.selected) {
+                _this.props.onClick(_this.props.value);
+            }
+        }, _temp), _possibleConstructorReturn(_this, _ret);
+    }
+
+    _createClass(Radio, [{
+        key: 'render',
+        value: function render() {
+            var _props = this.props,
+                selected = _props.selected,
+                children = _props.children;
+
+
+            return _react2.default.createElement(
+                'div',
+                { className: 'radio-group__item', onClick: this.clickHandler },
+                _react2.default.createElement('div', { className: (0, _classnames2.default)('radio-group__circle', {
+                        'radio-group__circle--selected': selected
+                    })
+                }),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'radio-group__label' },
+                    children
+                )
+            );
+        }
+    }]);
+
+    return Radio;
+}(_react2.default.PureComponent);
+
+Radio.propTypes = {
+    children: _propTypes2.default.node,
+    onClick: _propTypes2.default.func,
+    selected: _propTypes2.default.bool,
+    value: _propTypes2.default.bool
+};
+
+exports.Radio = Radio;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Components/Form/RangeSlider/index.js":
 /*!***********************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Form/RangeSlider/index.js ***!
@@ -8384,17 +8914,18 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
 
-var _Footer = __webpack_require__(/*! ../../../../Assets/Footer */ "./src/javascript/app_2/Assets/Footer/index.js");
-
 var _settingsDialog = __webpack_require__(/*! ../../Elements/SettingsDialog/settings-dialog.jsx */ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-dialog.jsx");
 
-var _settingsDialog2 = _interopRequireDefault(_settingsDialog);
+var _Footer = __webpack_require__(/*! ../../../../Assets/Footer */ "./src/javascript/app_2/Assets/Footer/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ToggleSettings = function ToggleSettings(_ref) {
-    var is_language_visible = _ref.is_language_visible,
+    var hideBlur = _ref.hideBlur,
+        is_dark_mode = _ref.is_dark_mode,
+        is_language_visible = _ref.is_language_visible,
         is_settings_visible = _ref.is_settings_visible,
+        showBlur = _ref.showBlur,
         toggleSettings = _ref.toggleSettings;
 
     var toggle_settings_class = (0, _classnames2.default)('ic-settings', 'footer__link', {
@@ -8424,18 +8955,24 @@ var ToggleSettings = function ToggleSettings(_ref) {
                 },
                 unmountOnExit: true
             },
-            _react2.default.createElement(_settingsDialog2.default, {
+            _react2.default.createElement(_settingsDialog.SettingsDialog, {
                 is_open: is_settings_visible,
                 is_language_dialog_visible: is_language_visible,
-                toggleDialog: toggleSettings
+                toggleDialog: toggleSettings,
+                is_dark_mode: is_dark_mode,
+                showBlur: showBlur,
+                hideBlur: hideBlur
             })
         )
     );
 };
 
 ToggleSettings.propTypes = {
+    hideBlur: _propTypes2.default.func,
+    is_dark_mode: _propTypes2.default.bool,
     is_language_visible: _propTypes2.default.bool,
     is_settings_visible: _propTypes2.default.bool,
+    showBlur: _propTypes2.default.func,
     toggleSettings: _propTypes2.default.func
 };
 
@@ -10213,14 +10750,16 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var AppContents = function AppContents(_ref) {
     var children = _ref.children,
         is_contract_mode = _ref.is_contract_mode,
-        is_positions_drawer_on = _ref.is_positions_drawer_on;
+        is_positions_drawer_on = _ref.is_positions_drawer_on,
+        is_blurred = _ref.is_blurred;
     return _react2.default.createElement(
         'div',
         {
             id: 'app_contents',
             className: (0, _classnames2.default)('app-contents', {
                 'app-contents--show-positions-drawer': is_positions_drawer_on,
-                'app-contents--contract-mode': is_contract_mode
+                'app-contents--contract-mode': is_contract_mode,
+                'app-contents--is-blurred': is_blurred
             })
         },
         _react2.default.createElement(
@@ -10244,7 +10783,8 @@ exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_
         ui = _ref2.ui;
     return {
         is_positions_drawer_on: ui.is_positions_drawer_on,
-        is_contract_mode: modules.smart_chart.is_contract_mode
+        is_contract_mode: modules.smart_chart.is_contract_mode,
+        is_blurred: ui.is_blurred
     };
 })(AppContents));
 
@@ -10283,11 +10823,14 @@ var _Footer = __webpack_require__(/*! ../../Components/Layout/Footer */ "./src/j
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Footer = function Footer(_ref) {
-    var is_language_dialog_visible = _ref.is_language_dialog_visible,
+    var hideBlur = _ref.hideBlur,
+        is_dark_mode = _ref.is_dark_mode,
+        is_language_dialog_visible = _ref.is_language_dialog_visible,
         is_logged_in = _ref.is_logged_in,
         is_positions_drawer_on = _ref.is_positions_drawer_on,
         is_settings_dialog_on = _ref.is_settings_dialog_on,
         network_status = _ref.network_status,
+        showBlur = _ref.showBlur,
         togglePositionsDrawer = _ref.togglePositionsDrawer,
         toggleSettingsDialog = _ref.toggleSettingsDialog;
     return _react2.default.createElement(
@@ -10308,15 +10851,19 @@ var Footer = function Footer(_ref) {
             { className: 'footer__links' },
             _react2.default.createElement(_Footer.ToggleFullScreen, null),
             _react2.default.createElement(_Footer.ToggleSettings, {
+                is_dark_mode: is_dark_mode,
                 is_language_visible: is_language_dialog_visible,
                 is_settings_visible: is_settings_dialog_on,
-                toggleSettings: toggleSettingsDialog
+                toggleSettings: toggleSettingsDialog,
+                showBlur: showBlur,
+                hideBlur: hideBlur
             })
         )
     );
 };
 
 Footer.propTypes = {
+    is_dark_mode: _propTypes2.default.bool,
     is_language_dialog_visible: _propTypes2.default.bool,
     is_logged_in: _propTypes2.default.bool,
     is_positions_drawer_on: _propTypes2.default.bool,
@@ -10331,11 +10878,14 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         common = _ref2.common,
         ui = _ref2.ui;
     return {
+        hideBlur: ui.hideBlur,
+        is_dark_mode: ui.is_dark_mode_on,
         is_logged_in: client.is_logged_in,
         network_status: common.network_status,
         is_language_dialog_visible: ui.is_language_dialog_on,
         is_positions_drawer_on: ui.is_positions_drawer_on,
         is_settings_dialog_on: ui.is_settings_dialog_on,
+        showBlur: ui.showBlur,
         togglePositionsDrawer: ui.togglePositionsDrawer,
         toggleSettingsDialog: ui.toggleSettingsDialog
     };
@@ -10581,25 +11131,30 @@ exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.LanguageSettings = exports.GeneralSettings = exports.ChartSettings = undefined;
+exports.ThemeSelectSettings = exports.PurchaseSettings = exports.LanguageSettings = exports.ChartSettings = undefined;
 
 var _settingsChart = __webpack_require__(/*! ./settings-chart.jsx */ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-chart.jsx");
 
 var _settingsChart2 = _interopRequireDefault(_settingsChart);
 
-var _settingsGeneral = __webpack_require__(/*! ./settings-general.jsx */ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-general.jsx");
-
-var _settingsGeneral2 = _interopRequireDefault(_settingsGeneral);
-
 var _settingsLanguage = __webpack_require__(/*! ./settings-language.jsx */ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-language.jsx");
 
 var _settingsLanguage2 = _interopRequireDefault(_settingsLanguage);
 
+var _settingsPurchase = __webpack_require__(/*! ./settings-purchase.jsx */ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-purchase.jsx");
+
+var _settingsPurchase2 = _interopRequireDefault(_settingsPurchase);
+
+var _settingsTheme = __webpack_require__(/*! ./settings-theme.jsx */ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-theme.jsx");
+
+var _settingsTheme2 = _interopRequireDefault(_settingsTheme);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 exports.ChartSettings = _settingsChart2.default;
-exports.GeneralSettings = _settingsGeneral2.default;
 exports.LanguageSettings = _settingsLanguage2.default;
+exports.PurchaseSettings = _settingsPurchase2.default;
+exports.ThemeSelectSettings = _settingsTheme2.default;
 
 /***/ }),
 
@@ -10629,9 +11184,21 @@ var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/j
 
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
-var _settingsControl = __webpack_require__(/*! ../../Components/Elements/SettingsDialog/settings-control.jsx */ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-control.jsx");
+var _localize2 = __webpack_require__(/*! ../../Components/Elements/localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
 
-var _settingsControl2 = _interopRequireDefault(_settingsControl);
+var _localize3 = _interopRequireDefault(_localize2);
+
+var _Media = __webpack_require__(/*! ../../Components/Elements/Media */ "./src/javascript/app_2/App/Components/Elements/Media/index.js");
+
+var _Media2 = _interopRequireDefault(_Media);
+
+var _Checkbox = __webpack_require__(/*! ../../Components/Form/Checkbox */ "./src/javascript/app_2/App/Components/Form/Checkbox/index.js");
+
+var _Checkbox2 = _interopRequireDefault(_Checkbox);
+
+var _Radio = __webpack_require__(/*! ../../Components/Form/Radio */ "./src/javascript/app_2/App/Components/Form/Radio/index.js");
+
+var _Radio2 = _interopRequireDefault(_Radio);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10644,26 +11211,86 @@ var ChartSettings = function ChartSettings(_ref) {
         toggleLayout = _ref.toggleLayout;
     return _react2.default.createElement(
         'div',
-        { className: 'settings-dialog__tab-content' },
+        { className: 'settings-chart' },
         _react2.default.createElement(
-            'div',
-            { className: 'settings-dialog__chart-container' },
-            _react2.default.createElement(_settingsControl2.default, {
-                name: (0, _localize.localize)('Position'),
-                toggle: toggleLayout,
-                to_toggle: !is_layout_default,
-                style: 'toggle-chart-layout'
-            }),
-            _react2.default.createElement(_settingsControl2.default, {
-                name: (0, _localize.localize)('Asset Information'),
-                toggle: toggleAsset,
-                to_toggle: is_asset_visible
-            }),
-            _react2.default.createElement(_settingsControl2.default, {
-                name: (0, _localize.localize)('Scale Countdown'),
-                toggle: toggleCountdown,
-                to_toggle: is_countdown_visible
-            })
+            _Media2.default,
+            null,
+            _react2.default.createElement(
+                _Media.MediaHeading,
+                null,
+                _react2.default.createElement(_localize3.default, { str: 'Chart Control Position' })
+            ),
+            _react2.default.createElement(
+                _Media.MediaDescription,
+                null,
+                _react2.default.createElement(_Media.MediaIcon, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'media__form' },
+                    _react2.default.createElement(
+                        'p',
+                        null,
+                        _react2.default.createElement(_localize3.default, { str: 'Chart control position' })
+                    ),
+                    _react2.default.createElement(_Radio2.default, {
+                        items: [{
+                            label: 'Bottom', // localization will be handled in RadioGroup
+                            value: true
+                        }, {
+                            label: 'Left',
+                            value: false
+                        }],
+                        selected: is_layout_default,
+                        onToggle: toggleLayout
+                    })
+                )
+            )
+        ),
+        _react2.default.createElement(
+            _Media2.default,
+            null,
+            _react2.default.createElement(
+                _Media.MediaHeading,
+                null,
+                _react2.default.createElement(_localize3.default, { str: 'Asset Information' })
+            ),
+            _react2.default.createElement(
+                _Media.MediaDescription,
+                null,
+                _react2.default.createElement(_Media.MediaIcon, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'media__form' },
+                    _react2.default.createElement(_Checkbox2.default, {
+                        value: is_asset_visible,
+                        label: (0, _localize.localize)('Visible Asset'),
+                        onClick: toggleAsset
+                    })
+                )
+            )
+        ),
+        _react2.default.createElement(
+            _Media2.default,
+            null,
+            _react2.default.createElement(
+                _Media.MediaHeading,
+                null,
+                _react2.default.createElement(_localize3.default, { str: 'Scale Countdown' })
+            ),
+            _react2.default.createElement(
+                _Media.MediaDescription,
+                null,
+                _react2.default.createElement(_Media.MediaIcon, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'media__form' },
+                    _react2.default.createElement(_Checkbox2.default, {
+                        value: is_countdown_visible,
+                        label: (0, _localize.localize)('Visible Countdown'),
+                        onClick: toggleCountdown
+                    })
+                )
+            )
         )
     );
 };
@@ -10688,115 +11315,6 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         toggleLayout: ui.toggleChartLayout
     };
 })(ChartSettings);
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-general.jsx":
-/*!*********************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Containers/SettingsDialog/settings-general.jsx ***!
-  \*********************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _Common = __webpack_require__(/*! ../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
-
-var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
-
-var _settingsControl = __webpack_require__(/*! ../../Components/Elements/SettingsDialog/settings-control.jsx */ "./src/javascript/app_2/App/Components/Elements/SettingsDialog/settings-control.jsx");
-
-var _settingsControl2 = _interopRequireDefault(_settingsControl);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var GeneralSettings = function GeneralSettings(_ref) {
-    var curr_language = _ref.curr_language,
-        is_dark_mode = _ref.is_dark_mode,
-        is_purchase_confirmed = _ref.is_purchase_confirmed,
-        is_purchase_locked = _ref.is_purchase_locked,
-        showLanguage = _ref.showLanguage,
-        toggleDarkMode = _ref.toggleDarkMode,
-        togglePurchaseConfirmation = _ref.togglePurchaseConfirmation,
-        togglePurchaseLock = _ref.togglePurchaseLock;
-    return _react2.default.createElement(
-        'div',
-        { className: 'settings-dialog__tab-content' },
-        _react2.default.createElement(
-            'div',
-            { className: 'settings-dialog__general-container' },
-            _react2.default.createElement(
-                _settingsControl2.default,
-                {
-                    name: (0, _localize.localize)('Language'),
-                    onClick: showLanguage
-                },
-                _react2.default.createElement(_Common.IconCountryFlag, {
-                    className: 'settings-dialog__language-flag',
-                    type: (curr_language || 'EN').toLowerCase()
-                })
-            ),
-            _react2.default.createElement(_settingsControl2.default, {
-                name: (0, _localize.localize)('Dark Mode'),
-                to_toggle: is_dark_mode,
-                toggle: toggleDarkMode
-            }),
-            _react2.default.createElement(_settingsControl2.default, {
-                name: (0, _localize.localize)('Purchase Confirmation'),
-                to_toggle: is_purchase_confirmed,
-                toggle: togglePurchaseConfirmation
-            }),
-            _react2.default.createElement(_settingsControl2.default, {
-                name: (0, _localize.localize)('Purchase Lock'),
-                to_toggle: is_purchase_locked,
-                toggle: togglePurchaseLock
-            })
-        )
-    );
-};
-
-GeneralSettings.propTypes = {
-    curr_language: _propTypes2.default.string,
-    is_dark_mode: _propTypes2.default.bool,
-    is_language_visible: _propTypes2.default.bool,
-    is_purchase_confirmed: _propTypes2.default.bool,
-    is_purchase_locked: _propTypes2.default.bool,
-    showLanguage: _propTypes2.default.func,
-    toggleDarkMode: _propTypes2.default.func,
-    togglePurchaseConfirmation: _propTypes2.default.func,
-    togglePurchaseLock: _propTypes2.default.func
-};
-
-exports.default = (0, _connect.connect)(function (_ref2) {
-    var common = _ref2.common,
-        ui = _ref2.ui;
-    return {
-        curr_language: common.current_language,
-        is_dark_mode: ui.is_dark_mode_on,
-        is_language_visible: ui.is_language_dialog_on,
-        is_purchase_confirmed: ui.is_purchase_confirm_on,
-        is_purchase_locked: ui.is_purchase_lock_on,
-        showLanguage: ui.showLanguageDialog,
-        toggleDarkMode: ui.toggleDarkMode,
-        togglePurchaseConfirmation: ui.togglePurchaseConfirmation,
-        togglePurchaseLock: ui.togglePurchaseLock
-    };
-})(GeneralSettings);
 
 /***/ }),
 
@@ -10855,6 +11373,234 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         is_visible: ui.is_language_dialog_on
     };
 })(LanguageSettings);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-purchase.jsx":
+/*!**********************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/SettingsDialog/settings-purchase.jsx ***!
+  \**********************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _Media = __webpack_require__(/*! ../../Components/Elements/Media */ "./src/javascript/app_2/App/Components/Elements/Media/index.js");
+
+var _Media2 = _interopRequireDefault(_Media);
+
+var _localize2 = __webpack_require__(/*! ../../Components/Elements/localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
+
+var _localize3 = _interopRequireDefault(_localize2);
+
+var _Checkbox = __webpack_require__(/*! ../../Components/Form/Checkbox */ "./src/javascript/app_2/App/Components/Form/Checkbox/index.js");
+
+var _Checkbox2 = _interopRequireDefault(_Checkbox);
+
+var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PurchaseSettings = function PurchaseSettings(_ref) {
+    var is_purchase_confirmed = _ref.is_purchase_confirmed,
+        is_purchase_locked = _ref.is_purchase_locked,
+        togglePurchaseConfirmation = _ref.togglePurchaseConfirmation,
+        togglePurchaseLock = _ref.togglePurchaseLock;
+    return _react2.default.createElement(
+        'div',
+        { className: 'settings-dialog__purchase' },
+        _react2.default.createElement(
+            _Media2.default,
+            null,
+            _react2.default.createElement(
+                _Media.MediaHeading,
+                null,
+                _react2.default.createElement(_localize3.default, { str: 'Purchase confirmation' })
+            ),
+            _react2.default.createElement(
+                _Media.MediaDescription,
+                null,
+                _react2.default.createElement(_Media.MediaIcon, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'media__form' },
+                    _react2.default.createElement(_Checkbox2.default, {
+                        value: is_purchase_confirmed,
+                        label: (0, _localize.localize)('Purchase confirmation'),
+                        onClick: togglePurchaseConfirmation
+                    })
+                )
+            )
+        ),
+        _react2.default.createElement(
+            _Media2.default,
+            null,
+            _react2.default.createElement(
+                _Media.MediaHeading,
+                null,
+                _react2.default.createElement(_localize3.default, { str: 'Purchase Lock' })
+            ),
+            _react2.default.createElement(
+                _Media.MediaDescription,
+                null,
+                _react2.default.createElement(_Media.MediaIcon, null),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'media__form' },
+                    _react2.default.createElement(_Checkbox2.default, {
+                        value: is_purchase_locked,
+                        label: (0, _localize.localize)('Purchase Lock'),
+                        onClick: togglePurchaseLock
+                    })
+                )
+            )
+        )
+    );
+};
+
+PurchaseSettings.propTypes = {
+    is_purchase_confirmed: _propTypes2.default.bool,
+    is_purchase_locked: _propTypes2.default.bool,
+    togglePurchaseConfirmation: _propTypes2.default.func,
+    togglePurchaseLock: _propTypes2.default.func
+};
+
+exports.default = (0, _connect.connect)(function (_ref2) {
+    var ui = _ref2.ui;
+    return {
+        is_purchase_confirmed: ui.is_purchase_confirm_on,
+        is_purchase_locked: ui.is_purchase_lock_on,
+        togglePurchaseConfirmation: ui.togglePurchaseConfirmation,
+        togglePurchaseLock: ui.togglePurchaseLock
+    };
+})(PurchaseSettings);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Containers/SettingsDialog/settings-theme.jsx":
+/*!*******************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/SettingsDialog/settings-theme.jsx ***!
+  \*******************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../Components/Elements/localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
+
+var _localize2 = _interopRequireDefault(_localize);
+
+var _imgThemeDark = __webpack_require__(/*! ../../../../../images/app_2/settings/img-theme-dark.svg */ "./src/images/app_2/settings/img-theme-dark.svg");
+
+var _imgThemeDark2 = _interopRequireDefault(_imgThemeDark);
+
+var _imgThemeLight = __webpack_require__(/*! ../../../../../images/app_2/settings/img-theme-light.svg */ "./src/images/app_2/settings/img-theme-light.svg");
+
+var _imgThemeLight2 = _interopRequireDefault(_imgThemeLight);
+
+var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ThemeSelectSettings = function ThemeSelectSettings(_ref) {
+    var is_dark_mode = _ref.is_dark_mode,
+        toggleDarkMode = _ref.toggleDarkMode;
+
+    var darkOnClick = function darkOnClick() {
+        if (!is_dark_mode) {
+            toggleDarkMode();
+        }
+    };
+
+    var lightOnClick = function lightOnClick() {
+        if (is_dark_mode) {
+            toggleDarkMode();
+        }
+    };
+    return _react2.default.createElement(
+        _react2.default.Fragment,
+        null,
+        _react2.default.createElement(
+            'div',
+            { className: 'theme-select-settings' },
+            _react2.default.createElement(
+                'h4',
+                { className: 'theme-select-settings__title' },
+                _react2.default.createElement(_localize2.default, { str: 'Select theme' })
+            ),
+            _react2.default.createElement(
+                'div',
+                { className: 'theme-select-settings__content' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'theme-select-settings__option' },
+                    _react2.default.createElement(_imgThemeDark2.default, {
+                        className: (0, _classnames2.default)('theme-select-settings__option__icon', {
+                            'theme-select-settings__option__icon--active': is_dark_mode
+                        }),
+                        onClick: darkOnClick
+                    }),
+                    _react2.default.createElement(
+                        'p',
+                        { className: 'theme-select-settings__option__title' },
+                        _react2.default.createElement(_localize2.default, { str: 'Dark mode' })
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'theme-select-settings__option' },
+                    _react2.default.createElement(_imgThemeLight2.default, {
+                        className: (0, _classnames2.default)('theme-select-settings__option__icon', {
+                            'theme-select-settings__option__icon--active': !is_dark_mode
+                        }),
+                        onClick: lightOnClick
+                    }),
+                    _react2.default.createElement(
+                        'p',
+                        { className: 'theme-select-settings__option__title' },
+                        _react2.default.createElement(_localize2.default, { str: 'Light mode' })
+                    )
+                )
+            )
+        )
+    );
+};
+
+exports.default = (0, _connect.connect)(function (_ref2) {
+    var ui = _ref2.ui;
+    return {
+        is_dark_mode: ui.is_dark_mode_on,
+        toggleDarkMode: ui.toggleDarkMode
+    };
+})(ThemeSelectSettings);
 
 /***/ }),
 
@@ -14047,6 +14793,372 @@ Object.keys(_iconTrade).forEach(function (key) {
     enumerable: true,
     get: function get() {
       return _iconTrade[key];
+    }
+  });
+});
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Settings/icon-charts.jsx":
+/*!**************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Settings/icon-charts.jsx ***!
+  \**************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconCharts = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconCharts = function IconCharts(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('path', {
+                fill: '#000',
+                fillOpacity: '0.8',
+                className: 'color1-fill',
+                d: 'M2 14h14v1H2v1H1v-1H0v-1h1V0h1v14zm1.724-.83l-.895-.446L5.321 7.74 9.266 10.7l3.262-8.698 2.604 7.814-.948.316-1.712-5.134L9.734 12.3 5.679 9.26l-1.955 3.91z'
+            })
+        )
+    );
+};
+
+IconCharts.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconCharts = IconCharts;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Settings/icon-close.jsx":
+/*!*************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Settings/icon-close.jsx ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconClose = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconClose = function IconClose(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        {
+            className: (0, _classnames2.default)('inline-icon', className),
+            xmlns: 'http://www.w3.org/2000/svg',
+            width: '16',
+            height: '16'
+        },
+        _react2.default.createElement('path', {
+            className: 'color1-fill',
+            fillOpacity: '0.8',
+            d: 'M8 6.587l4.293-4.294a1 1 0 0 1 1.414 1.414L9.414 8.002l4.293 4.294a1 1 0 0 1-1.414 1.414L8 9.416 3.707 13.71a1 1 0 1 1-1.414-1.414l4.293-4.294-4.293-4.295a1 1 0 1 1 1.414-1.414L8 6.587z'
+        })
+    );
+};
+
+IconClose.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconClose = IconClose;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Settings/icon-language.jsx":
+/*!****************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Settings/icon-language.jsx ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconLanguage = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconLanguage = function IconLanguage(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        {
+            className: (0, _classnames2.default)('inline-icon', className),
+            xmlns: 'http://www.w3.org/2000/svg',
+            width: '16',
+            height: '16'
+        },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('path', {
+                className: 'color1-fill',
+                fill: '#000',
+                fillOpacity: '0.8',
+                d: 'M8 15.794l-2.75-3.407H0V0h16v12.387h-5.25L8 15.794zm-7-4.44h4.75L8 14.143l2.25-2.787H15V1.032H1v10.323zM11 9.29H3V8.258h8V9.29zm2-2.58H3V5.677h10V6.71zm0-2.581H3V3.097h10v1.032z'
+            })
+        )
+    );
+};
+
+IconLanguage.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconLanguage = IconLanguage;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Settings/icon-purchase.jsx":
+/*!****************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Settings/icon-purchase.jsx ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconPurchase = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconPurchase = function IconPurchase(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        {
+            className: (0, _classnames2.default)('inline-icon', className),
+            xmlns: 'http://www.w3.org/2000/svg',
+            width: '16',
+            height: '16'
+        },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('path', {
+                className: 'color1-fill',
+                fill: '#000',
+                fillOpacity: '0.8',
+                d: 'M9 9l-1-.001V11H7V9H5.503V5.501a.501.501 0 1 0-1.003 0V10l.003 1.89L6 14.36V15h4v-.651l1-1.5V10.5a1.5 1.5 0 0 0-1-1.415V11H9V9zM3.5 5.5a1.501 1.501 0 0 1 3.003 0V8H9.5a2.5 2.5 0 0 1 2.5 2.5v2.651l-1 1.5V16H5v-1.36l-1.497-2.471V11L3.5 5.501zM1 6h2v1H0V0h16v7H7V6h8V1H1v5z'
+            })
+        )
+    );
+};
+
+IconPurchase.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconPurchase = IconPurchase;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Settings/icon-theme.jsx":
+/*!*************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Settings/icon-theme.jsx ***!
+  \*************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconTheme = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconTheme = function IconTheme(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(
+        'svg',
+        {
+            className: (0, _classnames2.default)('inline-icon', className),
+            xmlns: 'http://www.w3.org/2000/svg',
+            width: '16',
+            height: '16'
+        },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('path', {
+                fill: '#000',
+                className: 'color1-fill',
+                fillOpacity: '0.8',
+                d: 'M8 15A7 7 0 0 0 8 1v14zm0 1a7.982 7.982 0 0 1-6.1-2.823A8 8 0 1 1 8 16z'
+            })
+        )
+    );
+};
+
+IconTheme.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.IconTheme = IconTheme;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Settings/index.js":
+/*!*******************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Settings/index.js ***!
+  \*******************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _iconCharts = __webpack_require__(/*! ./icon-charts.jsx */ "./src/javascript/app_2/Assets/Settings/icon-charts.jsx");
+
+Object.keys(_iconCharts).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _iconCharts[key];
+    }
+  });
+});
+
+var _iconClose = __webpack_require__(/*! ./icon-close.jsx */ "./src/javascript/app_2/Assets/Settings/icon-close.jsx");
+
+Object.keys(_iconClose).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _iconClose[key];
+    }
+  });
+});
+
+var _iconLanguage = __webpack_require__(/*! ./icon-language.jsx */ "./src/javascript/app_2/Assets/Settings/icon-language.jsx");
+
+Object.keys(_iconLanguage).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _iconLanguage[key];
+    }
+  });
+});
+
+var _iconPurchase = __webpack_require__(/*! ./icon-purchase.jsx */ "./src/javascript/app_2/Assets/Settings/icon-purchase.jsx");
+
+Object.keys(_iconPurchase).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _iconPurchase[key];
+    }
+  });
+});
+
+var _iconTheme = __webpack_require__(/*! ./icon-theme.jsx */ "./src/javascript/app_2/Assets/Settings/icon-theme.jsx");
+
+Object.keys(_iconTheme).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _iconTheme[key];
     }
   });
 });
@@ -28467,7 +29579,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -28530,10 +29642,13 @@ function _initializerWarningHelper(descriptor, context) {
 
 var store_name = 'ui_store';
 
-var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, _dec22 = _mobx.action.bound, _dec23 = _mobx.action.bound, (_class = function (_BaseStore) {
+var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, _dec22 = _mobx.action.bound, _dec23 = _mobx.action.bound, _dec24 = _mobx.action.bound, _dec25 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(UIStore, _BaseStore);
 
-    // PWA event and config
+    // SmartCharts Controls
+
+
+    // Purchase Controls
     function UIStore() {
         _classCallCheck(this, UIStore);
 
@@ -28591,6 +29706,8 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         _initDefineProp(_this, 'duration_d', _descriptor25, _this);
 
+        _initDefineProp(_this, 'is_blurred', _descriptor26, _this);
+
         _this.getDurationFromUnit = function (unit) {
             return _this['duration_' + unit];
         };
@@ -28608,10 +29725,7 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
         return _this;
     }
 
-    // SmartCharts Controls
-
-
-    // Purchase Controls
+    // PWA event and config
 
 
     _createClass(UIStore, [{
@@ -28632,6 +29746,16 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
             if (this.is_mobile) {
                 this.is_positions_drawer_on = false;
             }
+        }
+    }, {
+        key: 'showBlur',
+        value: function showBlur() {
+            this.is_blurred = true;
+        }
+    }, {
+        key: 'hideBlur',
+        value: function hideBlur() {
+            this.is_blurred = false;
         }
     }, {
         key: 'toggleAccountsDialog',
@@ -28887,7 +30011,12 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return 1;
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'onChangeUiStore', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'onChangeUiStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'openPositionsDrawer', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'openPositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec22], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec23], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
+}), _descriptor26 = _applyDecoratedDescriptor(_class.prototype, 'is_blurred', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return false;
+    }
+}), _applyDecoratedDescriptor(_class.prototype, 'onChangeUiStore', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'onChangeUiStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showBlur', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'showBlur'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideBlur', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'hideBlur'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'openPositionsDrawer', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'openPositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec22], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec23], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec24], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec25], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype)), _class));
 exports.default = UIStore;
 
 /***/ }),
