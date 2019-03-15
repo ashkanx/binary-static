@@ -32227,10 +32227,6 @@ var MetaTrader = function () {
                     BinarySocket.send({ get_limits: 1 }).then(getAllAccountsInfo);
                     getExchangeRates();
                 }
-            } else if (State.getResponse('landing_company.gaming_company.shortcode') === 'malta') {
-                // TODO: remove this elseif when we enable mt account opening for malta
-                // show specific message to clients from malta landing company as long as there is no mt_company for them
-                MetaTraderUI.displayPageError(localize('Our MT5 service is currently unavailable to EU residents due to pending regulatory approval.'));
             } else {
                 MetaTraderUI.displayPageError(localize('Sorry, this feature is not available in your jurisdiction.'));
             }
@@ -35762,6 +35758,9 @@ module.exports = Contact;
 "use strict";
 
 
+var isEuCountry = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
+var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
+var BinarySocket = __webpack_require__(/*! ../../_common/base/socket_base */ "./src/javascript/_common/base/socket_base.js");
 var MenuSelector = __webpack_require__(/*! ../../_common/menu_selector */ "./src/javascript/_common/menu_selector.js");
 
 module.exports = {
@@ -35807,7 +35806,16 @@ module.exports = {
     },
     BinaryOptionsForMT5: {
         onLoad: function onLoad() {
-            MenuSelector.init(['what-are-binary-options', 'how-to-trade-binary', 'types-of-trades']);
+            var menu_sections = ['what-are-binary-options', 'how-to-trade-binary', 'types-of-trades'];
+            BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+                if (isEuCountry()) {
+                    menu_sections = menu_sections.filter(function (menu_item) {
+                        return menu_item !== 'how-to-trade-binary';
+                    });
+                }
+                MenuSelector.init(menu_sections);
+                getElementById('loading_binary_options_mt5').setVisibility(0);
+            });
         },
         onUnload: function onUnload() {
             MenuSelector.clean();
