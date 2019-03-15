@@ -22803,6 +22803,10 @@ var WS = function () {
         return _subscription_manager2.default.subscribe('proposal_open_contract', _extends({ proposal_open_contract: 1, subscribe: 1 }, contract_id && { contract_id: contract_id }), cb, should_forget_first);
     };
 
+    var subscribeProposalOpenContractOnBuy = function subscribeProposalOpenContractOnBuy(buy_request) {
+        return _subscription_manager2.default.addSubscriptionFromRequest('proposal_open_contract', _extends({}, buy_request, { subscribe: 1 }), { proposal_open_contract: 1, subscribe: 1 }, ['contract_id']);
+    };
+
     var subscribeTicks = function subscribeTicks(symbol, cb, should_forget_first) {
         return _subscription_manager2.default.subscribe('ticks', { ticks: symbol, subscribe: 1 }, cb, should_forget_first);
     };
@@ -22845,6 +22849,7 @@ var WS = function () {
         subscribeBalance: subscribeBalance,
         subscribeProposal: subscribeProposal,
         subscribeProposalOpenContract: subscribeProposalOpenContract,
+        subscribeProposalOpenContractOnBuy: subscribeProposalOpenContractOnBuy,
         subscribeTicks: subscribeTicks,
         subscribeTicksHistory: subscribeTicksHistory,
         subscribeTransaction: subscribeTransaction,
@@ -23672,7 +23677,6 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
         key: 'onUnmount',
         value: function onUnmount() {
             this.disposeSwitchAccount();
-            this.forgetProposalOpenContract();
             this.onCloseContract();
         }
     }, {
@@ -23985,7 +23989,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -24052,7 +24056,7 @@ function _initializerWarningHelper(descriptor, context) {
     throw new Error('Decorating class property failed. Please ensure that transform-class-properties is enabled.');
 }
 
-var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, (_class = function (_BaseStore) {
+var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(PortfolioStore, _BaseStore);
 
     function PortfolioStore() {
@@ -24066,7 +24070,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PortfolioStore.__proto__ || Object.getPrototypeOf(PortfolioStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'positions', _descriptor, _this), _initDefineProp(_this, 'is_loading', _descriptor2, _this), _initDefineProp(_this, 'error', _descriptor3, _this), _initDefineProp(_this, 'initializePortfolio', _descriptor4, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = PortfolioStore.__proto__ || Object.getPrototypeOf(PortfolioStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'positions', _descriptor, _this), _initDefineProp(_this, 'is_loading', _descriptor2, _this), _initDefineProp(_this, 'error', _descriptor3, _this), _initDefineProp(_this, 'initializePortfolio', _descriptor4, _this), _initDefineProp(_this, 'populateResultDetails', _descriptor5, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(PortfolioStore, [{
@@ -24118,12 +24122,7 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
                 // subscribe to new contract:
                 _Services.WS.subscribeProposalOpenContract(contract_id, this.proposalOpenContractHandler, false);
             } else if (act === 'sell') {
-                // TODO: Refactor with contract-store and use common helpers to handle contract result
-                _Services.WS.proposalOpenContract(contract_id).then((0, _mobx.action)(function (proposal_response) {
-                    // populate result details box for specified positions card
-                    _Services.WS.forget('proposal_open_contract', _this2.populateResultDetails, { contract_id: response.contract_id });
-                    _this2.populateResultDetails(proposal_response);
-                }));
+                _Services.WS.subscribeProposalOpenContract(contract_id, this.populateResultDetails, false);
             }
         }
     }, {
@@ -24198,22 +24197,6 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
                     type: 'info'
                 });
             }
-        }
-    }, {
-        key: 'populateResultDetails',
-        value: function populateResultDetails(response) {
-            var contract_response = response.proposal_open_contract;
-            var i = this.getPositionIndexById(contract_response.contract_id);
-            var sell_time = (0, _logic.isUserSold)(contract_response) ? +contract_response.date_expiry : (0, _logic.getEndSpotTime)(contract_response);
-
-            this.positions[i].id_sell = +contract_response.transaction_ids.sell;
-            this.positions[i].barrier = +contract_response.barrier;
-            this.positions[i].duration = (0, _details.getDurationTime)(contract_response);
-            this.positions[i].duration_unit = (0, _details.getDurationUnitText)((0, _details.getDurationPeriod)(contract_response));
-            this.positions[i].entry_spot = +contract_response.entry_spot;
-            this.positions[i].sell_time = sell_time;
-            this.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
-            this.positions[i].is_valid_to_sell = (0, _logic.isValidToSell)(contract_response);
         }
     }, {
         key: 'pushNewPosition',
@@ -24330,7 +24313,27 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             _Services.WS.subscribeTransaction(_this4.transactionHandler, false);
         };
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'clearTable', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'clearTable'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'portfolioHandler', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'portfolioHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'transactionHandler', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'transactionHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'proposalOpenContractHandler', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'proposalOpenContractHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onClickSell', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'onClickSell'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleSell', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'handleSell'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'clearTable', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'clearTable'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'portfolioHandler', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'portfolioHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'transactionHandler', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'transactionHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'proposalOpenContractHandler', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'proposalOpenContractHandler'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onClickSell', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'onClickSell'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleSell', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'handleSell'), _class.prototype), _descriptor5 = _applyDecoratedDescriptor(_class.prototype, 'populateResultDetails', [_dec8], {
+    enumerable: true,
+    initializer: function initializer() {
+        var _this5 = this;
+
+        return function (response) {
+            var contract_response = response.proposal_open_contract;
+            var i = _this5.getPositionIndexById(contract_response.contract_id);
+            var sell_time = (0, _logic.isUserSold)(contract_response) ? +contract_response.date_expiry : (0, _logic.getEndSpotTime)(contract_response);
+
+            _this5.positions[i].id_sell = +contract_response.transaction_ids.sell;
+            _this5.positions[i].barrier = +contract_response.barrier;
+            _this5.positions[i].duration = (0, _details.getDurationTime)(contract_response);
+            _this5.positions[i].duration_unit = (0, _details.getDurationUnitText)((0, _details.getDurationPeriod)(contract_response));
+            _this5.positions[i].entry_spot = +contract_response.entry_spot;
+            _this5.positions[i].sell_time = sell_time;
+            _this5.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
+            _this5.positions[i].is_valid_to_sell = (0, _logic.isValidToSell)(contract_response);
+        };
+    }
+}), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
 exports.default = PortfolioStore;
 
 /***/ }),
@@ -24661,7 +24664,11 @@ var ChartBarrierStore = exports.ChartBarrierStore = (_dec = _mobx.action.bound, 
     _createClass(ChartBarrierStore, [{
         key: 'updateBarriers',
         value: function updateBarriers(high, low) {
-            this.relative = /^[+-]/.test(high);
+            var isFromChart = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : false;
+
+            if (!isFromChart) {
+                this.relative = /^[+-]/.test(high);
+            }
             this.high = +high || undefined;
             this.low = +low || undefined;
         }
@@ -24676,7 +24683,7 @@ var ChartBarrierStore = exports.ChartBarrierStore = (_dec = _mobx.action.bound, 
             var high = _ref2.high,
                 low = _ref2.low;
 
-            this.updateBarriers(high, low);
+            this.updateBarriers(high, low, true);
             this.onChartBarrierChange.apply(this, _toConsumableArray((0, _barriers2.barriersToString)(this.relative, high, low)));
         }
     }, {
@@ -25551,7 +25558,7 @@ var onChangeExpiry = exports.onChangeExpiry = function onChangeExpiry(store) {
 
 
 Object.defineProperty(exports, "__esModule", {
-  value: true
+    value: true
 });
 exports.processPurchase = undefined;
 
@@ -25560,24 +25567,24 @@ var _Services = __webpack_require__(/*! ../../../../Services */ "./src/javascrip
 function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
 
 var processPurchase = exports.processPurchase = function () {
-  var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(proposal_id, price) {
-    return regeneratorRuntime.wrap(function _callee$(_context) {
-      while (1) {
-        switch (_context.prev = _context.next) {
-          case 0:
-            return _context.abrupt('return', _Services.WS.buy(proposal_id, price));
+    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(proposal_id, price) {
+        return regeneratorRuntime.wrap(function _callee$(_context) {
+            while (1) {
+                switch (_context.prev = _context.next) {
+                    case 0:
+                        return _context.abrupt('return', _Services.WS.subscribeProposalOpenContractOnBuy({ buy: proposal_id, price: price }));
 
-          case 1:
-          case 'end':
-            return _context.stop();
-        }
-      }
-    }, _callee, undefined);
-  }));
+                    case 1:
+                    case 'end':
+                        return _context.stop();
+                }
+            }
+        }, _callee, undefined);
+    }));
 
-  return function processPurchase(_x, _x2) {
-    return _ref.apply(this, arguments);
-  };
+    return function processPurchase(_x, _x2) {
+        return _ref.apply(this, arguments);
+    };
 }();
 
 /***/ }),
@@ -25894,10 +25901,8 @@ var getValidationRules = function getValidationRules() {
             rules: [['req', { condition: function condition(store) {
                     return store.barrier_count && store.form_components.indexOf('barrier') > -1;
                 }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
-                    return store.contract_expiry_type !== 'daily' && store.barrier_count;
-                } }], ['number', { condition: function condition(store) {
-                    return store.contract_expiry_type === 'daily' && store.barrier_count;
-                }, type: 'float' }], ['custom', { func: function func(value, options, store, inputs) {
+                    return store.barrier_count;
+                } }], ['custom', { func: function func(value, options, store, inputs) {
                     return store.barrier_count > 1 ? +value > +inputs.barrier_2 : true;
                 }, message: (0, _localize.localize)('Higher barrier must be higher than lower barrier.') }]],
             trigger: 'barrier_2'
@@ -25906,10 +25911,8 @@ var getValidationRules = function getValidationRules() {
             rules: [['req', { condition: function condition(store) {
                     return store.barrier_count > 1 && store.form_components.indexOf('barrier') > -1;
                 }, message: (0, _localize.localize)('Barrier is a required field.') }], ['barrier', { condition: function condition(store) {
-                    return store.contract_expiry_type !== 'daily' && store.barrier_count;
-                } }], ['number', { condition: function condition(store) {
-                    return store.contract_expiry_type === 'daily' && store.barrier_count;
-                }, type: 'float' }], ['custom', { func: function func(value, options, store, inputs) {
+                    return store.barrier_count;
+                } }], ['custom', { func: function func(value, options, store, inputs) {
                     return (/^[+-]/g.test(inputs.barrier_1) && /^[+-]/g.test(value) || /^(?![+-])/g.test(inputs.barrier_1) && /^(?![+-])/g.test(value)
                     );
                 }, message: (0, _localize.localize)('Both barriers should be relative or absolute') }], ['custom', { func: function func(value, options, store, inputs) {

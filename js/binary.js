@@ -2019,6 +2019,50 @@ var SubscriptionManager = function () {
         }
     };
 
+    /**
+     * Add subscription without subscribers from request
+     * E.g. open subscription to proposal_open_contract on buy request
+     * @param {String}   msg_type               msg_type of the subscription
+     * @param {Object}   send_request           the object of the request to be made
+     * @param {Object}   subscribe_request      the object of the subscription request
+     * @param {Array}    subscription_props     Array of prop strings to add to subscribe_request from initial request, e.g. contract_id
+     */
+    var addSubscriptionFromRequest = function addSubscriptionFromRequest(msg_type, send_request, subscribe_request, subscription_props) {
+        return new Promise(function (resolve) {
+            var sub_id = void 0;
+            var is_stream = false;
+
+            _socket_base2.default.send(send_request, {
+                callback: function callback(response) {
+                    if (response.error) {
+                        return resolve(response);
+                    }
+                    if (!is_stream) {
+                        is_stream = true;
+                        sub_id = ++subscription_id;
+
+                        if (subscription_props && Array.isArray(subscription_props)) {
+                            subscription_props.forEach(function (prop) {
+                                if (response[response.msg_type][prop]) {
+                                    subscribe_request[prop] = response[response.msg_type][prop];
+                                }
+                            });
+                        }
+
+                        subscriptions[sub_id] = {
+                            msg_type: msg_type,
+                            request: (0, _utility.cloneObject)(subscribe_request),
+                            stream_id: '', // stream_id will be updated after receiving the response
+                            subscribers: []
+                        };
+                        return resolve(response);
+                    }
+                    return dispatch(response, sub_id);
+                }
+            });
+        });
+    };
+
     // dispatches the response to subscribers of the specific subscription id (internal use only)
     var dispatch = function dispatch(response, sub_id) {
         var stream_id = (0, _utility.getPropertyValue)(response, [response.msg_type, 'id']);
@@ -2145,6 +2189,7 @@ var SubscriptionManager = function () {
     };
 
     return {
+        addSubscriptionFromRequest: addSubscriptionFromRequest,
         subscribe: subscribe,
         forget: forget,
         forgetAll: forgetAll
@@ -22092,8 +22137,12 @@ var DigitDisplay = function () {
 
     var end = function end(proposal_open_contract) {
         if (proposal_open_contract.status !== 'open') {
+            // if there is no exit tick inside proposal open contract, select a fallback from history instead.
+            var fallback_exit_tick = spot_times.find(function (spot) {
+                return +spot.time === +proposal_open_contract.exit_tick_time;
+            });
             DigitTicker.update(proposal_open_contract.tick_count, {
-                quote: proposal_open_contract.exit_tick,
+                quote: proposal_open_contract.exit_tick || fallback_exit_tick.spot,
                 epoch: +proposal_open_contract.exit_tick_time
             });
         }
