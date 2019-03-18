@@ -10959,15 +10959,12 @@ var Header = function Header(_ref) {
         can_upgrade = _ref.can_upgrade,
         can_upgrade_to = _ref.can_upgrade_to,
         currency = _ref.currency,
-        hideInstallButton = _ref.hideInstallButton,
         is_acc_switcher_on = _ref.is_acc_switcher_on,
-        is_install_button_visible = _ref.is_install_button_visible,
         is_logged_in = _ref.is_logged_in,
         is_mobile = _ref.is_mobile,
         is_virtual = _ref.is_virtual,
         loginid = _ref.loginid,
         onClickUpgrade = _ref.onClickUpgrade,
-        pwa_prompt_event = _ref.pwa_prompt_event,
         setPWAPromptEvent = _ref.setPWAPromptEvent,
         showInstallButton = _ref.showInstallButton,
         toggleAccountsDialog = _ref.toggleAccountsDialog;
@@ -11003,11 +11000,6 @@ var Header = function Header(_ref) {
                 _react2.default.createElement(
                     'div',
                     { className: 'acc-info__container' },
-                    is_install_button_visible && is_logged_in && _react2.default.createElement(_Header.InstallPWAButton, {
-                        className: 'acc-info__button',
-                        prompt_event: pwa_prompt_event,
-                        onClick: hideInstallButton
-                    }),
                     is_logged_in ? _react2.default.createElement(
                         _react2.default.Fragment,
                         null,
@@ -17808,6 +17800,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _reactTransitionGroup = __webpack_require__(/*! react-transition-group */ "./node_modules/react-transition-group/index.js");
+
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
 var _digits = __webpack_require__(/*! ../../../Stores/Modules/Contract/Helpers/digits */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/digits.js");
@@ -17822,7 +17816,8 @@ var Digits = function Digits(_ref) {
     var contract_info = _ref.contract_info,
         digits_info = _ref.digits_info,
         display_status = _ref.display_status,
-        is_trade_page = _ref.is_trade_page;
+        is_trade_page = _ref.is_trade_page,
+        last_digit = _ref.last_digit;
     var barrier = contract_info.barrier,
         contract_type = contract_info.contract_type;
 
@@ -17830,11 +17825,20 @@ var Digits = function Digits(_ref) {
     var is_ended = (0, _logic.isEnded)(contract_info);
 
     return _react2.default.createElement(
-        _react2.default.Fragment,
-        null,
-        contract_type && is_digit && _react2.default.createElement(_LastDigitPrediction.LastDigitPrediction, {
-            barrier: +barrier,
-            contract_type: contract_type,
+        _reactTransitionGroup.CSSTransition,
+        {
+            'in': is_digit,
+            timeout: 250,
+            classNames: {
+                enter: 'digits--enter',
+                enterDone: 'digits--enter-done',
+                exit: 'digits--exit'
+            },
+            unmountOnExit: true
+        },
+        _react2.default.createElement(_LastDigitPrediction.LastDigitPrediction, {
+            barrier: +barrier || +last_digit // fallback to last_digit if barrier from contract_info is null
+            , contract_type: contract_type,
             digits_info: digits_info,
             is_ended: is_ended,
             is_trade_page: is_trade_page,
@@ -17846,7 +17850,9 @@ var Digits = function Digits(_ref) {
 Digits.propTypes = {
     contract_info: _propTypes2.default.object,
     digits_info: _propTypes2.default.object,
-    display_status: _propTypes2.default.string
+    display_status: _propTypes2.default.string,
+    is_trade_page: _propTypes2.default.bool,
+    last_digit: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };
 
 exports.default = (0, _connect.connect)(function (_ref2) {
@@ -17854,7 +17860,8 @@ exports.default = (0, _connect.connect)(function (_ref2) {
     return {
         contract_info: modules.contract.contract_info,
         digits_info: modules.contract.digits_info,
-        display_status: modules.contract.display_status
+        display_status: modules.contract.display_status,
+        last_digit: modules.trade.last_digit
     };
 })(Digits);
 
