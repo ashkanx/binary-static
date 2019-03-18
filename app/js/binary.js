@@ -1123,7 +1123,7 @@ var Calendar = (_temp = _class = function (_React$PureComponent) {
 
 Calendar.defaultProps = {
     date_format: 'YYYY-MM-DD',
-    min_date: (0, _Date.toMoment)().format('YYYY-MM-DD'), // by default, min_date is set to Unix Epoch (January 1st 1970)
+    min_date: (0, _Date.toMoment)(0).format('YYYY-MM-DD'), // by default, min_date is set to Unix Epoch (January 1st 1970)
     max_date: (0, _Date.toMoment)().add(120, 'y').format('YYYY-MM-DD') // by default, max_date is set to 120 years after today
 };
 
@@ -8026,7 +8026,9 @@ var Dialog = function Dialog(_ref) {
                         var start_time_reset_minute = start_time_moment.clone().minute(0);
                         var is_hour_enabled = to_compare_moment.isBetween(start_time_reset_minute, end_time_moment);
                         var is_minute_enabled = to_compare_moment.isBetween(start_time_moment, end_time_moment, 'minute');
-                        var is_enabled = is_hour_enabled && is_minute_enabled;
+                        // The minute number after which the last block/interval of `Minutes` selection will be disabled
+                        var last_interval_of_hour = 52;
+                        var is_enabled = to_compare_moment.minutes() > last_interval_of_hour ? is_hour_enabled && is_minute_enabled : is_hour_enabled;
                         return _react2.default.createElement(
                             'div',
                             {
@@ -19122,13 +19124,15 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _connect = __webpack_require__(/*! ../../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
-
-var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
-
 var _DatePicker = __webpack_require__(/*! ../../../../../App/Components/Form/DatePicker */ "./src/javascript/app_2/App/Components/Form/DatePicker/index.js");
 
 var _DatePicker2 = _interopRequireDefault(_DatePicker);
+
+var _connect = __webpack_require__(/*! ../../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+var _duration = __webpack_require__(/*! ../../../../../Stores/Modules/Trading/Helpers/duration */ "./src/javascript/app_2/Stores/Modules/Trading/Helpers/duration.js");
+
+var _Date = __webpack_require__(/*! ../../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -19151,7 +19155,8 @@ var TradingDatePicker = function TradingDatePicker(_ref) {
         min_date_expiry = void 0,
         has_today_btn = void 0,
         is_read_only = void 0;
-    var moment_contract_start_date_time = (0, _Date.setTime)((0, _Date.toMoment)(start_date || server_time), (0, _Date.isTimeValid)(start_time) ? start_time : server_time.format('HH:mm:ss'));
+    var min_duration = (0, _duration.hasIntradayDurationUnit)(duration_units_list) ? (0, _Date.toMoment)(server_time) : (0, _Date.toMoment)(server_time).add(duration_min_max.daily.min, 'second');
+    var moment_contract_start_date_time = (0, _Date.setTime)((0, _Date.toMoment)(min_duration), (0, _Date.isTimeValid)(start_time) ? start_time : server_time.format('HH:mm:ss'));
 
     var max_daily_duration = duration_min_max.daily ? duration_min_max.daily.max : 365 * 24 * 3600;
 
@@ -28872,7 +28877,7 @@ var ClientStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 
             this.accounts[this.loginid].email = response.authorize.email;
             this.accounts[this.loginid].currency = response.authorize.currency;
             this.accounts[this.loginid].is_virtual = +response.authorize.is_virtual;
-            this.accounts[this.loginid].session_start = parseInt((0, _moment2.default)().valueOf() / 1000);
+            this.accounts[this.loginid].session_start = parseInt((0, _moment2.default)().utc().valueOf() / 1000);
             this.accounts[this.loginid].landing_company_shortcode = response.authorize.landing_company_name;
             this.updateAccountList(response.authorize.account_list);
             this.upgrade_info = this.getBasicUpgradeInfo();
@@ -30132,7 +30137,17 @@ var _moment2 = _interopRequireDefault(_moment);
 
 var _localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _server_time = __webpack_require__(/*! ../../../_common/base/server_time */ "./src/javascript/_common/base/server_time.js");
+
+var _server_time2 = _interopRequireDefault(_server_time);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+// Disables moment's fallback to native Date object
+// moment will return `Invalid Date` if date cannot be parsed
+_moment2.default.createFromInputFallback = function (config) {
+  config._d = new Date(NaN);
+};
 
 /**
  * Convert epoch to moment object
@@ -30150,13 +30165,12 @@ var epochToMoment = exports.epochToMoment = function epochToMoment(epoch) {
  * @return {moment} the moment object of 'now' or the provided date epoch or string
  */
 var toMoment = exports.toMoment = function toMoment(value) {
-  if (!value) return (0, _moment2.default)().utc(); // returns 'now' moment object
+  if (!value) return _server_time2.default.get() || (0, _moment2.default)().utc(); // returns 'now' moment object
   if (value instanceof _moment2.default && value.isValid() && value.isUTC()) return value; // returns if already a moment object
-  var is_number = typeof value === 'number';
-  // need to explicitly convert date string to a JS Date object then pass that into Moment
-  // to get rid of the warning: Deprecation warning: moment construction falls back to js Date
-  var formatted_date = (0, _moment2.default)(new Date(value)).format('YYYY-MM-DD');
-  return is_number ? epochToMoment(value) : _moment2.default.utc(formatted_date);
+  if (typeof value === 'number') return epochToMoment(value); // returns epochToMoment() if not a date
+
+  return (/invalid/i.test((0, _moment2.default)(value)) ? _moment2.default.utc(value, 'DD MMM YYYY') : _moment2.default.utc(value)
+  );
 };
 
 /**
