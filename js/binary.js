@@ -938,7 +938,8 @@ var GTM = function () {
             language: getLanguage(),
             pageTitle: pageTitle(),
             pjax: State.get('is_loaded_by_pjax'),
-            url: document.URL
+            url: document.URL,
+            country_ip: State.getResponse('website_status.clients_country')
         }, ClientBase.isLoggedIn() && {
             visitorId: ClientBase.get('loginid'),
             bom_email: ClientBase.get('email')
