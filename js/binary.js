@@ -651,6 +651,10 @@ var getPropertyValue = __webpack_require__(/*! ../utility */ "./src/javascript/_
 
 var currencies_config = {};
 
+var getTextFormat = function getTextFormat(number, currency) {
+    return currency + ' ' + addComma(number, getDecimalPlaces(currency), isCryptocurrency(currency));
+};
+
 var formatMoney = function formatMoney(currency_value, amount, exclude_currency) {
     var decimals = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : 0;
     var minimumFractionDigits = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : 0;
@@ -742,11 +746,20 @@ var getMinWithdrawal = function getMinWithdrawal(currency) {
     return isCryptocurrency(currency) ? getPropertyValue(CryptoConfig.get(), [currency, 'min_withdrawal']) || 0.002 : 1;
 };
 
-// returns in a string format, e.g. '0.00000001'
-var getMinTransfer = function getMinTransfer(currency) {
-    var min_transfer = getPropertyValue(currencies_config, [currency, 'transfer_between_accounts', 'limits', 'min']) || getMinWithdrawal(currency);
+/**
+ * Returns the transfer limits for the account.
+ * @param currency
+ * @param {string} max|undefined
+ * @returns numeric|undefined
+ */
+var getTransferLimits = function getTransferLimits(currency, which) {
+    var transfer_limits = getPropertyValue(currencies_config, [currency, 'transfer_between_accounts', 'limits']) || getMinWithdrawal(currency);
     var decimals = getDecimalPlaces(currency);
-    return min_transfer.toFixed(decimals); // we need toFixed() so that it doesn't display in scientific notation, e.g. 1e-8 for currencies with 8 decimal places
+    if (which === 'max') {
+        return transfer_limits.max ? transfer_limits.max.toFixed(decimals) : undefined;
+    }
+
+    return transfer_limits.min ? transfer_limits.min.toFixed(decimals) : undefined;
 };
 
 var getTransferFee = function getTransferFee(currency_from, currency_to) {
@@ -785,9 +798,10 @@ module.exports = {
     isCryptocurrency: isCryptocurrency,
     getCurrencyName: getCurrencyName,
     getMinWithdrawal: getMinWithdrawal,
-    getMinTransfer: getMinTransfer,
+    getTransferLimits: getTransferLimits,
     getTransferFee: getTransferFee,
     getMinimumTransferFee: getMinimumTransferFee,
+    getTextFormat: getTextFormat,
     getMinPayout: getMinPayout,
     getPaWithdrawalLimit: getPaWithdrawalLimit,
     getCurrencies: function getCurrencies() {
@@ -9118,11 +9132,17 @@ var Url = function () {
     };
 
     var urlFor = function urlFor(path, pars, language) {
+        var should_change_to_legacy = arguments.length > 3 && arguments[3] !== undefined ? arguments[3] : false;
+
         var lang = (language || urlLang()).toLowerCase();
         // url language might differ from passed language, so we will always replace using the url language
         var url_lang = language ? urlLang().toLowerCase() : lang;
         var url = window.location.href;
-        var new_url = '' + url.substring(0, url.indexOf('/' + url_lang + '/') + url_lang.length + 2) + (normalizePath(path) || 'home') + '.html' + (pars ? '?' + pars : '');
+        var domain = url.substring(0, url.indexOf('/' + url_lang + '/') + url_lang.length + 2);
+        if (should_change_to_legacy) {
+            domain = domain.replace(/\/app/, '');
+        }
+        var new_url = '' + domain + (normalizePath(path) || 'home') + '.html' + (pars ? '?' + pars : '');
         // replace old lang with new lang
         return urlForLanguage(lang, new_url);
     };
@@ -14670,7 +14690,6 @@ var elementTextContent = __webpack_require__(/*! ../../../_common/common_functio
 var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../_common/storage */ "./src/javascript/_common/storage.js").State;
-var createElement = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").createElement;
 var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 
 var AccountTransfer = function () {
@@ -14695,7 +14714,27 @@ var AccountTransfer = function () {
         client_balance = void 0,
         client_currency = void 0,
         client_loginid = void 0,
-        withdrawal_limit = void 0;
+        withdrawal_limit = void 0,
+        max_amount = void 0,
+        transferable_amount = void 0,
+        to_loginid = void 0,
+        transfer_to_currency = void 0;
+
+    /**
+     * Sort Accounts
+     * See : https://github.com/you-dont-need/You-Dont-Need-Lodash-Underscore#_sortby-and-_orderby
+     * @param accounts
+     * @returns {*}
+     */
+    var sortAccounts = function sortAccounts(accounts) {
+        var sortBy = function sortBy(key) {
+            return function (a, b) {
+                return a[key] > b[key] ? 1 : b[key] > a[key] ? -1 : 0;
+            };
+        };
+
+        return accounts.concat().sort(sortBy('currency'));
+    };
 
     var populateAccounts = function populateAccounts(accounts) {
         client_loginid = Client.get('loginid');
@@ -14704,12 +14743,16 @@ var AccountTransfer = function () {
 
         elementTextContent(el_transfer_from, client_loginid + ' ' + (client_currency ? '(' + client_currency + ')' : ''));
 
-        var fragment_transfer_to = document.createElement('div');
+        var fragment_transfer_to = document.createElement('select');
 
-        accounts.forEach(function (account) {
+        sortAccounts(accounts).forEach(function (account, index) {
             if (Client.canTransferFunds(account)) {
+                if (index === 0) {
+                    to_loginid = account.loginid;
+                }
                 var option = document.createElement('option');
                 option.setAttribute('data-currency', account.currency);
+                option.setAttribute('data-loginid', account.loginid);
                 option.appendChild(document.createTextNode('' + account.loginid + (account.currency ? ' (' + account.currency + ')' : '')));
                 fragment_transfer_to.appendChild(option);
             }
@@ -14718,27 +14761,26 @@ var AccountTransfer = function () {
         if (!fragment_transfer_to.childElementCount) {
             showError();
             return;
-        }
-        if (fragment_transfer_to.childElementCount > 1) {
-            el_transfer_to.innerHTML = fragment_transfer_to.innerHTML;
-            el_transfer_to.onchange = function () {
-                var to_currency = el_transfer_to.options[el_transfer_to.selectedIndex].getAttribute('data-currency');
-                el_transfer_fee.setVisibility(client_currency !== to_currency);
-                setTransferFeeAmount();
-            };
+        } else if (fragment_transfer_to.childElementCount === 1) {
+            var el_label_transfer_to = document.createElement('p');
+            el_label_transfer_to.setAttribute('data-value', fragment_transfer_to.firstChild.textContent);
+            el_label_transfer_to.setAttribute('id', el_transfer_to.getAttribute('id'));
+            el_label_transfer_to.innerText = fragment_transfer_to.firstChild.textContent;
+            to_loginid = fragment_transfer_to.firstChild.getAttribute('data-loginid');
+            el_transfer_to.setVisibility(0);
+            el_transfer_to.setAttribute('data-value', fragment_transfer_to.firstChild.textContent);
+            el_transfer_to.setAttribute('data-loginid', to_loginid);
+            el_transfer_to.parentElement.insertBefore(el_label_transfer_to, el_transfer_to);
         } else {
-            var label = createElement('label', {
-                'data-value': fragment_transfer_to.innerText,
-                'data-currency': fragment_transfer_to.firstChild.getAttribute('data-currency')
-            });
-            label.appendChild(document.createTextNode(fragment_transfer_to.innerText));
-            label.id = 'transfer_to';
-
-            el_transfer_to.parentNode.replaceChild(label, el_transfer_to);
-            el_transfer_to = getElementById('transfer_to');
+            el_transfer_to.innerHTML = fragment_transfer_to.innerHTML;
         }
+        el_transfer_to.addEventListener('change', function (e) {
+            setTransferFeeAmount();
+            to_loginid = e.target.getAttribute('data-loginid');
+        });
 
-        showForm();
+        transfer_to_currency = getElementById('amount-add-on');
+        transfer_to_currency.textContent = Client.get('currency');
 
         if (Client.hasCurrencyType('crypto') && Client.hasCurrencyType('fiat')) {
             setTransferFeeAmount();
@@ -14747,6 +14789,11 @@ var AccountTransfer = function () {
         } else {
             var to_currency = el_transfer_to.getAttribute('data-currency');
             el_transfer_fee.setVisibility(client_currency !== to_currency);
+        }
+
+        // Hide Notes from MF|MLT accounts
+        if (/iom|malta/.test(Client.get('landing_company_shortcode'))) {
+            el_transfer_fee.setVisibility(0);
         }
     };
 
@@ -14777,7 +14824,7 @@ var AccountTransfer = function () {
 
         getElementById(form_id).setVisibility(1);
 
-        FormManager.init(form_id_hash, [{ selector: '#amount', validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', decimals: Currency.getDecimalPlaces(client_currency), min: Currency.getMinTransfer(client_currency), max: Math.min(+withdrawal_limit, +client_balance), format_money: true }]] }, { request_field: 'transfer_between_accounts', value: 1 }, { request_field: 'account_from', value: client_loginid }, { request_field: 'account_to', value: function value() {
+        FormManager.init(form_id_hash, [{ selector: '#amount', validations: [['req', { hide_asterisk: true }], ['number', { type: 'float', decimals: Currency.getDecimalPlaces(client_currency), min: Currency.getTransferLimits(client_currency, 'min'), max: transferable_amount, format_money: true }]] }, { request_field: 'transfer_between_accounts', value: 1 }, { request_field: 'account_from', value: client_loginid }, { request_field: 'account_to', value: function value() {
                 return (el_transfer_to.value || el_transfer_to.getAttribute('data-value') || '').split(' (')[0];
             } }, { request_field: 'currency', value: client_currency }]);
 
@@ -14806,17 +14853,15 @@ var AccountTransfer = function () {
 
     var populateReceipt = function populateReceipt(response_submit_success, response) {
         getElementById(form_id).setVisibility(0);
-
-        elementTextContent(getElementById('from_loginid'), client_loginid);
-        elementTextContent(getElementById('to_loginid'), response_submit_success.client_to_loginid);
-
         response.accounts.forEach(function (account) {
             if (account.loginid === client_loginid) {
-                elementTextContent(getElementById('from_currency'), account.currency);
-                elementTextContent(getElementById('from_balance'), account.balance);
+                elementTextContent(getElementById('transfer_success_from'), localize('From account: '));
+                elementTextContent(getElementById('from_loginid'), account.loginid + ' (' + account.currency + ')');
+                getElementById('from_current_balance').innerText = Currency.getTextFormat(account.balance, account.currency);
             } else if (account.loginid === response_submit_success.client_to_loginid) {
-                elementTextContent(getElementById('to_currency'), account.currency);
-                elementTextContent(getElementById('to_balance'), account.balance);
+                elementTextContent(getElementById('transfer_success_to'), localize('To account: '));
+                elementTextContent(getElementById('to_loginid'), account.loginid + ' (' + account.currency + ')');
+                getElementById('to_current_balance').innerText = Currency.getTextFormat(account.balance, account.currency);
             }
         });
 
@@ -14846,7 +14891,7 @@ var AccountTransfer = function () {
         BinarySocket.wait('balance').then(function (response) {
             client_balance = +getPropertyValue(response, ['balance', 'balance']);
             client_currency = Client.get('currency');
-            var min_amount = Currency.getMinTransfer(client_currency);
+            var min_amount = Currency.getTransferLimits(client_currency, 'min');
             if (!client_balance || client_balance < +min_amount) {
                 getElementById(messages.parent).setVisibility(1);
                 if (client_currency) {
@@ -14857,10 +14902,14 @@ var AccountTransfer = function () {
             } else {
                 var req_transfer_between_accounts = BinarySocket.send({ transfer_between_accounts: 1 });
                 var req_get_limits = BinarySocket.send({ get_limits: 1 });
+                var get_account_status = BinarySocket.send({ get_account_status: 1 });
 
-                Promise.all([req_transfer_between_accounts, req_get_limits]).then(function () {
+                Promise.all([req_transfer_between_accounts, req_get_limits, get_account_status]).then(function () {
                     var response_transfer = State.get(['response', 'transfer_between_accounts']);
                     var response_limits = State.get(['response', 'get_limits']);
+                    var is_authenticated = State.getResponse('get_account_status.status').some(function (state) {
+                        return state === 'authenticated';
+                    });
 
                     if (hasError(response_transfer)) {
                         return;
@@ -14873,17 +14922,55 @@ var AccountTransfer = function () {
                     if (hasError(response_limits)) {
                         return;
                     }
-                    withdrawal_limit = +response_limits.get_limits.remainder;
-                    if (withdrawal_limit < +min_amount) {
+
+                    populateAccounts(accounts);
+                    setLimits(response_limits, min_amount, is_authenticated).then(function () {
+                        showForm({ is_authenticated: is_authenticated });
+                        populateHints();
+                    }).catch(function () {
                         getElementById(messages.limit).setVisibility(1);
                         getElementById(messages.parent).setVisibility(1);
-                        return;
-                    }
-                    getElementById('range_hint').textContent = localize('Min') + ': ' + min_amount + ' ' + localize('Max') + ': ' + (client_balance <= withdrawal_limit ? localize('Current balance') : localize('Withdrawal limit'));
-                    populateAccounts(accounts);
+                        el_transfer_fee.setVisibility(0);
+                    });
                 });
             }
         });
+    };
+
+    var setLimits = function setLimits(response, min_amount, is_authenticated) {
+        return new Promise(function (resolve, reject) {
+            withdrawal_limit = +response.get_limits.remainder;
+            if (withdrawal_limit < +min_amount) {
+                reject(new Error('Withdrawal limit is less than Min amount.'));
+            }
+
+            max_amount = Currency.getTransferLimits(Client.get('currency'), 'max');
+
+            var from_currency = Client.get('currency');
+            var to_currency = Client.get('currency', to_loginid);
+            if (!Currency.isCryptocurrency(from_currency) && !Currency.isCryptocurrency(to_currency) && is_authenticated) {
+                transferable_amount = client_balance;
+            } else {
+                transferable_amount = max_amount ? Math.min(max_amount, withdrawal_limit, client_balance) : Math.min(withdrawal_limit, client_balance);
+            }
+
+            getElementById('range_hint_min').textContent = min_amount;
+            resolve();
+        });
+    };
+
+    var populateHints = function populateHints() {
+        getElementById('limit_current_balance').innerText = Currency.getTextFormat(client_balance, client_currency);
+
+        getElementById('limit_max_amount').innerText = max_amount ? Currency.getTextFormat(transferable_amount, client_currency) : localize('Not announced for this currency.');
+
+        $('#range_hint').accordion({
+            heightStyle: 'content',
+            collapsible: true,
+            active: true
+        });
+
+        getElementById('range_hint').show();
     };
 
     var onUnload = function onUnload() {
@@ -17958,6 +18045,8 @@ module.exports = AssetIndex;
 var AssetIndex = __webpack_require__(/*! ./asset_index */ "./src/javascript/app/pages/resources/asset_index/asset_index.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Table = __webpack_require__(/*! ../../../common/attach_dom/table */ "./src/javascript/app/common/attach_dom/table.js");
+var Login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var CommonFunctions = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 
 var AssetIndexUI = function () {
@@ -17990,6 +18079,9 @@ var AssetIndexUI = function () {
         if (!asset_index.length) {
             $container.empty();
             $('#empty-asset-index').setVisibility(1);
+            var empty_asset_index_btn_login = CommonFunctions.getElementById('empty-asset-index-btn-login');
+            empty_asset_index_btn_login.removeEventListener('click', loginOnClick);
+            empty_asset_index_btn_login.addEventListener('click', loginOnClick);
             return;
         }
 
@@ -18082,6 +18174,11 @@ var AssetIndexUI = function () {
             asset_index = response.asset_index;
             if (active_symbols) populateTable();
         });
+    };
+
+    var loginOnClick = function loginOnClick(e) {
+        e.preventDefault();
+        Login.redirectToLogin();
     };
 
     return {
@@ -18269,7 +18366,8 @@ var TradingTimes = __webpack_require__(/*! ./trading_times */ "./src/javascript/
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var Table = __webpack_require__(/*! ../../../common/attach_dom/table */ "./src/javascript/app/common/attach_dom/table.js");
 var DatePicker = __webpack_require__(/*! ../../../components/date_picker */ "./src/javascript/app/components/date_picker.js");
-var dateValueChanged = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").dateValueChanged;
+var Login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
+var CommonFunctions = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var showLoadingImage = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").showLoadingImage;
 var toISOFormat = __webpack_require__(/*! ../../../../_common/string_util */ "./src/javascript/_common/string_util.js").toISOFormat;
@@ -18277,6 +18375,9 @@ var toISOFormat = __webpack_require__(/*! ../../../../_common/string_util */ "./
 var TradingTimesUI = function () {
     var $date = void 0,
         $container = void 0,
+        $date_container = void 0,
+        $date_notice = void 0,
+        $empty_trading_times = void 0,
         columns = void 0,
         active_symbols = void 0,
         trading_times = void 0;
@@ -18284,8 +18385,13 @@ var TradingTimesUI = function () {
     var onLoad = function onLoad() {
         $date = $('#trading-date');
         $container = $('#trading-times');
+        $date_container = $('#trading-date-container');
+        $date_notice = $('#trading-date-notice');
+        $empty_trading_times = $('#empty-trading-times');
+
         columns = ['Asset', 'Opens', 'Closes', 'Settles', 'UpcomingEvents'];
         active_symbols = trading_times = undefined;
+        $empty_trading_times.setVisibility(0);
 
         if ($container.contents().length) return;
 
@@ -18323,7 +18429,7 @@ var TradingTimesUI = function () {
             });
         }
         $date.change(function () {
-            if (!dateValueChanged(this, 'date')) {
+            if (!CommonFunctions.dateValueChanged(this, 'date')) {
                 return false;
             }
             $container.empty();
@@ -18338,6 +18444,19 @@ var TradingTimesUI = function () {
 
     var populateTable = function populateTable() {
         if (!active_symbols || !trading_times) return;
+        if (!active_symbols.length) {
+            $container.empty();
+            $date_container.setVisibility(0);
+            $date_notice.setVisibility(0);
+            $empty_trading_times.setVisibility(1);
+            var empty_trading_times_btn_login = CommonFunctions.getElementById('empty-trading-times-btn-login');
+            empty_trading_times_btn_login.removeEventListener('click', loginOnClick);
+            empty_trading_times_btn_login.addEventListener('click', loginOnClick);
+            return;
+        }
+
+        $date_container.setVisibility(1);
+        $date_notice.setVisibility(1);
 
         $('#errorMsg').setVisibility(0);
 
@@ -18447,6 +18566,11 @@ var TradingTimesUI = function () {
             trading_times = response.trading_times;
             if (active_symbols) populateTable();
         });
+    };
+
+    var loginOnClick = function loginOnClick(e) {
+        e.preventDefault();
+        Login.redirectToLogin();
     };
 
     return {
@@ -31868,14 +31992,23 @@ var MetaTraderConfig = function () {
                         $message.find('.citizen').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'personal_details_redirect\', \'' + acc_type + '\')');
                     };
 
-                    if (accounts_info[acc_type].account_type === 'financial') {
+                    var has_financial_account = Client.hasAccountType('financial', 1);
+                    var is_maltainvest = State.getResponse('landing_company.mt_financial_company.' + getMTFinancialAccountType(acc_type) + '.shortcode') === 'maltainvest';
+                    var is_financial = accounts_info[acc_type].account_type === 'financial';
+                    var is_demo = accounts_info[acc_type].account_type === 'demo';
+                    var is_ok = true;
+
+                    if (is_maltainvest && (is_financial || is_demo) && !has_financial_account) {
+                        $message.find('.maltainvest').setVisibility(1);
+                        is_ok = false;
+                        $message.find(message_selector).setVisibility(1);
+                        resolve($message.html());
+                    }
+
+                    if (is_financial) {
                         // financial accounts have their own checks
                         BinarySocket.wait('get_account_status', 'landing_company').then(function () {
-                            var is_ok = true;
-                            if (State.getResponse('landing_company.mt_financial_company.' + getMTFinancialAccountType(acc_type) + '.shortcode') === 'maltainvest' && !Client.hasAccountType('financial', 1)) {
-                                $message.find('.maltainvest').setVisibility(1);
-                                is_ok = false;
-                            } else {
+                            if (!(is_maltainvest && !has_financial_account)) {
                                 var response_get_account_status = State.getResponse('get_account_status');
                                 if (/(financial_assessment|trading_experience)_not_complete/.test(response_get_account_status.status)) {
                                     $message.find('.assessment').setVisibility(1).find('a').attr('onclick', 'localStorage.setItem(\'financial_assessment_redirect\', \'' + urlFor('user/metatrader') + '#' + acc_type + '\')');

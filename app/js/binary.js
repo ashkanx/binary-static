@@ -1328,7 +1328,7 @@ var getDays = function getDays(_ref) {
         // check if date is before min_date or after_max_date
         is_before_min_or_after_max_date
         // for forward starting accounts, only show same day as start date and the day after
-        || start_date && (moment_date.isBefore(moment_start_date) || moment_date.isAfter((0, _Date.addDays)(moment_start_date, 1)))
+        || start_date && moment_date.isBefore(moment_start_date)
         // check if weekends are disabled
         || weekends.some(function (day) {
             return (0, _Date.toMoment)(date).day() === day;
@@ -7832,8 +7832,9 @@ var RangeSlider = function RangeSlider(_ref) {
             ),
             !!value && _react2.default.createElement(
                 'span',
-                null,
-                (0, _localize.localize)('[_1] Ticks', value || '')
+                { className: 'range-slider__caption-title' },
+                +value === 1 && (0, _localize.localize)('[_1] Tick', value),
+                +value > 1 && (0, _localize.localize)('[_1] Ticks', value)
             ),
             _react2.default.createElement(
                 'span',
@@ -8258,7 +8259,7 @@ var TimePicker = function (_React$Component) {
                         is_read_only: true,
                         id: prefix_class + '-input',
                         className: (0, _classnames2.default)(prefix_class + '-input'),
-                        value: selected_time,
+                        value: selected_time + ' GMT',
                         onClick: this.toggleDropDown,
                         name: name,
                         placeholder: placeholder
@@ -9266,6 +9267,18 @@ Object.keys(_menuLinks).forEach(function (key) {
   });
 });
 
+var _signupButton = __webpack_require__(/*! ./signup-button.jsx */ "./src/javascript/app_2/App/Components/Layout/Header/signup-button.jsx");
+
+Object.keys(_signupButton).forEach(function (key) {
+  if (key === "default" || key === "__esModule") return;
+  Object.defineProperty(exports, key, {
+    enumerable: true,
+    get: function get() {
+      return _signupButton[key];
+    }
+  });
+});
+
 var _toggleMenuDrawer = __webpack_require__(/*! ./toggle-menu-drawer.jsx */ "./src/javascript/app_2/App/Components/Layout/Header/toggle-menu-drawer.jsx");
 
 Object.keys(_toggleMenuDrawer).forEach(function (key) {
@@ -9490,6 +9503,63 @@ MenuLinks.propTypes = {
 };
 
 exports.MenuLinks = MenuLinks;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Layout/Header/signup-button.jsx":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Layout/Header/signup-button.jsx ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.SignupButton = undefined;
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _url = __webpack_require__(/*! ../../../../../_common/url */ "./src/javascript/_common/url.js");
+
+var _button = __webpack_require__(/*! ../../Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SignupButton = function SignupButton(_ref) {
+    var className = _ref.className;
+    return _react2.default.createElement(_button2.default, {
+        className: (0, _classnames2.default)(className, 'btn--primary btn--primary--orange'),
+        has_effect: true,
+        text: (0, _localize.localize)('Sign up'),
+        onClick: function onClick() {
+            window.open((0, _url.urlFor)('new-account', undefined, undefined, true));
+        }
+    });
+};
+
+SignupButton.propTypes = {
+    className: _propTypes2.default.string
+};
+
+exports.SignupButton = SignupButton;
 
 /***/ }),
 
@@ -10874,7 +10944,6 @@ var Footer = function Footer(_ref) {
         _react2.default.createElement(
             'div',
             { className: 'footer__links' },
-            _react2.default.createElement(_Footer.ToggleFullScreen, null),
             _react2.default.createElement(_Footer.ToggleSettings, {
                 is_dark_mode: is_dark_mode,
                 is_language_visible: is_language_dialog_visible,
@@ -10882,7 +10951,8 @@ var Footer = function Footer(_ref) {
                 toggleSettings: toggleSettingsDialog,
                 showBlur: showBlur,
                 hideBlur: hideBlur
-            })
+            }),
+            _react2.default.createElement(_Footer.ToggleFullScreen, null)
         )
     );
 };
@@ -11015,7 +11085,12 @@ var Header = function Header(_ref) {
                         }),
                         !!(can_upgrade_to && is_virtual) && _react2.default.createElement(_Header.UpgradeButton, { className: 'acc-info__button' }),
                         !is_virtual && _react2.default.createElement(_Header.DepositButton, { className: 'acc-info__button' })
-                    ) : _react2.default.createElement(_Header.LoginButton, { className: 'acc-info__button' })
+                    ) : _react2.default.createElement(
+                        _react2.default.Fragment,
+                        null,
+                        _react2.default.createElement(_Header.LoginButton, { className: 'acc-info__button' }),
+                        _react2.default.createElement(_Header.SignupButton, { className: 'acc-info__button' })
+                    )
                 )
             )
         )
@@ -13270,7 +13345,7 @@ var IconMinus = function IconMinus(_ref) {
     return _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className, { disabled: is_disabled }), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
-        _react2.default.createElement('path', { className: 'color1-fill', fill: 'rgba(0, 0, 0, 0.8)', fillRule: 'evenodd', d: 'M3 7.5h10v1H3z' })
+        _react2.default.createElement('path', { className: 'color1-fill', fill: '#7f8397', fillRule: 'evenodd', d: 'M3 7.5h10v1H3z' })
     );
 };
 
@@ -13318,7 +13393,7 @@ var IconPlus = function IconPlus(_ref) {
     return _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className, { disabled: is_disabled }), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
-        _react2.default.createElement('path', { className: 'color1-fill', fill: '#5C5C5C', fillRule: 'evenodd', d: 'M8.5 7.5H13v1H8.5V13h-1V8.5H3v-1h4.5V3h1v4.5z' })
+        _react2.default.createElement('path', { className: 'color1-fill', fill: '#7f8397', fillRule: 'evenodd', d: 'M8.5 7.5H13v1H8.5V13h-1V8.5H3v-1h4.5V3h1v4.5z' })
     );
 };
 
@@ -14605,13 +14680,8 @@ var IconPortfolio = function IconPortfolio(_ref) {
     var className = _ref.className;
     return _react2.default.createElement(
         'svg',
-        { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '14', viewBox: '0 0 16 14' },
-        _react2.default.createElement(
-            'g',
-            { fill: 'none', fillRule: 'evenodd' },
-            _react2.default.createElement('path', { fill: '#000', fillOpacity: '0.16', d: 'M5 2v-.5A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5V2h3.5A1.5 1.5 0 0 1 16 3.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 12.5v-9A1.5 1.5 0 0 1 1.5 2H5zm1 0h4v-.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V2z' }),
-            _react2.default.createElement('path', { fill: '#FFF', fillRule: 'nonzero', d: 'M1 8.128l2.804 1.557A2.5 2.5 0 0 0 5.018 10h5.964a2.5 2.5 0 0 0 1.214-.315L15 8.128V12.5a.5.5 0 0 1-.5.5h-13a.5.5 0 0 1-.5-.5V8.128zm0-1.144V3.5a.5.5 0 0 1 .5-.5h13a.5.5 0 0 1 .5.5v3.484L11.71 8.81a1.5 1.5 0 0 1-.728.189H5.018a1.5 1.5 0 0 1-.728-.189L1 6.984zM6.5 8h3a.5.5 0 0 0 0-1h-3a.5.5 0 0 0 0 1z' })
-        )
+        { className: (0, _classnames2.default)('inline-icon', className), xmlns: 'http://www.w3.org/2000/svg', width: '16', height: '16', viewBox: '0 0 16 16' },
+        _react2.default.createElement('path', { fill: 'rgba(0, 0, 0, 0.8)', fillRule: 'evenodd', d: 'M5 3v-.5A1.5 1.5 0 0 1 6.5 1h3A1.5 1.5 0 0 1 11 2.5V3h3.5A1.5 1.5 0 0 1 16 4.5v9a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 13.5v-9A1.5 1.5 0 0 1 1.5 3H5zm1 0h4v-.5a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5V3zM1 9.128V13.5a.5.5 0 0 0 .5.5h13a.5.5 0 0 0 .5-.5V9.128l-2.804 1.557a2.5 2.5 0 0 1-1.214.315H5.018a2.5 2.5 0 0 1-1.214-.315L1 9.128zm0-1.144L4.29 9.81a1.5 1.5 0 0 0 .728.189h5.964a1.5 1.5 0 0 0 .728-.189L15 7.984V4.5a.5.5 0 0 0-.5-.5h-13a.5.5 0 0 0-.5.5v3.484zM6.5 9a.5.5 0 0 1 0-1h3a.5.5 0 0 1 0 1h-3z' })
     );
 };
 
@@ -18015,7 +18085,7 @@ var _react2 = _interopRequireDefault(_react);
 
 var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
-var _NavBar = __webpack_require__(/*! ../../../Assets/Header/NavBar */ "./src/javascript/app_2/Assets/Header/NavBar/index.js");
+var _Footer = __webpack_require__(/*! ../../../Assets/Footer */ "./src/javascript/app_2/Assets/Footer/index.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -18028,7 +18098,7 @@ var EmptyPortfolioMessage = function EmptyPortfolioMessage() {
             _react2.default.createElement(
                 'div',
                 { className: 'portfolio-empty__wrapper' },
-                _react2.default.createElement(_NavBar.IconPortfolio, { className: 'portfolio-empty__icon' }),
+                _react2.default.createElement(_Footer.IconPositions, { className: 'portfolio-empty__icon' }),
                 _react2.default.createElement(
                     'span',
                     { className: 'portfolio-empty__text' },
@@ -18831,6 +18901,8 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Common = __webpack_require__(/*! ../../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
+
 var _Categories = __webpack_require__(/*! ../../../../../Assets/Trading/Categories */ "./src/javascript/app_2/Assets/Trading/Categories/index.js");
 
 var _contractTypeDialog = __webpack_require__(/*! ./contract-type-dialog.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/ContractType/contract-type-dialog.jsx");
@@ -19011,7 +19083,7 @@ var ContractTypeWidget = function (_React$PureComponent) {
                 'div',
                 {
                     ref: this.setWrapperRef,
-                    className: 'contract-type-widget',
+                    className: 'contract-type-widget dropdown--left',
                     tabIndex: '0'
                 },
                 _react2.default.createElement(
@@ -19027,7 +19099,8 @@ var ContractTypeWidget = function (_React$PureComponent) {
                         'span',
                         { name: this.props.name, value: this.props.value },
                         this.getDisplayText()
-                    )
+                    ),
+                    _react2.default.createElement(_Common.IconArrow, { className: 'contract-type-widget__select-arrow contract-type-widget__select-arrow--left' })
                 ),
                 _react2.default.createElement(
                     _contractTypeDialog2.default,
@@ -19162,11 +19235,11 @@ var TradingDatePicker = function TradingDatePicker(_ref) {
         min_date_expiry = void 0,
         has_today_btn = void 0,
         is_read_only = void 0;
-    var min_duration = (0, _duration.hasIntradayDurationUnit)(duration_units_list) ? (0, _Date.toMoment)(server_time) : (0, _Date.toMoment)(server_time).add(duration_min_max.daily.min, 'second');
+    var has_intraday_unit = (0, _duration.hasIntradayDurationUnit)(duration_units_list);
+    var min_duration = has_intraday_unit ? (0, _Date.toMoment)(server_time) : (0, _Date.toMoment)(server_time).add(duration_min_max.daily.min, 'second');
     var moment_contract_start_date_time = (0, _Date.setTime)((0, _Date.toMoment)(min_duration), (0, _Date.isTimeValid)(start_time) ? start_time : server_time.format('HH:mm:ss'));
 
     var max_daily_duration = duration_min_max.daily ? duration_min_max.daily.max : 365 * 24 * 3600;
-
     if (is_24_hours_contract) {
         min_date_expiry = moment_contract_start_date_time.clone().startOf('day');
         max_date_duration = moment_contract_start_date_time.clone().add(start_date ? 24 * 3600 : max_daily_duration, 'second');
@@ -19175,7 +19248,9 @@ var TradingDatePicker = function TradingDatePicker(_ref) {
         max_date_duration = moment_contract_start_date_time.clone().add(max_daily_duration, 'second');
     }
     if (expiry_type === 'duration') {
-        min_date_expiry.add(1, 'day');
+        if (has_intraday_unit) {
+            min_date_expiry.add(1, 'day');
+        }
         has_today_btn = false;
         is_read_only = false;
     } else {
@@ -21703,7 +21778,8 @@ var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Purchase = function Purchase(_ref) {
-    var currency = _ref.currency,
+    var contract_type = _ref.contract_type,
+        currency = _ref.currency,
         is_contract_mode = _ref.is_contract_mode,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
         is_purchase_confirm_on = _ref.is_purchase_confirm_on,
@@ -21721,6 +21797,7 @@ var Purchase = function Purchase(_ref) {
         var info = proposal_info[type] || {};
         var is_disabled = !is_purchase_enabled || !is_trade_enabled || !info.id || !is_client_allowed_to_visit;
         var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
+        var is_high_low = /high_low/.test(contract_type.toLowerCase());
 
         var purchase_button = _react2.default.createElement(
             _button2.default,
@@ -21744,7 +21821,7 @@ var Purchase = function Purchase(_ref) {
                     _react2.default.createElement(
                         'div',
                         { className: 'btn-purchase__trade-type' },
-                        _react2.default.createElement(_Types.IconTradeType, { type: type.toLowerCase(), className: 'btn-purchase__trade-type-icon' }),
+                        _react2.default.createElement(_Types.IconTradeType, { type: !is_high_low ? type.toLowerCase() : type.toLowerCase() + '_barrier', className: 'btn-purchase__trade-type-icon' }),
                         _react2.default.createElement(
                             'span',
                             { className: 'btn-purchase__trade-type-text' },
@@ -21841,6 +21918,7 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
         is_contract_mode: modules.smart_chart.is_contract_mode,
+        contract_type: modules.trade.contract_type,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,
