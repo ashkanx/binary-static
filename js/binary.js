@@ -929,7 +929,7 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var GTM = function () {
     var isGtmApplicable = function isGtmApplicable() {
-        return (/^(1|1098|14473|15284)$/.test(getAppId())
+        return (/^(1|1098|14473|15284|1108)$/.test(getAppId())
         );
     };
 
