@@ -3624,44 +3624,6 @@ exports.default = ContractTypeCell;
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/duration-percentage.js":
-/*!*****************************************************************************************************!*\
-  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/duration-percentage.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.getTimePercentage = undefined;
-
-var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
-
-var _moment2 = _interopRequireDefault(_moment);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-// TODO: Refactor and simplify, handle tick duration
-var getTimePercentage = exports.getTimePercentage = function getTimePercentage(start_time, purchase_time, expiry_time) {
-    var duration_from_purchase = _moment2.default.duration(_moment2.default.unix(expiry_time).diff(_moment2.default.unix(purchase_time)));
-    var duration_from_now = _moment2.default.duration(_moment2.default.unix(expiry_time).diff(start_time));
-    var percentage = duration_from_now.asMilliseconds() / duration_from_purchase.asMilliseconds() * 100;
-
-    if (percentage < 0.5) {
-        percentage = 1;
-    } else if (percentage > 100) {
-        percentage = 100;
-    }
-
-    return Math.round(percentage);
-};
-
-/***/ }),
-
 /***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/index.js":
 /*!***************************************************************************************!*\
   !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/index.js ***!
@@ -3676,17 +3638,94 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _durationPercentage = __webpack_require__(/*! ./duration-percentage */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/duration-percentage.js");
+var _positionsHelper = __webpack_require__(/*! ./positions-helper */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/positions-helper.js");
 
-Object.keys(_durationPercentage).forEach(function (key) {
+Object.keys(_positionsHelper).forEach(function (key) {
   if (key === "default" || key === "__esModule") return;
   Object.defineProperty(exports, key, {
     enumerable: true,
     get: function get() {
-      return _durationPercentage[key];
+      return _positionsHelper[key];
     }
   });
 });
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/positions-helper.js":
+/*!**************************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/positions-helper.js ***!
+  \**************************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.getBarrierValue = exports.getBarrierLabel = exports.getTimePercentage = exports.addCommaToNumber = undefined;
+
+var _moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
+
+var _moment2 = _interopRequireDefault(_moment);
+
+var _localize = __webpack_require__(/*! ../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var addCommaToNumber = exports.addCommaToNumber = function addCommaToNumber(num) {
+    var n = String(num);
+    var p = n.indexOf('.');
+    return n.replace(/\d(?=(?:\d{3})+(?:\.|$))/g, function (m, i) {
+        return p <= 0 || i < p ? m + ',' : m;
+    });
+};
+
+var getTimePercentage = exports.getTimePercentage = function getTimePercentage(current_time, purchase_time, expiry_time) {
+    var duration_from_purchase = _moment2.default.duration(_moment2.default.unix(expiry_time).diff(_moment2.default.unix(purchase_time)));
+    var duration_from_now = _moment2.default.duration(_moment2.default.unix(expiry_time).diff(current_time));
+    var percentage = duration_from_now.asMilliseconds() / duration_from_purchase.asMilliseconds() * 100;
+
+    if (percentage < 0.5) {
+        percentage = 1;
+    } else if (percentage > 100) {
+        percentage = 100;
+    }
+
+    return Math.round(percentage);
+};
+
+var getBarrierLabel = exports.getBarrierLabel = function getBarrierLabel(contract_info) {
+    if (isDigitType(contract_info.contract_type)) {
+        return (0, _localize.localize)('Target');
+    }
+    return (0, _localize.localize)('Barrier');
+};
+
+var getBarrierValue = exports.getBarrierValue = function getBarrierValue(contract_info) {
+    if (isDigitType(contract_info.contract_type)) {
+        return digitTypeMap(contract_info)[contract_info.contract_type];
+    }
+    return addCommaToNumber(contract_info.barrier);
+};
+
+var digitTypeMap = function digitTypeMap(contract_info) {
+    return {
+        DIGITDIFF: (0, _localize.localize)('Not [_1]', contract_info.barrier),
+        DIGITEVEN: (0, _localize.localize)('Even'),
+        DIGITMATCH: (0, _localize.localize)('Equals [_1]', contract_info.barrier),
+        DIGITODD: (0, _localize.localize)('Odd'),
+        DIGITOVER: (0, _localize.localize)('Over [_1]', contract_info.barrier),
+        DIGITUNDER: (0, _localize.localize)('Under [_1]', contract_info.barrier)
+    };
+};
+
+var isDigitType = function isDigitType(contract_type) {
+    return (/digit/.test(contract_type.toLowerCase())
+    );
+};
 
 /***/ }),
 
@@ -3784,6 +3823,7 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
         currency = _ref.currency,
         duration = _ref.duration,
         duration_unit = _ref.duration_unit,
+        exit_spot = _ref.exit_spot,
         indicative = _ref.indicative,
         id = _ref.id,
         is_sell_requested = _ref.is_sell_requested,
@@ -3923,30 +3963,28 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
             )
         ),
         _react2.default.createElement(_resultDetails2.default, {
-            barrier: contract_info.barrier,
+            contract_info: contract_info,
             contract_end_time: sell_time,
-            contract_start_time: contract_info.purchase_time,
             duration: duration,
             duration_unit: duration_unit,
-            entry_spot: contract_info.entry_spot,
-            tick_count: contract_info.tick_count,
-            has_result: !!result,
-            id_sell: contract_info.transaction_ids.sell
+            exit_spot: exit_spot,
+            has_result: !!result
         })
     );
 };
 
 PositionsDrawerCard.propTypes = {
-    active_position: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    active_position: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     className: _propTypes2.default.string,
     contract_info: _propTypes2.default.object,
     currency: _propTypes2.default.string,
     duration: _propTypes2.default.number,
     duration_unit: _propTypes2.default.string,
+    exit_spot: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     id: _propTypes2.default.number,
     indicative: _propTypes2.default.number,
     is_sell_requested: _propTypes2.default.bool,
-    is_valid_to_sell: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.bool]),
+    is_valid_to_sell: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.bool]),
     onClickRemove: _propTypes2.default.func,
     onClickSell: _propTypes2.default.func,
     openContract: _propTypes2.default.func,
@@ -4140,7 +4178,7 @@ var PositionsDrawer = function (_React$Component) {
 }(_react2.default.Component);
 
 PositionsDrawer.propTypes = {
-    active_contract_id: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    active_contract_id: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     active_positions: _mobxReact.PropTypes.arrayOrObservableArray,
     children: _propTypes2.default.any,
     currency: _propTypes2.default.string,
@@ -4270,6 +4308,8 @@ var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./sr
 
 var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
+var _helpers = __webpack_require__(/*! ./helpers */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/helpers/index.js");
+
 var _resultDetailsItem = __webpack_require__(/*! ./result-details-item.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/result-details-item.jsx");
 
 var _resultDetailsItem2 = _interopRequireDefault(_resultDetailsItem);
@@ -4307,21 +4347,17 @@ var ResultDetails = function (_React$PureComponent) {
         key: 'render',
         value: function render() {
             var _props = this.props,
-                barrier = _props.barrier,
                 contract_end_time = _props.contract_end_time,
-                contract_start_time = _props.contract_start_time,
+                contract_info = _props.contract_info,
                 duration = _props.duration,
                 duration_unit = _props.duration_unit,
-                entry_spot = _props.entry_spot,
-                has_result = _props.has_result,
-                id_sell = _props.id_sell,
-                tick_count = _props.tick_count;
+                exit_spot = _props.exit_spot,
+                has_result = _props.has_result;
 
             if (!has_result) return null;
             return _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
-                _react2.default.createElement('div', { className: 'result-details__separator' }),
                 _react2.default.createElement(
                     'div',
                     { className: (0, _classnames2.default)('result-details__wrapper', {
@@ -4332,24 +4368,36 @@ var ResultDetails = function (_React$PureComponent) {
                         'div',
                         { className: 'result-details__grid' },
                         _react2.default.createElement(_resultDetailsItem2.default, {
-                            label: (0, _localize.localize)('Reference ID'),
-                            value: id_sell
+                            label: (0, _localize.localize)('Ref. ID (Buy)'),
+                            value: contract_info.transaction_ids.buy
                         }),
                         _react2.default.createElement(_resultDetailsItem2.default, {
-                            label: (0, _localize.localize)('Duration'),
-                            value: tick_count ? tick_count + ' ' + (0, _localize.localize)('ticks') : duration + ' ' + duration_unit
+                            label: (0, _localize.localize)('Ref. ID (Sell)'),
+                            value: contract_info.transaction_ids.sell
                         })
                     ),
                     _react2.default.createElement(
                         'div',
                         { className: 'result-details__grid' },
                         _react2.default.createElement(_resultDetailsItem2.default, {
-                            label: (0, _localize.localize)('Barrier'),
-                            value: barrier ? barrier.toString() : ' - '
+                            label: (0, _localize.localize)('Duration'),
+                            value: contract_info.tick_count > 0 ? contract_info.tick_count + ' ' + (contract_info.tick_count < 2 ? (0, _localize.localize)('tick') : (0, _localize.localize)('ticks')) : duration + ' ' + duration_unit
                         }),
                         _react2.default.createElement(_resultDetailsItem2.default, {
+                            label: (0, _helpers.getBarrierLabel)(contract_info),
+                            value: (0, _helpers.getBarrierValue)(contract_info) || ' - '
+                        })
+                    ),
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'result-details__grid' },
+                        _react2.default.createElement(_resultDetailsItem2.default, {
                             label: (0, _localize.localize)('Entry spot'),
-                            value: entry_spot || ' - '
+                            value: (0, _helpers.addCommaToNumber)(contract_info.entry_spot) || ' - '
+                        }),
+                        _react2.default.createElement(_resultDetailsItem2.default, {
+                            label: (0, _localize.localize)('Exit spot'),
+                            value: (0, _helpers.addCommaToNumber)(exit_spot) || ' - '
                         })
                     ),
                     _react2.default.createElement(
@@ -4357,11 +4405,11 @@ var ResultDetails = function (_React$PureComponent) {
                         { className: 'result-details__grid' },
                         _react2.default.createElement(_resultDetailsItem2.default, {
                             label: (0, _localize.localize)('Start time'),
-                            value: (0, _Date.toGMTFormat)((0, _Date.epochToMoment)(contract_start_time))
+                            value: (0, _Date.toGMTFormat)((0, _Date.epochToMoment)(contract_info.purchase_time)) || ' - '
                         }),
                         _react2.default.createElement(_resultDetailsItem2.default, {
                             label: (0, _localize.localize)('End time'),
-                            value: (0, _Date.toGMTFormat)((0, _Date.epochToMoment)(contract_end_time))
+                            value: (0, _Date.toGMTFormat)((0, _Date.epochToMoment)(contract_end_time)) || ' - '
                         })
                     )
                 ),
@@ -4383,15 +4431,12 @@ var ResultDetails = function (_React$PureComponent) {
 }(_react2.default.PureComponent);
 
 ResultDetails.propTypes = {
-    barrier: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     contract_end_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-    contract_start_time: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    contract_info: _propTypes2.default.object,
     duration: _propTypes2.default.number,
     duration_unit: _propTypes2.default.string,
-    entry_spot: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-    has_result: _propTypes2.default.bool,
-    id_sell: _propTypes2.default.PropTypes.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-    tick_count: _propTypes2.default.number
+    exit_spot: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
+    has_result: _propTypes2.default.bool
 };
 
 exports.default = ResultDetails;
@@ -23539,8 +23584,11 @@ var getDetailsExpiry = exports.getDetailsExpiry = function getDetailsExpiry(stor
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
+exports.getDigitInfo = exports.isDigitContract = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var _logic = __webpack_require__(/*! ./logic */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/logic.js");
 
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
@@ -23550,26 +23598,22 @@ var isDigitContract = exports.isDigitContract = function isDigitContract(contrac
 };
 
 var getDigitInfo = exports.getDigitInfo = function getDigitInfo(digits_info, contract_info) {
-    var start_time = +contract_info.entry_tick_time;
-    if (!start_time) return {}; // filter out the responses before contract start
+    var tick_stream = contract_info.tick_stream;
 
-    var entry = start_time in digits_info ? {} : createDigitInfo(contract_info.entry_tick, start_time);
+    var _getLastTickFromTickS = (0, _logic.getLastTickFromTickStream)(tick_stream),
+        tick = _getLastTickFromTickS.tick,
+        epoch = _getLastTickFromTickS.epoch;
 
-    var spot_time = +contract_info.current_spot_time;
-    var exit_time = +contract_info.exit_tick_time;
-    var is_after_expiry = exit_time && spot_time > exit_time;
+    if (!tick || !epoch) return {}; // filter out empty responses
 
-    var current = spot_time in digits_info || is_after_expiry ? {} : // filter out duplicated responses and those after contract expiry
-    createDigitInfo(contract_info.current_spot, spot_time);
+    var current = epoch in digits_info ? {} : // filter out duplicated responses
+    createDigitInfo(tick, epoch);
 
-    var is_expired = contract_info.is_expired;
-    var exit = exit_time in digits_info || !is_expired ? {} : createDigitInfo(contract_info.exit_tick, exit_time);
-
-    return _extends({}, entry, current, exit);
+    return _extends({}, current);
 };
 
 var createDigitInfo = function createDigitInfo(spot, spot_time) {
-    var digit = +("" + spot).slice(-1);
+    var digit = +('' + spot).slice(-1);
 
     return _defineProperty({}, +spot_time, {
         digit: digit,
@@ -23621,11 +23665,15 @@ var getDisplayStatus = exports.getDisplayStatus = function getDisplayStatus(cont
 };
 
 var getEndSpot = exports.getEndSpot = function getEndSpot(contract_info) {
-    return isUserSold(contract_info) ? +contract_info.sell_spot : +contract_info.exit_tick;
+    return isUserSold(contract_info) ? contract_info.sell_spot : contract_info.exit_tick;
 };
 
-var getEndSpotTime = exports.getEndSpotTime = function getEndSpotTime(contract_info) {
-    return isUserSold(contract_info) ? +contract_info.sell_spot_time : +contract_info.exit_tick_time;
+var getEndSpotTime = exports.getEndSpotTime = function getEndSpotTime(contract_info, is_return_string) {
+    var end_spot_time = isUserSold(contract_info) ? contract_info.sell_spot_time : contract_info.exit_tick_time;
+    if (is_return_string) {
+        return end_spot_time;
+    }
+    return +end_spot_time;
 };
 
 var getFinalPrice = exports.getFinalPrice = function getFinalPrice(contract_info) {
@@ -23634,6 +23682,11 @@ var getFinalPrice = exports.getFinalPrice = function getFinalPrice(contract_info
 
 var getIndicativePrice = exports.getIndicativePrice = function getIndicativePrice(contract_info) {
     return getFinalPrice(contract_info) && isEnded(contract_info) ? getFinalPrice(contract_info) : +contract_info.bid_price || null;
+};
+
+var getLastTickFromTickStream = exports.getLastTickFromTickStream = function getLastTickFromTickStream() {
+    var tick_stream = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : [];
+    return tick_stream[tick_stream.length - 1] || {};
 };
 
 var isEnded = exports.isEnded = function isEnded(contract_info) {
@@ -23807,6 +23860,7 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
     }, {
         key: 'onMount',
         value: function onMount(contract_id, has_left_epoch) {
+            if (contract_id === +this.contract_id) return;
             this.onSwitchAccount(this.accountSwitcherListener.bind(null));
             this.has_error = false;
             this.error_message = '';
@@ -24069,19 +24123,19 @@ var getDurationUnitValue = exports.getDurationUnitValue = function getDurationUn
 
 var getDurationUnitText = exports.getDurationUnitText = function getDurationUnitText(obj_duration) {
     var unit_map = {
-        s: { name: (0, _localize.localize)('seconds') },
-        m: { name: (0, _localize.localize)('minutes') },
-        h: { name: (0, _localize.localize)('hours') },
-        d: { name: (0, _localize.localize)('days') }
+        d: { name_plural: (0, _localize.localize)('days'), name_singular: (0, _localize.localize)('day') },
+        h: { name_plural: (0, _localize.localize)('hours'), name_singular: (0, _localize.localize)('hour') },
+        m: { name_plural: (0, _localize.localize)('minutes'), name_singular: (0, _localize.localize)('minute') },
+        s: { name: (0, _localize.localize)('seconds') }
     };
     var duration_ms = obj_duration.asMilliseconds() / 1000;
     if (duration_ms) {
         if (duration_ms >= 86400000) {
-            return unit_map.d.name;
+            return duration_ms === 8640000 ? unit_map.d.name_singular : unit_map.d.name_plural;
         } else if (duration_ms >= 3600000 && duration_ms < 86400000) {
-            return unit_map.h.name;
+            return duration_ms === 360000 ? unit_map.h.name_singular : unit_map.h.name_plural;
         } else if (duration_ms >= 60000 && duration_ms < 3600000) {
-            return unit_map.m.name;
+            return duration_ms === 60000 ? unit_map.m.name_singular : unit_map.m.name_plural;
         } else if (duration_ms >= 1000 && duration_ms < 60000) {
             return unit_map.s.name;
         }
@@ -24299,6 +24353,10 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             var new_indicative = +proposal.bid_price;
             var profit_loss = +proposal.profit;
 
+            // fix for missing barrier and entry_spot in proposal_open_contract API response, only re-assign if valid
+            if (proposal.barrier) portfolio_position.barrier = +proposal.barrier;
+            if (proposal.entry_spot) portfolio_position.entry_spot = +proposal.entry_spot;
+
             // store contract proposal details that require modifiers
             portfolio_position.indicative = new_indicative;
             portfolio_position.profit_loss = profit_loss;
@@ -24477,12 +24535,19 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             var contract_response = response.proposal_open_contract;
             var i = _this5.getPositionIndexById(contract_response.contract_id);
 
+            _this5.positions[i].contract_info = contract_response;
+            _this5.positions[i].exit_spot = (0, _logic.getEndSpot)(contract_response) || contract_response.current_spot; // workaround if no exit_spot in proposal_open_contract, use latest spot
             _this5.positions[i].duration = (0, _details.getDurationTime)(contract_response);
             _this5.positions[i].duration_unit = (0, _details.getDurationUnitText)((0, _details.getDurationPeriod)(contract_response));
-            _this5.positions[i].sell_time = (0, _logic.getEndSpotTime)(contract_response);
-            _this5.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
             _this5.positions[i].is_valid_to_sell = (0, _logic.isValidToSell)(contract_response);
-            _this5.positions[i].contract_info = contract_response;
+            _this5.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
+            _this5.positions[i].sell_time = (0, _logic.getEndSpotTime)(contract_response) || contract_response.current_spot_time; // same as exit_spot, use latest spot time if no exit_tick_time
+
+            // fix for missing barrier and entry_spot
+            if (!_this5.positions[i].contract_info.barrier || !_this5.positions[i].contract_info.entry_spot) {
+                _this5.positions[i].contract_info.barrier = _this5.positions[i].barrier;
+                _this5.positions[i].contract_info.entry_spot = _this5.positions[i].entry_spot;
+            }
         };
     }
 }), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));

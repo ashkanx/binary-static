@@ -929,17 +929,17 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var GTM = function () {
     var isGtmApplicable = function isGtmApplicable() {
-        return (/^(1|1098|14473|15284|1108)$/.test(getAppId())
+        return (/^(1|1098|14473|15284)$/.test(getAppId())
         );
     };
 
     var getCommonVariables = function getCommonVariables() {
         return _extends({
+            country_ip: State.getResponse('website_status.clients_country'),
             language: getLanguage(),
             pageTitle: pageTitle(),
             pjax: State.get('is_loaded_by_pjax'),
-            url: document.URL,
-            country_ip: State.getResponse('website_status.clients_country')
+            url: document.URL
         }, ClientBase.isLoggedIn() && {
             visitorId: ClientBase.get('loginid'),
             bom_email: ClientBase.get('email')
@@ -9976,6 +9976,11 @@ var BinaryPjax = function () {
         }, '', getElementById('all-accounts'));
         document.addEventListener('click', handleClick);
         window.addEventListener('popstate', handlePopstate);
+
+        // IE11 PopState
+        if (!!window.MSInputMethodContext && !!document.documentMode) {
+            window.onhashchange = handlePopstate;
+        }
     };
 
     var setDataPage = function setDataPage(content, url) {
@@ -10091,11 +10096,24 @@ var BinaryPjax = function () {
         return false;
     };
 
+    var createEventWithPolyfill = function createEventWithPolyfill(event_name) {
+        var event = void 0;
+        if (typeof Event === 'function') {
+            event = new Event(event_name);
+        } else {
+            // IE11
+            event = document.createEvent('HTMLEvents');
+            event.initEvent(event_name, true, true);
+        }
+
+        return event;
+    };
+
     var replaceContent = function replaceContent(url, content, replace) {
         previous_url = window.location.href;
         window.history[replace ? 'replaceState' : 'pushState']({ url: url }, content.title, url);
 
-        params.container.dispatchEvent(new Event('binarypjax:before'));
+        params.container.dispatchEvent(createEventWithPolyfill('binarypjax:before'));
 
         document.title = content.title;
         var content_selector = params.container.querySelector(params.content_selector);
@@ -36613,7 +36631,12 @@ var TermsAndConditions = function () {
             // 20 is the padding for content from bottom, to avoid menu snapping back up
             $sidebar.css({ position: 'absolute', bottom: '20px', top: '', width: sidebar_width });
         } else {
-            $sidebar.css({ position: 'fixed', top: '0px', bottom: '', width: sidebar_width });
+            var position_style = 'fixed';
+            if (!!window.MSInputMethodContext && !!document.documentMode) {
+                // fix styling for IE11
+                position_style = 'static';
+            }
+            $sidebar.css({ position: position_style, top: '0px', bottom: '', width: sidebar_width });
         }
     };
 
