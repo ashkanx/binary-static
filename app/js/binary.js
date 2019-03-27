@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio~statement":"portfolio~statement","portfolio":"portfolio","statement":"statement","self_exclusion":"self_exclusion","settings":"settings","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"cbb3f11fff75dd57bfef","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"044ca017a6864b043a4d","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio~statement":"4b11346e99830481ee15","portfolio":"90c69f17efacf0441d50","statement":"83be0ace500a644e5479","self_exclusion":"226ac0134b0354423868","settings":"90edf5f4d945de1a9104","vendors~smart_chart":"da70dc806a774f7ff1ee","smart_chart":"34e6da84e355fdd9098f"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_toke":"api_toke","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio~statement":"portfolio~statement","portfolio":"portfolio","statement":"statement","self_exclusion":"self_exclusion","settings":"settings","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"cbb3f11fff75dd57bfef","account_password":"5b98c5e0011cf272df7f","api_toke":"856a16352b5b0f7b5fb2","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"044ca017a6864b043a4d","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio~statement":"4b11346e99830481ee15","portfolio":"90c69f17efacf0441d50","statement":"83be0ace500a644e5479","self_exclusion":"226ac0134b0354423868","settings":"90edf5f4d945de1a9104","vendors~smart_chart":"0ba67c3be471f15f41ec","smart_chart":"34e6da84e355fdd9098f"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -23163,22 +23163,21 @@ var getSpotCount = function getSpotCount(contract_info, spot_count) {
 // -------------------- Lines --------------------
 var createMarkerExpiry = exports.createMarkerExpiry = function createMarkerExpiry(contract_info) {
     var end_spot_time = (0, _logic.getEndSpotTime)(contract_info);
-
     if (contract_info.status === 'open' || !end_spot_time) return false;
 
-    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_END.type, end_spot_time);
+    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_END.type, +end_spot_time);
 };
 
 var createMarkerPurchaseTime = exports.createMarkerPurchaseTime = function createMarkerPurchaseTime(contract_info) {
     if (!contract_info.purchase_time || !contract_info.date_start || +contract_info.purchase_time === +contract_info.date_start) return false;
 
-    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_PURCHASE.type, contract_info.purchase_time);
+    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_PURCHASE.type, +contract_info.purchase_time);
 };
 
 var createMarkerStartTime = exports.createMarkerStartTime = function createMarkerStartTime(contract_info) {
     if (!contract_info.date_start) return false;
 
-    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_START.type, contract_info.date_start);
+    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_START.type, +contract_info.date_start);
 };
 
 // -------------------- Spots --------------------
@@ -23187,43 +23186,48 @@ var createMarkerSpotEntry = exports.createMarkerSpotEntry = function createMarke
 
     var marker_type = _markers.MARKER_TYPES_CONFIG.SPOT_ENTRY.type;
     var component_props = {};
-    var spot_has_label = (0, _digits.isDigitContract)(contract_info.contract_type);
 
+    var spot_has_label = (0, _digits.isDigitContract)(contract_info.contract_type);
     if (spot_has_label) {
         marker_type = _markers.MARKER_TYPES_CONFIG.SPOT_MIDDLE.type;
-        var spot_count = 1;
 
         component_props = {
-            spot_value: contract_info.entry_tick,
-            spot_epoch: contract_info.entry_tick_time,
-            spot_count: spot_count
+            spot_value: '' + contract_info.entry_tick,
+            spot_epoch: '' + contract_info.entry_tick_time,
+            spot_count: 1
         };
     }
 
     return createMarkerConfig(marker_type, contract_info.entry_tick_time, contract_info.entry_tick, component_props);
 };
 
-var createMarkerSpotExit = exports.createMarkerSpotExit = function createMarkerSpotExit(contract_info, idx, align_label) {
+var createMarkerSpotExit = exports.createMarkerSpotExit = function createMarkerSpotExit(contract_info, tick, idx) {
     if (!contract_info.exit_tick_time || (0, _logic.isUserSold)(contract_info)) return false;
-    var spot_count = getSpotCount(contract_info, idx);
 
-    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.SPOT_EXIT.type, contract_info.exit_tick_time, contract_info.exit_tick, {
+    var spot_count = void 0,
+        align_label = void 0;
+    if (tick) {
+        spot_count = getSpotCount(contract_info, idx);
+        align_label = tick.align_label;
+    }
+
+    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.SPOT_EXIT.type, +contract_info.exit_tick_time, +contract_info.exit_tick, {
         spot_value: '' + contract_info.exit_tick,
         spot_epoch: '' + contract_info.exit_tick_time,
         status: '' + (contract_info.profit > 0 ? 'won' : 'lost'),
-        spot_count: spot_count,
-        align_label: align_label
+        align_label: align_label,
+        spot_count: spot_count
     });
 };
 
-var createMarkerSpotMiddle = exports.createMarkerSpotMiddle = function createMarkerSpotMiddle(contract_info, tick, idx, align_label) {
+var createMarkerSpotMiddle = exports.createMarkerSpotMiddle = function createMarkerSpotMiddle(contract_info, tick, idx) {
     var spot_count = getSpotCount(contract_info, idx);
 
-    var marker_config = createMarkerConfig(_markers.MARKER_TYPES_CONFIG.SPOT_MIDDLE.type, tick.time, tick.price, {
-        spot_value: '' + tick.price,
-        spot_epoch: '' + tick.time,
-        spot_count: spot_count,
-        align_label: align_label
+    var marker_config = createMarkerConfig(_markers.MARKER_TYPES_CONFIG.SPOT_MIDDLE.type, +tick.epoch, +tick.tick, {
+        spot_value: '' + tick.tick,
+        spot_epoch: '' + tick.epoch,
+        align_label: tick.align_label,
+        spot_count: spot_count
     });
     marker_config.type = marker_config.type + '_' + idx;
 
@@ -23247,9 +23251,11 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.createChartMarkers = undefined;
 
-var _marker_creators;
+var _marker_spots, _marker_lines;
 
 var _chartMarkerHelpers = __webpack_require__(/*! ./chart-marker-helpers */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-marker-helpers.js");
+
+var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
 var _markers = __webpack_require__(/*! ../../SmartChart/Constants/markers */ "./src/javascript/app_2/Stores/Modules/SmartChart/Constants/markers.js");
 
@@ -23257,206 +23263,64 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 
 var createChartMarkers = exports.createChartMarkers = function createChartMarkers(SmartChartStore, contract_info) {
     if (contract_info) {
-        Object.keys(marker_creators).forEach(function (marker_type) {
-            if (marker_type in SmartChartStore.markers) return;
-
-            var marker_config = marker_creators[marker_type](contract_info);
-            if (marker_config) {
-                SmartChartStore.createMarker(marker_config);
-            }
-        });
+        if (contract_info.tick_count) {
+            addTickMarker(SmartChartStore, contract_info);
+        } else {
+            addMarker(marker_spots, SmartChartStore, contract_info);
+        }
+        addMarker(marker_lines, SmartChartStore, contract_info);
     }
 };
 
-var marker_creators = (_marker_creators = {}, _defineProperty(_marker_creators, _markers.MARKER_TYPES_CONFIG.LINE_END.type, _chartMarkerHelpers.createMarkerExpiry), _defineProperty(_marker_creators, _markers.MARKER_TYPES_CONFIG.LINE_PURCHASE.type, _chartMarkerHelpers.createMarkerPurchaseTime), _defineProperty(_marker_creators, _markers.MARKER_TYPES_CONFIG.LINE_START.type, _chartMarkerHelpers.createMarkerStartTime), _defineProperty(_marker_creators, _markers.MARKER_TYPES_CONFIG.SPOT_ENTRY.type, _chartMarkerHelpers.createMarkerSpotEntry), _defineProperty(_marker_creators, _markers.MARKER_TYPES_CONFIG.SPOT_EXIT.type, _chartMarkerHelpers.createMarkerSpotExit), _marker_creators);
+var marker_spots = (_marker_spots = {}, _defineProperty(_marker_spots, _markers.MARKER_TYPES_CONFIG.SPOT_ENTRY.type, _chartMarkerHelpers.createMarkerSpotEntry), _defineProperty(_marker_spots, _markers.MARKER_TYPES_CONFIG.SPOT_EXIT.type, _chartMarkerHelpers.createMarkerSpotExit), _marker_spots);
 
-/***/ }),
+var marker_lines = (_marker_lines = {}, _defineProperty(_marker_lines, _markers.MARKER_TYPES_CONFIG.LINE_START.type, _chartMarkerHelpers.createMarkerStartTime), _defineProperty(_marker_lines, _markers.MARKER_TYPES_CONFIG.LINE_END.type, _chartMarkerHelpers.createMarkerExpiry), _defineProperty(_marker_lines, _markers.MARKER_TYPES_CONFIG.LINE_PURCHASE.type, _chartMarkerHelpers.createMarkerPurchaseTime), _marker_lines);
 
-/***/ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-tick-markers.js":
-/*!************************************************************************************!*\
-  !*** ./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-tick-markers.js ***!
-  \************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
+var addMarker = function addMarker(marker_obj, SmartChartStore, contract_info) {
+    Object.keys(marker_obj).forEach(createMarker);
 
-"use strict";
+    function createMarker(marker_type) {
+        if (marker_type in SmartChartStore.markers) return;
 
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.destroyChartTickMarkers = exports.createChartTickMarkers = undefined;
-
-var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
-
-var _Services = __webpack_require__(/*! ../../../../Services */ "./src/javascript/app_2/Services/index.js");
-
-var _chartMarkerHelpers = __webpack_require__(/*! ./chart-marker-helpers */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-marker-helpers.js");
-
-function _objectWithoutProperties(obj, keys) { var target = {}; for (var i in obj) { if (keys.indexOf(i) >= 0) continue; if (!Object.prototype.hasOwnProperty.call(obj, i)) continue; target[i] = obj[i]; } return target; }
-
-function _toArray(arr) { return Array.isArray(arr) ? arr : Array.from(arr); }
-
-function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
-
-var createChartTickMarkers = exports.createChartTickMarkers = function createChartTickMarkers(SmartChartStore, contract_info) {
-    var tick_marker_handler = tickMarker.getInstance(SmartChartStore, contract_info);
-
-    if (contract_info.exit_tick_time) {
-        tick_marker_handler.addSpotsFromHistory();
-        tick_marker_handler.addLines();
-    } else {
-        // TODO: implement middle tick markers for ongoing contracts
-        // tick_marker_handler.addMarkerSpotsFromStream();
+        var marker_config = marker_obj[marker_type](contract_info);
+        if (marker_config) {
+            SmartChartStore.createMarker(marker_config);
+        }
     }
 };
 
-var destroyChartTickMarkers = exports.destroyChartTickMarkers = function destroyChartTickMarkers() {
-    tickMarker.destroyInstance();
-};
+var addLabelAlignment = function addLabelAlignment(tick, idx, arr) {
+    if (idx > 0 && arr.length) {
+        var prev_tick = arr[idx - 1];
 
-var zip = function zip(arr) {
-    for (var _len = arguments.length, arrs = Array(_len > 1 ? _len - 1 : 0), _key = 1; _key < _len; _key++) {
-        arrs[_key - 1] = arguments[_key];
+        if (+tick > +prev_tick.tick) tick.align_label = 'top';
+        if (+tick.tick < +prev_tick.tick) tick.align_label = 'bottom';
+        if (+tick.tick === +prev_tick.tick) tick.align_label = prev_tick.align_label;
     }
 
-    return arr.map(function (val, idx) {
-        return arrs.reduce(function (a, curr) {
-            return [].concat(_toConsumableArray(a), [curr[idx]]);
-        }, [val]);
+    return tick;
+};
+
+var addTickMarker = function addTickMarker(SmartChartStore, contract_info) {
+    var tick_stream = (0, _utility.unique)(contract_info.tick_stream, 'epoch').map(addLabelAlignment);
+
+    tick_stream.forEach(function (tick, idx) {
+        var is_entry_spot = idx === 0;
+        var is_middle_spot = idx > 0 && +tick.epoch !== +contract_info.exit_tick_time;
+        var is_exit_spot = idx > 0 && +tick.epoch === +contract_info.exit_tick_time;
+
+        var marker_config = void 0;
+        if (is_entry_spot) marker_config = (0, _chartMarkerHelpers.createMarkerSpotEntry)(contract_info);
+        if (is_middle_spot) marker_config = (0, _chartMarkerHelpers.createMarkerSpotMiddle)(contract_info, tick, idx);
+        if (is_exit_spot) marker_config = (0, _chartMarkerHelpers.createMarkerSpotExit)(contract_info, tick, idx);
+
+        if (marker_config) {
+            if (marker_config.type in SmartChartStore.markers) return;
+
+            SmartChartStore.createMarker(marker_config);
+        }
     });
 };
-
-var makeTickArr = function makeTickArr(price_arr, times_arr) {
-    return zip(price_arr, times_arr).reduce(function (acc, tick) {
-        return [].concat(_toConsumableArray(acc), [{ price: tick[0], time: tick[1] }]);
-    }, []);
-};
-
-var fnForEach = function fnForEach(fn) {
-    return function (_ref) {
-        var _ref2 = _toArray(_ref),
-            args = _ref2.slice(0);
-
-        return args.forEach(fn);
-    };
-};
-
-var tickMarker = function () {
-    var instance = void 0;
-
-    var tickMarkerHandler = function tickMarkerHandler(SmartChartStore, _ref3) {
-        var contract_info = _objectWithoutProperties(_ref3, []);
-
-        var ticks_history_req = {
-            ticks_history: contract_info.underlying,
-            start: contract_info.entry_tick_time,
-            end: contract_info.exit_tick_time,
-            count: contract_info.tick_count + 1 // add 1 to prevent for 1-tick contracts from returning 5000 ticks
-        };
-        var ticks_added_to_chart = [];
-
-        var addMarkerFromContract = function addMarkerFromContract(markerConfigFn, tick, idx) {
-            var align_label = labelTopOrBottom(tick, idx);
-            var marker_config = markerConfigFn(contract_info, idx, align_label);
-
-            if (marker_config) SmartChartStore.createMarker(marker_config);
-        };
-
-        var labelTopOrBottom = function labelTopOrBottom(tick, idx) {
-            var align_label = 'top';
-            if (tick && tick.price) {
-                if (idx > 0 && ticks_added_to_chart.length) {
-                    var prev_tick = ticks_added_to_chart[idx - 1];
-
-                    if (+tick.price < +prev_tick.price) align_label = 'bottom';
-                    if (+tick.price === +prev_tick.price) align_label = prev_tick.align_label;
-                }
-                ticks_added_to_chart.push(_extends({}, tick, { align_label: align_label }));
-            }
-            return align_label;
-        };
-
-        var addMarkerFromTick = function addMarkerFromTick(markerConfigFn, tick, idx) {
-            var align_label = labelTopOrBottom(tick, idx);
-            var marker_config = markerConfigFn(contract_info, tick, idx, align_label);
-
-            if (marker_config) SmartChartStore.createMarker(marker_config);
-        };
-
-        var isContractTick = function isContractTick(tick) {
-            return +tick.time >= +contract_info.entry_tick_time && +tick.time <= +contract_info.exit_tick_time;
-        };
-
-        var isMiddleTick = function isMiddleTick(tick) {
-            return +tick.time > contract_info.entry_tick_time && tick.time < contract_info.exit_tick_time;
-        };
-
-        var isEntryTick = function isEntryTick(tick) {
-            return +tick.time === +contract_info.entry_tick_time;
-        };
-
-        var isExitTick = function isExitTick(tick) {
-            return +tick.time === +contract_info.exit_tick_time;
-        };
-
-        var addTickToChart = function addTickToChart(tick, idx) {
-            var is_entry = idx === 0 && isEntryTick(tick);
-            var is_exit = isExitTick(tick);
-            var is_middle = isMiddleTick(tick);
-
-            if (is_entry) addMarkerFromContract(_chartMarkerHelpers.createMarkerSpotEntry, tick, idx);
-            if (is_exit) addMarkerFromContract(_chartMarkerHelpers.createMarkerSpotExit, tick, idx);
-            if (is_middle) addMarkerFromTick(_chartMarkerHelpers.createMarkerSpotMiddle, tick, idx);
-        };
-
-        var addTicks = function addTicks(_ref4) {
-            var _ref5 = _toArray(_ref4),
-                ticks_arr = _ref5.slice(0);
-
-            var contract_ticks = ticks_arr.sort(function (a, b) {
-                return +a.time - +b.time;
-            }).filter(isContractTick);
-
-            contract_ticks.forEach(addTickToChart);
-        };
-
-        var onTicksHistory = function onTicksHistory(data) {
-            var _data$history = data.history,
-                prices = _data$history.prices,
-                times = _data$history.times;
-
-            var ticks = makeTickArr(prices, times);
-
-            addTicks(ticks);
-        };
-
-        return {
-            addSpotsFromHistory: function addSpotsFromHistory() {
-                return _Services.WS.sendRequest(_extends({}, ticks_history_req)).then(onTicksHistory);
-            },
-            addLines: function addLines() {
-                fnForEach(addMarkerFromContract)([_chartMarkerHelpers.createMarkerExpiry, _chartMarkerHelpers.createMarkerPurchaseTime, _chartMarkerHelpers.createMarkerStartTime]);
-            },
-            getContractId: function getContractId() {
-                return contract_info.contract_id;
-            }
-        };
-    };
-
-    return {
-        getInstance: function getInstance(SmartChartStore, contract_info) {
-            if (!instance || instance.getContractId() !== contract_info.contract_id) {
-                instance = tickMarkerHandler(SmartChartStore, contract_info);
-            }
-            return instance;
-        },
-        destroyInstance: function destroyInstance() {
-            // TODO: forget tick history stream for ongoing contracts here
-            if (instance) instance = null;
-        }
-    };
-}();
 
 /***/ }),
 
@@ -23668,12 +23532,8 @@ var getEndSpot = exports.getEndSpot = function getEndSpot(contract_info) {
     return isUserSold(contract_info) ? contract_info.sell_spot : contract_info.exit_tick;
 };
 
-var getEndSpotTime = exports.getEndSpotTime = function getEndSpotTime(contract_info, is_return_string) {
-    var end_spot_time = isUserSold(contract_info) ? contract_info.sell_spot_time : contract_info.exit_tick_time;
-    if (is_return_string) {
-        return end_spot_time;
-    }
-    return +end_spot_time;
+var getEndSpotTime = exports.getEndSpotTime = function getEndSpotTime(contract_info) {
+    return isUserSold(contract_info) ? +contract_info.sell_spot_time : +contract_info.exit_tick_time;
 };
 
 var getFinalPrice = exports.getFinalPrice = function getFinalPrice(contract_info) {
@@ -23741,8 +23601,6 @@ var _Services = __webpack_require__(/*! ../../../Services */ "./src/javascript/a
 var _chartBarriers = __webpack_require__(/*! ./Helpers/chart-barriers */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-barriers.js");
 
 var _chartMarkers = __webpack_require__(/*! ./Helpers/chart-markers */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-markers.js");
-
-var _chartTickMarkers = __webpack_require__(/*! ./Helpers/chart-tick-markers */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/chart-tick-markers.js");
 
 var _details = __webpack_require__(/*! ./Helpers/details */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/details.js");
 
@@ -23847,13 +23705,7 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
             }
 
             (0, _chartBarriers.createChartBarrier)(SmartChartStore, contract_info);
-
-            if (contract_info.tick_count && contract_info.exit_tick_time) {
-                // TODO: remove this.contract_info.exit_tick_time when ongoing contracts are implemented
-                (0, _chartTickMarkers.createChartTickMarkers)(SmartChartStore, contract_info);
-            } else {
-                (0, _chartMarkers.createChartMarkers)(SmartChartStore, contract_info);
-            }
+            (0, _chartMarkers.createChartMarkers)(SmartChartStore, contract_info);
 
             this.handleDigits();
         }
@@ -23898,7 +23750,6 @@ var ContractStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec
             this.is_left_epoch_set = false;
             this.sell_info = {};
 
-            (0, _chartTickMarkers.destroyChartTickMarkers)();
             this.smart_chart.cleanupContractChartView();
         }
     }, {

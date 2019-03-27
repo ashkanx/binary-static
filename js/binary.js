@@ -9387,6 +9387,15 @@ var isEqualObject = function isEqualObject(obj1, obj2) {
     });
 };
 
+// Filters out duplicates in an array of objects by key
+var unique = function unique(array, key) {
+    return array.filter(function (e, idx) {
+        return array.findIndex(function (a, i) {
+            return a[key] ? a[key] === e[key] : i === idx;
+        }) === idx;
+    });
+};
+
 var getPropertyValue = function getPropertyValue(obj, k) {
     var keys = k;
     if (!Array.isArray(keys)) keys = [keys];
@@ -9518,6 +9527,7 @@ module.exports = {
     isEmptyObject: isEmptyObject,
     cloneObject: cloneObject,
     isDeepEqual: isDeepEqual,
+    unique: unique,
     getPropertyValue: getPropertyValue,
     handleHash: handleHash,
     clearable: clearable,
