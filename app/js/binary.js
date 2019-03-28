@@ -8457,7 +8457,7 @@ var Button = function Button(_ref) {
             disabled: is_disabled,
             tabIndex: tabIndex || '0'
         },
-        _react2.default.createElement(
+        text && _react2.default.createElement(
             'span',
             { className: (0, _classnames2.default)('btn__text', classNameSpan) },
             text
@@ -18203,6 +18203,10 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
 
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
@@ -18256,8 +18260,7 @@ var MarkerSpotLabel = function (_React$Component) {
         value: function render() {
             var marker_spot = _react2.default.createElement(_markerSpot2.default, {
                 className: this.props.spot_className,
-                spot_count: this.props.spot_count,
-                status: this.props.status
+                spot_count: this.props.spot_count
             });
 
             if (this.props.has_hover_toggle) {
@@ -18289,7 +18292,12 @@ var MarkerSpotLabel = function (_React$Component) {
                         ),
                         _react2.default.createElement(
                             'div',
-                            { className: 'chart-spot-label__value-container' },
+                            {
+                                className: (0, _classnames2.default)('chart-spot-label__value-container', {
+                                    'chart-spot-label__value-container--won': this.props.status === 'won',
+                                    'chart-spot-label__value-container--lost': this.props.status === 'lost'
+                                })
+                            },
                             _react2.default.createElement(
                                 'p',
                                 null,
@@ -18355,15 +18363,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var MarkerSpot = function MarkerSpot(_ref) {
     var className = _ref.className,
-        spot_count = _ref.spot_count,
-        status = _ref.status;
+        spot_count = _ref.spot_count;
     return _react2.default.createElement(
         'div',
         {
-            className: (0, _classnames2.default)('chart-spot', className, {
-                'chart-spot__spot--won': status === 'won',
-                'chart-spot__spot--lost': status === 'lost'
-            })
+            className: (0, _classnames2.default)('chart-spot', className)
         },
         spot_count
     );
@@ -18371,8 +18375,7 @@ var MarkerSpot = function MarkerSpot(_ref) {
 
 MarkerSpot.propTypes = {
     className: _propTypes2.default.string,
-    spot_count: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
-    status: _propTypes2.default.oneOf(['won', 'lost'])
+    spot_count: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };
 
 exports.default = (0, _mobxReact.observer)(MarkerSpot);
@@ -18649,6 +18652,126 @@ var MobileWidget = function (_React$PureComponent) {
 }(_react2.default.PureComponent);
 
 exports.default = MobileWidget;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Modules/Trading/Components/Elements/purchase-button.jsx":
+/*!**************************************************************************************!*\
+  !*** ./src/javascript/app_2/Modules/Trading/Components/Elements/purchase-button.jsx ***!
+  \**************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _money = __webpack_require__(/*! ../../../../App/Components/Elements/money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
+
+var _money2 = _interopRequireDefault(_money);
+
+var _button = __webpack_require__(/*! ../../../../App/Components/Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
+
+var _button2 = _interopRequireDefault(_button);
+
+var _Types = __webpack_require__(/*! ../../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PurchaseButton = function PurchaseButton(_ref) {
+    var currency = _ref.currency,
+        info = _ref.info,
+        is_contract_mode = _ref.is_contract_mode,
+        is_disabled = _ref.is_disabled,
+        is_high_low = _ref.is_high_low,
+        is_loading = _ref.is_loading,
+        onClickPurchase = _ref.onClickPurchase,
+        trade_types = _ref.trade_types,
+        type = _ref.type;
+    return _react2.default.createElement(
+        _button2.default,
+        {
+            is_disabled: is_contract_mode || is_disabled,
+            id: 'purchase_' + type,
+            className: (0, _classnames2.default)('btn-purchase', { 'btn-purchase--disabled': (is_contract_mode || is_disabled) && !is_loading }, { 'btn-purchase--disabled-bar': !is_contract_mode && is_disabled }, { 'btn-purchase--animated': is_loading }),
+            has_effect: true,
+            onClick: function onClick() {
+                onClickPurchase(info.id, info.stake, type);
+            }
+        },
+        _react2.default.createElement(
+            _react2.default.Fragment,
+            null,
+            _react2.default.createElement(
+                'div',
+                { className: 'btn-purchase__trade-type' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'btn-purchase__icon_wrapper' },
+                    _react2.default.createElement(_Types.IconTradeType, {
+                        className: 'btn-purchase__icon',
+                        type: !is_disabled ? !is_high_low ? type.toLowerCase() : type.toLowerCase() + '_barrier' : ''
+                    })
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'btn-purchase__text_wrapper' },
+                    _react2.default.createElement(
+                        'span',
+                        { className: 'btn-purchase__text' },
+                        !is_disabled && (0, _localize.localize)('[_1]', trade_types[type])
+                    )
+                )
+            ),
+            _react2.default.createElement('div', { className: 'btn-purchase__effect-detail' }),
+            _react2.default.createElement(
+                'div',
+                { className: 'btn-purchase__info' },
+                _react2.default.createElement(
+                    'div',
+                    { className: 'btn-purchase__return' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'btn-purchase__text_wrapper' },
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'btn-purchase__text' },
+                            !is_disabled && info.returns
+                        )
+                    )
+                ),
+                _react2.default.createElement(
+                    'div',
+                    { className: 'btn-purchase__profit' },
+                    _react2.default.createElement(
+                        'div',
+                        { className: 'btn-purchase__text_wrapper' },
+                        _react2.default.createElement(
+                            'span',
+                            { className: 'btn-purchase__text' },
+                            !is_disabled && _react2.default.createElement(_money2.default, { amount: info.profit, currency: currency, className: 'btn-purchase__currency' })
+                        )
+                    )
+                )
+            )
+        )
+    );
+};
+
+exports.default = PurchaseButton;
 
 /***/ }),
 
@@ -19785,10 +19908,19 @@ var ContractInfo = function ContractInfo(_ref) {
         has_increased = _ref.has_increased,
         is_visible = _ref.is_visible,
         proposal_info = _ref.proposal_info;
+
+    var is_loading = !proposal_info.has_error && !proposal_info.id;
+    var is_loaded_with_error = proposal_info.has_error || !proposal_info.id;
+
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        proposal_info.has_error || !proposal_info.id ? _react2.default.createElement(
+        is_loading && _react2.default.createElement(
+            'div',
+            { className: 'trade-container__loader' },
+            _react2.default.createElement('div', { className: 'trade-container__loader--loading' })
+        ),
+        is_loaded_with_error ? _react2.default.createElement(
             'div',
             {
                 className: (0, _classnames2.default)({
@@ -19830,7 +19962,6 @@ var ContractInfo = function ContractInfo(_ref) {
         )
     );
 };
-
 ContractInfo.propTypes = {
     currency: _propTypes2.default.string,
     has_increased: _propTypes2.default.bool,
@@ -21763,25 +21894,11 @@ var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/j
 
 var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
-var _money = __webpack_require__(/*! ../../../App/Components/Elements/money.jsx */ "./src/javascript/app_2/App/Components/Elements/money.jsx");
-
-var _money2 = _interopRequireDefault(_money);
-
 var _PopConfirm = __webpack_require__(/*! ../../../App/Components/Elements/PopConfirm */ "./src/javascript/app_2/App/Components/Elements/PopConfirm/index.js");
-
-var _uiLoader = __webpack_require__(/*! ../../../App/Components/Elements/ui-loader.jsx */ "./src/javascript/app_2/App/Components/Elements/ui-loader.jsx");
-
-var _uiLoader2 = _interopRequireDefault(_uiLoader);
-
-var _button = __webpack_require__(/*! ../../../App/Components/Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
-
-var _button2 = _interopRequireDefault(_button);
 
 var _fieldset = __webpack_require__(/*! ../../../App/Components/Form/fieldset.jsx */ "./src/javascript/app_2/App/Components/Form/fieldset.jsx");
 
 var _fieldset2 = _interopRequireDefault(_fieldset);
-
-var _Types = __webpack_require__(/*! ../../../Assets/Trading/Types */ "./src/javascript/app_2/Assets/Trading/Types/index.js");
 
 var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
 
@@ -21796,6 +21913,10 @@ var _MessageBox2 = _interopRequireDefault(_MessageBox);
 var _PurchaseLock = __webpack_require__(/*! ../Components/Form/Purchase/PurchaseLock */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/PurchaseLock/index.js");
 
 var _PurchaseLock2 = _interopRequireDefault(_PurchaseLock);
+
+var _purchaseButton = __webpack_require__(/*! ../Components/Elements/purchase-button.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Elements/purchase-button.jsx");
+
+var _purchaseButton2 = _interopRequireDefault(_purchaseButton);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -21818,55 +21939,20 @@ var Purchase = function Purchase(_ref) {
     return Object.keys(trade_types).map(function (type, idx) {
         var info = proposal_info[type] || {};
         var is_disabled = !is_purchase_enabled || !is_trade_enabled || !info.id || !is_client_allowed_to_visit;
-        var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
         var is_high_low = /high_low/.test(contract_type.toLowerCase());
-
-        var purchase_button = _react2.default.createElement(
-            _button2.default,
-            {
-                is_disabled: is_contract_mode || is_disabled,
-                id: 'purchase_' + type,
-                className: 'btn--primary btn-purchase',
-                has_effect: true,
-                onClick: function onClick() {
-                    onClickPurchase(info.id, info.stake, type);
-                }
-            },
-            _react2.default.createElement(
-                _react2.default.Fragment,
-                null,
-                _react2.default.createElement('div', { className: 'btn-purchase__effect-main' }),
-                _react2.default.createElement('div', { className: 'btn-purchase__effect-detail' }),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'btn-purchase__content' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'btn-purchase__trade-type' },
-                        _react2.default.createElement(_Types.IconTradeType, { type: !is_high_low ? type.toLowerCase() : type.toLowerCase() + '_barrier', className: 'btn-purchase__trade-type-icon' }),
-                        _react2.default.createElement(
-                            'span',
-                            { className: 'btn-purchase__trade-type-text' },
-                            (0, _localize.localize)('[_1]', trade_types[type])
-                        )
-                    )
-                ),
-                _react2.default.createElement(
-                    'div',
-                    { className: 'btn-purchase__info' },
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'btn-purchase__return' },
-                        is_disabled ? '---,-' : info.returns
-                    ),
-                    _react2.default.createElement(
-                        'div',
-                        { className: 'btn-purchase__profit' },
-                        is_disabled ? '--,--' : _react2.default.createElement(_money2.default, { amount: info.profit, currency: currency, className: 'btn-purchase__currency' })
-                    )
-                )
-            )
-        );
+        var is_loading = !info.has_error && !info.id;
+        var purchase_button = _react2.default.createElement(_purchaseButton2.default, {
+            currency: currency,
+            info: info,
+            is_contract_mode: is_contract_mode,
+            is_disabled: is_disabled,
+            is_high_low: is_high_low,
+            is_loading: is_loading,
+            onClickPurchase: onClickPurchase,
+            trade_types: trade_types,
+            type: type
+        });
+        var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
 
         return _react2.default.createElement(
             _fieldset2.default,
@@ -21889,7 +21975,6 @@ var Purchase = function Purchase(_ref) {
             _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
-                !is_purchase_enabled && idx === 0 && _react2.default.createElement(_uiLoader2.default, { classNameBlock: 'purchase-container__loading' }),
                 _react2.default.createElement(_contractInfo2.default, {
                     currency: currency,
                     proposal_info: info,
@@ -23305,9 +23390,9 @@ var addTickMarker = function addTickMarker(SmartChartStore, contract_info) {
     var tick_stream = (0, _utility.unique)(contract_info.tick_stream, 'epoch').map(addLabelAlignment);
 
     tick_stream.forEach(function (tick, idx) {
-        var is_entry_spot = idx === 0;
+        var is_entry_spot = idx === 0 && +tick.epoch !== contract_info.exit_tick_time;
         var is_middle_spot = idx > 0 && +tick.epoch !== +contract_info.exit_tick_time;
-        var is_exit_spot = idx > 0 && +tick.epoch === +contract_info.exit_tick_time;
+        var is_exit_spot = +tick.epoch === +contract_info.exit_tick_time;
 
         var marker_config = void 0;
         if (is_entry_spot) marker_config = (0, _chartMarkerHelpers.createMarkerSpotEntry)(contract_info);
