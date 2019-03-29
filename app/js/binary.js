@@ -3436,11 +3436,12 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ProgressSlider = function ProgressSlider(_ref) {
     var className = _ref.className,
-        has_result = _ref.has_result,
-        ticks_count = _ref.ticks_count,
         current_tick = _ref.current_tick,
+        has_result = _ref.has_result,
+        is_loading = _ref.is_loading,
         percentage = _ref.percentage,
-        remaining_time = _ref.remaining_time;
+        remaining_time = _ref.remaining_time,
+        ticks_count = _ref.ticks_count;
 
     if (!percentage && !ticks_count || has_result || !remaining_time) return _react2.default.createElement('div', { className: 'progress-slider--completed' });
     return _react2.default.createElement(
@@ -3457,6 +3458,12 @@ var ProgressSlider = function ProgressSlider(_ref) {
                 { className: 'positions-drawer-card__remaining-time' },
                 _react2.default.createElement(_remainingTime2.default, { end_time: remaining_time })
             ),
+            is_loading || percentage < 1 ? _react2.default.createElement(
+                'div',
+                { className: 'progress-slider__infinite-loader' },
+                _react2.default.createElement('div', { className: 'progress-slider__infinite-loader--indeterminate' })
+            ) :
+            /* Calculate line width based on percentage of time left */
             _react2.default.createElement(
                 'div',
                 { className: 'progress-slider__track' },
@@ -3478,6 +3485,7 @@ ProgressSlider.propTypes = {
     className: _propTypes2.default.string,
     current_tick: _propTypes2.default.number,
     has_result: _propTypes2.default.bool,
+    is_loading: _propTypes2.default.bool,
     percentage: _propTypes2.default.number,
     remaining_time: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     ticks_count: _propTypes2.default.number
@@ -3524,39 +3532,25 @@ var ProgressTicks = function ProgressTicks(_ref) {
         ticks_count = _ref.ticks_count;
 
     var arr_ticks = [].concat(_toConsumableArray(Array(ticks_count).keys()));
-    // TODO: temporary infinite/indeterminate loader
-    if (!current_tick) return _react2.default.createElement(
+    return _react2.default.createElement(
         'div',
-        { className: 'progress-slider__infinite-loader' },
-        _react2.default.createElement('div', { className: 'progress-slider__infinite-loader--indeterminate' })
-    );
-    return (
-        // TODO: Update and show once design for ticks progress bar is finalized
+        { className: 'progress-slider__ticks' },
+        _react2.default.createElement(
+            'span',
+            { className: 'progress-slider__ticks-caption' },
+            (0, _localize.localize)('Tick [_1]', current_tick.toString())
+        ),
         _react2.default.createElement(
             'div',
-            { style: { display: 'none' } },
-            _react2.default.createElement(
-                'span',
-                { className: 'progress-slider__ticks-caption' },
-                (0, _localize.localize)('Tick [_1]', current_tick)
-            ),
-            _react2.default.createElement(
-                'div',
-                { className: 'progress-slider__track--ticks' },
-                _react2.default.createElement(
-                    'div',
-                    { className: 'progress-slider__ticks' },
-                    arr_ticks.map(function (idx) {
-                        return _react2.default.createElement('span', {
-                            key: idx,
-                            className: (0, _classnames2.default)('ticks__step', {
-                                'ticks__step--active': idx + 1 === parseInt(current_tick),
-                                'ticks__step--marked': idx + 1 < parseInt(current_tick)
-                            })
-                        });
+            { className: 'progress-slider__ticks-wrapper' },
+            arr_ticks.map(function (idx) {
+                return _react2.default.createElement('div', {
+                    key: idx,
+                    className: (0, _classnames2.default)('progress-slider__ticks-step', {
+                        'progress-slider__ticks-step--marked': idx + 1 <= parseInt(current_tick)
                     })
-                )
-            )
+                });
+            })
         )
     );
 };
@@ -3689,7 +3683,7 @@ var getTimePercentage = exports.getTimePercentage = function getTimePercentage(c
     var percentage = duration_from_now.asMilliseconds() / duration_from_purchase.asMilliseconds() * 100;
 
     if (percentage < 0.5) {
-        percentage = 1;
+        percentage = 0;
     } else if (percentage > 100) {
         percentage = 100;
     }
@@ -3788,6 +3782,8 @@ var _contractLink2 = _interopRequireDefault(_contractLink);
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _iconPriceMove = __webpack_require__(/*! ../../../../Assets/Trading/icon-price-move.jsx */ "./src/javascript/app_2/Assets/Trading/icon-price-move.jsx");
+
 var _contractTypeCell = __webpack_require__(/*! ./contract-type-cell.jsx */ "./src/javascript/app_2/App/Components/Elements/PositionsDrawer/contract-type-cell.jsx");
 
 var _contractTypeCell2 = _interopRequireDefault(_contractTypeCell);
@@ -3821,11 +3817,13 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
         className = _ref.className,
         contract_info = _ref.contract_info,
         currency = _ref.currency,
+        current_tick = _ref.current_tick,
         duration = _ref.duration,
         duration_unit = _ref.duration_unit,
         exit_spot = _ref.exit_spot,
         indicative = _ref.indicative,
         id = _ref.id,
+        is_loading = _ref.is_loading,
         is_sell_requested = _ref.is_sell_requested,
         is_valid_to_sell = _ref.is_valid_to_sell,
         profit_loss = _ref.profit_loss,
@@ -3887,8 +3885,10 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
                     )
                 ),
                 _react2.default.createElement(_ProgressSlider2.default, {
+                    is_loading: is_loading,
                     remaining_time: contract_info.date_expiry,
                     percentage: percentage,
+                    current_tick: current_tick,
                     ticks_count: contract_info.tick_count,
                     has_result: !!result
                 }),
@@ -3919,8 +3919,18 @@ var PositionsDrawerCard = function PositionsDrawerCard(_ref) {
                     ),
                     _react2.default.createElement(
                         'div',
-                        { className: 'positions-drawer-card__indicative positions-drawer-card__indicative--' + status },
-                        _react2.default.createElement(_money2.default, { amount: indicative, currency: currency })
+                        { className: 'positions-drawer-card__indicative' },
+                        _react2.default.createElement(_money2.default, { amount: indicative, currency: currency }),
+                        _react2.default.createElement(
+                            'div',
+                            { className: (0, _classnames2.default)('positions-drawer-card__indicative--movement', {
+                                    'positions-drawer-card__indicative--movement-complete': status === 'complete'
+                                })
+                            },
+                            _react2.default.createElement(_iconPriceMove.IconPriceMove, {
+                                type: status !== 'complete' ? status : null
+                            })
+                        )
                     )
                 ),
                 _react2.default.createElement(
@@ -3978,11 +3988,13 @@ PositionsDrawerCard.propTypes = {
     className: _propTypes2.default.string,
     contract_info: _propTypes2.default.object,
     currency: _propTypes2.default.string,
+    current_tick: _propTypes2.default.number,
     duration: _propTypes2.default.number,
     duration_unit: _propTypes2.default.string,
     exit_spot: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     id: _propTypes2.default.number,
     indicative: _propTypes2.default.number,
+    is_loading: _propTypes2.default.bool,
     is_sell_requested: _propTypes2.default.bool,
     is_valid_to_sell: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.bool]),
     onClickRemove: _propTypes2.default.func,
@@ -16452,7 +16464,7 @@ var IconPriceMove = function IconPriceMove(_ref) {
                 break;
         }
     }
-    return _react2.default.createElement(
+    return type && _react2.default.createElement(
         'svg',
         { className: (0, _classnames2.default)('inline-icon', className), width: '16', height: '16', viewBox: '0 0 16 16', xmlns: 'http://www.w3.org/2000/svg' },
         IconType
@@ -17444,7 +17456,7 @@ var LastDigitPrediction = function (_React$Component) {
                     return !(val % 2);
                 }
             };
-
+            if (!contract_type) return null;
             return barrier_map[contract_type](num) ? num : null;
         }, _temp), _possibleConstructorReturn(_this, _ret);
     }
@@ -24036,11 +24048,21 @@ exports.default = ContractStore;
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getDurationTime = exports.getDurationPeriod = exports.getDurationUnitText = exports.getDurationUnitValue = undefined;
+exports.getDurationTime = exports.getDurationPeriod = exports.getDurationUnitText = exports.getDurationUnitValue = exports.getCurrentTick = undefined;
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
+
 var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
+
+var _digits = __webpack_require__(/*! ../../Contract/Helpers/digits */ "./src/javascript/app_2/Stores/Modules/Contract/Helpers/digits.js");
+
+var getCurrentTick = exports.getCurrentTick = function getCurrentTick(contract_info) {
+    var tick_stream = (0, _utility.unique)(contract_info.tick_stream, 'epoch');
+    var current_tick = (0, _digits.isDigitContract)(contract_info.contract_type) ? tick_stream.length : tick_stream.length - 1;
+    return !current_tick || current_tick < 0 ? 0 : current_tick;
+};
 
 var getDurationUnitValue = exports.getDurationUnitValue = function getDurationUnitValue(obj_duration) {
     var duration_ms = obj_duration.asMilliseconds() / 1000;
@@ -24270,6 +24292,8 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
                 // subscribe to new contract:
                 _Services.WS.subscribeProposalOpenContract(contract_id, this.proposalOpenContractHandler, false);
             } else if (act === 'sell') {
+                var i = this.getPositionIndexById(contract_id);
+                this.positions[i].is_loading = true;
                 _Services.WS.subscribeProposalOpenContract(contract_id, this.populateResultDetails, false);
             }
         }
@@ -24300,14 +24324,18 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             // store contract proposal details that do not require modifiers
             portfolio_position.contract_info = proposal;
 
-            if (!proposal.is_valid_to_sell) {
-                portfolio_position.status = 'no-resale';
-            } else if (new_indicative > prev_indicative) {
-                portfolio_position.status = 'price-moved-up';
+            // for tick contracts
+            if (proposal.tick_count) {
+                var current_tick = portfolio_position.current_tick > (0, _details.getCurrentTick)(proposal) ? portfolio_position.current_tick : (0, _details.getCurrentTick)(proposal);
+                portfolio_position.current_tick = current_tick;
+            }
+
+            if (new_indicative > prev_indicative) {
+                portfolio_position.status = 'profit';
             } else if (new_indicative < prev_indicative) {
-                portfolio_position.status = 'price-moved-down';
+                portfolio_position.status = 'loss';
             } else {
-                portfolio_position.status = 'price-stable';
+                portfolio_position.status = null;
             }
         }
     }, {
@@ -24478,12 +24506,15 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
             _this5.positions[i].is_valid_to_sell = (0, _logic.isValidToSell)(contract_response);
             _this5.positions[i].result = (0, _logic.getDisplayStatus)(contract_response);
             _this5.positions[i].sell_time = (0, _logic.getEndSpotTime)(contract_response) || contract_response.current_spot_time; // same as exit_spot, use latest spot time if no exit_tick_time
+            _this5.positions[i].status = 'complete';
 
             // fix for missing barrier and entry_spot
             if (!_this5.positions[i].contract_info.barrier || !_this5.positions[i].contract_info.entry_spot) {
                 _this5.positions[i].contract_info.barrier = _this5.positions[i].barrier;
                 _this5.positions[i].contract_info.entry_spot = _this5.positions[i].entry_spot;
             }
+
+            _this5.positions[i].is_loading = false;
         };
     }
 }), _applyDecoratedDescriptor(_class.prototype, 'pushNewPosition', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'pushNewPosition'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removePositionById', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'removePositionById'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'accountSwitcherListener', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'accountSwitcherListener'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onMount', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'onMount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'onUnmount', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'onUnmount'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'totals', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'totals'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'active_positions', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'active_positions'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_empty', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_empty'), _class.prototype)), _class));
@@ -25186,7 +25217,6 @@ var SmartChartStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _d
         value: function setTickChartView(scroll_to_left_epoch) {
             if (this.granularity !== 0) {
                 this.updateGranularity(0);
-                this.updateChartType('mountain');
             }
             this.updateEpochScrollToOffset(1);
             this.updateChartZoom(100);
