@@ -1489,7 +1489,7 @@ var CalendarButton = function CalendarButton(_ref) {
         _react2.default.Fragment,
         null,
         !is_hidden && _react2.default.createElement(
-            'button',
+            'div',
             {
                 className: className,
                 onClick: onClick
@@ -3669,7 +3669,7 @@ var FullPageModal = function FullPageModal(_ref) {
                 _react2.default.createElement(
                     'div',
                     { className: 'full-page-modal__footer' },
-                    _react2.default.createElement(_button2.default, {
+                    onCancel && _react2.default.createElement(_button2.default, {
                         className: (0, _classnames2.default)('full-page-modal__button', 'btn--secondary btn--secondary--orange'),
                         has_effect: true,
                         text: cancel_button_text,
@@ -6598,7 +6598,7 @@ var Tooltip = function (_React$Component) {
                 'span',
                 {
                     className: (0, _classnames2.default)(className, 'tooltip', { 'tooltip--error': has_error }),
-                    'data-tooltip': message,
+                    'data-tooltip': message || undefined,
                     'data-tooltip-pos': alignment
                 },
                 icon === 'info' && _react2.default.createElement(
@@ -8247,7 +8247,12 @@ var InputField = function InputField(_ref) {
 
     var input_tooltip = _react2.default.createElement(
         _tooltip2.default,
-        { className: (0, _classnames2.default)('', { 'with-label': label }), alignment: 'left', message: has_error ? error_messages[0] : null, has_error: has_error },
+        {
+            className: (0, _classnames2.default)('', { 'tooltip--with-label': label }),
+            alignment: 'left',
+            message: has_error ? error_messages[0] : null,
+            has_error: has_error
+        },
         !!label && _react2.default.createElement(
             'label',
             { htmlFor: name, className: 'input-field__label' },
@@ -8731,6 +8736,8 @@ var _react2 = _interopRequireDefault(_react);
 
 var _localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
+var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
 var _tickSteps = __webpack_require__(/*! ./tick-steps.jsx */ "./src/javascript/app_2/App/Components/Form/RangeSlider/tick-steps.jsx");
 
 var _tickSteps2 = _interopRequireDefault(_tickSteps);
@@ -8739,13 +8746,11 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var RangeSlider = function RangeSlider(_ref) {
     var className = _ref.className,
-        ticks = _ref.ticks,
         max_value = _ref.max_value,
         min_value = _ref.min_value,
         name = _ref.name,
         value = _ref.value,
         onChange = _ref.onChange;
-
 
     var handleChange = function handleChange(e) {
         if (e.target.value !== value) {
@@ -8759,11 +8764,18 @@ var RangeSlider = function RangeSlider(_ref) {
         }
     };
 
-    var first_tick = ticks - (ticks - 1);
+    if (+value < min_value || +value > max_value) {
+        onChange({
+            target: {
+                name: name,
+                value: min_value
+            }
+        });
+    }
 
     return _react2.default.createElement(
         'div',
-        { className: (0, _classnames2.default)('range-slider', className, { 'range-slider__error': value < min_value || value > max_value }) },
+        { className: (0, _classnames2.default)('range-slider', className, { 'range-slider__error': value < +min_value || value > +max_value }) },
         _react2.default.createElement(
             'label',
             { className: 'range-slider__label', htmlFor: 'range' },
@@ -8771,12 +8783,12 @@ var RangeSlider = function RangeSlider(_ref) {
                 id: 'range',
                 className: 'input trade-container__input range-slider__track',
                 type: 'range',
-                min: first_tick,
-                max: ticks,
+                min: min_value,
+                max: max_value,
                 min_value: min_value,
                 max_value: max_value,
                 name: name,
-                steps: '1',
+                steps: max_value - min_value,
                 onChange: handleChange,
                 tabIndex: '0',
                 value: value
@@ -8786,13 +8798,12 @@ var RangeSlider = function RangeSlider(_ref) {
                 { className: 'range-slider__ticks' },
                 _react2.default.createElement(_tickSteps2.default, {
                     value: value,
-                    ticks: ticks,
                     onClick: handleClick
                 })
             ),
             _react2.default.createElement('div', {
                 className: 'range-slider__line',
-                style: { width: 'calc(' + value * 10 + '% - ' + (value < 4 ? '1.6rem' : '1rem') + ')' }
+                style: { width: 'calc(' + (value - min_value) * (100 / (max_value - min_value)) + '% ' }
             })
         ),
         _react2.default.createElement(
@@ -8801,7 +8812,7 @@ var RangeSlider = function RangeSlider(_ref) {
             _react2.default.createElement(
                 'span',
                 { className: 'range-slider__caption--first' },
-                first_tick
+                min_value
             ),
             !!value && _react2.default.createElement(
                 'span',
@@ -8812,7 +8823,7 @@ var RangeSlider = function RangeSlider(_ref) {
             _react2.default.createElement(
                 'span',
                 { className: 'range-slider__caption--last' },
-                ticks
+                max_value
             )
         )
     );
@@ -8829,7 +8840,13 @@ RangeSlider.propTypes = {
     value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };
 
-exports.default = (0, _mobxReact.observer)(RangeSlider);
+exports.default = (0, _connect.connect)(function (_ref2) {
+    var modules = _ref2.modules;
+    return {
+        max_value: modules.trade.duration_min_max.tick.max,
+        min_value: modules.trade.duration_min_max.tick.min
+    };
+})((0, _mobxReact.observer)(RangeSlider));
 
 /***/ }),
 
@@ -8859,16 +8876,19 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _connect = __webpack_require__(/*! ../../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _toConsumableArray(arr) { if (Array.isArray(arr)) { for (var i = 0, arr2 = Array(arr.length); i < arr.length; i++) { arr2[i] = arr[i]; } return arr2; } else { return Array.from(arr); } }
 
 var TickSteps = function TickSteps(_ref) {
-    var value = _ref.value,
-        ticks = _ref.ticks,
+    var max_value = _ref.max_value,
+        min_value = _ref.min_value,
+        value = _ref.value,
         _onClick = _ref.onClick;
 
-    var arr_ticks = [].concat(_toConsumableArray(Array(ticks).keys()));
+    var arr_ticks = [].concat(_toConsumableArray(Array(max_value - min_value + 1).keys()));
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
@@ -8876,11 +8896,11 @@ var TickSteps = function TickSteps(_ref) {
             return _react2.default.createElement('span', {
                 key: idx,
                 className: (0, _classnames2.default)('range-slider__ticks-step', {
-                    'range-slider__ticks-step--active': idx + 1 === parseInt(value),
-                    'range-slider__ticks-step--marked': idx + 1 < parseInt(value)
+                    'range-slider__ticks-step--active': idx + parseInt(min_value) === parseInt(value),
+                    'range-slider__ticks-step--marked': idx + parseInt(min_value) < parseInt(value)
                 }),
                 onClick: function onClick(e) {
-                    return _onClick(e, idx + 1);
+                    return _onClick(e, idx + parseInt(min_value));
                 }
             });
         })
@@ -8888,12 +8908,20 @@ var TickSteps = function TickSteps(_ref) {
 };
 
 TickSteps.propTypes = {
+    max_value: _propTypes2.default.string,
+    min_value: _propTypes2.default.string,
     onClick: _propTypes2.default.func,
     ticks: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string]),
     value: _propTypes2.default.oneOfType([_propTypes2.default.number, _propTypes2.default.string])
 };
 
-exports.default = TickSteps;
+exports.default = (0, _connect.connect)(function (_ref2) {
+    var modules = _ref2.modules;
+    return {
+        max_value: modules.trade.duration_min_max.tick.max,
+        min_value: modules.trade.duration_min_max.tick.min
+    };
+})(TickSteps);
 
 /***/ }),
 
@@ -12117,6 +12145,108 @@ exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/App/Containers/MarketUnavailableModal/index.js":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/MarketUnavailableModal/index.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _marketUnavailable = __webpack_require__(/*! ./market-unavailable.jsx */ "./src/javascript/app_2/App/Containers/MarketUnavailableModal/market-unavailable.jsx");
+
+var _marketUnavailable2 = _interopRequireDefault(_marketUnavailable);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _marketUnavailable2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Containers/MarketUnavailableModal/market-unavailable.jsx":
+/*!*******************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/MarketUnavailableModal/market-unavailable.jsx ***!
+  \*******************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
+
+var _url2 = _interopRequireDefault(_url);
+
+var _fullPageModal = __webpack_require__(/*! ../../Components/Elements/FullPageModal/full-page-modal.jsx */ "./src/javascript/app_2/App/Components/Elements/FullPageModal/full-page-modal.jsx");
+
+var _fullPageModal2 = _interopRequireDefault(_fullPageModal);
+
+var _localize2 = __webpack_require__(/*! ../../Components/Elements/localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
+
+var _localize3 = _interopRequireDefault(_localize2);
+
+var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var MarketUnavailableModal = function MarketUnavailableModal(_ref) {
+    var is_visible = _ref.is_visible,
+        setHasOnlyForwardingContracts = _ref.setHasOnlyForwardingContracts;
+    return _react2.default.createElement(
+        _fullPageModal2.default,
+        {
+            cancel_button_text: (0, _localize.localize)('Go to SmartTrader'),
+            confirm_button_text: (0, _localize.localize)('No, Stay on BinaryNex'),
+            is_visible: is_visible,
+            onCancel: function onCancel() {
+                return window.open(_url2.default.websiteUrl()) && setHasOnlyForwardingContracts(false);
+            },
+            onConfirm: function onConfirm() {
+                return setHasOnlyForwardingContracts(false);
+            },
+            title: (0, _localize.localize)('Market is unavailable')
+        },
+        _react2.default.createElement(_localize3.default, { str: 'Sorry, but this market is not supported yet on BinaryNex. Do you want to trade this market on SmartTrader?' })
+    );
+};
+
+MarketUnavailableModal.propTypes = {
+    is_visible: _propTypes2.default.bool,
+    setHasOnlyForwardingContracts: _propTypes2.default.func
+};
+
+var market_unavailable = (0, _connect.connect)(function (_ref2) {
+    var ui = _ref2.ui;
+    return {
+        is_visible: ui.has_only_forward_starting_contracts,
+        setHasOnlyForwardingContracts: ui.setHasOnlyForwardingContracts
+    };
+})(MarketUnavailableModal);
+exports.default = market_unavailable;
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/App/Containers/Routes/routes.jsx":
 /*!***************************************************************!*\
   !*** ./src/javascript/app_2/App/Containers/Routes/routes.jsx ***!
@@ -12180,6 +12310,141 @@ exports.default = (0, _reactRouter.withRouter)((0, _connect.connect)(function (_
         has_error: common.has_error
     };
 })(Routes));
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Containers/ServicesErrorModal/constants.js":
+/*!*****************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/ServicesErrorModal/constants.js ***!
+  \*****************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.title = undefined;
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var title = exports.title = {
+    buy: (0, _localize.localize)('Purchase Error'),
+    sell: (0, _localize.localize)('Sell Error')
+};
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Containers/ServicesErrorModal/index.js":
+/*!*************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/ServicesErrorModal/index.js ***!
+  \*************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.default = undefined;
+
+var _servicesErrorModal = __webpack_require__(/*! ./services-error-modal.jsx */ "./src/javascript/app_2/App/Containers/ServicesErrorModal/services-error-modal.jsx");
+
+var _servicesErrorModal2 = _interopRequireDefault(_servicesErrorModal);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.default = _servicesErrorModal2.default;
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/App/Containers/ServicesErrorModal/services-error-modal.jsx":
+/*!*****************************************************************************************!*\
+  !*** ./src/javascript/app_2/App/Containers/ServicesErrorModal/services-error-modal.jsx ***!
+  \*****************************************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
+
+var _fullPageModal = __webpack_require__(/*! ../../Components/Elements/FullPageModal/full-page-modal.jsx */ "./src/javascript/app_2/App/Components/Elements/FullPageModal/full-page-modal.jsx");
+
+var _fullPageModal2 = _interopRequireDefault(_fullPageModal);
+
+var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascript/app_2/Stores/connect.js");
+
+var _constants = __webpack_require__(/*! ./constants */ "./src/javascript/app_2/App/Containers/ServicesErrorModal/constants.js");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ServicesErrorModal = function ServicesErrorModal(_ref) {
+    var is_services_error_visible = _ref.is_services_error_visible,
+        resetPurchase = _ref.resetPurchase,
+        services_error = _ref.services_error,
+        toggleServicesErrorModal = _ref.toggleServicesErrorModal;
+    var code = services_error.code,
+        message = services_error.message;
+
+
+    if (!code || !message) return null;
+
+    return _react2.default.createElement(
+        _fullPageModal2.default,
+        {
+            title: _constants.title[services_error.type],
+            confirm_button_text: (0, _localize.localize)('OK'),
+            onConfirm: function onConfirm() {
+                toggleServicesErrorModal(false);
+                if (services_error.type === 'buy') {
+                    resetPurchase();
+                }
+            }
+            // TODO: handle onCancel
+            // cancel_button_text={cancel_button_text}
+            // onCancel={onCancel}
+            , is_visible: is_services_error_visible
+        },
+        message
+    );
+};
+
+ServicesErrorModal.propTypes = {
+    is_services_error_visible: _propTypes2.default.bool,
+    resetPurchase: _propTypes2.default.func,
+    services_error: _propTypes2.default.object,
+    toggleServicesErrorModal: _propTypes2.default.func
+};
+
+exports.default = (0, _connect.connect)(function (_ref2) {
+    var common = _ref2.common,
+        modules = _ref2.modules,
+        ui = _ref2.ui;
+    return {
+        services_error: common.services_error,
+        is_services_error_visible: ui.is_services_error_visible,
+        toggleServicesErrorModal: ui.toggleServicesErrorModal,
+        resetPurchase: modules.trade.requestProposal
+    };
+})(ServicesErrorModal);
 
 /***/ }),
 
@@ -13122,6 +13387,14 @@ var _DenialOfServiceModal = __webpack_require__(/*! ./Containers/DenialOfService
 
 var _DenialOfServiceModal2 = _interopRequireDefault(_DenialOfServiceModal);
 
+var _MarketUnavailableModal = __webpack_require__(/*! ./Containers/MarketUnavailableModal */ "./src/javascript/app_2/App/Containers/MarketUnavailableModal/index.js");
+
+var _MarketUnavailableModal2 = _interopRequireDefault(_MarketUnavailableModal);
+
+var _ServicesErrorModal = __webpack_require__(/*! ./Containers/ServicesErrorModal */ "./src/javascript/app_2/App/Containers/ServicesErrorModal/index.js");
+
+var _ServicesErrorModal2 = _interopRequireDefault(_ServicesErrorModal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App(_ref) {
@@ -13150,7 +13423,9 @@ var App = function App(_ref) {
                         _react2.default.createElement(_PositionsDrawer2.default, null),
                         _react2.default.createElement(_toastMessage2.default, { position: _ToastMessage.POSITIONS.TOP_RIGHT })
                     ),
-                    _react2.default.createElement(_DenialOfServiceModal2.default, null)
+                    _react2.default.createElement(_DenialOfServiceModal2.default, null),
+                    _react2.default.createElement(_MarketUnavailableModal2.default, null),
+                    _react2.default.createElement(_ServicesErrorModal2.default, null)
                 ),
                 _react2.default.createElement(
                     'footer',
@@ -17123,7 +17398,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M7.234 9.316l5.183-5.193H10.14a1.988 1.988 0 0 1-1.983-1.988h7.662v5.713h-1.983V5.523L10.05 9.316h5.769v1.987H.045V9.316h7.189z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M3.425 15.91H.045v-3.387h2.073v1.874l1.87-1.874h2.818z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M3.425 15.91H.045v-3.387h2.073v1.874l1.87-1.874h2.818z' })
                 );
                 break;
             case 'calle':
@@ -17133,7 +17408,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M8.721.162c0 1.13.902 2.03 1.983 2.03h1.848l-7.55 7.731v2.885l8.97-9.185v1.892c0 1.131.901 2.031 1.983 2.031V.138H8.72v.024z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.135 12.808v2.123h2.817l2.05-2.123z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M.135 12.808v2.123h2.817l2.05-2.123z' })
                 );
                 break;
             case 'calle_light':
@@ -17145,7 +17420,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M3.493.654l5.746 5.723-5.746 5.747c-.766-.789-.789-2.028 0-2.817l1.848-1.848H.045V5.476H5.5L3.493 3.47a1.973 1.973 0 0 1 0-2.816zm3.448 11.808h1.983v3.493H6.94v-3.493zM6.94.18h1.983v1.893H6.94V.18z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M15.82 8.563h-4.305l1.848-1.848c.767-.766.767-2.028 0-2.816L10.051 7.21a.844.844 0 0 1 0 1.172l-1.826 1.825 5.138 5.138c.609-.923.474-2.343-.315-3.132l-1.69-1.69h4.44v-1.96h.022z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M15.82 8.563h-4.305l1.848-1.848c.767-.766.767-2.028 0-2.816L10.051 7.21a.844.844 0 0 1 0 1.172l-1.826 1.825 5.138 5.138c.609-.923.474-2.343-.315-3.132l-1.69-1.69h4.44v-1.96h.022z' })
                 );
                 break;
             case 'digiteven':
@@ -17153,7 +17428,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.135 6.49V.158h6.333V6.49H.135zM4.26 2.39H2.366v1.893H4.26V2.389zM9.6 16V9.668h6.332V16H9.6zm4.101-4.124h-1.893v1.893h1.893v-1.893z' }),
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M.135 6.49V.158h6.333V6.49H.135zM4.26 2.39H2.366v1.893H4.26V2.389zM9.6 16V9.668h6.332V16H9.6zm4.101-4.124h-1.893v1.893h1.893v-1.893z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M9.6.158h6.332V6.49H9.6V.158zm2.208 4.124h1.893V2.389h-1.893v1.893zM.135 16V9.668h6.333V16H.135zm4.124-4.124H2.366v1.893H4.26v-1.893z' })
                 );
                 break;
@@ -17163,7 +17438,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M3.556 2.231l5.666 5.724L3.556 13.7c-.756-.788-.778-2.028 0-2.816l1.822-1.848H.156V7.054h5.377L3.556 5.048a1.992 1.992 0 0 1 0-2.817zm3.377 10.231H8.89v3.47H6.933v-3.47zm0-12.304H8.89v3.56H6.933V.158z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M12.156 2.344c.755.788.755 2.05-.023 2.817l-1.466 1.487L9.289 5.25l2.867-2.907zm0 11.493L9.2 10.817l1.378-1.397 1.578 1.6c.755.788.755 2.05 0 2.817zm-1.223-4.778l1.045-1.082-.911-.923h4.622v2.005h-4.756z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M12.156 2.344c.755.788.755 2.05-.023 2.817l-1.466 1.487L9.289 5.25l2.867-2.907zm0 11.493L9.2 10.817l1.378-1.397 1.578 1.6c.755.788.755 2.05 0 2.817zm-1.223-4.778l1.045-1.082-.911-.923h4.622v2.005h-4.756z' })
                 );
                 break;
             case 'digitodd':
@@ -17171,7 +17446,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M11.628 7.827H4.237L7.91 2l3.718 5.827zM7.256 6.155h1.352l-.676-1.068-.676 1.068z' }),
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M11.628 7.827H4.237L7.91 2l3.718 5.827zM7.256 6.155h1.352l-.676-1.068-.676 1.068z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M7.46 14.86H.067L3.74 9.035l3.718 5.827zm-4.395-1.67h1.352L3.74 12.12l-.676 1.068zm12.755 1.67H8.428l3.673-5.826 3.719 5.827zm-4.372-1.67H12.8l-.676-1.069-.676 1.068z' })
                 );
                 break;
@@ -17180,7 +17455,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M6.513 12.544L3.02 15.912H.203l4.89-4.746z' }),
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M6.513 12.544L3.02 15.912H.203l4.89-4.746z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M.045 11.034H15.82v1.925H.045v-1.925zM13.837 8.06V5.412l-5.792 5.622V8.3l4.372-4.244H9.69c-1.104 0-1.983-.875-1.983-1.925h8.113v7.875c-1.105 0-1.983-.875-1.983-1.947z' })
                 );
                 break;
@@ -17189,7 +17464,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     'g',
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M6.603 5.478L3.11 2.088H.293l4.913 4.768z' }),
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M6.603 5.478L3.11 2.088H.293l4.913 4.768z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M.135 5.04H15.91v1.926H.135V5.04zm13.792 4.9c0-1.071.901-1.924 1.983-1.946v7.875H7.797c0-1.05.88-1.925 1.983-1.925h2.727L8.135 9.7V6.966l5.792 5.621V9.941z' })
                 );
                 break;
@@ -17301,7 +17576,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M.068.07h15.774V2.1H.068V.07zm13.769 8.007c0-1.13.878-2.03 1.983-2.054v6.646H9.33c0-1.107.878-2.03 1.983-2.03h1.104L9.059 7.2l-5.363 5.515V9.831l5.363-5.516 4.778 4.893V8.077z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.068 12.692v2.123h1.6l2.05-2.123z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M.068 12.692v2.123h1.6l2.05-2.123z' })
                 );
                 break;
             case 'onetouch':
@@ -17310,7 +17585,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M11.989 2.1h1.983V.07h1.96V2.1h-1.938v7.408c-1.081 0-1.983-.9-1.983-2.031V5.585l-6.94 7.107V9.785l5.52-5.654H8.745c-1.082 0-1.983-.9-1.983-2.031H.158V.07h11.83V2.1z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.158 12.692v2.123H3.02l2.05-2.123z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M.158 12.692v2.123H3.02l2.05-2.123z' })
                 );
                 break;
             case 'put_barrier':
@@ -17319,7 +17594,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M10.14 8.706l3.787 3.794v-2.326h1.983v5.713H8.248c0-1.084.879-1.987 1.983-1.987h2.276L7.324 8.706H.135V6.72H15.91v1.987h-5.77z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M3.515 2.113H.135V5.5h2.073V3.626L4.078 5.5h2.818z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M3.515 2.113H.135V5.5h2.073V3.626L4.078 5.5h2.818z' })
                 );
                 break;
             case 'pute':
@@ -17329,7 +17604,7 @@ var IconTradeType = function IconTradeType(_ref) {
                     { fill: 'none', fillRule: 'evenodd' },
                     _react2.default.createElement('path', { className: 'transparent', d: 'M0 0h16v16H0z' }),
                     _react2.default.createElement('path', { className: 'color1-fill', fill: '#2A3052', d: 'M8.631 14.862c0-1.131.901-2.031 1.983-2.031h1.848L4.912 5.1V2.215l8.97 9.185V9.508c0-1.131.901-2.031 1.983-2.031v7.408H8.63v-.023z' }),
-                    _react2.default.createElement('path', { className: 'important', fill: '#F93', d: 'M.045 2.215V.092h2.817l2.05 2.123z' })
+                    _react2.default.createElement('path', { className: 'color2-fill important', fill: '#F93', d: 'M.045 2.215V.092h2.817l2.05 2.123z' })
                 );
                 break;
             case 'range':
@@ -19765,7 +20040,7 @@ var PurchaseButton = function PurchaseButton(_ref) {
         {
             is_disabled: is_contract_mode || is_disabled,
             id: 'purchase_' + type,
-            className: (0, _classnames2.default)('btn-purchase', { 'btn-purchase--disabled': (is_contract_mode || is_disabled) && !is_loading }, { 'btn-purchase--disabled-bar': !is_contract_mode && is_disabled }, { 'btn-purchase--animated': is_loading }),
+            className: (0, _classnames2.default)('btn-purchase', { 'btn-purchase--disabled': (is_contract_mode || is_disabled) && !is_loading }, { 'btn-purchase--animated': is_loading }),
             has_effect: true,
             onClick: function onClick() {
                 onClickPurchase(info.id, info.stake, type);
@@ -19782,7 +20057,7 @@ var PurchaseButton = function PurchaseButton(_ref) {
                     { className: 'btn-purchase__icon_wrapper' },
                     _react2.default.createElement(_Types.IconTradeType, {
                         className: 'btn-purchase__icon',
-                        type: !is_disabled ? !is_high_low ? type.toLowerCase() : type.toLowerCase() + '_barrier' : ''
+                        type: is_high_low ? type.toLowerCase() + '_barrier' : type.toLowerCase()
                     })
                 ),
                 _react2.default.createElement(
@@ -19791,7 +20066,7 @@ var PurchaseButton = function PurchaseButton(_ref) {
                     _react2.default.createElement(
                         'span',
                         { className: 'btn-purchase__text' },
-                        !is_disabled && (0, _localize.localize)('[_1]', trade_types[type])
+                        (0, _localize.localize)('[_1]', trade_types[type])
                     )
                 )
             ),
@@ -19808,7 +20083,7 @@ var PurchaseButton = function PurchaseButton(_ref) {
                         _react2.default.createElement(
                             'span',
                             { className: 'btn-purchase__text' },
-                            !is_disabled && info.returns
+                            is_disabled ? '' : info.returns
                         )
                     )
                 ),
@@ -19821,7 +20096,7 @@ var PurchaseButton = function PurchaseButton(_ref) {
                         _react2.default.createElement(
                             'span',
                             { className: 'btn-purchase__text' },
-                            !is_disabled && _react2.default.createElement(_money2.default, { amount: info.profit, currency: currency, className: 'btn-purchase__currency' })
+                            is_disabled ? '' : _react2.default.createElement(_money2.default, { amount: info.profit, currency: currency, className: 'btn-purchase__currency' })
                         )
                     )
                 )
@@ -20521,315 +20796,6 @@ exports.default = (0, _connect.connect)(function (_ref2) {
 
 /***/ }),
 
-/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-balance.jsx":
-/*!**************************************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-balance.jsx ***!
-  \**************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.ErrorBalance = undefined;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _localize = __webpack_require__(/*! ../../../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _button = __webpack_require__(/*! ../../../../../../../App/Components/Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
-
-var _button2 = _interopRequireDefault(_button);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ErrorBalance = function ErrorBalance() {
-    return _react2.default.createElement(
-        'div',
-        { className: 'message-box__login' },
-        _react2.default.createElement(
-            'span',
-            { className: 'message-box__info message-box__login-info' },
-            (0, _localize.localize)('You have an insufficient amount of balance.')
-        ),
-        _react2.default.createElement(_button2.default, {
-            className: 'btn--secondary btn--secondary--orange',
-            has_effect: true,
-            text: (0, _localize.localize)('Deposit')
-        })
-    );
-};
-
-exports.ErrorBalance = ErrorBalance;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-general.jsx":
-/*!**************************************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-general.jsx ***!
-  \**************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.ErrorGeneral = undefined;
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ErrorGeneral = function ErrorGeneral(_ref) {
-    var message = _ref.message;
-    return _react2.default.createElement(
-        'div',
-        { className: 'message-box__result' },
-        _react2.default.createElement(
-            'span',
-            { className: 'message-box__info' },
-            message
-        )
-    );
-};
-
-ErrorGeneral.propTypes = {
-    message: _propTypes2.default.string
-};
-
-exports.ErrorGeneral = ErrorGeneral;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-login.jsx":
-/*!************************************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-login.jsx ***!
-  \************************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-exports.ErrorLogin = undefined;
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _login = __webpack_require__(/*! ../../../../../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
-
-var _localize = __webpack_require__(/*! ../../../../../../../../_common/localize */ "./src/javascript/_common/localize.js");
-
-var _button = __webpack_require__(/*! ../../../../../../../App/Components/Form/button.jsx */ "./src/javascript/app_2/App/Components/Form/button.jsx");
-
-var _button2 = _interopRequireDefault(_button);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ErrorLogin = function ErrorLogin() {
-    return _react2.default.createElement(
-        'div',
-        { className: 'message-box__login' },
-        _react2.default.createElement(
-            'span',
-            { className: 'message-box__info message-box__login-info' },
-            (0, _localize.localize)('Please log in to purchase the contract')
-        ),
-        _react2.default.createElement(_button2.default, {
-            className: 'btn--secondary btn--secondary--orange',
-            has_effect: true,
-            text: (0, _localize.localize)('log in'),
-            onClick: _login.redirectToLogin
-        }),
-        _react2.default.createElement(
-            'p',
-            { className: 'message-box__login-prompt' },
-            (0, _localize.localize)('Don\'t have a [_1] account?', ['Binary.com'])
-        ),
-        _react2.default.createElement(
-            'a',
-            { className: 'message-box__login-link', href: 'javascript:;' },
-            _react2.default.createElement(
-                'span',
-                { className: 'message-box__info message-box__login-info' },
-                (0, _localize.localize)('Create one now')
-            )
-        )
-    );
-};
-
-exports.ErrorLogin = ErrorLogin;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/index.js":
-/*!*****************************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/index.js ***!
-  \*****************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _errorBalance = __webpack_require__(/*! ./error-balance.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-balance.jsx");
-
-Object.keys(_errorBalance).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _errorBalance[key];
-    }
-  });
-});
-
-var _errorGeneral = __webpack_require__(/*! ./error-general.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-general.jsx");
-
-Object.keys(_errorGeneral).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _errorGeneral[key];
-    }
-  });
-});
-
-var _errorLogin = __webpack_require__(/*! ./error-login.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/error-login.jsx");
-
-Object.keys(_errorLogin).forEach(function (key) {
-  if (key === "default" || key === "__esModule") return;
-  Object.defineProperty(exports, key, {
-    enumerable: true,
-    get: function get() {
-      return _errorLogin[key];
-    }
-  });
-});
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/index.js":
-/*!*******************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/index.js ***!
-  \*******************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-exports.default = undefined;
-
-var _messageBox = __webpack_require__(/*! ./message-box.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/message-box.jsx");
-
-var _messageBox2 = _interopRequireDefault(_messageBox);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-exports.default = _messageBox2.default;
-
-/***/ }),
-
-/***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/message-box.jsx":
-/*!**************************************************************************************************!*\
-  !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/message-box.jsx ***!
-  \**************************************************************************************************/
-/*! no static exports found */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-    value: true
-});
-
-var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
-
-var _propTypes2 = _interopRequireDefault(_propTypes);
-
-var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
-
-var _react2 = _interopRequireDefault(_react);
-
-var _utility = __webpack_require__(/*! ../../../../../../../_common/utility */ "./src/javascript/_common/utility.js");
-
-var _iconClose = __webpack_require__(/*! ../../../../../../Assets/Common/icon-close.jsx */ "./src/javascript/app_2/Assets/Common/icon-close.jsx");
-
-var _Templates = __webpack_require__(/*! ./Templates */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/Templates/index.js");
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var MessageBox = function MessageBox(_ref) {
-    var purchase_info = _ref.purchase_info,
-        onClick = _ref.onClick;
-
-    var has_error = !!purchase_info.error;
-    var ErrorComponent = void 0;
-    if (has_error) {
-        var error_code = (0, _utility.getPropertyValue)(purchase_info, ['error', 'code']);
-        switch (error_code) {
-            case 'AuthorizationRequired':
-                ErrorComponent = _react2.default.createElement(_Templates.ErrorLogin, null);
-                break;
-            case 'InsufficientBalance':
-                ErrorComponent = _react2.default.createElement(_Templates.ErrorBalance, null);
-                break;
-            default:
-                ErrorComponent = _react2.default.createElement(_Templates.ErrorGeneral, { message: purchase_info.error.message });
-                break;
-        }
-    }
-    if (!has_error) return null;
-    return _react2.default.createElement(
-        'div',
-        { className: 'message-box' },
-        _react2.default.createElement(
-            'div',
-            { className: 'message-box__close-btn', onClick: onClick },
-            _react2.default.createElement(_iconClose.IconClose, { className: 'ic-close' })
-        ),
-        ErrorComponent
-    );
-};
-
-MessageBox.propTypes = {
-    currency: _propTypes2.default.string,
-    onClick: _propTypes2.default.func,
-    purchase_info: _propTypes2.default.object
-};
-
-exports.default = MessageBox;
-
-/***/ }),
-
 /***/ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/PurchaseLock/index.js":
 /*!*********************************************************************************************!*\
   !*** ./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/PurchaseLock/index.js ***!
@@ -20965,67 +20931,57 @@ var _iconPriceMove = __webpack_require__(/*! ../../../../../Assets/Trading/icon-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ContractInfo = function ContractInfo(_ref) {
-    var currency = _ref.currency,
+    var basis = _ref.basis,
+        currency = _ref.currency,
         has_increased = _ref.has_increased,
+        is_loading = _ref.is_loading,
         is_visible = _ref.is_visible,
         proposal_info = _ref.proposal_info;
 
-    var is_loading = !proposal_info.has_error && !proposal_info.id;
     var is_loaded_with_error = proposal_info.has_error || !proposal_info.id;
 
     return _react2.default.createElement(
         _react2.default.Fragment,
         null,
-        is_loading && _react2.default.createElement(
+        is_loading ? _react2.default.createElement(
             'div',
             { className: 'trade-container__loader' },
             _react2.default.createElement('div', { className: 'trade-container__loader--loading' })
-        ),
-        is_loaded_with_error ? _react2.default.createElement(
-            'div',
-            {
-                className: (0, _classnames2.default)({
-                    'trade-container__error': proposal_info.has_error
-                })
-            },
-            proposal_info.message && _react2.default.createElement(
-                'span',
-                { className: 'trade-container__error-info' },
-                proposal_info.message
-            )
         ) : _react2.default.createElement(
             'div',
             { className: 'trade-container__price' },
             _react2.default.createElement(
                 'div',
-                { className: 'trade-container__price-info' },
+                { className: (0, _classnames2.default)('trade-container__price-info', { 'trade-container__price-info--disabled': is_loaded_with_error }) },
                 _react2.default.createElement(
                     'div',
                     { className: 'trade-container__price-info-basis' },
-                    (0, _localize.localize)('[_1]', proposal_info.obj_contract_basis.text)
+                    is_loaded_with_error ? basis : (0, _localize.localize)('[_1]', proposal_info.obj_contract_basis.text)
                 ),
                 _react2.default.createElement(
                     'div',
                     { className: 'trade-container__price-info-value' },
-                    _react2.default.createElement(_money2.default, { amount: proposal_info.obj_contract_basis.value, className: 'trade-container__price-info-currency', currency: currency })
+                    is_loaded_with_error ? '' : _react2.default.createElement(_money2.default, { amount: proposal_info.obj_contract_basis.value, className: 'trade-container__price-info-currency', currency: currency })
                 ),
                 is_visible && _react2.default.createElement(
                     'div',
                     { className: 'trade-container__price-info-movement' },
-                    has_increased !== null && _react2.default.createElement(_iconPriceMove.IconPriceMove, { type: has_increased ? 'profit' : 'loss' })
+                    !is_loaded_with_error && has_increased !== null && _react2.default.createElement(_iconPriceMove.IconPriceMove, { type: has_increased ? 'profit' : 'loss' })
                 )
             ),
             _react2.default.createElement(
                 'span',
                 null,
-                _react2.default.createElement(_tooltip2.default, { alignment: 'left', className: 'trade-container__price-tooltip', classNameIcon: 'trade-container__price-tooltip-i', icon: 'info', message: proposal_info.message })
+                _react2.default.createElement(_tooltip2.default, { alignment: 'left', className: 'trade-container__price-tooltip', classNameIcon: 'trade-container__price-tooltip-i', icon: 'info', message: is_loaded_with_error ? '' : proposal_info.message })
             )
         )
     );
 };
 ContractInfo.propTypes = {
+    basis: _propTypes2.default.string,
     currency: _propTypes2.default.string,
     has_increased: _propTypes2.default.bool,
+    is_loading: _propTypes2.default.bool,
     is_visible: _propTypes2.default.bool,
     proposal_info: _propTypes2.default.object
 };
@@ -21743,7 +21699,6 @@ var Duration = function Duration(_ref) {
         { className: 'trade-container__fieldset' },
         !has_toggle && _react2.default.createElement(_RangeSlider2.default, _extends({
             name: 'duration',
-            ticks: 10,
             value: duration_t
         }, props.shared_input)),
         has_toggle && _react2.default.createElement(
@@ -22942,6 +22897,10 @@ Object.defineProperty(exports, "__esModule", {
     value: true
 });
 
+var _classnames = __webpack_require__(/*! classnames */ "./node_modules/classnames/index.js");
+
+var _classnames2 = _interopRequireDefault(_classnames);
+
 var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
 
 var _propTypes2 = _interopRequireDefault(_propTypes);
@@ -22952,9 +22911,11 @@ var _react2 = _interopRequireDefault(_react);
 
 var _localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
-var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
-
 var _PopConfirm = __webpack_require__(/*! ../../../App/Components/Elements/PopConfirm */ "./src/javascript/app_2/App/Components/Elements/PopConfirm/index.js");
+
+var _tooltip = __webpack_require__(/*! ../../../App/Components/Elements/tooltip.jsx */ "./src/javascript/app_2/App/Components/Elements/tooltip.jsx");
+
+var _tooltip2 = _interopRequireDefault(_tooltip);
 
 var _fieldset = __webpack_require__(/*! ../../../App/Components/Form/fieldset.jsx */ "./src/javascript/app_2/App/Components/Form/fieldset.jsx");
 
@@ -22965,10 +22926,6 @@ var _connect = __webpack_require__(/*! ../../../Stores/connect */ "./src/javascr
 var _contractInfo = __webpack_require__(/*! ../Components/Form/Purchase/contract-info.jsx */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/contract-info.jsx");
 
 var _contractInfo2 = _interopRequireDefault(_contractInfo);
-
-var _MessageBox = __webpack_require__(/*! ../Components/Form/Purchase/MessageBox */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/MessageBox/index.js");
-
-var _MessageBox2 = _interopRequireDefault(_MessageBox);
 
 var _PurchaseLock = __webpack_require__(/*! ../Components/Form/Purchase/PurchaseLock */ "./src/javascript/app_2/Modules/Trading/Components/Form/Purchase/PurchaseLock/index.js");
 
@@ -22981,7 +22938,8 @@ var _purchaseButton2 = _interopRequireDefault(_purchaseButton);
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var Purchase = function Purchase(_ref) {
-    var contract_type = _ref.contract_type,
+    var basis = _ref.basis,
+        contract_type = _ref.contract_type,
         currency = _ref.currency,
         is_contract_mode = _ref.is_contract_mode,
         is_client_allowed_to_visit = _ref.is_client_allowed_to_visit,
@@ -22991,16 +22949,19 @@ var Purchase = function Purchase(_ref) {
         is_trade_enabled = _ref.is_trade_enabled,
         onClickPurchase = _ref.onClickPurchase,
         onHoverPurchase = _ref.onHoverPurchase,
-        resetPurchase = _ref.resetPurchase,
         togglePurchaseLock = _ref.togglePurchaseLock,
-        purchase_info = _ref.purchase_info,
         proposal_info = _ref.proposal_info,
-        trade_types = _ref.trade_types;
+        trade_types = _ref.trade_types,
+        validation_errors = _ref.validation_errors;
     return Object.keys(trade_types).map(function (type, idx) {
         var info = proposal_info[type] || {};
         var is_disabled = !is_purchase_enabled || !is_trade_enabled || !info.id || !is_client_allowed_to_visit;
         var is_high_low = /high_low/.test(contract_type.toLowerCase());
-        var is_loading = !info.has_error && !info.id;
+        var is_validation_error = Object.values(validation_errors).some(function (e) {
+            return e.length;
+        });
+        var is_loading = !is_validation_error && !info.has_error && !info.id;
+
         var purchase_button = _react2.default.createElement(_purchaseButton2.default, {
             currency: currency,
             info: info,
@@ -23012,38 +22973,39 @@ var Purchase = function Purchase(_ref) {
             trade_types: trade_types,
             type: type
         });
-        var is_purchase_error = !(0, _utility.isEmptyObject)(purchase_info) && purchase_info.echo_req.buy === info.id;
+
+        var is_proposal_error = info.has_error && !info.has_error_details;
 
         return _react2.default.createElement(
             _fieldset2.default,
             {
                 className: 'trade-container__fieldset purchase-container__option',
-                key: idx,
-                onMouseEnter: function onMouseEnter() {
-                    onHoverPurchase(true, type);
-                },
-                onMouseLeave: function onMouseLeave() {
-                    onHoverPurchase(false);
-                }
+                key: idx
             },
-            is_purchase_error && _react2.default.createElement(_MessageBox2.default, {
-                purchase_info: purchase_info,
-                onClick: resetPurchase,
-                currency: currency
-            }),
             is_purchase_locked && idx === 0 && _react2.default.createElement(_PurchaseLock2.default, { onClick: togglePurchaseLock }),
             _react2.default.createElement(
                 _react2.default.Fragment,
                 null,
                 _react2.default.createElement(_contractInfo2.default, {
+                    basis: basis,
                     currency: currency,
                     proposal_info: info,
                     has_increased: info.has_increased,
+                    is_loading: is_loading,
                     is_visible: !is_contract_mode
                 }),
                 _react2.default.createElement(
                     'div',
-                    { className: 'btn-purchase__shadow-wrapper' },
+                    {
+                        className: (0, _classnames2.default)('btn-purchase__shadow-wrapper', { 'btn-purchase__shadow-wrapper--disabled': is_proposal_error || is_disabled }),
+                        onMouseEnter: function onMouseEnter() {
+                            onHoverPurchase(true, type);
+                        },
+                        onMouseLeave: function onMouseLeave() {
+                            onHoverPurchase(false);
+                        }
+                    },
+                    is_proposal_error && _react2.default.createElement(_tooltip2.default, { message: info.message, alignment: 'left', className: 'tooltip--error-secondary' }),
                     is_purchase_confirm_on ? _react2.default.createElement(
                         _PopConfirm.PopConfirm,
                         {
@@ -23061,6 +23023,7 @@ var Purchase = function Purchase(_ref) {
 };
 
 Purchase.propTypes = {
+    basis: _propTypes2.default.string,
     currency: _propTypes2.default.string,
     is_client_allowed_to_visit: _propTypes2.default.bool,
     is_contract_mode: _propTypes2.default.bool,
@@ -23072,9 +23035,9 @@ Purchase.propTypes = {
     onHoverPurchase: _propTypes2.default.func,
     proposal_info: _propTypes2.default.object,
     purchase_info: _propTypes2.default.object,
-    resetPurchase: _propTypes2.default.func,
     togglePurchaseLock: _propTypes2.default.func,
-    trade_types: _propTypes2.default.object
+    trade_types: _propTypes2.default.object,
+    validation_errors: _propTypes2.default.object
 };
 
 exports.default = (0, _connect.connect)(function (_ref2) {
@@ -23085,15 +23048,16 @@ exports.default = (0, _connect.connect)(function (_ref2) {
         currency: client.currency,
         is_client_allowed_to_visit: client.is_client_allowed_to_visit,
         is_contract_mode: modules.smart_chart.is_contract_mode,
+        basis: modules.trade.basis,
         contract_type: modules.trade.contract_type,
         is_purchase_enabled: modules.trade.is_purchase_enabled,
         is_trade_enabled: modules.trade.is_trade_enabled,
         onClickPurchase: modules.trade.onPurchase,
         onHoverPurchase: modules.trade.onHoverPurchase,
-        resetPurchase: modules.trade.requestProposal,
         proposal_info: modules.trade.proposal_info,
         purchase_info: modules.trade.purchase_info,
         trade_types: modules.trade.trade_types,
+        validation_errors: modules.trade.validation_errors,
         is_purchase_confirm_on: ui.is_purchase_confirm_on,
         is_purchase_locked: ui.is_purchase_lock_on,
         togglePurchaseLock: ui.togglePurchaseLock
@@ -23369,19 +23333,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _url = __webpack_require__(/*! ../../../../_common/url */ "./src/javascript/_common/url.js");
-
-var _url2 = _interopRequireDefault(_url);
-
 var _utility = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js");
-
-var _fullPageModal = __webpack_require__(/*! ../../../App/Components/Elements/FullPageModal/full-page-modal.jsx */ "./src/javascript/app_2/App/Components/Elements/FullPageModal/full-page-modal.jsx");
-
-var _fullPageModal2 = _interopRequireDefault(_fullPageModal);
-
-var _localize = __webpack_require__(/*! ../../../App/Components/Elements/localize.jsx */ "./src/javascript/app_2/App/Components/Elements/localize.jsx");
-
-var _localize2 = _interopRequireDefault(_localize);
 
 var _uiLoader = __webpack_require__(/*! ../../../App/Components/Elements/ui-loader.jsx */ "./src/javascript/app_2/App/Components/Elements/ui-loader.jsx");
 
@@ -23404,8 +23356,6 @@ var _digits2 = _interopRequireDefault(_digits);
 var _infoBox = __webpack_require__(/*! ../../Contract/Containers/info-box.jsx */ "./src/javascript/app_2/Modules/Contract/Containers/info-box.jsx");
 
 var _infoBox2 = _interopRequireDefault(_infoBox);
-
-var _localize3 = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -23441,8 +23391,6 @@ var Trade = function (_React$Component) {
     }, {
         key: 'render',
         value: function render() {
-            var _this2 = this;
-
             var contract_id = (0, _utility.getPropertyValue)(this.props.purchase_info, ['buy', 'contract_id']);
             var form_wrapper_class = this.props.is_mobile ? 'mobile-wrapper' : 'sidebar__container desktop-only';
             var should_show_last_digit_stats = ['match_diff', 'even_odd', 'over_under'].includes(this.props.contract_type) && !this.props.is_contract_mode;
@@ -23486,22 +23434,6 @@ var Trade = function (_React$Component) {
                         is_contract_visible: !!contract_id || this.props.is_contract_mode,
                         is_trade_enabled: this.props.is_trade_enabled
                     })
-                ),
-                _react2.default.createElement(
-                    _fullPageModal2.default,
-                    {
-                        confirm_button_text: (0, _localize3.localize)('No, Stay on BinaryNex'),
-                        cancel_button_text: (0, _localize3.localize)('Go to SmartTrader'),
-                        is_visible: this.props.has_only_forward_starting_contracts,
-                        onConfirm: function onConfirm() {
-                            return _this2.props.setHasOnlyForwardingContracts(false);
-                        },
-                        onCancel: function onCancel() {
-                            return window.open(_url2.default.websiteUrl()) && _this2.props.setHasOnlyForwardingContracts(false);
-                        },
-                        title: (0, _localize3.localize)('Market is unavailable')
-                    },
-                    _react2.default.createElement(_localize2.default, { str: 'Sorry, but this market is not supported yet on BinaryNex. Do you want to trade this market on SmartTrader?' })
                 )
             );
         }
@@ -23515,7 +23447,6 @@ Trade.propTypes = {
     chart_zoom: _propTypes2.default.number,
     contract_type: _propTypes2.default.string,
     end_epoch: _propTypes2.default.number,
-    has_only_forward_starting_contracts: _propTypes2.default.bool,
     is_contract_mode: _propTypes2.default.bool,
     is_mobile: _propTypes2.default.bool,
     is_trade_enabled: _propTypes2.default.bool,
@@ -23526,7 +23457,6 @@ Trade.propTypes = {
     purchase_info: _propTypes2.default.object,
     scroll_to_epoch: _propTypes2.default.number,
     scroll_to_offset: _propTypes2.default.number,
-    setHasOnlyForwardingContracts: _propTypes2.default.func,
     start_epoch: _propTypes2.default.number,
     symbol: _propTypes2.default.string
 };
@@ -23554,9 +23484,7 @@ exports.default = (0, _connect.connect)(function (_ref) {
         onUnmount: modules.trade.onUnmount,
         purchase_info: modules.trade.purchase_info,
         symbol: modules.trade.symbol,
-        has_only_forward_starting_contracts: ui.has_only_forward_starting_contracts,
-        is_mobile: ui.is_mobile,
-        setHasOnlyForwardingContracts: ui.setHasOnlyForwardingContracts
+        is_mobile: ui.is_mobile
     };
 })(Trade);
 
@@ -25205,6 +25133,8 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.default = undefined;
 
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
 var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5;
@@ -25402,13 +25332,13 @@ var PortfolioStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _de
         value: function handleSell(response) {
             // Toast messages are temporary UI for prompting user of sold contracts
             if (response.error) {
-                // If unable to sell due to error, give error via toast message if not in contract mode
+                // If unable to sell due to error, give error via pop up if not in contract mode
                 var i = this.getPositionIndexById(response.echo_req.sell);
                 this.positions[i].is_sell_requested = false;
-                this.root_store.ui.addToastMessage({
-                    message: response.error.message,
-                    type: 'error'
-                });
+                this.root_store.common.services_error = _extends({
+                    type: response.msg_type
+                }, response.error);
+                this.root_store.ui.toggleServicesErrorModal(true);
             } else if (!response.error && response.sell) {
                 var _i = this.getPositionIndexById(response.sell.contract_id);
                 this.positions[_i].is_sell_requested = false;
@@ -25586,6 +25516,8 @@ Object.defineProperty(exports, "__esModule", {
 var CONTRACT_SHADES = exports.CONTRACT_SHADES = {
     CALL: 'ABOVE',
     PUT: 'BELOW',
+    CALLE: 'ABOVE',
+    PUTE: 'BELOW',
     EXPIRYRANGE: 'BETWEEN',
     EXPIRYMISS: 'OUTSIDE',
     RANGE: 'BETWEEN',
@@ -28271,17 +28203,35 @@ var extendOrReplace = function extendOrReplace(source, new_values) {
 Object.defineProperty(exports, "__esModule", {
     value: true
 });
-exports.getProposalParametersName = exports.createProposalRequests = exports.getProposalInfo = undefined;
+exports.getProposalParametersName = exports.createProposalRequests = exports.getProposalInfo = exports.getProposalErrorField = undefined;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
 var _currency_base = __webpack_require__(/*! ../../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
+
+var _common_functions = __webpack_require__(/*! ../../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 
 var _utility = __webpack_require__(/*! ../../../../../_common/utility */ "./src/javascript/_common/utility.js");
 
 var _Date = __webpack_require__(/*! ../../../../Utils/Date */ "./src/javascript/app_2/Utils/Date/index.js");
 
 var _queryString = __webpack_require__(/*! ../Constants/query-string */ "./src/javascript/app_2/Stores/Modules/Trading/Constants/query-string.js");
+
+var map_error_field = {
+    barrier: 'barrier_1',
+    barrier2: 'barrier_2',
+    date_expiry: 'expiry_date'
+};
+
+var getProposalErrorField = exports.getProposalErrorField = function getProposalErrorField(response) {
+    var error_field = (0, _utility.getPropertyValue)(response, ['error', 'details', 'field']);
+    if (!error_field) {
+        return null;
+    }
+    var error_id = map_error_field[error_field] || error_field;
+    var el_error = document.getElementsByName(error_id)[0];
+    return el_error && (0, _common_functions.isVisible)(el_error) ? error_id : null;
+};
 
 var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, response, obj_prev_contract_basis) {
     var proposal = response.proposal || {};
@@ -28309,6 +28259,7 @@ var getProposalInfo = exports.getProposalInfo = function getProposalInfo(store, 
     return {
         id: proposal.id || '',
         has_error: !!response.error,
+        has_error_details: !!getProposalErrorField(response),
         has_increased: has_increased,
         message: proposal.longcode || response.error.message,
         obj_contract_basis: obj_contract_basis,
@@ -28890,7 +28841,9 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
     }, {
         key: 'onHoverPurchase',
         value: function onHoverPurchase(is_over, contract_type) {
-            this.smart_chart.updateBarrierShade(is_over, contract_type);
+            if (this.is_purchase_enabled) {
+                this.smart_chart.updateBarrierShade(is_over, contract_type);
+            }
         }
     }, {
         key: 'onPurchase',
@@ -28914,6 +28867,11 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
                             _this4.root_store.ui.openPositionsDrawer();
                         }
                         _gtm2.default.pushPurchaseData(contract_data, _this4.root_store);
+                    } else if (response.error) {
+                        _this4.root_store.common.services_error = _extends({
+                            type: response.msg_type
+                        }, response.error);
+                        _this4.root_store.ui.toggleServicesErrorModal(true);
                     }
                     _Services.WS.forgetAll('proposal');
                     _this4.purchase_info = response;
@@ -29117,6 +29075,15 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
 
             if (!this.smart_chart.is_contract_mode) {
                 (0, _chart.setChartBarrier)(this.smart_chart, response, this.onChartBarrierChange);
+            }
+
+            if (response.error) {
+                var error_id = (0, _proposal.getProposalErrorField)(response);
+                if (error_id) {
+                    this.setValidationErrorMessages(error_id, [response.error.message]);
+                }
+            } else {
+                this.validateAllProperties();
             }
 
             this.is_purchase_enabled = true;
@@ -30595,7 +30562,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7;
+var _dec, _dec2, _dec3, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -30674,7 +30641,7 @@ var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 
             args[_key] = arguments[_key];
         }
 
-        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonStore.__proto__ || Object.getPrototypeOf(CommonStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'server_time', _descriptor, _this), _initDefineProp(_this, 'current_language', _descriptor2, _this), _initDefineProp(_this, 'has_error', _descriptor3, _this), _initDefineProp(_this, 'error', _descriptor4, _this), _initDefineProp(_this, 'network_status', _descriptor5, _this), _initDefineProp(_this, 'is_network_online', _descriptor6, _this), _initDefineProp(_this, 'is_socket_opened', _descriptor7, _this), _temp), _possibleConstructorReturn(_this, _ret);
+        return _ret = (_temp = (_this = _possibleConstructorReturn(this, (_ref = CommonStore.__proto__ || Object.getPrototypeOf(CommonStore)).call.apply(_ref, [this].concat(args))), _this), _initDefineProp(_this, 'server_time', _descriptor, _this), _initDefineProp(_this, 'current_language', _descriptor2, _this), _initDefineProp(_this, 'has_error', _descriptor3, _this), _initDefineProp(_this, 'error', _descriptor4, _this), _initDefineProp(_this, 'network_status', _descriptor5, _this), _initDefineProp(_this, 'is_network_online', _descriptor6, _this), _initDefineProp(_this, 'is_socket_opened', _descriptor7, _this), _initDefineProp(_this, 'services_error', _descriptor8, _this), _temp), _possibleConstructorReturn(_this, _ret);
     }
 
     _createClass(CommonStore, [{
@@ -30739,6 +30706,11 @@ var CommonStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 
     enumerable: true,
     initializer: function initializer() {
         return false;
+    }
+}), _descriptor8 = _applyDecoratedDescriptor(_class.prototype, 'services_error', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return {};
     }
 }), _applyDecoratedDescriptor(_class.prototype, 'setIsSocketOpened', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'setIsSocketOpened'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setError', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'setError'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showError', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'showError'), _class.prototype)), _class));
 exports.default = CommonStore;
@@ -30952,7 +30924,7 @@ exports.default = undefined;
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27;
+var _dec, _dec2, _dec3, _dec4, _dec5, _dec6, _dec7, _dec8, _dec9, _dec10, _dec11, _dec12, _dec13, _dec14, _dec15, _dec16, _dec17, _dec18, _dec19, _dec20, _dec21, _dec22, _dec23, _dec24, _dec25, _dec26, _dec27, _desc, _value, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6, _descriptor7, _descriptor8, _descriptor9, _descriptor10, _descriptor11, _descriptor12, _descriptor13, _descriptor14, _descriptor15, _descriptor16, _descriptor17, _descriptor18, _descriptor19, _descriptor20, _descriptor21, _descriptor22, _descriptor23, _descriptor24, _descriptor25, _descriptor26, _descriptor27, _descriptor28;
 
 var _mobx = __webpack_require__(/*! mobx */ "./node_modules/mobx/lib/mobx.module.js");
 
@@ -31015,13 +30987,10 @@ function _initializerWarningHelper(descriptor, context) {
 
 var store_name = 'ui_store';
 
-var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, _dec22 = _mobx.action.bound, _dec23 = _mobx.action.bound, _dec24 = _mobx.action.bound, _dec25 = _mobx.action.bound, _dec26 = _mobx.action.bound, (_class = function (_BaseStore) {
+var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _mobx.action.bound, _dec4 = _mobx.action.bound, _dec5 = _mobx.action.bound, _dec6 = _mobx.action.bound, _dec7 = _mobx.action.bound, _dec8 = _mobx.action.bound, _dec9 = _mobx.action.bound, _dec10 = _mobx.action.bound, _dec11 = _mobx.action.bound, _dec12 = _mobx.action.bound, _dec13 = _mobx.action.bound, _dec14 = _mobx.action.bound, _dec15 = _mobx.action.bound, _dec16 = _mobx.action.bound, _dec17 = _mobx.action.bound, _dec18 = _mobx.action.bound, _dec19 = _mobx.action.bound, _dec20 = _mobx.action.bound, _dec21 = _mobx.action.bound, _dec22 = _mobx.action.bound, _dec23 = _mobx.action.bound, _dec24 = _mobx.action.bound, _dec25 = _mobx.action.bound, _dec26 = _mobx.action.bound, _dec27 = _mobx.action.bound, (_class = function (_BaseStore) {
     _inherits(UIStore, _BaseStore);
 
     // SmartCharts Controls
-
-
-    // Purchase Controls
     function UIStore() {
         _classCallCheck(this, UIStore);
 
@@ -31047,41 +31016,43 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
 
         _initDefineProp(_this, 'is_purchase_confirm_on', _descriptor9, _this);
 
-        _initDefineProp(_this, 'is_purchase_lock_on', _descriptor10, _this);
+        _initDefineProp(_this, 'is_services_error_visible', _descriptor10, _this);
 
-        _initDefineProp(_this, 'is_chart_asset_info_visible', _descriptor11, _this);
+        _initDefineProp(_this, 'is_purchase_lock_on', _descriptor11, _this);
 
-        _initDefineProp(_this, 'is_chart_countdown_visible', _descriptor12, _this);
+        _initDefineProp(_this, 'is_chart_asset_info_visible', _descriptor12, _this);
 
-        _initDefineProp(_this, 'is_chart_layout_default', _descriptor13, _this);
+        _initDefineProp(_this, 'is_chart_countdown_visible', _descriptor13, _this);
 
-        _initDefineProp(_this, 'is_install_button_visible', _descriptor14, _this);
+        _initDefineProp(_this, 'is_chart_layout_default', _descriptor14, _this);
 
-        _initDefineProp(_this, 'pwa_prompt_event', _descriptor15, _this);
+        _initDefineProp(_this, 'is_install_button_visible', _descriptor15, _this);
 
-        _initDefineProp(_this, 'screen_width', _descriptor16, _this);
+        _initDefineProp(_this, 'pwa_prompt_event', _descriptor16, _this);
 
-        _initDefineProp(_this, 'toast_messages', _descriptor17, _this);
+        _initDefineProp(_this, 'screen_width', _descriptor17, _this);
 
-        _initDefineProp(_this, 'is_advanced_duration', _descriptor18, _this);
+        _initDefineProp(_this, 'toast_messages', _descriptor18, _this);
 
-        _initDefineProp(_this, 'advanced_duration_unit', _descriptor19, _this);
+        _initDefineProp(_this, 'is_advanced_duration', _descriptor19, _this);
 
-        _initDefineProp(_this, 'advanced_expiry_type', _descriptor20, _this);
+        _initDefineProp(_this, 'advanced_duration_unit', _descriptor20, _this);
 
-        _initDefineProp(_this, 'simple_duration_unit', _descriptor21, _this);
+        _initDefineProp(_this, 'advanced_expiry_type', _descriptor21, _this);
 
-        _initDefineProp(_this, 'duration_t', _descriptor22, _this);
+        _initDefineProp(_this, 'simple_duration_unit', _descriptor22, _this);
 
-        _initDefineProp(_this, 'duration_s', _descriptor23, _this);
+        _initDefineProp(_this, 'duration_t', _descriptor23, _this);
 
-        _initDefineProp(_this, 'duration_m', _descriptor24, _this);
+        _initDefineProp(_this, 'duration_s', _descriptor24, _this);
 
-        _initDefineProp(_this, 'duration_h', _descriptor25, _this);
+        _initDefineProp(_this, 'duration_m', _descriptor25, _this);
 
-        _initDefineProp(_this, 'duration_d', _descriptor26, _this);
+        _initDefineProp(_this, 'duration_h', _descriptor26, _this);
 
-        _initDefineProp(_this, 'is_blurred', _descriptor27, _this);
+        _initDefineProp(_this, 'duration_d', _descriptor27, _this);
+
+        _initDefineProp(_this, 'is_blurred', _descriptor28, _this);
 
         _this.getDurationFromUnit = function (unit) {
             return _this['duration_' + unit];
@@ -31101,6 +31072,9 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     }
 
     // PWA event and config
+
+
+    // Purchase Controls
 
 
     _createClass(UIStore, [{
@@ -31194,6 +31168,11 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
         value: function togglePositionsDrawer() {
             // toggle Positions Drawer
             this.is_positions_drawer_on = !this.is_positions_drawer_on;
+        }
+    }, {
+        key: 'toggleServicesErrorModal',
+        value: function toggleServicesErrorModal(is_visible) {
+            this.is_services_error_visible = is_visible;
         }
     }, {
         key: 'showMainDrawer',
@@ -31311,97 +31290,102 @@ var UIStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 = _m
     initializer: function initializer() {
         return false;
     }
-}), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, 'is_purchase_lock_on', [_mobx.observable], {
+}), _descriptor10 = _applyDecoratedDescriptor(_class.prototype, 'is_services_error_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_asset_info_visible', [_mobx.observable], {
+}), _descriptor11 = _applyDecoratedDescriptor(_class.prototype, 'is_purchase_lock_on', [_mobx.observable], {
+    enumerable: true,
+    initializer: function initializer() {
+        return false;
+    }
+}), _descriptor12 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_asset_info_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return true;
     }
-}), _descriptor12 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_countdown_visible', [_mobx.observable], {
+}), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_countdown_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor13 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_layout_default', [_mobx.observable], {
+}), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'is_chart_layout_default', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return true;
     }
-}), _descriptor14 = _applyDecoratedDescriptor(_class.prototype, 'is_install_button_visible', [_mobx.observable], {
+}), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, 'is_install_button_visible', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor15 = _applyDecoratedDescriptor(_class.prototype, 'pwa_prompt_event', [_mobx.observable], {
+}), _descriptor16 = _applyDecoratedDescriptor(_class.prototype, 'pwa_prompt_event', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return null;
     }
-}), _descriptor16 = _applyDecoratedDescriptor(_class.prototype, 'screen_width', [_mobx.observable], {
+}), _descriptor17 = _applyDecoratedDescriptor(_class.prototype, 'screen_width', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return window.innerWidth;
     }
-}), _descriptor17 = _applyDecoratedDescriptor(_class.prototype, 'toast_messages', [_mobx.observable], {
+}), _descriptor18 = _applyDecoratedDescriptor(_class.prototype, 'toast_messages', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return [];
     }
-}), _descriptor18 = _applyDecoratedDescriptor(_class.prototype, 'is_advanced_duration', [_mobx.observable], {
+}), _descriptor19 = _applyDecoratedDescriptor(_class.prototype, 'is_advanced_duration', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _descriptor19 = _applyDecoratedDescriptor(_class.prototype, 'advanced_duration_unit', [_mobx.observable], {
+}), _descriptor20 = _applyDecoratedDescriptor(_class.prototype, 'advanced_duration_unit', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 't';
     }
-}), _descriptor20 = _applyDecoratedDescriptor(_class.prototype, 'advanced_expiry_type', [_mobx.observable], {
+}), _descriptor21 = _applyDecoratedDescriptor(_class.prototype, 'advanced_expiry_type', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 'duration';
     }
-}), _descriptor21 = _applyDecoratedDescriptor(_class.prototype, 'simple_duration_unit', [_mobx.observable], {
+}), _descriptor22 = _applyDecoratedDescriptor(_class.prototype, 'simple_duration_unit', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 't';
     }
-}), _descriptor22 = _applyDecoratedDescriptor(_class.prototype, 'duration_t', [_mobx.observable], {
+}), _descriptor23 = _applyDecoratedDescriptor(_class.prototype, 'duration_t', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 5;
     }
-}), _descriptor23 = _applyDecoratedDescriptor(_class.prototype, 'duration_s', [_mobx.observable], {
+}), _descriptor24 = _applyDecoratedDescriptor(_class.prototype, 'duration_s', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 15;
     }
-}), _descriptor24 = _applyDecoratedDescriptor(_class.prototype, 'duration_m', [_mobx.observable], {
+}), _descriptor25 = _applyDecoratedDescriptor(_class.prototype, 'duration_m', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 3;
     }
-}), _descriptor25 = _applyDecoratedDescriptor(_class.prototype, 'duration_h', [_mobx.observable], {
+}), _descriptor26 = _applyDecoratedDescriptor(_class.prototype, 'duration_h', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 1;
     }
-}), _descriptor26 = _applyDecoratedDescriptor(_class.prototype, 'duration_d', [_mobx.observable], {
+}), _descriptor27 = _applyDecoratedDescriptor(_class.prototype, 'duration_d', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return 1;
     }
-}), _descriptor27 = _applyDecoratedDescriptor(_class.prototype, 'is_blurred', [_mobx.observable], {
+}), _descriptor28 = _applyDecoratedDescriptor(_class.prototype, 'is_blurred', [_mobx.observable], {
     enumerable: true,
     initializer: function initializer() {
         return false;
     }
-}), _applyDecoratedDescriptor(_class.prototype, 'onChangeUiStore', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'onChangeUiStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showBlur', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'showBlur'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideBlur', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'hideBlur'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'openPositionsDrawer', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'openPositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec22], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec23], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec24], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec25], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setHasOnlyForwardingContracts', [_dec26], Object.getOwnPropertyDescriptor(_class.prototype, 'setHasOnlyForwardingContracts'), _class.prototype)), _class));
+}), _applyDecoratedDescriptor(_class.prototype, 'onChangeUiStore', [_dec], Object.getOwnPropertyDescriptor(_class.prototype, 'onChangeUiStore'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'handleResize', [_dec2], Object.getOwnPropertyDescriptor(_class.prototype, 'handleResize'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_mobile', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_mobile'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'is_tablet', [_mobx.computed], Object.getOwnPropertyDescriptor(_class.prototype, 'is_tablet'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showBlur', [_dec3], Object.getOwnPropertyDescriptor(_class.prototype, 'showBlur'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideBlur', [_dec4], Object.getOwnPropertyDescriptor(_class.prototype, 'hideBlur'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleAccountsDialog', [_dec5], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleAccountsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartLayout', [_dec6], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartLayout'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartAssetInfo', [_dec7], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartAssetInfo'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleChartCountdown', [_dec8], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleChartCountdown'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseLock', [_dec9], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseLock'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePurchaseConfirmation', [_dec10], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePurchaseConfirmation'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleDarkMode', [_dec11], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleDarkMode'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleSettingsDialog', [_dec12], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleSettingsDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showLanguageDialog', [_dec13], Object.getOwnPropertyDescriptor(_class.prototype, 'showLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideLanguageDialog', [_dec14], Object.getOwnPropertyDescriptor(_class.prototype, 'hideLanguageDialog'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'openPositionsDrawer', [_dec15], Object.getOwnPropertyDescriptor(_class.prototype, 'openPositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'togglePositionsDrawer', [_dec16], Object.getOwnPropertyDescriptor(_class.prototype, 'togglePositionsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'toggleServicesErrorModal', [_dec17], Object.getOwnPropertyDescriptor(_class.prototype, 'toggleServicesErrorModal'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showMainDrawer', [_dec18], Object.getOwnPropertyDescriptor(_class.prototype, 'showMainDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showNotificationsDrawer', [_dec19], Object.getOwnPropertyDescriptor(_class.prototype, 'showNotificationsDrawer'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideDrawers', [_dec20], Object.getOwnPropertyDescriptor(_class.prototype, 'hideDrawers'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'showInstallButton', [_dec21], Object.getOwnPropertyDescriptor(_class.prototype, 'showInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'hideInstallButton', [_dec22], Object.getOwnPropertyDescriptor(_class.prototype, 'hideInstallButton'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setPWAPromptEvent', [_dec23], Object.getOwnPropertyDescriptor(_class.prototype, 'setPWAPromptEvent'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'addToastMessage', [_dec24], Object.getOwnPropertyDescriptor(_class.prototype, 'addToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeToastMessage', [_dec25], Object.getOwnPropertyDescriptor(_class.prototype, 'removeToastMessage'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'removeAllToastMessages', [_dec26], Object.getOwnPropertyDescriptor(_class.prototype, 'removeAllToastMessages'), _class.prototype), _applyDecoratedDescriptor(_class.prototype, 'setHasOnlyForwardingContracts', [_dec27], Object.getOwnPropertyDescriptor(_class.prototype, 'setHasOnlyForwardingContracts'), _class.prototype)), _class));
 exports.default = UIStore;
 
 /***/ }),
