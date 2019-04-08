@@ -9633,7 +9633,6 @@ var BinaryLoader = function () {
 
     var afterContentChange = function afterContentChange(e) {
         Page.onLoad();
-        GTM.pushDataLayer({ event: 'page_load' });
 
         var this_page = e.detail.getAttribute('data-page');
         if (Object.prototype.hasOwnProperty.call(pages_config, this_page)) {
@@ -9645,6 +9644,8 @@ var BinaryLoader = function () {
         ContentVisibility.init();
 
         BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+            GTM.pushDataLayer({ event: 'page_load' }); // we need website_status.clients_country
+
             // first time load.
             var last_image = $('#content img').last();
             if (last_image) {
@@ -10461,21 +10462,14 @@ var Footer = function () {
             if (Client.isLoggedIn()) {
                 var landing_company_shortcode = Client.get('landing_company_shortcode');
                 showWarning(landing_company_shortcode === 'maltainvest' || Client.get('is_virtual') && State.getResponse('landing_company.financial_company.shortcode') === 'maltainvest');
-                setVisibilityAgeRestrictionSign(/^(malta|iom)$/.test(landing_company_shortcode));
             } else {
-                var is_eu_country = isEuCountry();
-                showWarning(is_eu_country);
-                setVisibilityAgeRestrictionSign(is_eu_country);
+                showWarning(isEuCountry());
             }
         });
     };
 
     var showWarning = function showWarning(should_show_warning) {
         $('#footer-regulatory .eu-only').setVisibility(should_show_warning);
-    };
-
-    var setVisibilityAgeRestrictionSign = function setVisibilityAgeRestrictionSign(should_show_age_restriction_sign) {
-        $('#footer-regulatory .age-restriction-sign').setVisibility(+should_show_age_restriction_sign);
     };
 
     var clearNotification = function clearNotification() {
@@ -11078,10 +11072,12 @@ var LoggedInHandler = function () {
         BinarySocket.send({ authorize: params.token1 }).then(function (response) {
             var account_list = getPropertyValue(response, ['authorize', 'account_list']);
             if (isStorageSupported(localStorage) && isStorageSupported(sessionStorage) && account_list) {
-                storeClientAccounts(account_list);
                 // redirect url
                 redirect_url = sessionStorage.getItem('redirect_url');
                 sessionStorage.removeItem('redirect_url');
+
+                var is_app_2 = redirect_url.includes('/app/');
+                storeClientAccounts(account_list, is_app_2);
             } else {
                 Client.doLogout({ logout: 1 });
             }
@@ -11115,7 +11111,7 @@ var LoggedInHandler = function () {
         landing_company_name: 'landing_company_shortcode'
     };
 
-    var storeClientAccounts = function storeClientAccounts(account_list) {
+    var storeClientAccounts = function storeClientAccounts(account_list, is_app_2) {
         // Parse url for loginids, tokens, and currencies returned by OAuth
         var params = paramsHash(window.location.href);
 
@@ -11125,8 +11121,13 @@ var LoggedInHandler = function () {
         account_list.forEach(function (account) {
             Object.keys(account).forEach(function (param) {
                 if (param === 'loginid') {
-                    if (!Client.get('loginid') && !account.is_virtual && !account.is_disabled) {
-                        Client.set(param, account[param]);
+                    if (!Client.get('loginid') && !account.is_disabled) {
+                        if (is_app_2 && account.is_virtual) {
+                            // TODO: [only_virtual] remove this to stop logging clients into virtual for app_2
+                            Client.set(param, account[param]);
+                        } else if (!is_app_2 && !account.is_virtual) {
+                            Client.set(param, account[param]);
+                        }
                     }
                 } else {
                     var param_to_set = map_names[param] || param;
