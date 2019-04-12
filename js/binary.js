@@ -497,8 +497,7 @@ var ClientBase = function () {
         var can_open_multi = false;
         var type = void 0,
             can_upgrade_to = void 0;
-        if ((upgradeable_landing_companies || []).length && !/^(py|ae)$/i.test(get('residence'))) {
-            // TODO: remove py and ae exceptions when API block is implemented
+        if ((upgradeable_landing_companies || []).length) {
             var current_landing_company = get('landing_company_shortcode');
 
             can_open_multi = upgradeable_landing_companies.indexOf(current_landing_company) !== -1;
@@ -947,7 +946,7 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var GTM = function () {
     var isGtmApplicable = function isGtmApplicable() {
-        return (/^(1|1098|14473|15284)$/.test(getAppId())
+        return (/^(1|1098|14473|15284|16303|15265)$/.test(getAppId())
         );
     };
 
@@ -25319,6 +25318,7 @@ var Process = function () {
     var onExpiryTypeChange = function onExpiryTypeChange(value) {
         var $expiry_type = $('#expiry_type');
         var validated_value = value && $expiry_type.find('option[value=' + value + ']').length ? value : 'duration';
+        var is_edge = window.navigator.userAgent.indexOf('Edge') !== -1;
         $expiry_type.val(validated_value);
 
         var make_price_request = 0;
@@ -25329,6 +25329,9 @@ var Process = function () {
                 make_price_request = Durations.selectEndDate(moment(Defaults.get('expiry_date'))) ? -1 : 1;
             }
             Defaults.remove('duration_units', 'duration_amount');
+            if (is_edge) {
+                document.getSelection().empty(); // microsoft edge 18 automatically start selecting text when select expiry time after changing expiry type to end time
+            }
         } else {
             StartDates.enable();
             Durations.display();
@@ -30103,8 +30106,7 @@ var PersonalDetails = function () {
                     $options_with_disabled.append(CommonFunctions.makeOption({
                         text: res.text,
                         value: res.value,
-                        // is_disabled: res.disabled,
-                        is_disabled: res.disabled || /^(py|ae)$/i.test(res.value) ? 'disabled' : '' // TODO: remove py and ae exceptions when API block is implemented
+                        is_disabled: res.disabled
                     }));
                 });
                 if (residence) {
@@ -33927,8 +33929,7 @@ var VirtualAccOpening = function () {
                 $options_with_disabled.append(makeOption({
                     text: res.text,
                     value: res.value,
-                    // is_disabled: res.disabled,
-                    is_disabled: res.disabled || /^(py|ae)$/i.test(res.value) ? 'disabled' : '' // TODO: remove py and ae exceptions when API block is implemented
+                    is_disabled: res.disabled
                 }));
             });
             $residence.html($options_with_disabled.html());
@@ -35951,7 +35952,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = ''; // you can insert Application ID of your registered application here
+    var user_app_id = '1108'; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
@@ -35962,18 +35963,15 @@ var getAppId = function getAppId() {
         app_id = binary_desktop_app_id;
     } else if (/staging\.binary\.com/i.test(window.location.hostname)) {
         window.localStorage.removeItem('config.default_app_id');
-        app_id = 1098;
+        app_id = is_new_app ? 16303 : 1098;
     } else if (user_app_id.length) {
         window.localStorage.setItem('config.default_app_id', user_app_id); // it's being used in endpoint chrome extension - please do not remove
         app_id = user_app_id;
     } else if (/localhost/i.test(window.location.hostname)) {
         app_id = 1159;
-    } else if (is_new_app) {
-        window.localStorage.removeItem('config.default_app_id');
-        app_id = 15265;
     } else {
         window.localStorage.removeItem('config.default_app_id');
-        app_id = domain_app_ids[getCurrentBinaryDomain()] || 1;
+        app_id = is_new_app ? 15265 : domain_app_ids[getCurrentBinaryDomain()] || 1;
     }
     return app_id;
 };
