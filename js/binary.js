@@ -11079,7 +11079,7 @@ var LoggedInHandler = function () {
                 redirect_url = sessionStorage.getItem('redirect_url');
                 sessionStorage.removeItem('redirect_url');
 
-                var is_app_2 = redirect_url.includes('/app/');
+                var is_app_2 = (typeof redirect_url === 'string' || redirect_url instanceof String) && redirect_url.includes('/app/');
                 storeClientAccounts(account_list, is_app_2);
             } else {
                 Client.doLogout({ logout: 1 });
@@ -23500,7 +23500,7 @@ var TradingEvents = function () {
             var ask_price = e.currentTarget.getAttribute('data-ask-price');
             var params = { buy: id, price: ask_price, passthrough: {} };
             Array.prototype.slice.call(e.currentTarget.attributes).filter(function (attr) {
-                if (!/^data/.test(attr.name) || /^data-balloon$/.test(attr.name) || /data-balloon/.test(attr.name)) {
+                if (!/^data/.test(attr.name) || /^data-balloon$/.test(attr.name) || /data-balloon/.test(attr.name) || /^data-passthrough$/.test(attr.name)) {
                     return false;
                 }
                 return true;
@@ -27647,7 +27647,11 @@ var Authenticate = function () {
 
     var showSuccess = function showSuccess() {
         var msg = localize('We are reviewing your documents. For more details [_1]contact us[_2].', ['<a href="' + Url.urlFor('contact') + '">', '</a>']);
-        displayNotification(msg, false, 'document_under_review');
+
+        BinarySocket.send({ get_account_status: 1 }).then(function () {
+            displayNotification(msg, false, 'document_under_review');
+        });
+
         setTimeout(function () {
             removeButtonLoading();
             $button.setVisibility(0);
@@ -29542,7 +29546,7 @@ var LimitsInit = function () {
                 elementTextContent(el_withdraw_limit, localize('Your [_1] day withdrawal limit is currently [_2] [_3] (or equivalent in other currency).', [limits.num_of_days, currency, days_limit]));
                 elementTextContent(el_withdrawn, localize('You have already withdrawn the equivalent of [_1] [_2] in aggregate over the last [_3] days.', [currency, limits.withdrawal_for_x_days_monetary, limits.num_of_days]));
                 elementTextContent(el_withdraw_limit_agg, localize('Therefore your current immediate maximum withdrawal (subject to your account having sufficient funds) is [_1] [_2] (or equivalent in other currency).', [currency, remainder]));
-            } else if (Client.get('landing_company_shortcode' === 'costarica') || Client.get('landing_company_shortcode' === 'svg')) {
+            } else if (Client.get('landing_company_shortcode') === 'costarica' || Client.get('landing_company_shortcode') === 'svg') {
                 // TODO [->svg]
                 elementTextContent(el_withdraw_limit, localize('Your withdrawal limit is [_1] [_2].', [currency, days_limit]));
                 elementTextContent(el_withdrawn, localize('You have already withdrawn [_1] [_2].', [currency, limits.withdrawal_since_inception_monetary]));
@@ -35952,7 +35956,7 @@ var binary_desktop_app_id = 14473;
 
 var getAppId = function getAppId() {
     var app_id = null;
-    var user_app_id = '1108'; // you can insert Application ID of your registered application here
+    var user_app_id = ''; // you can insert Application ID of your registered application here
     var config_app_id = window.localStorage.getItem('config.app_id');
     var is_new_app = /\/app\//.test(window.location.pathname);
     if (config_app_id) {
