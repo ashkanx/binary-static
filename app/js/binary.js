@@ -20639,7 +20639,7 @@ var MarkerLine = function MarkerLine(_ref) {
         }),
         label === marker_config.LINE_START.content_config.label && _react2.default.createElement(_Common.Icon, {
             icon: _iconStartTime.IconStartTimeSVG,
-            className: 'chart-marker-line__icon'
+            className: (0, _classnames2.default)('chart-marker-line__icon', 'chart-marker-line__icon--time')
         })
     );
 };

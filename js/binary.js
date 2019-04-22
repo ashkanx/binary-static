@@ -2100,7 +2100,7 @@ var SubscriptionManager = function () {
 
     // dispatches the response to subscribers of the specific subscription id (internal use only)
     var dispatch = function dispatch(response, sub_id) {
-        var stream_id = (0, _utility.getPropertyValue)(response, [response.msg_type, 'id']);
+        var stream_id = (0, _utility.getPropertyValue)(response, [response.msg_type, 'id']) || (0, _utility.getPropertyValue)(response.subscription, ['id']);
 
         if (!subscriptions[sub_id]) {
             if (!forget_requested[stream_id]) {
