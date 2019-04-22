@@ -63,7 +63,7 @@
 /******/
 /******/ 	// script path function
 /******/ 	function jsonpScriptSrc(chunkId) {
-/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_token":"api_token","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio~statement":"portfolio~statement","portfolio":"portfolio","statement":"statement","self_exclusion":"self_exclusion","settings":"settings","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"5189d05e3eada5e2fb30","account_password":"5b98c5e0011cf272df7f","api_token":"1bcb0c881a41de9bfd6e","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"3cb8eb3c646183fd430a","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio~statement":"89c32cd4391ea5a712d9","portfolio":"aab793ab7fcad630040c","statement":"64dc835a679e2e68c64f","self_exclusion":"226ac0134b0354423868","settings":"90edf5f4d945de1a9104","vendors~smart_chart":"013ca5ddbeb1ffbc57a1","smart_chart":"756fb58b2565226a920f"}[chunkId] + ".js"
+/******/ 		return __webpack_require__.p + "" + ({"404":"404","account_password":"account_password","api_token":"api_token","authorized_application":"authorized_application","cashier_password":"cashier_password","contract":"contract","financial_assessment":"financial_assessment","limits":"limits","login_history":"login_history","personal_details":"personal_details","portfolio~statement":"portfolio~statement","portfolio":"portfolio","statement":"statement","self_exclusion":"self_exclusion","settings":"settings","vendors~smart_chart":"vendors~smart_chart","smart_chart":"smart_chart"}[chunkId]||chunkId) + "-" + {"404":"5189d05e3eada5e2fb30","account_password":"5b98c5e0011cf272df7f","api_token":"1bcb0c881a41de9bfd6e","authorized_application":"41eb62c13df5f986ea68","cashier_password":"90e23ba1132672b3e187","contract":"243c718b107d604341d6","financial_assessment":"182a107203c81d1cc33a","limits":"6122a66075b7120f5152","login_history":"92742ccaa1efb1ab65b8","personal_details":"716845b634031dd9cf95","portfolio~statement":"1239d5c20c1b75c51821","portfolio":"f1d35791cb381ba423a5","statement":"58d4a34d13ede4ecde59","self_exclusion":"226ac0134b0354423868","settings":"629b43dd5f13f4355536","vendors~smart_chart":"e5a02e5cee0181f4193d","smart_chart":"756fb58b2565226a920f"}[chunkId] + ".js"
 /******/ 	}
 /******/
 /******/ 	// The require function
@@ -4357,10 +4357,8 @@ var PositionsDrawerCard = function (_React$PureComponent) {
                             _react2.default.createElement(
                                 'div',
                                 { className: (0, _classnames2.default)('positions-drawer-card__profit-loss', {
-                                        'positions-drawer-card__profit-loss--minus': status !== 'complete' && profit_loss < 0,
-                                        'positions-drawer-card__profit-loss--plus': status !== 'complete' && profit_loss > 0,
-                                        'positions-drawer-card__profit-loss--negative': status === 'complete' && profit_loss < 0,
-                                        'positions-drawer-card__profit-loss--positive': status === 'complete' && profit_loss > 0
+                                        'positions-drawer-card__profit-loss--negative': profit_loss < 0,
+                                        'positions-drawer-card__profit-loss--positive': profit_loss > 0
                                     })
                                 },
                                 _react2.default.createElement(_money2.default, { amount: Math.abs(profit_loss), currency: currency }),
@@ -10610,7 +10608,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 var _helpers = __webpack_require__(/*! ./helpers */ "./src/javascript/app_2/App/Components/Routes/helpers.js");
 
@@ -10679,7 +10677,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 var _routesConfig = __webpack_require__(/*! ../../Constants/routes-config */ "./src/javascript/app_2/App/Constants/routes-config.js");
 
@@ -10739,7 +10737,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -10785,7 +10783,7 @@ Object.defineProperty(exports, "__esModule", {
 });
 exports.getContractPath = exports.getPath = exports.isRouteVisible = exports.findRouteByPath = exports.normalizePath = undefined;
 
-var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 
 var _routes = __webpack_require__(/*! ../../../Constants/routes */ "./src/javascript/app_2/Constants/routes.js");
 
@@ -10802,7 +10800,16 @@ var findRouteByPath = exports.findRouteByPath = function findRouteByPath(path, r
     var result = void 0;
 
     routes_config.some(function (route_info) {
-        if ((0, _reactRouter.matchPath)(path, route_info)) {
+        var match_path = void 0;
+        try {
+            match_path = (0, _reactRouter.matchPath)(path, route_info);
+        } catch (e) {
+            if (/undefined/.test(e.message)) {
+                return undefined;
+            }
+        }
+
+        if (match_path) {
             result = route_info;
             return true;
         } else if (route_info.routes) {
@@ -10904,7 +10911,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 var _login = __webpack_require__(/*! ../../../../_common/base/login */ "./src/javascript/_common/base/login.js");
 
@@ -11034,7 +11041,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 var _localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js");
 
@@ -11723,7 +11730,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 
 var _ttReactCustomScrollbars = __webpack_require__(/*! tt-react-custom-scrollbars */ "./node_modules/tt-react-custom-scrollbars/lib/index.js");
 
@@ -11918,7 +11925,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 
 var _currency_base = __webpack_require__(/*! ../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js");
 
@@ -12191,7 +12198,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/es/index.js");
+var _reactRouter = __webpack_require__(/*! react-router */ "./node_modules/react-router/esm/react-router.js");
 
 var _Errors = __webpack_require__(/*! ../../Components/Elements/Errors */ "./src/javascript/app_2/App/Components/Elements/Errors/index.js");
 
@@ -13313,7 +13320,7 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
-var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/es/index.js");
+var _reactRouterDom = __webpack_require__(/*! react-router-dom */ "./node_modules/react-router-dom/esm/react-router-dom.js");
 
 var _baseName = __webpack_require__(/*! ../Utils/URL/base-name */ "./src/javascript/app_2/Utils/URL/base-name.js");
 
@@ -15503,6 +15510,68 @@ exports.default = IconContractClose;
 
 /***/ }),
 
+/***/ "./src/javascript/app_2/Assets/Contract/icon-end-time.jsx":
+/*!****************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Contract/icon-end-time.jsx ***!
+  \****************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconEndTimeSVG = undefined;
+
+var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _icon = __webpack_require__(/*! ../Common/icon.jsx */ "./src/javascript/app_2/Assets/Common/icon.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconEndTimeSVG = exports.IconEndTimeSVG = function IconEndTimeSVG(_ref) {
+    var className = _ref.className,
+        classNamePath = _ref.classNamePath;
+    return _react2.default.createElement(
+        'svg',
+        { xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24', className: className },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('circle', { className: classNamePath, cx: '12', cy: '12', r: '12' }),
+            _react2.default.createElement('path', {
+                fill: '#FFF',
+                fillRule: 'nonzero',
+                d: 'M6.364 5.333h12.303c.736 0 1.333.597 1.333 1.334v8c0 .736-.597 1.333-1.333 1.333H6.364v3.333a.667.667 0 0 1-.667.667h-.03A.667.667 0 0 1 5 19.333V4.667C5 4.298 5.298 4 5.667 4h.03c.368 0 .667.298.667.667v.666zm4.09 1.334v2.666h2.728V6.667h-2.727zm2.728 2.666V12h2.727V9.333h-2.727zm2.727-2.666v2.666h2.727V6.667H15.91zm0 5.333v2.667h2.727V12H15.91zm-5.454 0v2.667h2.727V12h-2.727zM7.727 9.333V12h2.728V9.333H7.727z'
+            })
+        )
+    );
+};
+
+var IconEndTime = function IconEndTime() {
+    return _react2.default.createElement(_icon.Icon, { icon: IconEndTimeSVG });
+};
+
+IconEndTime.propTypes = {
+    className: _propTypes2.default.string,
+    classNamePath: _propTypes2.default.string,
+    color: _propTypes2.default.string
+};
+
+exports.default = (0, _mobxReact.observer)(IconEndTime);
+
+/***/ }),
+
 /***/ "./src/javascript/app_2/Assets/Contract/icon-flag.jsx":
 /*!************************************************************!*\
   !*** ./src/javascript/app_2/Assets/Contract/icon-flag.jsx ***!
@@ -15554,6 +15623,67 @@ IconFlag.propTypes = {
 };
 
 exports.default = (0, _mobxReact.observer)(IconFlag);
+
+/***/ }),
+
+/***/ "./src/javascript/app_2/Assets/Contract/icon-start-time.jsx":
+/*!******************************************************************!*\
+  !*** ./src/javascript/app_2/Assets/Contract/icon-start-time.jsx ***!
+  \******************************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+    value: true
+});
+exports.IconStartTimeSVG = undefined;
+
+var _mobxReact = __webpack_require__(/*! mobx-react */ "./node_modules/mobx-react/index.module.js");
+
+var _propTypes = __webpack_require__(/*! prop-types */ "./node_modules/prop-types/index.js");
+
+var _propTypes2 = _interopRequireDefault(_propTypes);
+
+var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
+
+var _react2 = _interopRequireDefault(_react);
+
+var _icon = __webpack_require__(/*! ../Common/icon.jsx */ "./src/javascript/app_2/Assets/Common/icon.jsx");
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var IconStartTimeSVG = exports.IconStartTimeSVG = function IconStartTimeSVG(_ref) {
+    var className = _ref.className,
+        classNamePath = _ref.classNamePath;
+    return _react2.default.createElement(
+        'svg',
+        { className: className, xmlns: 'http://www.w3.org/2000/svg', width: '24', height: '24', viewBox: '0 0 24 24' },
+        _react2.default.createElement(
+            'g',
+            { fill: 'none', fillRule: 'evenodd' },
+            _react2.default.createElement('path', {
+                className: classNamePath,
+                fill: '#FFF',
+                d: 'M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2 2 6.477 2 12s4.477 10 10 10zm0 2C5.373 24 0 18.627 0 12S5.373 0 12 0s12 5.373 12 12-5.373 12-12 12zm0-20a5.5 5.5 0 0 1 5.5 5.487c0 2.946-5.095 9.956-5.311 10.253l-.19.26-.188-.26C11.593 19.447 6.5 12.426 6.5 9.487A5.5 5.5 0 0 1 12 4zm0 7.363a2.496 2.496 0 0 0 2.494-2.491 2.492 2.492 0 0 0-2.496-2.488 2.492 2.492 0 0 0-2.494 2.49 2.492 2.492 0 0 0 2.495 2.49z'
+            })
+        )
+    );
+};
+
+var IconStartTime = function IconStartTime() {
+    return _react2.default.createElement(_icon.Icon, { icon: IconStartTimeSVG });
+};
+
+IconStartTime.propTypes = {
+    className: _propTypes2.default.string,
+    classNamePath: _propTypes2.default.string,
+    color: _propTypes2.default.string
+};
+
+exports.default = (0, _mobxReact.observer)(IconStartTime);
 
 /***/ }),
 
@@ -18632,7 +18762,11 @@ var _iconSuccess = __webpack_require__(/*! ../Assets/Common/icon-success.jsx */ 
 
 var _iconWarning = __webpack_require__(/*! ../Assets/Common/icon-warning.jsx */ "./src/javascript/app_2/Assets/Common/icon-warning.jsx");
 
+var _iconEndTime = __webpack_require__(/*! ../Assets/Contract/icon-end-time.jsx */ "./src/javascript/app_2/Assets/Contract/icon-end-time.jsx");
+
 var _iconFlag2 = __webpack_require__(/*! ../Assets/Contract/icon-flag.jsx */ "./src/javascript/app_2/Assets/Contract/icon-flag.jsx");
+
+var _iconStartTime = __webpack_require__(/*! ../Assets/Contract/icon-start-time.jsx */ "./src/javascript/app_2/Assets/Contract/icon-start-time.jsx");
 
 var _iconTick = __webpack_require__(/*! ../Assets/Contract/icon-tick.jsx */ "./src/javascript/app_2/Assets/Contract/icon-tick.jsx");
 
@@ -18712,7 +18846,9 @@ var ICONS = {
     },
     CONTRACT: {
         // ENTRY_SPOT: IconEntrySpotSVG,
+        END_TIME: _iconEndTime.IconEndTimeSVG,
         FLAG: _iconFlag2.IconFlagSVG,
+        START_TIME: _iconStartTime.IconStartTimeSVG,
         TICK: _iconTick.IconTickSVG
     },
     FOOTER: {
@@ -20478,25 +20614,41 @@ var _react = __webpack_require__(/*! react */ "./node_modules/react/index.js");
 
 var _react2 = _interopRequireDefault(_react);
 
+var _Common = __webpack_require__(/*! ../../../../Assets/Common */ "./src/javascript/app_2/Assets/Common/index.js");
+
+var _iconEndTime = __webpack_require__(/*! ../../../../Assets/Contract/icon-end-time.jsx */ "./src/javascript/app_2/Assets/Contract/icon-end-time.jsx");
+
+var _iconStartTime = __webpack_require__(/*! ../../../../Assets/Contract/icon-start-time.jsx */ "./src/javascript/app_2/Assets/Contract/icon-start-time.jsx");
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var MarkerLine = function MarkerLine(_ref) {
     var label = _ref.label,
-        line_style = _ref.line_style;
+        line_style = _ref.line_style,
+        marker_config = _ref.marker_config,
+        status = _ref.status;
     return _react2.default.createElement(
         'div',
         { className: (0, _classnames2.default)('chart-marker-line__wrapper', 'chart-marker-line--' + line_style) },
-        _react2.default.createElement(
-            'div',
-            { className: 'chart-marker-line__label' },
-            label
-        )
+        label === marker_config.LINE_END.content_config.label && _react2.default.createElement(_Common.Icon, {
+            icon: _iconEndTime.IconEndTimeSVG,
+            className: (0, _classnames2.default)('chart-marker-line__icon', {
+                'chart-marker-line__icon--won': status === 'won',
+                'chart-marker-line__icon--lost': status === 'lost'
+            })
+        }),
+        label === marker_config.LINE_START.content_config.label && _react2.default.createElement(_Common.Icon, {
+            icon: _iconStartTime.IconStartTimeSVG,
+            className: 'chart-marker-line__icon'
+        })
     );
 };
 
 MarkerLine.propTypes = {
     label: _propTypes2.default.string,
-    line_style: _propTypes2.default.string
+    line_style: _propTypes2.default.string,
+    marker_config: _propTypes2.default.object,
+    status: _propTypes2.default.oneOf(['won', 'lost'])
 };
 exports.default = (0, _mobxReact.observer)(MarkerLine);
 
@@ -25353,7 +25505,10 @@ var createMarkerEndTime = exports.createMarkerEndTime = function createMarkerEnd
     var end_time = (0, _logic.getEndTime)(contract_info);
     if (!end_time) return false;
 
-    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_END.type, +end_time);
+    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_END.type, +end_time, null, {
+        status: '' + (contract_info.profit > 0 ? 'won' : 'lost'),
+        marker_config: _markers.MARKER_TYPES_CONFIG
+    });
 };
 
 var createMarkerPurchaseTime = exports.createMarkerPurchaseTime = function createMarkerPurchaseTime(contract_info) {
@@ -25365,7 +25520,9 @@ var createMarkerPurchaseTime = exports.createMarkerPurchaseTime = function creat
 var createMarkerStartTime = exports.createMarkerStartTime = function createMarkerStartTime(contract_info) {
     if (!contract_info.date_start) return false;
 
-    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_START.type, +contract_info.date_start);
+    return createMarkerConfig(_markers.MARKER_TYPES_CONFIG.LINE_START.type, +contract_info.date_start, null, {
+        marker_config: _markers.MARKER_TYPES_CONFIG
+    });
 };
 
 // -------------------- Spots --------------------
@@ -26660,7 +26817,8 @@ var DEFAULT_SHADES = exports.DEFAULT_SHADES = {
 var BARRIER_COLORS = exports.BARRIER_COLORS = {
     GREEN: '#39b19d',
     RED: 'red',
-    GRAY: '#999cac'
+    GRAY: '#999cac',
+    DARK_GRAY: '#555975'
 };
 
 var BARRIER_LINE_STYLES = exports.BARRIER_LINE_STYLES = {
@@ -26912,7 +27070,7 @@ var ChartBarrierStore = exports.ChartBarrierStore = (_dec = _mobx.action.bound, 
 
         _initDefineProp(this, 'hidePriceLines', _descriptor8, this);
 
-        this.color = color || _barriers.BARRIER_COLORS.GRAY; // dark mode is the default mode
+        this.color = color; // dark mode is the default mode
         this.lineStyle = line_style || _barriers.BARRIER_LINE_STYLES.SOLID;
         this.onChange = this.onBarrierChange;
 
@@ -26960,7 +27118,7 @@ var ChartBarrierStore = exports.ChartBarrierStore = (_dec = _mobx.action.bound, 
     }, {
         key: 'updateBarrierColor',
         value: function updateBarrierColor(is_dark_mode) {
-            this.color = is_dark_mode ? _barriers.BARRIER_COLORS.GRAY : _barriers.BARRIER_COLORS.GREEN;
+            this.color = is_dark_mode ? _barriers.BARRIER_COLORS.DARK_GRAY : _barriers.BARRIER_COLORS.GRAY;
         }
     }, {
         key: 'barrier_count',
@@ -30219,7 +30377,7 @@ var TradeStore = (_dec = _mobx.action.bound, _dec2 = _mobx.action.bound, _dec3 =
             this.proposal_info = _extends({}, this.proposal_info, _defineProperty({}, contract_type, (0, _proposal.getProposalInfo)(this, response, obj_prev_contract_basis)));
 
             if (!this.smart_chart.is_contract_mode) {
-                var color = this.root_store.ui.is_dark_mode_on ? _barriers.BARRIER_COLORS.GRAY : _barriers.BARRIER_COLORS.GREEN;
+                var color = this.root_store.ui.is_dark_mode_on ? _barriers.BARRIER_COLORS.DARK_GRAY : _barriers.BARRIER_COLORS.GRAY;
                 var barrier_config = { color: color };
                 (0, _chart.setChartBarrier)(this.smart_chart, response, this.onChartBarrierChange, barrier_config);
             }
