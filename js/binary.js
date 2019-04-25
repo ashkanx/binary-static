@@ -26368,6 +26368,7 @@ var ChartSettings = __webpack_require__(/*! ../../common/chart_settings */ "./sr
 var addComma = __webpack_require__(/*! ../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var CommonFunctions = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
+var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 
 var TickDisplay = function () {
     var number_of_ticks = void 0,
@@ -26389,7 +26390,6 @@ var TickDisplay = function () {
         counter = void 0,
         spots_list = void 0,
         tick_init = void 0,
-        subscribe = void 0,
         reset_spot_plotted = void 0,
         response_id = void 0,
         contract = void 0,
@@ -26666,6 +26666,10 @@ var TickDisplay = function () {
         applicable_ticks = [];
     };
 
+    var getDecimalPlaces = function getDecimalPlaces(number) {
+        return number.toString().split('.')[1].length || 2;
+    };
+
     var dispatch = function dispatch(data) {
         var tick_chart = CommonFunctions.getElementById(id_render);
 
@@ -26673,7 +26677,7 @@ var TickDisplay = function () {
             return;
         }
 
-        if (subscribe && data.tick && document.getElementById('sell_content_wrapper')) {
+        if (getPropertyValue(data, ['tick', 'id']) && document.getElementById('sell_content_wrapper')) {
             response_id = data.tick.id;
             ViewPopupUI.storeSubscriptionID(response_id);
         }
@@ -26686,11 +26690,11 @@ var TickDisplay = function () {
             if (data.tick) {
                 Tick.details(data);
                 if (!chart_display_decimals) {
-                    chart_display_decimals = data.tick.quote.split('.')[1].length || 2;
+                    chart_display_decimals = getDecimalPlaces(data.tick.quote);
                 }
             } else if (data.history) {
                 if (!chart_display_decimals) {
-                    chart_display_decimals = data.history.prices[0].split('.')[1].length || 2;
+                    chart_display_decimals = getDecimalPlaces(data.history.prices[0]);
                 }
             }
             if (!tick_init && contract) {
@@ -26885,7 +26889,6 @@ var TickDisplay = function () {
     };
 
     var updateChart = function updateChart(data, proposal_open_contract) {
-        subscribe = 'false';
         if (proposal_open_contract) {
             updateContract(proposal_open_contract);
         }
@@ -26897,20 +26900,12 @@ var TickDisplay = function () {
                 id_render = data.id_render;
             }
 
-            var request = {
-                ticks_history: contract.underlying,
+            var request = _extends({
+                end: contract.exit_tick_time || 'latest',
                 start: contract.date_start,
-                end: 'latest'
-            };
-            if (contract.current_spot_time < contract.date_expiry) {
-                request.subscribe = 1;
-                subscribe = 'true';
-            } else if (!/^(runhigh|runlow)$/i.test(contract.contract_category)) {
-                request.subscribe = 1;
-                request.end = contract.exit_tick_time || 'latest';
-            } else {
-                request.end = contract.date_expiry;
-            }
+                ticks_history: contract.underlying
+            }, !contract.exit_tick_time && { subscribe: 1 });
+
             if (data.request_ticks) {
                 // we shouldn't send this multiple times on every update
                 tick_init = '';
@@ -34861,7 +34856,7 @@ var ViewPopup = function () {
 
     var init = function init(button, onClose) {
         btn_view = button;
-        contract_id = $(btn_view).attr('contract_id');
+        contract_id = +$(btn_view).attr('contract_id');
         contract = {};
         is_sold = false;
         is_sold_before_start = false;
@@ -35589,15 +35584,15 @@ var ViewPopup = function () {
 
     var responseProposal = function responseProposal(response) {
         if (response.error) {
-            if (response.error.code !== 'AlreadySubscribed' && response.echo_req.contract_id === contract_id) {
+            if (response.error.code !== 'AlreadySubscribed' && +response.echo_req.contract_id === contract_id) {
                 showErrorPopup(response, response.error.message);
             }
             return;
         }
-        if (response.proposal_open_contract.contract_id === contract_id) {
+        if (+response.proposal_open_contract.contract_id === contract_id) {
             ViewPopupUI.storeSubscriptionID(response.proposal_open_contract.id);
             responseContract(response);
-        } else {
+        } else if (response.proposal_open_contract.id) {
             BinarySocket.send({ forget: response.proposal_open_contract.id });
         }
         var dates = ['#trade_details_start_date', '#trade_details_end_date', '#trade_details_current_date', '#trade_details_live_date'];
