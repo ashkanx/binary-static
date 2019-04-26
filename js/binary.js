@@ -15625,6 +15625,7 @@ module.exports = PaymentAgentList;
 "use strict";
 
 
+var refreshDropdown = __webpack_require__(/*! @binary-com/binary-style */ "./node_modules/@binary-com/binary-style/binary.js").selectDropdown;
 var BinaryPjax = __webpack_require__(/*! ../../base/binary_pjax */ "./src/javascript/app/base/binary_pjax.js");
 var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/base/client.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
@@ -15647,11 +15648,15 @@ var PaymentAgentWithdraw = function () {
     };
     var field_ids = {
         ddl_agents: '#ddlAgents',
+        txt_agents: '#txtAgents',
         txt_amount: '#txtAmount',
         txt_desc: '#txtDescription'
     };
 
-    var $views = void 0,
+    var $agent_error = void 0,
+        $ddl_agents = void 0,
+        $txt_agents = void 0,
+        $views = void 0,
         agent_name = void 0,
         currency = void 0,
         token = void 0;
@@ -15660,17 +15665,17 @@ var PaymentAgentWithdraw = function () {
     // ----- Agents List -----
     // -----------------------
     var populateAgentsList = function populateAgentsList(response) {
-        var $ddl_agents = $(field_ids.ddl_agents);
+        $ddl_agents = $(field_ids.ddl_agents);
         $ddl_agents.empty();
         var pa_list = (response.paymentagent_list || {}).list;
         if (pa_list.length > 0) {
-            checkToken($ddl_agents, pa_list);
+            checkToken(pa_list);
         } else {
             showPageError(localize('Payment Agent services are not available in your country or in your preferred currency.'));
         }
     };
 
-    var checkToken = function checkToken($ddl_agents, pa_list) {
+    var checkToken = function checkToken(pa_list) {
         token = token || Url.getHashValue('token');
         if (!token) {
             BinarySocket.send({ verify_email: Client.get('email'), type: 'paymentagent_withdraw' });
@@ -15685,29 +15690,61 @@ var PaymentAgentWithdraw = function () {
         } else if (!validEmailToken(token)) {
             showPageError('token_error');
         } else {
-            insertListOption($ddl_agents, localize('Please select a payment agent'), '');
+            insertListOption($ddl_agents, localize('Select payment agent'), '');
             for (var i = 0; i < pa_list.length; i++) {
                 insertListOption($ddl_agents, pa_list[i].name, pa_list[i].paymentagent_loginid);
             }
             setActiveView(view_ids.form);
 
             var form_id = '#' + $(view_ids.form).find('form').attr('id');
+            var $form = $(form_id);
             var min = getPaWithdrawalLimit(currency, 'min');
             var max = getPaWithdrawalLimit(currency, 'max');
 
-            $(form_id).find('label[for="txtAmount"]').text(localize('Amount') + ' ' + currency);
+            $agent_error = $('.row-agent').find('.error-msg');
+            $txt_agents = $(field_ids.txt_agents);
+
+            $form.find('.wrapper-row-agent').find('label').append($('<span />', { text: '*', class: 'required_field_asterisk' }));
+            $form.find('label[for="txtAmount"]').text(localize('Amount in') + ' ' + currency);
             trimDescriptionContent();
-            FormManager.init(form_id, [{ selector: field_ids.ddl_agents, validations: ['req'], request_field: 'paymentagent_loginid' }, { selector: field_ids.txt_amount, validations: ['req', ['number', { type: 'float', decimals: getDecimalPlaces(currency), min: min, max: max }], ['custom', { func: function func() {
+            FormManager.init(form_id, [{ selector: field_ids.txt_amount, validations: ['req', ['number', { type: 'float', decimals: getDecimalPlaces(currency), min: min, max: max }], ['custom', { func: function func() {
                         return +Client.get('balance') >= +$(field_ids.txt_amount).val();
-                    }, message: localize('Insufficient balance.') }]], request_field: 'amount' }, { selector: field_ids.txt_desc, validations: ['general'], request_field: 'description' }, { request_field: 'currency', value: currency }, { request_field: 'paymentagent_withdraw', value: 1 }, { request_field: 'dry_run', value: 1 }], true);
+                    }, message: localize('Insufficient balance.') }]], request_field: 'amount' }, { selector: field_ids.txt_desc, validations: ['general'], request_field: 'description' }, { request_field: 'currency', value: currency }, { request_field: 'paymentagent_loginid', value: getPALoginID }, { request_field: 'paymentagent_withdraw', value: 1 }, { request_field: 'dry_run', value: 1 }], true);
+
+            $ddl_agents.on('change', function () {
+                $agent_error.setVisibility(0);
+                if ($txt_agents.val()) {
+                    $txt_agents.val('');
+                }
+                if (!$ddl_agents.val()) {
+                    // error handling
+                    $agent_error.setVisibility(1);
+                }
+            });
+
+            $txt_agents.on('keyup', function () {
+                $agent_error.setVisibility(0);
+                if ($ddl_agents.val()) {
+                    $ddl_agents.val('');
+                    refreshDropdown(field_ids.ddl_agents);
+                }
+                if (!$txt_agents.val()) {
+                    // error handling
+                    $agent_error.setVisibility(1);
+                }
+            });
 
             FormManager.handleSubmit({
                 form_selector: form_id,
                 fnc_response_handler: withdrawResponse,
-                fnc_additional_check: setAgentName,
+                fnc_additional_check: checkAgent,
                 enable_button: true
             });
         }
+    };
+
+    var getPALoginID = function getPALoginID() {
+        return $ddl_agents.val() || $txt_agents.val();
     };
 
     // Remove multiline and excess whitespaces from description text.
@@ -15815,9 +15852,18 @@ var PaymentAgentWithdraw = function () {
         });
     };
 
-    var setAgentName = function setAgentName() {
-        agent_name = $(field_ids.ddl_agents).find('option:selected').text();
+    var checkAgent = function checkAgent() {
+        if (!$ddl_agents.val() && !$txt_agents.val()) {
+            $agent_error.setVisibility(1);
+            return false;
+        }
+        // else
+        setAgentName();
         return true;
+    };
+
+    var setAgentName = function setAgentName() {
+        agent_name = $ddl_agents.val() ? $ddl_agents.find('option:selected').text() : $txt_agents.val();
     };
 
     var onUnload = function onUnload() {
