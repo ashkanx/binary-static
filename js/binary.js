@@ -946,7 +946,7 @@ var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.
 
 var GTM = function () {
     var isGtmApplicable = function isGtmApplicable() {
-        return (/^(1|1098|14473|15284|16303|15265)$/.test(getAppId())
+        return (/^(1|1098|14473|15284|16303|15265|16929)$/.test(getAppId())
         );
     };
 
@@ -9698,7 +9698,7 @@ var BinaryLoader = function () {
             }
         } else if (config.not_authenticated && Client.isLoggedIn()) {
             if (this_page === 'home') {
-                BinaryPjax.load(Client.defaultRedirectUrl(), true);
+                BinaryPjax.load('' + Client.defaultRedirectUrl() + window.location.search, true);
             } else {
                 handleNotAuthenticated();
             }
@@ -11079,8 +11079,7 @@ var LoggedInHandler = function () {
                 redirect_url = sessionStorage.getItem('redirect_url');
                 sessionStorage.removeItem('redirect_url');
 
-                var is_app_2 = (typeof redirect_url === 'string' || redirect_url instanceof String) && redirect_url.includes('/app/');
-                storeClientAccounts(account_list, is_app_2);
+                storeClientAccounts(account_list);
             } else {
                 Client.doLogout({ logout: 1 });
             }
@@ -11114,7 +11113,7 @@ var LoggedInHandler = function () {
         landing_company_name: 'landing_company_shortcode'
     };
 
-    var storeClientAccounts = function storeClientAccounts(account_list, is_app_2) {
+    var storeClientAccounts = function storeClientAccounts(account_list) {
         // Parse url for loginids, tokens, and currencies returned by OAuth
         var params = paramsHash(window.location.href);
 
@@ -11124,13 +11123,8 @@ var LoggedInHandler = function () {
         account_list.forEach(function (account) {
             Object.keys(account).forEach(function (param) {
                 if (param === 'loginid') {
-                    if (!Client.get('loginid') && !account.is_disabled) {
-                        if (is_app_2 && account.is_virtual) {
-                            // TODO: [only_virtual] remove this to stop logging clients into virtual for app_2
-                            Client.set(param, account[param]);
-                        } else if (!is_app_2 && !account.is_virtual) {
-                            Client.set(param, account[param]);
-                        }
+                    if (!Client.get('loginid') && !account.is_disabled && !account.is_virtual) {
+                        Client.set(param, account[param]);
                     }
                 } else {
                     var param_to_set = map_names[param] || param;
@@ -25572,6 +25566,20 @@ var Purchase = function () {
                                 additional_message = localize('Try our other markets.');
                             }
                             message = error.message + '. ' + additional_message;
+                        } else if (/ClientUnwelcome/.test(error.code) && /gb/.test(Client.get('residence'))) {
+                            var _message_text2 = '';
+                            var _additional_message = '';
+
+                            if (!Client.hasAccountType('real') && Client.get('is_virtual')) {
+                                _message_text2 = localize('Please complete the [_1]Real Account form[_2] to verify your age as required by the [_3]UK Gambling[_4] Commission (UKGC).', ['<a href=\'' + urlFor('new_account/realws') + '\'>', '</a>', '<strong>', '</strong>']);
+                                message = _message_text2;
+                            } else if (Client.hasAccountType('real') && /^virtual|iom$/i.test(Client.get('landing_company_shortcode'))) {
+                                _message_text2 = localize('Your age verification failed. Please contact customer service for assistance. [_1][_1] [_2]Telephone:[_3] [_1] United Kingdom [_1] +44 (0) 1666 800042 [_1] 0800 011 9847 (Toll Free)', ['<br/>', '<strong>', '</strong>']);
+                                _additional_message = localize('[_1]Telephone numbers in other locations[_2]', ['<a href=\'' + urlFor('contact') + '\'>', '</a>']);
+                                message = _message_text2 + ' <br/><br/> ' + _additional_message;
+                            } else {
+                                message = error.message;
+                            }
                         }
                         CommonFunctions.elementInnerHtml(confirmation_error, message);
                     });
@@ -33781,10 +33789,17 @@ var RealAccOpening = function () {
         if (Client.get('residence')) {
             if (AccountOpening.redirectAccount()) return;
 
-            BinarySocket.wait('landing_company').then(function () {
+            BinarySocket.wait('landing_company', 'get_account_status').then(function () {
                 // TODO [->svg]
+                var is_unwelcome_uk = State.getResponse('get_account_status.status').some(function (status) {
+                    return status === 'unwelcome';
+                }) && /gb/.test(Client.get('residence'));
+
                 if (State.getResponse('authorize.upgradeable_landing_companies').indexOf('svg') !== -1 || State.getResponse('authorize.upgradeable_landing_companies').indexOf('costarica') !== -1) {
                     getElementById('risk_disclaimer').setVisibility(1);
+                }
+                if (is_unwelcome_uk) {
+                    getElementById('ukgc_age_verification').setVisibility(1);
                 }
 
                 AccountOpening.populateForm(form_id, getValidations, false);
@@ -33956,12 +33971,17 @@ var VirtualAccOpening = function () {
                 if (!response_auth.error) {
                     LocalStore.remove('date_first_contact');
                     LocalStore.remove('signup_device');
-                    Client.processNewAccount({
-                        email: new_account.email,
-                        loginid: new_account.client_id,
-                        token: new_account.oauth_token,
-                        is_virtual: true,
-                        redirect_url: urlFor('new_account/welcome')
+                    BinarySocket.send({ get_account_status: 1 }).then(function (account_status) {
+                        var is_unwelcome_uk = account_status.get_account_status.status.some(function (status) {
+                            return status === 'unwelcome';
+                        }) && /gb/.test(residence);
+                        Client.processNewAccount({
+                            email: new_account.email,
+                            loginid: new_account.client_id,
+                            token: new_account.oauth_token,
+                            is_virtual: true,
+                            redirect_url: is_unwelcome_uk ? urlFor('new_account/realws') : urlFor('new_account/welcome')
+                        });
                     });
                 }
             });
@@ -35908,7 +35928,8 @@ module.exports = ViewPopupUI;
  */
 var domain_app_ids = { // these domains also being used in '_common/url.js' as supported "production domains"
     'binary.com': 1,
-    'binary.me': 15284
+    'binary.me': 15284,
+    'deriv.com': 16929
 };
 
 var getCurrentBinaryDomain = function getCurrentBinaryDomain() {
@@ -35947,7 +35968,9 @@ var getAppId = function getAppId() {
         app_id = 1159;
     } else {
         window.localStorage.removeItem('config.default_app_id');
-        app_id = is_new_app ? 15265 : domain_app_ids[getCurrentBinaryDomain()] || 1;
+        var current_domain = getCurrentBinaryDomain();
+        // TODO: remove is_new_app && deriv.com check when repos are split
+        app_id = is_new_app && current_domain !== 'deriv.com' ? 15265 : domain_app_ids[current_domain] || 1;
     }
     return app_id;
 };
