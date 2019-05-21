@@ -8027,11 +8027,12 @@ var BinaryPushwoosh = function () {
     var sendTags = function sendTags() {
         pw.push(function (api) {
             api.getTags().then(function (result) {
-                if (!result.result['Login ID'] || !result.result['Site Language']) {
+                if (!result.result['Login ID'] || !result.result['Site Language'] || !result.result['Residence']) {
                     // send login id and site language
                     return api.setTags({
                         'Login ID': Client.get('loginid'),
-                        'Site Language': getLanguage()
+                        'Site Language': getLanguage(),
+                        'Residence': Client.get('residence')
                     });
                 }
                 return null;
@@ -25618,22 +25619,18 @@ var Purchase = function () {
                             } else if (/Random/.test(error.code)) {
                                 additional_message = localize('Try our other markets.');
                             }
+
                             message = error.message + '. ' + additional_message;
                         } else if (/ClientUnwelcome/.test(error.code) && /gb/.test(Client.get('residence'))) {
-                            var _message_text2 = '';
-                            var _additional_message = '';
-
                             if (!Client.hasAccountType('real') && Client.get('is_virtual')) {
-                                _message_text2 = localize('Please complete the [_1]Real Account form[_2] to verify your age as required by the [_3]UK Gambling[_4] Commission (UKGC).', ['<a href=\'' + urlFor('new_account/realws') + '\'>', '</a>', '<strong>', '</strong>']);
-                                message = _message_text2;
+                                message = localize('Please complete the [_1]Real Account form[_2] to verify your age as required by the [_3]UK Gambling[_4] Commission (UKGC).', ['<a href=\'' + urlFor('new_account/realws') + '\'>', '</a>', '<strong>', '</strong>']);
                             } else if (Client.hasAccountType('real') && /^virtual|iom$/i.test(Client.get('landing_company_shortcode'))) {
-                                _message_text2 = localize('Your age verification failed. Please contact customer service for assistance. [_1][_1] [_2]Telephone:[_3] [_1] United Kingdom [_1] +44 (0) 1666 800042 [_1] 0800 011 9847 (Toll Free)', ['<br/>', '<strong>', '</strong>']);
-                                _additional_message = localize('[_1]Telephone numbers in other locations[_2]', ['<a href=\'' + urlFor('contact') + '\'>', '</a>']);
-                                message = _message_text2 + ' <br/><br/> ' + _additional_message;
+                                message = localize('The system failed to verify your identity. Please check your email for details and the next steps.');
                             } else {
                                 message = error.message;
                             }
                         }
+
                         CommonFunctions.elementInnerHtml(confirmation_error, message);
                     });
                 }
@@ -36624,6 +36621,11 @@ var Platforms = function () {
                 var el_button = getElementById('app_' + os.name);
                 el_button.setAttribute('href', os.download_url);
             });
+        });
+        fetch('https://grid.binary.me/version.json').then(function (response) {
+            return response.json();
+        }).then(function (gridapp) {
+            $('.download-grid-app').attr('href', 'https://grid.binary.me/download/' + gridapp.name);
         });
     };
 
