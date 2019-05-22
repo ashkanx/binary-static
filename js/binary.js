@@ -844,23 +844,74 @@ var BinarySocket = __webpack_require__(/*! ./socket_base */ "./src/javascript/_c
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var localize = __webpack_require__(/*! ../localize */ "./src/javascript/_common/localize.js").localize;
 var createElement = __webpack_require__(/*! ../utility */ "./src/javascript/_common/utility.js").createElement;
+var isLoginPages = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js").isLoginPages;
 
 var Elevio = function () {
+    var el_shell_id = 'elevio-shell';
+    var el_shell = void 0;
+
     var init = function init() {
+        if (isLoginPages()) return;
+
+        el_shell = document.getElementById(el_shell_id);
+
+        el_shell.addEventListener('click', function () {
+            return injectElevio(true);
+        });
+    };
+
+    var injectElevio = function injectElevio() {
+        var is_open = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
+        var account_id = '5bbc2de0b7365';
+        window._elev = {}; // eslint-disable-line no-underscore-dangle
+        window._elev.account_id = account_id; // eslint-disable-line no-underscore-dangle
+
+        var script = document.createElement('script');
+        script.type = 'text/javascript';
+        script.async = 1;
+        script.src = 'https://cdn.elev.io/sdk/bootloader/v4/elevio-bootloader.js?cid=' + account_id;
+        script.id = 'loaded-elevio-script';
+        document.body.appendChild(script);
+
+        window._elev.q = []; // eslint-disable-line no-underscore-dangle
+        window._elev.on = function (z, y) {
+            // eslint-disable-line no-underscore-dangle
+            window._elev.q.push([z, y]); // eslint-disable-line no-underscore-dangle
+        };
+
+        script.onload = function () {
+            return loadElevio(is_open);
+        };
+    };
+
+    var loadElevio = function loadElevio() {
+        var is_open = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : false;
+
         if (!window._elev) return; // eslint-disable-line no-underscore-dangle
+
         window._elev.on('load', function (elev) {
             // eslint-disable-line no-underscore-dangle
+            if (el_shell) {
+                el_shell.parentNode.removeChild(el_shell);
+                el_shell = undefined;
+            }
+
             var available_elev_languages = ['es', 'id', 'pt', 'ru'];
             var current_language = getLanguage().toLowerCase();
             if (available_elev_languages.indexOf(current_language) !== -1) {
-                window._elev.setLanguage(current_language); // eslint-disable-line no-underscore-dangle
+                elev.setLanguage(current_language);
             } else {
-                window._elev.setLanguage('en'); // eslint-disable-line no-underscore-dangle
+                elev.setLanguage('en');
             }
             setUserInfo(elev);
             setTranslations(elev);
             addEventListenerGTM();
             makeLauncherVisible();
+
+            if (is_open) {
+                elev.open();
+            }
         });
     };
 
@@ -911,6 +962,7 @@ var Elevio = function () {
 
     return {
         init: init,
+        injectElevio: injectElevio,
         createComponent: createComponent
     };
 }();
@@ -7975,11 +8027,12 @@ var BinaryPushwoosh = function () {
     var sendTags = function sendTags() {
         pw.push(function (api) {
             api.getTags().then(function (result) {
-                if (!result.result['Login ID'] || !result.result['Site Language']) {
+                if (!result.result['Login ID'] || !result.result['Site Language'] || !result.result['Residence']) {
                     // send login id and site language
                     return api.setTags({
                         'Login ID': Client.get('loginid'),
-                        'Site Language': getLanguage()
+                        'Site Language': getLanguage(),
+                        'Residence': Client.get('residence')
                     });
                 }
                 return null;
@@ -9727,7 +9780,7 @@ var BinaryLoader = function () {
             return;
         }
 
-        var div_container = createElement('div', { class: 'logged_out_title_container', html: content.getElementsByTagName('h1')[0] });
+        var div_container = createElement('div', { class: 'logged_out_title_container', html: content.getElementsByTagName('h1')[0] || '' });
         var div_notice = createElement('p', { class: 'center-text notice-msg', html: localized_message });
 
         div_container.appendChild(div_notice);
@@ -25566,22 +25619,18 @@ var Purchase = function () {
                             } else if (/Random/.test(error.code)) {
                                 additional_message = localize('Try our other markets.');
                             }
+
                             message = error.message + '. ' + additional_message;
                         } else if (/ClientUnwelcome/.test(error.code) && /gb/.test(Client.get('residence'))) {
-                            var _message_text2 = '';
-                            var _additional_message = '';
-
                             if (!Client.hasAccountType('real') && Client.get('is_virtual')) {
-                                _message_text2 = localize('Please complete the [_1]Real Account form[_2] to verify your age as required by the [_3]UK Gambling[_4] Commission (UKGC).', ['<a href=\'' + urlFor('new_account/realws') + '\'>', '</a>', '<strong>', '</strong>']);
-                                message = _message_text2;
+                                message = localize('Please complete the [_1]Real Account form[_2] to verify your age as required by the [_3]UK Gambling[_4] Commission (UKGC).', ['<a href=\'' + urlFor('new_account/realws') + '\'>', '</a>', '<strong>', '</strong>']);
                             } else if (Client.hasAccountType('real') && /^virtual|iom$/i.test(Client.get('landing_company_shortcode'))) {
-                                _message_text2 = localize('Your age verification failed. Please contact customer service for assistance. [_1][_1] [_2]Telephone:[_3] [_1] United Kingdom [_1] +44 (0) 1666 800042 [_1] 0800 011 9847 (Toll Free)', ['<br/>', '<strong>', '</strong>']);
-                                _additional_message = localize('[_1]Telephone numbers in other locations[_2]', ['<a href=\'' + urlFor('contact') + '\'>', '</a>']);
-                                message = _message_text2 + ' <br/><br/> ' + _additional_message;
+                                message = localize('The system failed to verify your identity. Please check your email for details and the next steps.');
                             } else {
                                 message = error.message;
                             }
                         }
+
                         CommonFunctions.elementInnerHtml(confirmation_error, message);
                     });
                 }
@@ -36111,6 +36160,7 @@ var Elevio = __webpack_require__(/*! ../../_common/base/elevio */ "./src/javascr
 var Contact = function () {
     var onLoad = function onLoad() {
         initPhoneNumber(true);
+        Elevio.injectElevio();
         window._elev.on('ready', embedElevioComponents); // eslint-disable-line no-underscore-dangle
 
         $('#contact_loading').remove();
@@ -36571,6 +36621,11 @@ var Platforms = function () {
                 var el_button = getElementById('app_' + os.name);
                 el_button.setAttribute('href', os.download_url);
             });
+        });
+        fetch('https://grid.binary.me/version.json').then(function (response) {
+            return response.json();
+        }).then(function (gridapp) {
+            $('.download-grid-app').attr('href', 'https://grid.binary.me/download/' + gridapp.name);
         });
     };
 
