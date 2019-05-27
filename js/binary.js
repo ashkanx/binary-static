@@ -15680,7 +15680,7 @@ var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascrip
 var getDecimalPlaces = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getDecimalPlaces;
 var getPaWithdrawalLimit = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").getPaWithdrawalLimit;
 var FormManager = __webpack_require__(/*! ../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
-var validEmailToken = __webpack_require__(/*! ../../common/form_validation */ "./src/javascript/app/common/form_validation.js").validEmailToken;
+var Validation = __webpack_require__(/*! ../../common/form_validation */ "./src/javascript/app/common/form_validation.js");
 var handleVerifyCode = __webpack_require__(/*! ../../common/verification_code */ "./src/javascript/app/common/verification_code.js").handleVerifyCode;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var Url = __webpack_require__(/*! ../../../_common/url */ "./src/javascript/_common/url.js");
@@ -15704,6 +15704,7 @@ var PaymentAgentWithdraw = function () {
     var $agent_error = void 0,
         $ddl_agents = void 0,
         $txt_agents = void 0,
+        $txt_amount = void 0,
         $views = void 0,
         agent_name = void 0,
         currency = void 0,
@@ -15735,7 +15736,7 @@ var PaymentAgentWithdraw = function () {
             } else {
                 setActiveView(view_ids.notice);
             }
-        } else if (!validEmailToken(token)) {
+        } else if (!Validation.validEmailToken(token)) {
             showPageError('token_error');
         } else {
             insertListOption($ddl_agents, localize('Select payment agent'), '');
@@ -15746,17 +15747,34 @@ var PaymentAgentWithdraw = function () {
 
             var form_id = '#' + $(view_ids.form).find('form').attr('id');
             var $form = $(form_id);
-            var min = getPaWithdrawalLimit(currency, 'min');
-            var max = getPaWithdrawalLimit(currency, 'max');
+
+            var getAPILimit = function getAPILimit(limit) {
+                var selected_val = getPALoginID();
+                if (selected_val) {
+                    var selected_pa = pa_list.find(function (pa) {
+                        return pa.paymentagent_loginid === selected_val;
+                    });
+                    if (selected_pa) return selected_pa[limit + '_withdrawal'];
+                }
+                return getPaWithdrawalLimit(currency, limit);
+            };
+
+            var min = function min() {
+                return getAPILimit('min');
+            };
+            var max = function max() {
+                return getAPILimit('max');
+            };
 
             $agent_error = $('.row-agent').find('.error-msg');
             $txt_agents = $(field_ids.txt_agents);
+            $txt_amount = $(field_ids.txt_amount);
 
             $form.find('.wrapper-row-agent').find('label').append($('<span />', { text: '*', class: 'required_field_asterisk' }));
             $form.find('label[for="txtAmount"]').text(localize('Amount in') + ' ' + currency);
             trimDescriptionContent();
             FormManager.init(form_id, [{ selector: field_ids.txt_amount, validations: ['req', ['number', { type: 'float', decimals: getDecimalPlaces(currency), min: min, max: max }], ['custom', { func: function func() {
-                        return +Client.get('balance') >= +$(field_ids.txt_amount).val();
+                        return +Client.get('balance') >= +$txt_amount.val();
                     }, message: localize('Insufficient balance.') }]], request_field: 'amount' }, { selector: field_ids.txt_desc, validations: ['general'], request_field: 'description' }, { request_field: 'currency', value: currency }, { request_field: 'paymentagent_loginid', value: getPALoginID }, { request_field: 'paymentagent_withdraw', value: 1 }, { request_field: 'dry_run', value: 1 }], true);
 
             $ddl_agents.on('change', function () {
@@ -15768,6 +15786,7 @@ var PaymentAgentWithdraw = function () {
                     // error handling
                     $agent_error.setVisibility(1);
                 }
+                validateAmount();
             });
 
             $txt_agents.on('keyup', function () {
@@ -15781,6 +15800,16 @@ var PaymentAgentWithdraw = function () {
                     $agent_error.setVisibility(1);
                 }
             });
+
+            $txt_agents.on('focusout', function () {
+                validateAmount();
+            });
+
+            var validateAmount = function validateAmount() {
+                if ($txt_amount.val()) {
+                    Validation.validate(form_id);
+                }
+            };
 
             FormManager.handleSubmit({
                 form_selector: form_id,
