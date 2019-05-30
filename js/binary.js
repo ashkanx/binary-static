@@ -844,7 +844,7 @@ var BinarySocket = __webpack_require__(/*! ./socket_base */ "./src/javascript/_c
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var localize = __webpack_require__(/*! ../localize */ "./src/javascript/_common/localize.js").localize;
 var createElement = __webpack_require__(/*! ../utility */ "./src/javascript/_common/utility.js").createElement;
-var isLoginPages = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js").isLoginPages;
+var isLoginPages = __webpack_require__(/*! ../utility */ "./src/javascript/_common/utility.js").isLoginPages;
 
 var Elevio = function () {
     var el_shell_id = 'elevio-shell';
@@ -986,7 +986,6 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var ClientBase = __webpack_require__(/*! ./client_base */ "./src/javascript/_common/base/client_base.js");
-var Login = __webpack_require__(/*! ./login */ "./src/javascript/_common/base/login.js");
 var ServerTime = __webpack_require__(/*! ./server_time */ "./src/javascript/_common/base/server_time.js");
 var BinarySocket = __webpack_require__(/*! ./socket_base */ "./src/javascript/_common/base/socket_base.js");
 var getElementById = __webpack_require__(/*! ../common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
@@ -994,6 +993,7 @@ var isVisible = __webpack_require__(/*! ../common_functions */ "./src/javascript
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var State = __webpack_require__(/*! ../storage */ "./src/javascript/_common/storage.js").State;
 var getPropertyValue = __webpack_require__(/*! ../utility */ "./src/javascript/_common/utility.js").getPropertyValue;
+var isLoginPages = __webpack_require__(/*! ../utility */ "./src/javascript/_common/utility.js").isLoginPages;
 var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").getAppId;
 
 var GTM = function () {
@@ -1016,7 +1016,7 @@ var GTM = function () {
     };
 
     var pushDataLayer = function pushDataLayer(data) {
-        if (isGtmApplicable() && !Login.isLoginPages()) {
+        if (isGtmApplicable() && !isLoginPages()) {
             dataLayer.push(_extends({}, getCommonVariables(), data));
         }
     };
@@ -1220,12 +1220,15 @@ module.exports = GTM;
 "use strict";
 
 
+var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
 var Client = __webpack_require__(/*! ./client_base */ "./src/javascript/_common/base/client_base.js");
 var getLanguage = __webpack_require__(/*! ../language */ "./src/javascript/_common/language.js").get;
 var isMobile = __webpack_require__(/*! ../os_detect */ "./src/javascript/_common/os_detect.js").isMobile;
 var isStorageSupported = __webpack_require__(/*! ../storage */ "./src/javascript/_common/storage.js").isStorageSupported;
 var LocalStore = __webpack_require__(/*! ../storage */ "./src/javascript/_common/storage.js").LocalStore;
 var urlForCurrentDomain = __webpack_require__(/*! ../url */ "./src/javascript/_common/url.js").urlForCurrentDomain;
+var isLoginPages = __webpack_require__(/*! ../utility */ "./src/javascript/_common/utility.js").isLoginPages;
+var TrafficSource = __webpack_require__(/*! ../../app/common/traffic_source */ "./src/javascript/app/common/traffic_source.js");
 var getAppId = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").getAppId;
 
 var Login = function () {
@@ -1246,27 +1249,31 @@ var Login = function () {
         return server_url && /qa/.test(server_url) ? 'https://' + server_url + '/oauth2/authorize?app_id=' + getAppId() + '&l=' + language + marketing_queries : urlForCurrentDomain('https://oauth.binary.com/oauth2/authorize?app_id=' + getAppId() + '&l=' + language + marketing_queries);
     };
 
-    var isLoginPages = function isLoginPages() {
-        return (/logged_inws|redirect/i.test(window.location.pathname)
-        );
-    };
-
-    var socialLoginUrl = function socialLoginUrl(brand) {
-        return loginUrl() + '&social_signup=' + brand;
+    var socialLoginUrl = function socialLoginUrl(brand, affiliate_token, utm_source, utm_medium, utm_campaign) {
+        return loginUrl() + '&social_signup=' + brand + affiliate_token + utm_source + utm_medium + utm_campaign;
     };
 
     var initOneAll = function initOneAll() {
         ['google', 'facebook'].forEach(function (provider) {
             $('#button_' + provider).off('click').on('click', function (e) {
                 e.preventDefault();
-                window.location.href = socialLoginUrl(provider);
+
+                var affiliate_tracking = Cookies.getJSON('affiliate_tracking');
+                var utm_data = TrafficSource.getData();
+                var utm_source = TrafficSource.getSource(utm_data);
+                var utm_source_link = utm_source ? '&utm_source=' + utm_source : '';
+                var utm_medium_link = utm_data.utm_medium ? '&utm_medium=' + utm_data.utm_medium : '';
+                var utm_campaign_link = utm_data.utm_campaign ? '&utm_campaign=' + utm_data.utm_campaign : '';
+                var affiliate_token_link = affiliate_tracking ? '&affiliate_token=' + affiliate_tracking.t : '';
+                var social_login_url = socialLoginUrl(provider, affiliate_token_link, utm_source_link, utm_medium_link, utm_campaign_link);
+
+                window.location.href = social_login_url;
             });
         });
     };
 
     return {
         redirectToLogin: redirectToLogin,
-        isLoginPages: isLoginPages,
         initOneAll: initOneAll
     };
 }();
@@ -9430,6 +9437,11 @@ var isEmptyObject = function isEmptyObject(obj) {
     return is_empty;
 };
 
+var isLoginPages = function isLoginPages() {
+    return (/logged_inws|redirect/i.test(window.location.pathname)
+    );
+};
+
 var cloneObject = function cloneObject(obj) {
     return !isEmptyObject(obj) ? extend(true, Array.isArray(obj) ? [] : {}, obj) : obj;
 };
@@ -9596,6 +9608,7 @@ module.exports = {
     downloadCSV: downloadCSV,
     template: template,
     isEmptyObject: isEmptyObject,
+    isLoginPages: isLoginPages,
     cloneObject: cloneObject,
     isDeepEqual: isDeepEqual,
     unique: unique,
@@ -11383,6 +11396,7 @@ var scrollToTop = __webpack_require__(/*! ../../_common/scroll */ "./src/javascr
 var toISOFormat = __webpack_require__(/*! ../../_common/string_util */ "./src/javascript/_common/string_util.js").toISOFormat;
 var Url = __webpack_require__(/*! ../../_common/url */ "./src/javascript/_common/url.js");
 var createElement = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").createElement;
+var isLoginPages = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").isLoginPages;
 var isProduction = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").isProduction;
 __webpack_require__(/*! ../../_common/lib/polyfills/array.includes */ "./src/javascript/_common/lib/polyfills/array.includes.js");
 __webpack_require__(/*! ../../_common/lib/polyfills/string.includes */ "./src/javascript/_common/lib/polyfills/string.includes.js");
@@ -11436,7 +11450,7 @@ var Page = function () {
             updateLinksURL('#content');
         } else {
             init();
-            if (!Login.isLoginPages()) {
+            if (!isLoginPages()) {
                 Language.setCookie(Language.urlLang());
 
                 if (!ClientBase.get('is_virtual')) {
@@ -11639,7 +11653,6 @@ var setCurrencies = __webpack_require__(/*! ../common/currency */ "./src/javascr
 var SessionDurationLimit = __webpack_require__(/*! ../common/session_duration_limit */ "./src/javascript/app/common/session_duration_limit.js");
 var updateBalance = __webpack_require__(/*! ../pages/user/update_balance */ "./src/javascript/app/pages/user/update_balance.js");
 var GTM = __webpack_require__(/*! ../../_common/base/gtm */ "./src/javascript/_common/base/gtm.js");
-var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
 var SubscriptionManager = __webpack_require__(/*! ../../_common/base/subscription_manager */ "./src/javascript/_common/base/subscription_manager.js").default;
 var Crowdin = __webpack_require__(/*! ../../_common/crowdin */ "./src/javascript/_common/crowdin.js");
 var localize = __webpack_require__(/*! ../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -11647,12 +11660,13 @@ var LocalStore = __webpack_require__(/*! ../../_common/storage */ "./src/javascr
 var State = __webpack_require__(/*! ../../_common/storage */ "./src/javascript/_common/storage.js").State;
 var urlFor = __webpack_require__(/*! ../../_common/url */ "./src/javascript/_common/url.js").urlFor;
 var getPropertyValue = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
+var isLoginPages = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").isLoginPages;
 
 var BinarySocketGeneral = function () {
     var onOpen = function onOpen(is_ready) {
         Header.hideNotification();
         if (is_ready) {
-            if (!Login.isLoginPages()) {
+            if (!isLoginPages()) {
                 if (!Client.isValidLoginid()) {
                     Client.sendLogoutRequest();
                     return;
@@ -11704,7 +11718,7 @@ var BinarySocketGeneral = function () {
                         Dialog.alert({ id: 'authorize_error_alert', localized_message: response.error.message });
                     }
                     Client.sendLogoutRequest(is_active_tab);
-                } else if (!Login.isLoginPages() && !/authorize/.test(State.get('skip_response'))) {
+                } else if (!isLoginPages() && !/authorize/.test(State.get('skip_response'))) {
                     if (response.authorize.loginid !== Client.get('loginid')) {
                         Client.sendLogoutRequest(true);
                     } else {
@@ -12034,9 +12048,11 @@ var AccountOpening = function () {
     };
     var handleNewAccount = function handleNewAccount(response, message_type) {
         if (response.error) {
-            var errorMessage = response.error.message;
+            var error_message = response.error.message;
+            var $notice_box = $('#client_message').find('.notice-msg');
             $('#submit-message').empty();
-            $('#client_message').find('.notice-msg').text(response.msg_type === 'sanity_check' ? localize('There was some invalid character in an input field.') : errorMessage).end().setVisibility(1);
+            $notice_box.text(response.msg_type === 'sanity_check' ? localize('There was some invalid character in an input field.') : error_message).end().setVisibility(1);
+            $.scrollTo($notice_box, 500, { offset: -150 });
         } else {
             localStorage.setItem('is_new_account', 1);
             Client.processNewAccount({
@@ -19258,7 +19274,7 @@ var Barriers = function () {
     var validateBarrier = function validateBarrier() {
         var barrier_element = getElementById('barrier');
         var barrier_high_element = getElementById('barrier_high');
-        var empty = isNaN(parseFloat(barrier_element.value)) || parseFloat(barrier_element.value) === 0;
+        var empty = isNaN(parseFloat(barrier_element.value)) || isAbsoluteZero(barrier_element.value);
 
         if (isVisible(barrier_element) && empty) {
             barrier_element.classList.add('error-field');
@@ -19287,6 +19303,10 @@ var Barriers = function () {
                 el.removeAttribute('data-balloon-length');
             }
         });
+    };
+
+    var isAbsoluteZero = function isAbsoluteZero(num) {
+        return !(parseFloat(num) !== 0 || /\+|-/.test(num.toString().charAt(0)));
     };
 
     return {
@@ -24806,7 +24826,7 @@ var Price = function () {
             proposal.duration_unit = 'm';
         }
 
-        if (barrier && CommonFunctions.isVisible(barrier) && barrier.value) {
+        if (barrier && CommonFunctions.isVisible(barrier)) {
             proposal.barrier = barrier.value;
         }
 
