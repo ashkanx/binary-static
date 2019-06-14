@@ -427,6 +427,7 @@ var ClientBase = function () {
         set('is_virtual', +authorize.is_virtual);
         set('session_start', parseInt(moment().valueOf() / 1000));
         set('landing_company_shortcode', authorize.landing_company_name);
+        set('user_id', authorize.user_id);
         updateAccountList(authorize.account_list);
     };
 
@@ -1010,7 +1011,8 @@ var GTM = function () {
             url: document.URL
         }, ClientBase.isLoggedIn() && {
             visitorId: ClientBase.get('loginid'),
-            bom_email: ClientBase.get('email')
+            bom_email: ClientBase.get('email'),
+            userId: ClientBase.get('user_id')
         });
     };
 
@@ -1689,7 +1691,7 @@ var BinarySocketBase = function () {
             var response = SocketCache.get(data, msg_type);
             if (response) {
                 State.set(['response', msg_type], cloneObject(response));
-                if (isReady() && is_available) {
+                if (isReady() && is_available && !options.skip_cache_update) {
                     // make the request to keep the cache updated
                     binary_socket.send(JSON.stringify(data));
                 }
@@ -14139,6 +14141,107 @@ module.exports = Guide;
 
 /***/ }),
 
+/***/ "./src/javascript/app/common/request_middleware.js":
+/*!*********************************************************!*\
+  !*** ./src/javascript/app/common/request_middleware.js ***!
+  \*********************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var getDecimalPlaces = __webpack_require__(/*! ./currency */ "./src/javascript/app/common/currency.js").getDecimalPlaces;
+var getUnderlyingPipSize = __webpack_require__(/*! ../pages/trade/symbols */ "./src/javascript/app/pages/trade/symbols.js").getUnderlyingPipSize;
+var addComma = __webpack_require__(/*! ../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
+var isEmptyObject = __webpack_require__(/*! ../../_common/utility */ "./src/javascript/_common/utility.js").isEmptyObject;
+var Client = __webpack_require__(/*! ../base/client */ "./src/javascript/app/base/client.js");
+
+var changePocNumbersToString = function changePocNumbersToString(response) {
+    var _response$proposal_op = response.proposal_open_contract,
+        audit_details = _response$proposal_op.audit_details,
+        barrier = _response$proposal_op.barrier,
+        bid_price = _response$proposal_op.bid_price,
+        current_spot = _response$proposal_op.current_spot,
+        entry_spot = _response$proposal_op.entry_spot,
+        entry_tick = _response$proposal_op.entry_tick,
+        exit_tick = _response$proposal_op.exit_tick,
+        sell_price = _response$proposal_op.sell_price,
+        sell_spot = _response$proposal_op.sell_spot,
+        tick_stream = _response$proposal_op.tick_stream,
+        profit_percentage = _response$proposal_op.profit_percentage;
+
+
+    return new Promise(function (resolve) {
+        getUnderlyingPipSize(response.proposal_open_contract.underlying).then(function (pip_size) {
+            var currency_decimal_places = getDecimalPlaces(Client.get('currency'));
+            var toString = function toString(property) {
+                var has_comma = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : true;
+                var decimal_places = arguments.length > 2 && arguments[2] !== undefined ? arguments[2] : pip_size;
+                return property || property === 0 ? has_comma ? addComma(property, decimal_places) : addComma(property, decimal_places).replace(',', '') : undefined;
+            };
+
+            var new_response = $.extend({}, _extends({}, response, {
+                proposal_open_contract: _extends({}, response.proposal_open_contract, {
+                    barrier: barrier ? addComma(barrier).replace(',', '') : undefined, // Because `barrier` must not be displayed when zero
+                    bid_price: toString(bid_price, true, currency_decimal_places),
+                    sell_price: toString(sell_price, true, currency_decimal_places),
+                    sell_spot: toString(sell_spot),
+                    current_spot: toString(current_spot),
+                    entry_spot: toString(entry_spot, false),
+                    entry_tick: toString(entry_tick),
+                    exit_tick: toString(exit_tick),
+                    profit_percentage: toString(profit_percentage, true, 2)
+                })
+            }));
+
+            if (!isEmptyObject(audit_details)) {
+                var formatAuditDetails = function formatAuditDetails(obj) {
+                    var modded_obj = _extends({}, obj);
+
+                    Object.keys(obj).forEach(function (key) {
+                        modded_obj[key] = modded_obj[key].map(function (tick_obj) {
+                            return tick_obj.tick ? _extends({}, tick_obj, { tick: toString(tick_obj.tick) }) : tick_obj;
+                        });
+                    });
+
+                    return modded_obj;
+                };
+
+                new_response = $.extend({}, _extends({}, new_response, {
+                    proposal_open_contract: _extends({}, new_response.proposal_open_contract, {
+                        audit_details: formatAuditDetails(audit_details)
+                    })
+                }));
+            }
+
+            if (!isEmptyObject(tick_stream)) {
+                var formatTickStream = function formatTickStream(arr) {
+                    return arr.map(function (tick_obj) {
+                        return tick_obj.tick ? _extends({}, tick_obj, { tick: toString(tick_obj.tick) }) : tick_obj;
+                    });
+                };
+
+                new_response = $.extend({}, _extends({}, new_response, {
+                    proposal_open_contract: _extends({}, new_response.proposal_open_contract, {
+                        tick_stream: formatTickStream(tick_stream)
+                    })
+                }));
+            }
+
+            resolve(new_response);
+        });
+    });
+};
+
+module.exports = {
+    changePocNumbersToString: changePocNumbersToString
+};
+
+/***/ }),
+
 /***/ "./src/javascript/app/common/session_duration_limit.js":
 /*!*************************************************************!*\
   !*** ./src/javascript/app/common/session_duration_limit.js ***!
@@ -14358,6 +14461,41 @@ var handleVerifyCode = function handleVerifyCode(onSubmit) {
 module.exports = {
     handleVerifyCode: handleVerifyCode
 };
+
+/***/ }),
+
+/***/ "./src/javascript/app/common/verify_email.js":
+/*!***************************************************!*\
+  !*** ./src/javascript/app/common/verify_email.js ***!
+  \***************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+
+var Cookies = __webpack_require__(/*! js-cookie */ "./node_modules/js-cookie/src/js.cookie.js");
+var TrafficSource = __webpack_require__(/*! ../../app/common/traffic_source */ "./src/javascript/app/common/traffic_source.js");
+
+/* Contains helper function related to the verify_email API call */
+var getFormRequest = function getFormRequest() {
+    var utm_data = TrafficSource.getData();
+    var affiliate_token = Cookies.getJSON('affiliate_tracking');
+
+    return [{ selector: '#email', validations: ['req', 'email'], request_field: 'verify_email' }, { request_field: 'type', value: 'account_opening' }, {
+        request_field: 'url_parameters',
+        value: _extends({
+            utm_source: TrafficSource.getSource(utm_data)
+        }, utm_data.utm_campaign && {
+            utm_medium: utm_data.utm_medium,
+            utm_campaign: utm_data.utm_campaign
+        }, affiliate_token && { affiliate_token: affiliate_token.t })
+    }];
+};
+
+module.exports = getFormRequest;
 
 /***/ }),
 
@@ -18084,6 +18222,7 @@ var BinaryPjax = __webpack_require__(/*! ../base/binary_pjax */ "./src/javascrip
 var BinarySocket = __webpack_require__(/*! ../base/socket */ "./src/javascript/app/base/socket.js");
 var isEuCountry = __webpack_require__(/*! ../common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
 var FormManager = __webpack_require__(/*! ../common/form_manager */ "./src/javascript/app/common/form_manager.js");
+var getFormRequest = __webpack_require__(/*! ../../app/common/verify_email */ "./src/javascript/app/common/verify_email.js");
 var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
 var getElementById = __webpack_require__(/*! ../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -18107,7 +18246,7 @@ var NewAccount = function () {
         BinarySocket.wait('website_status', 'authorize', 'landing_company').then(function () {
             clients_country = State.getResponse('website_status.clients_country');
 
-            FormManager.init(form_id, [{ selector: '#email', validations: ['req', 'email'], request_field: 'verify_email' }, { request_field: 'type', value: 'account_opening' }]);
+            FormManager.init(form_id, getFormRequest());
             FormManager.handleSubmit({
                 form_selector: form_id,
                 fnc_response_handler: verifyEmailHandler,
@@ -19617,10 +19756,13 @@ module.exports = Callputspread;
 
 var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var CreateDropdown = __webpack_require__(/*! @binary-com/binary-style */ "./node_modules/@binary-com/binary-style/binary.js").selectDropdown;
 var getHighstock = __webpack_require__(/*! ../common */ "./src/javascript/app/pages/trade/common.js").requireHighstock;
 var Symbols = __webpack_require__(/*! ../symbols */ "./src/javascript/app/pages/trade/symbols.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
+var addComma = __webpack_require__(/*! ../../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var template = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").template;
 
@@ -19755,47 +19897,113 @@ var DigitInfo = function () {
                     stream_id = null;
                 }
             }
-            BinarySocket.send(request, { callback: function callback(response) {
-                    var type = response.msg_type;
-                    if (type === 'tick') {
-                        updateChart(response);
-                    } else if (type === 'history') {
-                        showChart(response.echo_req.ticks_history, response.history.prices);
-                    }
-                } });
+            BinarySocket.send(request, { callback: function () {
+                    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(response) {
+                        var type;
+                        return regeneratorRuntime.wrap(function _callee$(_context) {
+                            while (1) {
+                                switch (_context.prev = _context.next) {
+                                    case 0:
+                                        type = response.msg_type;
+
+                                        if (!(type === 'tick')) {
+                                            _context.next = 5;
+                                            break;
+                                        }
+
+                                        updateChart(response);
+                                        _context.next = 8;
+                                        break;
+
+                                    case 5:
+                                        if (!(type === 'history')) {
+                                            _context.next = 8;
+                                            break;
+                                        }
+
+                                        _context.next = 8;
+                                        return showChart(response.echo_req.ticks_history, response.history.prices);
+
+                                    case 8:
+                                    case 'end':
+                                        return _context.stop();
+                                }
+                            }
+                        }, _callee, undefined);
+                    }));
+
+                    return function callback(_x) {
+                        return _ref.apply(this, arguments);
+                    };
+                }() });
         };
         $('#digit_underlying, #tick_count').off('change').on('change', getLatest);
     };
 
-    var showChart = function showChart(underlying, underlying_spots) {
-        if (underlying_spots.length !== +$('#tick_count').val()) return;
-        getHighstock(function (Highcharts) {
-            var new_spots = underlying_spots;
-            if (typeof new_spots === 'undefined' || new_spots.length <= 0) {
-                return;
-            }
-            var dec = new_spots[0].split('.')[1].length;
-            for (var i = 0; i < new_spots.length; i++) {
-                var val = parseFloat(new_spots[i]).toFixed(dec);
-                new_spots[i] = val.substr(val.length - 1);
-            }
+    var showChart = function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(underlying, underlying_spots) {
+            var decimal_places, formatted_underlying_spots;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            if (!(underlying_spots.length !== +$('#tick_count').val())) {
+                                _context2.next = 2;
+                                break;
+                            }
 
-            var getTitle = function getTitle() {
-                return {
-                    text: template($('#last_digit_title').html(), [new_spots.length, $('#digit_underlying option:selected').text()])
-                };
-            };
+                            return _context2.abrupt('return');
 
-            spots = new_spots;
-            if (chart) chart.destroy();
-            addContent(underlying); // this creates #last_digit_title
-            chart_config.xAxis.title = getTitle();
-            chart = new Highcharts.Chart(chart_config);
-            chart.addSeries({ name: underlying, data: [] });
-            onLatest();
-            update();
-        });
-    };
+                        case 2:
+                            _context2.next = 4;
+                            return Symbols.getUnderlyingPipSize(underlying);
+
+                        case 4:
+                            decimal_places = _context2.sent;
+                            formatted_underlying_spots = underlying_spots.map(function (price) {
+                                return addComma(price, decimal_places).replace(',', '');
+                            });
+
+
+                            getHighstock(function (Highcharts) {
+                                var new_spots = formatted_underlying_spots;
+                                if (typeof new_spots === 'undefined' || new_spots.length <= 0) {
+                                    return;
+                                }
+                                var dec = new_spots[0].split('.')[1].length;
+                                for (var i = 0; i < new_spots.length; i++) {
+                                    var val = parseFloat(new_spots[i]).toFixed(dec);
+                                    new_spots[i] = val.substr(val.length - 1);
+                                }
+
+                                var getTitle = function getTitle() {
+                                    return {
+                                        text: template($('#last_digit_title').html(), [new_spots.length, $('#digit_underlying option:selected').text()])
+                                    };
+                                };
+
+                                spots = new_spots;
+                                if (chart) chart.destroy();
+                                addContent(underlying); // this creates #last_digit_title
+                                chart_config.xAxis.title = getTitle();
+                                chart = new Highcharts.Chart(chart_config);
+                                chart.addSeries({ name: underlying, data: [] });
+                                onLatest();
+                                update();
+                            });
+
+                        case 7:
+                        case 'end':
+                            return _context2.stop();
+                    }
+                }
+            }, _callee2, undefined);
+        }));
+
+        return function showChart(_x2, _x3) {
+            return _ref2.apply(this, arguments);
+        };
+    }();
 
     var update = function update(symbol, latest_spot) {
         if (typeof chart === 'undefined') {
@@ -19860,18 +20068,42 @@ var DigitInfo = function () {
         return series.setData(filtered_spots);
     };
 
-    var updateChart = function updateChart(tick) {
-        if (stream_id) {
-            if (chart.series[0].name === tick.tick.symbol) {
-                stream_id = tick.tick.id || null;
-                update(tick.tick.symbol, tick.tick.quote);
-            } else {
-                BinarySocket.send({ forget: tick.tick.id.toString() });
-            }
-        } else {
-            update(tick.tick.symbol, tick.tick.quote);
-        }
-    };
+    var updateChart = function () {
+        var _ref3 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee3(tick) {
+            var decimal_places;
+            return regeneratorRuntime.wrap(function _callee3$(_context3) {
+                while (1) {
+                    switch (_context3.prev = _context3.next) {
+                        case 0:
+                            _context3.next = 2;
+                            return Symbols.getUnderlyingPipSize(tick.tick.symbol);
+
+                        case 2:
+                            decimal_places = _context3.sent;
+
+                            if (stream_id) {
+                                if (chart.series[0].name === tick.tick.symbol) {
+                                    stream_id = tick.tick.id || null;
+                                    update(tick.tick.symbol, tick.tick.quote);
+                                } else {
+                                    BinarySocket.send({ forget: tick.tick.id.toString() });
+                                }
+                            } else {
+                                update(tick.tick.symbol, addComma(tick.tick.quote, decimal_places).replace(',', ''));
+                            }
+
+                        case 4:
+                        case 'end':
+                            return _context3.stop();
+                    }
+                }
+            }, _callee3, undefined);
+        }));
+
+        return function updateChart(_x4) {
+            return _ref3.apply(this, arguments);
+        };
+    }();
 
     return {
         showChart: showChart,
@@ -19895,8 +20127,11 @@ module.exports = DigitInfo;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var HighchartUI = __webpack_require__(/*! ./highchart.ui */ "./src/javascript/app/pages/trade/charts/highchart.ui.js");
 var getHighstock = __webpack_require__(/*! ../common */ "./src/javascript/app/pages/trade/common.js").requireHighstock;
+var getUnderlyingPipSize = __webpack_require__(/*! ../symbols */ "./src/javascript/app/pages/trade/symbols.js").getUnderlyingPipSize;
 var MBContract = __webpack_require__(/*! ../../mb_trade/mb_contract */ "./src/javascript/app/pages/mb_trade/mb_contract.js");
 var MBDefaults = __webpack_require__(/*! ../../mb_trade/mb_defaults */ "./src/javascript/app/pages/mb_trade/mb_defaults.js");
 var Callputspread = __webpack_require__(/*! ../../trade/callputspread */ "./src/javascript/app/pages/trade/callputspread.js");
@@ -19965,103 +20200,136 @@ var Highchart = function () {
     };
 
     // initialize the chart only once with ticks or candles data
-    var initChart = function initChart(init_options) {
-        var data = [];
-        var type = '';
-        var i = void 0;
+    var initChart = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(init_options) {
+            var data, type, i, pushTicks, history, candles, times, prices, current_time, el, display_decimals;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            data = [];
+                            type = '';
+                            i = void 0;
 
-        var pushTicks = function pushTicks(time, price) {
-            // we need to add the marker as we are pushing the data points
-            // since for large arrays, data doesn't get pushed to series[0].data
-            // and we can't update markers if data is empty
-            var int_time = parseInt(time);
-            var is_match_entry = int_time === entry_tick_time;
-            var is_match_exit = contract.status !== 'sold' && int_time === exit_tick_time;
-            var tick_type = is_match_entry ? 'entry' : 'exit';
-            data.push({
-                x: int_time * 1000,
-                y: price * 1,
-                marker: is_match_entry || is_match_exit ? HighchartUI.getMarkerObject(tick_type) : ''
-            });
-        };
+                            pushTicks = function pushTicks(time, price) {
+                                // we need to add the marker as we are pushing the data points
+                                // since for large arrays, data doesn't get pushed to series[0].data
+                                // and we can't update markers if data is empty
+                                var int_time = parseInt(time);
+                                var is_match_entry = int_time === entry_tick_time;
+                                var is_match_exit = contract.status !== 'sold' && int_time === exit_tick_time;
+                                var tick_type = is_match_entry ? 'entry' : 'exit';
+                                data.push({
+                                    x: int_time * 1000,
+                                    y: price * 1,
+                                    marker: is_match_entry || is_match_exit ? HighchartUI.getMarkerObject(tick_type) : ''
+                                });
+                            };
 
-        var history = '';
-        var candles = '';
-        if (init_options.history) {
-            // indicates line chart
-            type = 'line';
-            history = init_options.history;
-            var times = history.times;
-            var prices = history.prices;
-            if (is_chart_delayed) {
-                for (i = 0; i < times.length; ++i) {
-                    pushTicks(times[i], prices[i]);
-                }
-            } else if (min_point && max_point) {
-                var current_time = void 0;
-                for (i = 0; i < times.length; ++i) {
-                    current_time = parseInt(times[i]);
-                    // only display the first tick before entry spot and one tick after exit spot
-                    // as well as the set of ticks between them
-                    if (current_time >= min_point && current_time <= max_point) {
-                        pushTicks(current_time, prices[i]);
+                            history = '';
+                            candles = '';
+
+                            if (init_options.history) {
+                                // indicates line chart
+                                type = 'line';
+                                history = init_options.history;
+                                times = history.times;
+                                prices = history.prices;
+
+                                if (is_chart_delayed) {
+                                    for (i = 0; i < times.length; ++i) {
+                                        pushTicks(times[i], prices[i]);
+                                    }
+                                } else if (min_point && max_point) {
+                                    current_time = void 0;
+
+                                    for (i = 0; i < times.length; ++i) {
+                                        current_time = parseInt(times[i]);
+                                        // only display the first tick before entry spot and one tick after exit spot
+                                        // as well as the set of ticks between them
+                                        if (current_time >= min_point && current_time <= max_point) {
+                                            pushTicks(current_time, prices[i]);
+                                        }
+                                    }
+                                }
+                            } else if (init_options.candles) {
+                                // indicates candle chart
+                                candles = init_options.candles;
+                                type = 'candlestick';
+                                data = candles.map(function (c) {
+                                    return [c.epoch * 1000, c.open * 1, c.high * 1, c.low * 1, c.close * 1];
+                                });
+                            }
+
+                            // element where chart is to be displayed
+                            el = document.getElementById('analysis_live_chart');
+
+                            if (el) {
+                                _context.next = 11;
+                                break;
+                            }
+
+                            chart = null;
+                            return _context.abrupt('return', null);
+
+                        case 11:
+
+                            HighchartUI.updateLabels(chart, getHighchartLabelParams());
+
+                            // const display_decimals = (history ? history.prices[0] : candles[0].open).toString().split('.')[1].length || 3;
+                            _context.next = 14;
+                            return getUnderlyingPipSize(contract.underlying);
+
+                        case 14:
+                            display_decimals = _context.sent;
+
+                            chart_options = {
+                                data: data,
+                                display_decimals: display_decimals,
+                                type: type,
+                                entry_time: (entry_tick_time || start_time) * 1000,
+                                exit_time: exit_tick_time ? exit_tick_time * 1000 : exit_time ? exit_time * 1000 : null, // eslint-disable-line do-not-nest-ternary
+                                has_zone: true,
+                                height: Math.max(el.parentElement.offsetHeight, 450),
+                                radius: 2,
+                                title: init_options.title,
+                                tooltip: {
+                                    valueDecimals: display_decimals,
+                                    xDateFormat: '%A, %b %e, %H:%M:%S GMT'
+                                },
+                                user_sold: contract.status === 'sold',
+                                x_axis: { label: { format: '{value:%H:%M:%S}', overflow: 'justify' } }
+                            };
+                            if (Callputspread.isCallputspread(contract.contract_type)) {
+                                $.extend(chart_options, Callputspread.getChartOptions(contract));
+                            }
+                            HighchartUI.setChartOptions(chart_options);
+
+                            return _context.abrupt('return', getHighstock(function (Highcharts) {
+                                Highcharts.setOptions(HighchartUI.getHighchartOptions());
+                                if (!el) chart = null;else {
+                                    chart = Highcharts.StockChart(el, HighchartUI.getChartOptions());
+                                    is_initialized = true;
+
+                                    $(window).on('resize', updateHighchartOptions);
+                                    if (Callputspread.isCallputspread(contract.contract_type)) {
+                                        Callputspread.init(chart, contract);
+                                    }
+                                }
+                            }));
+
+                        case 19:
+                        case 'end':
+                            return _context.stop();
                     }
                 }
-            }
-        } else if (init_options.candles) {
-            // indicates candle chart
-            candles = init_options.candles;
-            type = 'candlestick';
-            data = candles.map(function (c) {
-                return [c.epoch * 1000, c.open * 1, c.high * 1, c.low * 1, c.close * 1];
-            });
-        }
+            }, _callee, undefined);
+        }));
 
-        // element where chart is to be displayed
-        var el = document.getElementById('analysis_live_chart');
-        if (!el) {
-            chart = null;
-            return null;
-        }
-
-        HighchartUI.updateLabels(chart, getHighchartLabelParams());
-
-        var display_decimals = (history ? history.prices[0] : candles[0].open).split('.')[1].length || 3;
-        chart_options = {
-            data: data,
-            display_decimals: display_decimals,
-            type: type,
-            entry_time: (entry_tick_time || start_time) * 1000,
-            exit_time: exit_tick_time ? exit_tick_time * 1000 : exit_time ? exit_time * 1000 : null, // eslint-disable-line do-not-nest-ternary
-            has_zone: true,
-            height: Math.max(el.parentElement.offsetHeight, 450),
-            radius: 2,
-            title: init_options.title,
-            tooltip: {
-                valueDecimals: display_decimals,
-                xDateFormat: '%A, %b %e, %H:%M:%S GMT'
-            },
-            user_sold: contract.status === 'sold',
-            x_axis: { label: { format: '{value:%H:%M:%S}', overflow: 'justify' } }
+        return function initChart(_x) {
+            return _ref.apply(this, arguments);
         };
-        if (Callputspread.isCallputspread(contract.contract_type)) {
-            $.extend(chart_options, Callputspread.getChartOptions(contract));
-        }
-        HighchartUI.setChartOptions(chart_options);
-
-        return getHighstock(function (Highcharts) {
-            Highcharts.setOptions(HighchartUI.getHighchartOptions());
-            if (!el) chart = null;else {
-                chart = Highcharts.StockChart(el, HighchartUI.getChartOptions());
-                is_initialized = true;
-
-                $(window).on('resize', updateHighchartOptions);
-                if (Callputspread.isCallputspread(contract.contract_type)) {
-                    Callputspread.init(chart, contract);
-                }
-            }
-        });
-    };
+    }();
 
     var getHighchartLabelParams = function getHighchartLabelParams(is_reset_barrier) {
         return {
@@ -20105,100 +20373,160 @@ var Highchart = function () {
         $(window).off('resize', updateHighchartOptions);
     };
 
-    var handleResponse = function handleResponse(response) {
-        var type = response.msg_type;
-        var error = response.error;
+    var handleResponse = function () {
+        var _ref2 = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee2(response) {
+            var type, error, history, candles, tick, ohlc, page_underlying, length, history_times;
+            return regeneratorRuntime.wrap(function _callee2$(_context2) {
+                while (1) {
+                    switch (_context2.prev = _context2.next) {
+                        case 0:
+                            type = response.msg_type;
+                            error = response.error;
 
-        if (/history|candles|tick|ohlc/.test(type) && !error) {
-            options = { title: contract.display_name };
-            options[type] = response[type];
-            var history = response.history;
-            var candles = response.candles;
-            var tick = response.tick;
-            var ohlc = response.ohlc;
-            response_id = response[type].id;
-            is_tick_type = !isEmptyObject(history) || !isEmptyObject(tick);
-            // send view popup the response ID so view popup can forget the calls if it's closed before contract ends
-            if (response_id && !is_response_id_set) {
-                if (State.get('is_trading') || State.get('is_mb_trading')) {
-                    var page_underlying = State.get('is_mb_trading') ? MBDefaults.get('underlying') : Defaults.get('underlying');
-                    if (page_underlying !== (tick || ohlc).symbol) {
-                        ViewPopupUI.storeSubscriptionID(response_id, true);
-                        ViewPopupUI.setOnCloseFunction(onClose);
-                    } else {
-                        ViewPopupUI.setOnCloseFunction(function () {
-                            return onClose(GetTicks.request);
-                        });
-                    }
-                } else {
-                    ViewPopupUI.storeSubscriptionID(response_id, true);
-                    ViewPopupUI.setOnCloseFunction(onClose);
-                }
-                is_response_id_set = true;
-            } else {
-                ViewPopupUI.setOnCloseFunction(onClose);
-            }
-            if (history || candles) {
-                var length = (history ? history.times : candles).length;
-                if (length === 0) {
-                    HighchartUI.showError('missing');
-                    return;
-                }
-                if (history) {
-                    var history_times = history.times;
-                    getMinHistory(history_times);
-                    getMaxHistory(history_times);
-                } else if (candles) {
-                    getMinCandle(candles);
-                    getMaxCandle(candles);
-                }
-                // only initialize chart if it hasn't already been initialized
-                if (!chart && !is_initialized) {
-                    chart_promise = initChart(options);
-                    if (!chart_promise || typeof chart_promise.then !== 'function') return;
-                    chart_promise.then(function () {
-                        if (!chart) return;
+                            if (!(/history|candles|tick|ohlc/.test(type) && !error)) {
+                                _context2.next = 29;
+                                break;
+                            }
 
-                        if (purchase_time !== start_time) {
-                            drawLineX({
-                                value: purchase_time,
-                                label: localize('Purchase Time'),
-                                color: '#7cb5ec'
+                            options = { title: contract.display_name };
+                            options[type] = response[type];
+                            history = response.history;
+                            candles = response.candles;
+                            tick = response.tick;
+                            ohlc = response.ohlc;
+
+                            response_id = response[type].id;
+                            is_tick_type = !isEmptyObject(history) || !isEmptyObject(tick);
+                            // send view popup the response ID so view popup can forget the calls if it's closed before contract ends
+                            if (response_id && !is_response_id_set) {
+                                if (State.get('is_trading') || State.get('is_mb_trading')) {
+                                    page_underlying = State.get('is_mb_trading') ? MBDefaults.get('underlying') : Defaults.get('underlying');
+
+                                    if (page_underlying !== (tick || ohlc).symbol) {
+                                        ViewPopupUI.storeSubscriptionID(response_id, true);
+                                        ViewPopupUI.setOnCloseFunction(onClose);
+                                    } else {
+                                        ViewPopupUI.setOnCloseFunction(function () {
+                                            return onClose(GetTicks.request);
+                                        });
+                                    }
+                                } else {
+                                    ViewPopupUI.storeSubscriptionID(response_id, true);
+                                    ViewPopupUI.setOnCloseFunction(onClose);
+                                }
+                                is_response_id_set = true;
+                            } else {
+                                ViewPopupUI.setOnCloseFunction(onClose);
+                            }
+
+                            if (!(history || candles)) {
+                                _context2.next = 25;
+                                break;
+                            }
+
+                            length = (history ? history.times : candles).length;
+
+                            if (!(length === 0)) {
+                                _context2.next = 17;
+                                break;
+                            }
+
+                            HighchartUI.showError('missing');
+                            return _context2.abrupt('return');
+
+                        case 17:
+                            if (history) {
+                                history_times = history.times;
+
+                                getMinHistory(history_times);
+                                getMaxHistory(history_times);
+                            } else if (candles) {
+                                getMinCandle(candles);
+                                getMaxCandle(candles);
+                            }
+                            // only initialize chart if it hasn't already been initialized
+
+                            if (!(!chart && !is_initialized)) {
+                                _context2.next = 23;
+                                break;
+                            }
+
+                            chart_promise = initChart(options);
+
+                            if (!(!chart_promise || typeof chart_promise.then !== 'function')) {
+                                _context2.next = 22;
+                                break;
+                            }
+
+                            return _context2.abrupt('return');
+
+                        case 22:
+                            chart_promise.then(function () {
+                                if (!chart) return;
+
+                                if (purchase_time !== start_time) {
+                                    drawLineX({
+                                        value: purchase_time,
+                                        label: localize('Purchase Time'),
+                                        color: '#7cb5ec'
+                                    });
+                                }
+
+                                // don't draw start time for contracts that are sold before contract starts
+                                if (sell_time < start_time) {
+                                    HighchartUI.updateLabels(chart, getHighchartLabelParams());
+                                } else {
+                                    drawLineX({ value: start_time });
+                                }
+
+                                if (Reset.isReset(contract.contract_type)) {
+                                    drawResetTimeLine();
+                                }
                             });
-                        }
 
-                        // don't draw start time for contracts that are sold before contract starts
-                        if (sell_time < start_time) {
-                            HighchartUI.updateLabels(chart, getHighchartLabelParams());
-                        } else {
-                            drawLineX({ value: start_time });
-                        }
+                        case 23:
+                            _context2.next = 26;
+                            break;
 
-                        if (Reset.isReset(contract.contract_type)) {
-                            drawResetTimeLine();
-                        }
-                    });
+                        case 25:
+                            if ((tick || ohlc) && !stop_streaming) {
+                                if (chart && chart.series) {
+                                    updateChart(options);
+                                }
+                            }
+
+                        case 26:
+                            if (chart_promise && typeof chart_promise.then === 'function') {
+                                if (entry_tick_time && !is_entry_tick_barrier_selected) {
+                                    chart_promise.then(selectEntryTickBarrier);
+                                }
+                                if (contract.is_sold || contract.is_settleable) {
+                                    chart_promise.then(function () {
+                                        updateZone('exit');
+                                        endContract();
+                                    });
+                                }
+                            }
+                            _context2.next = 30;
+                            break;
+
+                        case 29:
+                            if (type === 'ticks_history' && error) {
+                                HighchartUI.showError('', error.message);
+                            }
+
+                        case 30:
+                        case 'end':
+                            return _context2.stop();
+                    }
                 }
-            } else if ((tick || ohlc) && !stop_streaming) {
-                if (chart && chart.series) {
-                    updateChart(options);
-                }
-            }
-            if (chart_promise && typeof chart_promise.then === 'function') {
-                if (entry_tick_time && !is_entry_tick_barrier_selected) {
-                    chart_promise.then(selectEntryTickBarrier);
-                }
-                if (contract.is_sold || contract.is_settleable) {
-                    chart_promise.then(function () {
-                        updateZone('exit');
-                        endContract();
-                    });
-                }
-            }
-        } else if (type === 'ticks_history' && error) {
-            HighchartUI.showError('', error.message);
-        }
-    };
+            }, _callee2, undefined);
+        }));
+
+        return function handleResponse(_x3) {
+            return _ref2.apply(this, arguments);
+        };
+    }();
 
     var showChart = function showChart(proposal_contract, update) {
         contract = proposal_contract;
@@ -22162,6 +22490,7 @@ module.exports = Defaults;
 
 var DigitTicker = function () {
     var barrier = void 0,
+        container_ref = void 0,
         el_container = void 0,
         el_peek = void 0,
         el_peek_box = void 0,
@@ -22171,6 +22500,7 @@ var DigitTicker = function () {
         type = void 0,
         current_spot = void 0;
     var style_offset_correction = 5;
+    var is_initialized = false;
 
     var array_of_digits = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 
@@ -22182,6 +22512,8 @@ var DigitTicker = function () {
         type = contract_type;
         current_spot = '-';
         el_container = document.querySelector('#' + container_id);
+        container_ref = container_id;
+        is_initialized = true;
 
         setBarrierFromShortcode(type, shortcode);
         populateContainer(el_container);
@@ -22191,9 +22523,8 @@ var DigitTicker = function () {
 
     var populateContainer = function populateContainer(container_element) {
         // remove previous elements and start fresh.
-        while (container_element && container_element.firstChild) {
-            container_element.removeChild(container_element.firstChild);
-        }
+        if (!container_element) return;
+        container_element.innerHTML = '';
 
         var temp_epoch_el = document.createElement('div');
         temp_epoch_el.classList.add('epoch');
@@ -22297,6 +22628,7 @@ var DigitTicker = function () {
     };
 
     var highlightWinningNumbers = function highlightWinningNumbers(winning_numbers) {
+        if (!el_container) return;
         winning_numbers.forEach(function (digit) {
             var element = el_container.querySelector('.digit-' + digit);
             element.classList.remove('digit-losing');
@@ -22346,14 +22678,18 @@ var DigitTicker = function () {
         if (!el_peek_box || !el_peek) {
             setElements();
         }
-        el_peek_box.classList.remove('digit-losing', 'digit-running');
-        el_peek_box.classList.add('digit-winning');
-        el_peek.classList.remove('digit-losing', 'digit-running');
-        el_peek.classList.add('digit-winning');
+        if (el_peek_box) {
+            el_peek_box.classList.remove('digit-losing', 'digit-running');
+            el_peek_box.classList.add('digit-winning');
+        }
+        if (el_peek) {
+            el_peek.classList.remove('digit-losing', 'digit-running');
+            el_peek.classList.add('digit-winning');
+        }
     };
 
     var setElements = function setElements() {
-        el_peek = el_container ? el_container.querySelector('.peek') : null;
+        el_peek = el_container ? el_container.querySelector('.peek') : populateContainer(container_ref);
         el_peek_box = el_peek ? el_container.querySelector('.peek-box') : null;
         el_mask = el_peek_box ? el_peek_box.querySelector('.mask') : null;
     };
@@ -22380,14 +22716,13 @@ var DigitTicker = function () {
         setElements(epoch);
         el_container.classList.remove('invisible');
         adjustBoxSizes();
-        current_spot = quote.substr(-1);
-
-        el_mask.innerText = current_tick_count + ' / ' + total_tick_count;
-
-        el_peek_box.classList.add('digit-running');
-        el_peek.classList.add('digit-running');
-
-        el_peek_box.setAttribute('style', 'transform: translateX(' + calculateOffset() + 'px)');
+        current_spot = quote.toString().substr(-1);
+        if (el_mask) el_mask.innerText = current_tick_count + ' / ' + total_tick_count;
+        if (el_peek_box) {
+            el_peek_box.classList.add('digit-running');
+            el_peek_box.setAttribute('style', 'transform: translateX(' + calculateOffset() + 'px)');
+        }
+        if (el_peek) el_peek.classList.add('digit-running');
     };
 
     var remove = function remove() {
@@ -22433,6 +22768,10 @@ var DigitTicker = function () {
         requestAnimationFrame(renderTick);
     };
 
+    var isInitialized = function isInitialized() {
+        return is_initialized;
+    };
+
     return {
         init: init,
         update: update,
@@ -22442,7 +22781,8 @@ var DigitTicker = function () {
         markAsLost: markAsLost,
         markDigitAsLost: markDigitAsLost,
         markDigitAsWon: markDigitAsWon,
-        remove: remove
+        remove: remove,
+        isInitialized: isInitialized
     };
 }();
 
@@ -22464,135 +22804,151 @@ var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js"
 var DigitTicker = __webpack_require__(/*! ./digit_ticker */ "./src/javascript/app/pages/trade/digit_ticker.js");
 var ViewPopupUI = __webpack_require__(/*! ../user/view_popup/view_popup.ui */ "./src/javascript/app/pages/user/view_popup/view_popup.ui.js");
 var showLocalTimeOnHover = __webpack_require__(/*! ../../base/clock */ "./src/javascript/app/base/clock.js").showLocalTimeOnHover;
-var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var LoadingSpinner = __webpack_require__(/*! ../../components/loading-spinner */ "./src/javascript/app/components/loading-spinner.js");
 var addComma = __webpack_require__(/*! ../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var localize = __webpack_require__(/*! ../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
-var getPropertyValue = __webpack_require__(/*! ../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 
 var DigitDisplay = function () {
-    var $container = void 0,
-        contract = void 0,
-        tick_count = void 0,
-        spot_times = void 0;
+    var $container = void 0;
 
-    // Subscribe if contract is still ongoing/running.
-    var subscribe = function subscribe(request) {
-        request.end = 'latest';
+    var initTable = function initTable(id_render, calculated_height, poc) {
+        $container = $('#' + id_render);
+        $container.addClass('normal-font').html($('<h5 />', {
+            text: poc.display_name,
+            class: 'center-text'
+        })).append($('<div />', {
+            class: 'gr-8 gr-centered gr-12-m',
+            style: 'height: ' + calculated_height + 'px;'
+        }).append($('<div />', {
+            class: 'gr-row',
+            id: 'table_digits'
+        }).append($('<strong />', {
+            class: 'gr-3',
+            text: localize('Tick')
+        })).append($('<strong />', {
+            class: 'gr-3',
+            text: localize('Spot')
+        })).append($('<strong />', {
+            class: 'gr-6',
+            text: localize('Spot Time (GMT)')
+        })))).append($('<div />', {
+            class: 'digit-ticker invisible',
+            id: 'digit_ticker_container'
+        }));
+        LoadingSpinner.show('table_digits');
+    };
 
-        if (contract.exit_tick_time) {
-            request.end = +contract.exit_tick_time;
-            request.count = +contract.tick_count;
-            if (+contract.tick_count === 1) {
-                request.end += 1; // TODO: API sends the improper response when end and start are the same for 1 tick contracts. remove this block on fix
-            }
-        } else {
-            request.subscribe = 1;
-            request.end = 'latest';
+    var calculateTableHeight = function calculateTableHeight(proposal_open_contract) {
+        return (proposal_open_contract.tick_count + 1) * 40;
+    };
+
+    var renderTable = function renderTable(id_render, poc) {
+        var el_tick_chart = document.getElementById(id_render);
+        if (!el_tick_chart || el_tick_chart.childElementCount < 3) return;
+
+        if (DigitTicker.isInitialized()) {
+            DigitTicker.update(poc.tick_stream.length, {
+                quote: poc.status !== 'open' ? poc.exit_tick : poc.current_spot,
+                epoch: +poc.exit_tick_time || +poc.current_spot_time
+            });
         }
+
+        var el_container = document.getElementById('table_digits');
+        if (el_container.childElementCount > 3) {
+            el_container.innerHTML = '';
+            el_container.append(createHeadingElements());
+        }
+
+        ViewPopupUI.storeSubscriptionID(poc.id);
+        LoadingSpinner.hide('table_digits');
+        poc.tick_stream.forEach(function (tick, index) {
+            $('#table_digits').append(renderRow(tick, index + 1, poc.tick_count));
+        });
+        showLocalTimeOnHover('.digit-spot-time');
+    };
+
+    var createCounterElement = function createCounterElement(csv_spot, index, total) {
+        var el_counter = document.createElement('p');
+        el_counter.classList.add('gr-3', 'gray');
+        el_counter.innerHTML = index === total ? csv_spot.slice(0, csv_spot.length - 1) + '<strong>' + csv_spot.substr(-1) + '</strong>' : csv_spot;
+        return el_counter;
+    };
+
+    var createIndexElement = function createIndexElement(index) {
+        var el_index = document.createElement('p');
+        el_index.classList.add('gr-3');
+        el_index.innerText = index;
+        return el_index;
+    };
+
+    var createSpotElement = function createSpotElement(tick) {
+        var el_spot = document.createElement('p');
+        'gr-6 gray digit-spot-time no-underline'.split(' ').forEach(function (class_name) {
+            el_spot.classList.add(class_name);
+        });
+        el_spot.innerText = moment(+tick.epoch * 1000).utc().format('YYYY-MM-DD HH:mm:ss');
+        return el_spot;
+    };
+
+    var renderRow = function renderRow(tick, index, total) {
+        var csv_spot = addComma(tick.tick);
+        var el_fragment = document.createDocumentFragment();
+        el_fragment.append(createIndexElement(index));
+        el_fragment.append(createCounterElement(csv_spot, index, total));
+        el_fragment.append(createSpotElement(tick));
+
+        return el_fragment;
+    };
+
+    var createHeadingElements = function createHeadingElements() {
+        var tick = document.createElement('strong');
+        var spot = document.createElement('strong');
+        var spot_time = document.createElement('strong');
+
+        tick.innerText = localize('Tick');
+        tick.classList.add('gr-3');
+
+        spot.innerText = localize('Spot');
+        spot.classList.add('gr-3');
+
+        spot_time.innerText = localize('Spot Time (GMT)');
+        spot_time.classList.add('gr-6');
+
+        var fragment = document.createDocumentFragment();
+        fragment.append(tick, spot, spot_time);
+
+        return fragment;
     };
 
     var init = function init(id_render, proposal_open_contract) {
-        var calculated_height = (proposal_open_contract.tick_count + 1) * 40;
-
-        tick_count = 1;
-        contract = proposal_open_contract;
-        spot_times = [];
-
-        $container = $('#' + id_render);
-        $container.addClass('normal-font').html($('<h5 />', { text: contract.display_name, class: 'center-text' })).append($('<div />', { class: 'gr-8 gr-centered gr-12-m', style: 'height: ' + calculated_height + 'px;' }).append($('<div />', { class: 'gr-row', id: 'table_digits' }).append($('<strong />', { class: 'gr-3', text: localize('Tick') })).append($('<strong />', { class: 'gr-3', text: localize('Spot') })).append($('<strong />', { class: 'gr-6', text: localize('Spot Time (GMT)') })))).append($('<div />', { class: 'digit-ticker invisible', id: 'digit_ticker_container' }));
-        LoadingSpinner.show('table_digits');
-
-        DigitTicker.init('digit_ticker_container', contract.contract_type, contract.shortcode, contract.tick_count, contract.status);
-
-        var request = {
-            ticks_history: contract.underlying,
-            start: +contract.entry_tick_time
-        };
-
-        subscribe(request);
-
-        BinarySocket.send(request, { callback: update });
-    };
-
-    var updateTable = function updateTable(spot, time) {
-        if (spot_times.some(function (item) {
-            return item.spot === spot && item.time === time;
-        })) {
-            return;
-        }
-        if (spot_times.filter(function (spot_time) {
-            return spot_time.spot === spot && spot_time.time === time;
-        }).length !== 0) {
-            return;
-        }
-
-        spot_times.push({
-            spot: spot,
-            time: time
-        });
-
-        var csv_spot = addComma(spot);
-
-        $container.find('#table_digits').append($('<p />', { class: 'gr-3', text: tick_count })).append($('<p />', { class: 'gr-3 gray', html: tick_count === contract.tick_count ? csv_spot.slice(0, csv_spot.length - 1) + '<strong>' + csv_spot.substr(-1) + '</strong>' : csv_spot })).append($('<p />', { class: 'gr-6 gray digit-spot-time no-underline', text: moment(+time * 1000).utc().format('YYYY-MM-DD HH:mm:ss') }));
-
-        DigitTicker.update(tick_count, {
-            quote: contract.status !== 'open' ? contract.exit_tick : spot,
-            epoch: +contract.exit_tick_time || +contract.current_spot_time
-        });
-    };
-
-    var update = function update(response) {
-        if (!$container.is(':visible') || !response || !response.tick && !response.history) {
-            return;
-        }
-
-        if (getPropertyValue(response, ['tick', 'id']) && document.getElementById('sell_content_wrapper')) {
-            ViewPopupUI.storeSubscriptionID(response.tick.id);
-        }
-        LoadingSpinner.hide('table_digits');
-        if (response.history) {
-            response.history.times.some(function (time, idx) {
-                if (+time >= +contract.entry_tick_time) {
-                    updateTable(response.history.prices[idx], time);
-                    tick_count += 1;
-                }
-                return tick_count > contract.tick_count;
-            });
-        } else if (response.tick) {
-            if (tick_count <= contract.tick_count && +response.tick.epoch >= +contract.entry_tick_time) {
-                updateTable(response.tick.quote, response.tick.epoch);
-                tick_count += 1;
-            }
-        }
-        showLocalTimeOnHover('.digit-spot-time');
+        initTable(id_render, calculateTableHeight(proposal_open_contract), proposal_open_contract);
+        DigitTicker.init('digit_ticker_container', proposal_open_contract.contract_type, proposal_open_contract.shortcode, proposal_open_contract.tick_count, proposal_open_contract.status);
+        renderTable(id_render, proposal_open_contract);
     };
 
     var end = function end(proposal_open_contract) {
         if (proposal_open_contract.status !== 'open') {
-            // if there is no exit tick inside proposal open contract, select a fallback from history instead.
-            var fallback_exit_tick = spot_times.find(function (spot) {
-                return +spot.time === +proposal_open_contract.exit_tick_time;
-            });
             DigitTicker.update(proposal_open_contract.tick_count, {
-                quote: proposal_open_contract.exit_tick || fallback_exit_tick.spot,
+                quote: proposal_open_contract.exit_tick || proposal_open_contract.tick_stream.slice(-1).tick,
                 epoch: +proposal_open_contract.exit_tick_time
             });
         }
         if (proposal_open_contract.status === 'won') {
             DigitTicker.markAsWon();
-            DigitTicker.markDigitAsWon(proposal_open_contract.exit_tick.slice(-1));
+            DigitTicker.markDigitAsWon(proposal_open_contract.exit_tick.toString().slice(-1));
         }
         if (proposal_open_contract.status === 'lost') {
             DigitTicker.markAsLost();
-            DigitTicker.markDigitAsLost(proposal_open_contract.exit_tick.slice(-1));
+            DigitTicker.markDigitAsLost(proposal_open_contract.exit_tick.toString().slice(-1));
         }
     };
 
     return {
+        calculateTableHeight: calculateTableHeight,
         end: end,
         init: init,
-        update: update
+        initTable: initTable,
+        renderTable: renderTable
     };
 }();
 
@@ -23812,6 +24168,8 @@ module.exports = {
 "use strict";
 
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var Barriers = __webpack_require__(/*! ./barriers */ "./src/javascript/app/pages/trade/barriers.js");
 var updateWarmChart = __webpack_require__(/*! ./common */ "./src/javascript/app/pages/trade/common.js").updateWarmChart;
 var DigitInfo = __webpack_require__(/*! ./charts/digit_info */ "./src/javascript/app/pages/trade/charts/digit_info.js");
@@ -23841,30 +24199,76 @@ var GetTicks = function () {
                     count: 20,
                     subscribe: 1
                 }, {
-                    callback: function callback(response) {
-                        var type = response.msg_type;
+                    callback: function () {
+                        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(response) {
+                            var type;
+                            return regeneratorRuntime.wrap(function _callee$(_context) {
+                                while (1) {
+                                    switch (_context.prev = _context.next) {
+                                        case 0:
+                                            type = response.msg_type;
 
-                        if (typeof _callback === 'function') {
-                            _callback(response);
-                        }
 
-                        if (State.get('is_mb_trading')) {
-                            MBTick.processTickStream(response);
-                            return;
-                        }
+                                            if (typeof _callback === 'function') {
+                                                _callback(response);
+                                            }
 
-                        if (type === 'tick') {
-                            processTick(response);
-                            if (getActiveTab() === 'tab_last_digit') {
-                                DigitInfo.updateChart(response);
-                            }
-                        } else if (type === 'history') {
-                            processHistory(response);
-                            if (getActiveTab() === 'tab_last_digit') {
-                                DigitInfo.showChart(response.echo_req.ticks_history, response.history.prices);
-                            }
-                        }
-                    }
+                                            if (!State.get('is_mb_trading')) {
+                                                _context.next = 5;
+                                                break;
+                                            }
+
+                                            MBTick.processTickStream(response);
+                                            return _context.abrupt('return');
+
+                                        case 5:
+                                            if (!(type === 'tick')) {
+                                                _context.next = 12;
+                                                break;
+                                            }
+
+                                            processTick(response);
+
+                                            if (!(getActiveTab() === 'tab_last_digit')) {
+                                                _context.next = 10;
+                                                break;
+                                            }
+
+                                            _context.next = 10;
+                                            return DigitInfo.updateChart(response);
+
+                                        case 10:
+                                            _context.next = 17;
+                                            break;
+
+                                        case 12:
+                                            if (!(type === 'history')) {
+                                                _context.next = 17;
+                                                break;
+                                            }
+
+                                            processHistory(response);
+
+                                            if (!(getActiveTab() === 'tab_last_digit')) {
+                                                _context.next = 17;
+                                                break;
+                                            }
+
+                                            _context.next = 17;
+                                            return DigitInfo.showChart(response.echo_req.ticks_history, response.history.prices);
+
+                                        case 17:
+                                        case 'end':
+                                            return _context.stop();
+                                    }
+                                }
+                            }, _callee, undefined);
+                        }));
+
+                        return function callback(_x) {
+                            return _ref.apply(this, arguments);
+                        };
+                    }()
                 });
             };
 
@@ -25540,6 +25944,8 @@ module.exports = Process;
 
 var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var isCallputspread = __webpack_require__(/*! ./callputspread */ "./src/javascript/app/pages/trade/callputspread.js").isCallputspread;
 var Contract = __webpack_require__(/*! ./contract */ "./src/javascript/app/pages/trade/contract.js");
@@ -25557,6 +25963,7 @@ var Client = __webpack_require__(/*! ../../base/client */ "./src/javascript/app/
 var Header = __webpack_require__(/*! ../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 var formatMoney = __webpack_require__(/*! ../../common/currency */ "./src/javascript/app/common/currency.js").formatMoney;
+var changePocNumbersToString = __webpack_require__(/*! ../../common/request_middleware */ "./src/javascript/app/common/request_middleware.js").changePocNumbersToString;
 var TopUpVirtualPopup = __webpack_require__(/*! ../../pages/user/account/top_up_virtual/pop_up */ "./src/javascript/app/pages/user/account/top_up_virtual/pop_up.js");
 var addComma = __webpack_require__(/*! ../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var CommonFunctions = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
@@ -25813,27 +26220,64 @@ var Purchase = function () {
                 contract_id: receipt.contract_id,
                 subscribe: 1
             };
-            BinarySocket.send(request, { callback: function callback(response) {
-                    var contract = response.proposal_open_contract;
-                    if (contract) {
-                        status = contract.status;
-                        profit_value = contract.profit;
-                        TickDisplay.setStatus(contract);
-                        if (/^digit/i.test(contract.contract_type)) {
-                            if (contract.status !== 'open') {
-                                digitShowExitTime(contract.status, contract.exit_tick);
-                            }
-                        }
-                        if (!/^digit/i.test(contract.contract_type) && contract.exit_tick_time && +contract.exit_tick_time < contract.date_expiry) {
-                            TickDisplay.updateChart({ is_sold: true }, contract);
-                        }
+            BinarySocket.send(request, { callback: function () {
+                    var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(response) {
+                        var mw_response, contract;
+                        return regeneratorRuntime.wrap(function _callee$(_context) {
+                            while (1) {
+                                switch (_context.prev = _context.next) {
+                                    case 0:
+                                        if (!response.proposal_open_contract) {
+                                            _context.next = 6;
+                                            break;
+                                        }
 
-                        // force to sell the expired contract, in order to get the final status
-                        if (+contract.is_settleable === 1 && !contract.is_sold) {
-                            sellExpired();
-                        }
-                    }
-                } });
+                                        _context.next = 3;
+                                        return changePocNumbersToString(response);
+
+                                    case 3:
+                                        _context.t0 = _context.sent;
+                                        _context.next = 7;
+                                        break;
+
+                                    case 6:
+                                        _context.t0 = undefined;
+
+                                    case 7:
+                                        mw_response = _context.t0;
+                                        contract = mw_response ? mw_response.proposal_open_contract : undefined;
+
+                                        if (contract) {
+                                            status = contract.status;
+                                            profit_value = contract.profit;
+                                            TickDisplay.setStatus(contract);
+                                            if (/^digit/i.test(contract.contract_type)) {
+                                                if (contract.status !== 'open' || contract.is_sold || contract.is_settleable) {
+                                                    digitShowExitTime(contract.status, contract.exit_tick);
+                                                }
+                                            }
+                                            if (!/^digit/i.test(contract.contract_type) && contract.exit_tick_time && +contract.exit_tick_time < contract.date_expiry) {
+                                                TickDisplay.updateChart({ is_sold: true }, contract);
+                                            }
+
+                                            // force to sell the expired contract, in order to get the final status
+                                            if (+contract.is_settleable === 1 && !contract.is_sold) {
+                                                sellExpired();
+                                            }
+                                        }
+
+                                    case 10:
+                                    case 'end':
+                                        return _context.stop();
+                                }
+                            }
+                        }, _callee, undefined);
+                    }));
+
+                    return function callback(_x) {
+                        return _ref.apply(this, arguments);
+                    };
+                }() });
         }
     };
 
@@ -25915,7 +26359,7 @@ var Purchase = function () {
         for (var s = 0; s < epoches.length; s++) {
             var tick_d = {
                 epoch: epoches[s],
-                quote: spots2[epoches[s]]
+                quote: addComma(spots2[epoches[s]], Tick.pipSize())
             };
 
             if (CommonFunctions.isVisible(spots) && tick_d.epoch && tick_d.epoch > purchase_data.buy.start_time) {
@@ -25943,8 +26387,7 @@ var Purchase = function () {
                 if (!tick_config.is_digit) {
                     fragment.appendChild(el2);
                 }
-                var tick_with_comma = addComma(tick_d.quote, countDecimalPlaces(tick_d.quote));
-                var tick = '<div class=\'quote\'>' + tick_with_comma.replace(/\d$/, makeBold) + '</div>';
+                var tick = '<div class=\'quote\'>' + tick_d.quote.replace(/\d$/, makeBold) + '</div>';
                 var el3 = createElement('div', { class: 'col' });
                 CommonFunctions.elementInnerHtml(el3, tick);
 
@@ -25987,7 +26430,7 @@ var Purchase = function () {
         if (el_epoch && el_epoch.classList) {
             el_epoch.classList.add('is-visible');
             el_epoch.setAttribute('style', 'position: absolute; right: ' + ((el_epoch.parentElement.offsetWidth - el_epoch.nextSibling.offsetWidth) / 2 + adjustment) + 'px');
-            var last_digit_quote = last_tick_quote ? last_tick_quote.slice(-1) : '';
+            var last_digit_quote = last_tick_quote ? last_tick_quote.toString().slice(-1) : '';
             if (contract_status === 'won') {
                 DigitTicker.markAsWon();
                 DigitTicker.markDigitAsWon(last_digit_quote);
@@ -26084,7 +26527,7 @@ var Reset = function () {
     };
 
     var isNewBarrier = function isNewBarrier(entry_barrier, current_barrier) {
-        return +entry_barrier !== +current_barrier;
+        return (entry_barrier || entry_barrier === 0) && (current_barrier || current_barrier === 0) ? +entry_barrier.toString().replace(',', '') !== +current_barrier.toString().replace(',', '') : entry_barrier !== current_barrier;
     };
 
     var isReset = function isReset(contract_type) {
@@ -26255,7 +26698,9 @@ module.exports = {
 "use strict";
 
 
+var countDecimalPlaces = __webpack_require__(/*! ./common_independent */ "./src/javascript/app/pages/trade/common_independent.js").countDecimalPlaces;
 var ActiveSymbols = __webpack_require__(/*! ../../common/active_symbols */ "./src/javascript/app/common/active_symbols.js");
+var BinarySocket = __webpack_require__(/*! ../../base/socket */ "./src/javascript/app/base/socket.js");
 
 /*
  * Symbols object parses the active_symbols json that we get from socket.send({active_symbols: 'brief'}
@@ -26278,6 +26723,7 @@ var Symbols = function () {
     var trade_markets_list = {};
     var trade_underlyings = {};
     var names = {};
+    var is_active_symbols_cached = false;
 
     var details = function details(data) {
         var all_symbols = data.active_symbols;
@@ -26285,6 +26731,20 @@ var Symbols = function () {
         trade_markets_list = ActiveSymbols.getMarketsList(all_symbols);
         trade_underlyings = ActiveSymbols.getTradeUnderlyings(all_symbols);
         names = ActiveSymbols.getSymbolNames(all_symbols);
+    };
+
+    var getUnderlyingPipSize = function getUnderlyingPipSize(underlying) {
+        return new Promise(function (resolve) {
+            var req = { active_symbols: 'brief' };
+            var options = { skip_cache_update: is_active_symbols_cached };
+            BinarySocket.send(req, options).then(function (active_symbols) {
+                details(active_symbols);
+                var market = ActiveSymbols.getSymbols(active_symbols);
+                is_active_symbols_cached = true;
+
+                resolve(countDecimalPlaces(market[underlying].pip));
+            });
+        });
     };
 
     return {
@@ -26300,7 +26760,8 @@ var Symbols = function () {
         },
         getAllSymbols: function getAllSymbols() {
             return names;
-        }
+        },
+        getUnderlyingPipSize: getUnderlyingPipSize
     };
 }();
 
@@ -26321,6 +26782,7 @@ module.exports = Symbols;
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var countDecimalPlaces = __webpack_require__(/*! ./common_independent */ "./src/javascript/app/pages/trade/common_independent.js").countDecimalPlaces;
 var displayPriceMovement = __webpack_require__(/*! ./common_independent */ "./src/javascript/app/pages/trade/common_independent.js").displayPriceMovement;
+var underlyings = __webpack_require__(/*! ./symbols */ "./src/javascript/app/pages/trade/symbols.js").underlyings;
 var addComma = __webpack_require__(/*! ../../../_common/base/currency_base */ "./src/javascript/_common/base/currency_base.js").addComma;
 var elementTextContent = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").elementTextContent;
 var getElementById = __webpack_require__(/*! ../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
@@ -26348,6 +26810,7 @@ var Tick = function () {
     var _epoch = '';
     var error_message = '';
     var _spots = {};
+    var pip_size = 2;
 
     var details = function details(data) {
         error_message = '';
@@ -26356,6 +26819,12 @@ var Tick = function () {
             if (data.error) {
                 error_message = data.error.message;
             } else {
+                var all_underlyings = underlyings();
+                Object.keys(all_underlyings).forEach(function (key) {
+                    if (Object.prototype.hasOwnProperty.call(all_underlyings[key], data.tick.symbol)) {
+                        pip_size = countDecimalPlaces(all_underlyings[key][data.tick.symbol].pip);
+                    }
+                });
                 var tick = data.tick;
                 _quote = tick.quote;
                 _id = tick.id;
@@ -26380,8 +26849,7 @@ var Tick = function () {
             message = error_message;
             message_number = error_message;
         } else {
-            var decimal_places = parseInt(countDecimalPlaces(Tick.quote()));
-            message = addComma(_quote, decimal_places);
+            message = addComma(_quote, pip_size);
             message_number = _quote;
         }
 
@@ -26495,6 +26963,9 @@ var Tick = function () {
         },
         setQuote: function setQuote(q) {
             _quote = q;
+        },
+        pipSize: function pipSize() {
+            return pip_size;
         }
     };
 }();
@@ -35008,6 +35479,8 @@ module.exports = VideoFacility;
 
 var _slicedToArray = function () { function sliceIterator(arr, i) { var _arr = []; var _n = true; var _d = false; var _e = undefined; try { for (var _i = arr[Symbol.iterator](), _s; !(_n = (_s = _i.next()).done); _n = true) { _arr.push(_s.value); if (i && _arr.length === i) break; } } catch (err) { _d = true; _e = err; } finally { try { if (!_n && _i["return"]) _i["return"](); } finally { if (_d) throw _e; } } return _arr; } return function (arr, i) { if (Array.isArray(arr)) { return arr; } else if (Symbol.iterator in Object(arr)) { return sliceIterator(arr, i); } else { throw new TypeError("Invalid attempt to destructure non-iterable instance"); } }; }();
 
+function _asyncToGenerator(fn) { return function () { var gen = fn.apply(this, arguments); return new Promise(function (resolve, reject) { function step(key, arg) { try { var info = gen[key](arg); var value = info.value; } catch (error) { reject(error); return; } if (info.done) { resolve(value); } else { return Promise.resolve(value).then(function (value) { step("next", value); }, function (err) { step("throw", err); }); } } return step("next"); }); }; }
+
 var moment = __webpack_require__(/*! moment */ "./node_modules/moment/moment.js");
 var ViewPopupUI = __webpack_require__(/*! ./view_popup.ui */ "./src/javascript/app/pages/user/view_popup/view_popup.ui.js");
 var Highchart = __webpack_require__(/*! ../../trade/charts/highchart */ "./src/javascript/app/pages/trade/charts/highchart.js");
@@ -35018,6 +35491,7 @@ var Reset = __webpack_require__(/*! ../../trade/reset */ "./src/javascript/app/p
 var TickDisplay = __webpack_require__(/*! ../../trade/tick_trade */ "./src/javascript/app/pages/trade/tick_trade.js");
 var Clock = __webpack_require__(/*! ../../../base/clock */ "./src/javascript/app/base/clock.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
+var changePocNumbersToString = __webpack_require__(/*! ../../../common/request_middleware */ "./src/javascript/app/common/request_middleware.js").changePocNumbersToString;
 var getElementById = __webpack_require__(/*! ../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js").getElementById;
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
@@ -35248,7 +35722,7 @@ var ViewPopup = function () {
             containerSetText('trade_details_entry_spot > span', '-');
             containerSetText('trade_details_message', localize('Contract has not started yet'));
         } else {
-            if (contract.entry_spot > 0) {
+            if (parseFloat(contract.entry_spot) > 0) {
                 // only show entry spot if available and contract was not sold before start time
                 containerSetText('trade_details_entry_spot > span', is_sold_before_start ? '-' : addComma(contract.entry_spot));
             }
@@ -35257,9 +35731,14 @@ var ViewPopup = function () {
 
         var is_digit = /digit/i.test(contract.contract_type);
         if (is_digit) {
-            if (!chart_started) {
+            if (!chart_started && contract.entry_tick_time) {
                 DigitDisplay.init(id_tick_chart, contract);
-                chart_started = true;
+                if (contract.entry_tick_time) chart_started = true;
+            } else if (!chart_started && !contract.entry_tick_time) {
+                // Since the contract not started yet, display the loading table:
+                DigitDisplay.initTable(id_tick_chart, DigitDisplay.calculateTableHeight(contract), contract);
+            } else if (chart_started) {
+                DigitDisplay.renderTable(id_tick_chart, contract);
             }
         } else if (!chart_started && !contract.tick_count) {
             if (!chart_init) {
@@ -35773,25 +36252,65 @@ var ViewPopup = function () {
         getContract('no-subscribe');
     };
 
-    var responseProposal = function responseProposal(response) {
-        if (response.error) {
-            if (response.error.code !== 'AlreadySubscribed' && +response.echo_req.contract_id === contract_id) {
-                showErrorPopup(response, response.error.message);
-            }
-            return;
-        }
-        if (+response.proposal_open_contract.contract_id === contract_id) {
-            ViewPopupUI.storeSubscriptionID(response.proposal_open_contract.id);
-            responseContract(response);
-        } else if (response.proposal_open_contract.id) {
-            BinarySocket.send({ forget: response.proposal_open_contract.id });
-        }
-        var dates = ['#trade_details_start_date', '#trade_details_end_date', '#trade_details_current_date', '#trade_details_live_date'];
-        for (var i = 0; i < dates.length; i++) {
-            Clock.showLocalTimeOnHover(dates[i]);
-            $(dates[i]).attr('data-balloon-pos', 'left');
-        }
-    };
+    var responseProposal = function () {
+        var _ref = _asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee(response) {
+            var dates, i;
+            return regeneratorRuntime.wrap(function _callee$(_context) {
+                while (1) {
+                    switch (_context.prev = _context.next) {
+                        case 0:
+                            if (!response.error) {
+                                _context.next = 3;
+                                break;
+                            }
+
+                            if (response.error.code !== 'AlreadySubscribed' && +response.echo_req.contract_id === contract_id) {
+                                showErrorPopup(response, response.error.message);
+                            }
+                            return _context.abrupt('return');
+
+                        case 3:
+                            if (!(+response.proposal_open_contract.contract_id === contract_id)) {
+                                _context.next = 12;
+                                break;
+                            }
+
+                            ViewPopupUI.storeSubscriptionID(response.proposal_open_contract.id);
+                            _context.t0 = responseContract;
+                            _context.next = 8;
+                            return changePocNumbersToString(response);
+
+                        case 8:
+                            _context.t1 = _context.sent;
+                            (0, _context.t0)(_context.t1);
+                            _context.next = 13;
+                            break;
+
+                        case 12:
+                            if (response.proposal_open_contract.id) {
+                                BinarySocket.send({ forget: response.proposal_open_contract.id });
+                            }
+
+                        case 13:
+                            dates = ['#trade_details_start_date', '#trade_details_end_date', '#trade_details_current_date', '#trade_details_live_date'];
+
+                            for (i = 0; i < dates.length; i++) {
+                                Clock.showLocalTimeOnHover(dates[i]);
+                                $(dates[i]).attr('data-balloon-pos', 'left');
+                            }
+
+                        case 15:
+                        case 'end':
+                            return _context.stop();
+                    }
+                }
+            }, _callee, undefined);
+        }));
+
+        return function responseProposal(_x3) {
+            return _ref.apply(this, arguments);
+        };
+    }();
 
     var viewButtonOnClick = function viewButtonOnClick(container_selector) {
         $(container_selector).on('click', '.open_contract_details', function (e) {
@@ -36493,6 +37012,7 @@ var BinaryPjax = __webpack_require__(/*! ../../app/base/binary_pjax */ "./src/ja
 var BinarySocket = __webpack_require__(/*! ../../app/base/socket */ "./src/javascript/app/base/socket.js");
 var isEuCountry = __webpack_require__(/*! ../../app/common/country_base */ "./src/javascript/app/common/country_base.js").isEuCountry;
 var FormManager = __webpack_require__(/*! ../../app/common/form_manager */ "./src/javascript/app/common/form_manager.js");
+var getFormRequest = __webpack_require__(/*! ../../app/common/verify_email */ "./src/javascript/app/common/verify_email.js");
 var isBinaryApp = __webpack_require__(/*! ../../config */ "./src/javascript/config.js").isBinaryApp;
 
 var Home = function () {
@@ -36509,7 +37029,7 @@ var Home = function () {
             TabSelector.repositionSelector();
 
             var form_id = '#frm_verify_email';
-            FormManager.init(form_id, [{ selector: '#email', validations: ['req', 'email'], request_field: 'verify_email' }, { request_field: 'type', value: 'account_opening' }]);
+            FormManager.init(form_id, getFormRequest());
             FormManager.handleSubmit({
                 form_selector: form_id,
                 fnc_response_handler: handler,
