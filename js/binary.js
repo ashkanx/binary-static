@@ -11558,9 +11558,9 @@ var Page = function () {
             vs: { i: 11, f: -4, o: -4, s: 9, c: 65 },
             api: 4,
             l: Language.get().toLowerCase(),
-            url: 'https://whatbrowser.org/',
+            url: 'https://browsehappy.com/',
             noclose: true, // Do not show the 'ignore' button to close the notification
-            text: localize('Your web browser ([_1]) is out of date and may affect your trading experience. Proceed at your own risk. [_2]Update browser[_3]', ['{brow_name}', '<a href="https://www.whatbrowser.org/" target="_blank">', '</a>']),
+            text: localize('Your web browser ([_1]) is out of date and may affect your trading experience. Proceed at your own risk. [_2]Update browser[_3]', ['{brow_name}', '<a href="https://browsehappy.com/" target="_blank">', '</a>']),
             reminder: 0 // show all the time
         };
         if (document.body) {
@@ -22818,7 +22818,7 @@ var DigitDisplay = function () {
             class: 'center-text'
         })).append($('<div />', {
             class: 'gr-8 gr-centered gr-12-m',
-            style: 'height: ' + calculated_height + 'px;'
+            id: 'table_digits_container'
         }).append($('<div />', {
             class: 'gr-row',
             id: 'table_digits'
@@ -33180,7 +33180,6 @@ var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javasc
 var Validation = __webpack_require__(/*! ../../../common/form_validation */ "./src/javascript/app/common/form_validation.js");
 var localize = __webpack_require__(/*! ../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
 var State = __webpack_require__(/*! ../../../../_common/storage */ "./src/javascript/_common/storage.js").State;
-var getPropertyValue = __webpack_require__(/*! ../../../../_common/utility */ "./src/javascript/_common/utility.js").getPropertyValue;
 
 var MetaTrader = function () {
     var mt_companies = void 0;
@@ -33360,25 +33359,13 @@ var MetaTrader = function () {
                         if (/^MT5(Deposit|Withdrawal)Error$/.test(response.error.code)) {
                             getExchangeRates();
                         }
+                        MetaTraderUI.enableButton(action, response);
                     } else {
-                        var login = actions_info[action].login ? actions_info[action].login(response) : accounts_info[acc_type].info.login;
-                        if (!accounts_info[acc_type].info) {
-                            // it's a new account
-                            accounts_info[acc_type].info = { login: login, currency: getPropertyValue(response, ['mt5_new_account', 'currency']) };
-                            MetaTraderUI.setAccountType(acc_type, true);
-                            BinarySocket.send({ mt5_login_list: 1 });
-                            MetaTraderUI.loadAction(null, acc_type);
-                        } else {
-                            // other than revoke mam, other actions are two forms in one action, so we need the parent action to be loaded for them
+                        if (accounts_info[acc_type].info) {
                             var parent_action = /password/.test(action) ? 'manage_password' : 'cashier';
                             MetaTraderUI.loadAction(action === 'revoke_mam' ? action : parent_action);
+                            MetaTraderUI.enableButton(action, response);
                         }
-                        BinarySocket.send({ mt5_login_list: 1 }).then(function (response_login_list) {
-                            setAccountDetails(login, acc_type, response_login_list);
-                            if (/^(revoke_mam|new_account_mam)/.test(action)) {
-                                MetaTraderUI.showHideMAM(acc_type);
-                            }
-                        });
                         if (typeof actions_info[action].success_msg === 'function') {
                             var success_msg = actions_info[action].success_msg(response, acc_type);
                             if (actions_info[action].success_msg_selector) {
@@ -33386,12 +33373,25 @@ var MetaTrader = function () {
                             } else {
                                 MetaTraderUI.displayMainMessage(success_msg);
                             }
+                            MetaTraderUI.enableButton(action, response);
                         }
                         if (typeof actions_info[action].onSuccess === 'function') {
                             actions_info[action].onSuccess(response, MetaTraderUI.$form());
                         }
+                        BinarySocket.send({ mt5_login_list: 1 }).then(function (response_login_list) {
+                            allAccountsResponseHandler(response_login_list);
+                            MetaTraderUI.refreshAction();
+                            MetaTraderUI.setAccountType(acc_type, true);
+
+                            if (!accounts_info[acc_type].info) {
+                                MetaTraderUI.loadAction(null, acc_type);
+                            }
+
+                            if (/^(revoke_mam|new_account_mam)/.test(action)) {
+                                MetaTraderUI.showHideMAM(acc_type);
+                            }
+                        });
                     }
-                    MetaTraderUI.enableButton(action, response);
                 });
             });
         }
@@ -33449,8 +33449,13 @@ var MetaTrader = function () {
         });
     };
 
+    var onUnload = function onUnload() {
+        MetaTraderUI.refreshAction();
+    };
+
     return {
         onLoad: onLoad,
+        onUnload: onUnload,
         isEligible: isEligible
     };
 }();
@@ -33700,6 +33705,10 @@ var MetaTraderUI = function () {
             removeUrlHash(); // only load manage_password section on first page load if token in url, after that remove it from url
         }
         return type;
+    };
+
+    var refreshAction = function refreshAction() {
+        current_action_ui = '';
     };
 
     var loadAction = function loadAction(action, acc_type) {
@@ -34164,6 +34173,7 @@ var MetaTraderUI = function () {
         displayPageError: displayPageError,
         disableButton: disableButton,
         enableButton: enableButton,
+        refreshAction: refreshAction,
         showHideMAM: showHideMAM,
         setTopupLoading: setTopupLoading,
         showNewAccountConfirmationPopup: showNewAccountConfirmationPopup,
