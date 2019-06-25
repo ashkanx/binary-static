@@ -10975,9 +10975,6 @@ var Header = function () {
                 document_needs_action: function document_needs_action() {
                     return buildMessage(localizeKeepPlaceholders('[_1]Your Proof of Identity or Proof of Address[_2] did not meet our requirements. Please check your email for further instructions.'), 'user/authenticate');
                 },
-                document_review: function document_review() {
-                    return buildMessage(localizeKeepPlaceholders('We are reviewing your documents. For more details [_1]contact us[_2].'), 'contact');
-                },
                 excluded_until: function excluded_until() {
                     return buildMessage(localizeKeepPlaceholders('Your account is restricted. Kindly [_1]contact customer support[_2] for assistance.'), 'contact');
                 },
@@ -11015,7 +11012,7 @@ var Header = function () {
 
             var validations = {
                 authenticate: function authenticate() {
-                    return +get_account_status.prompt_client_to_authenticate;
+                    return +get_account_status.prompt_client_to_authenticate && !hasStatus('document_under_review');
                 },
                 cashier_locked: function cashier_locked() {
                     return hasStatus('cashier_locked');
@@ -11025,9 +11022,6 @@ var Header = function () {
                 },
                 document_needs_action: function document_needs_action() {
                     return hasStatus('document_needs_action');
-                },
-                document_review: function document_review() {
-                    return hasStatus('document_under_review');
                 },
                 excluded_until: function excluded_until() {
                     return Client.get('excluded_until');
@@ -11065,7 +11059,7 @@ var Header = function () {
             };
 
             // real account checks in order
-            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'document_review', 'document_needs_action', 'authenticate', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail'];
+            var check_statuses_real = ['excluded_until', 'tnc', 'required_fields', 'financial_limit', 'risk', 'tax', 'currency', 'document_needs_action', 'authenticate', 'cashier_locked', 'withdrawal_locked', 'mt5_withdrawal_locked', 'unwelcome', 'mf_retail'];
 
             // virtual checks
             var check_statuses_virtual = ['residence'];
@@ -26250,7 +26244,9 @@ var Purchase = function () {
                                         if (contract) {
                                             status = contract.status;
                                             profit_value = contract.profit;
-                                            TickDisplay.setStatus(contract);
+                                            if (has_chart) {
+                                                TickDisplay.setStatus(contract);
+                                            }
                                             if (/^digit/i.test(contract.contract_type)) {
                                                 if (contract.status !== 'open' || contract.is_sold || contract.is_settleable) {
                                                     digitShowExitTime(contract.status, contract.exit_tick);
@@ -27273,13 +27269,13 @@ var TickDisplay = function () {
             if (contract.status === 'won') {
                 if (show_contract_result) {
                     $('#' + id_render).css('background-color', winning_color);
+                    updatePurchaseStatus(payout, price, contract.profit, localize('This contract won'));
                 }
-                updatePurchaseStatus(payout, price, contract.profit, localize('This contract won'));
             } else if (contract.status === 'lost') {
                 if (show_contract_result) {
                     $('#' + id_render).css('background-color', losing_color);
+                    updatePurchaseStatus(0, -price, contract.profit, localize('This contract lost'));
                 }
-                updatePurchaseStatus(0, -price, contract.profit, localize('This contract lost'));
             }
 
             addExitSpot();
@@ -27748,7 +27744,7 @@ module.exports = {
 
 var DocumentUploader = __webpack_require__(/*! @binary-com/binary-document-uploader */ "./node_modules/@binary-com/binary-document-uploader/DocumentUploader.js");
 var Client = __webpack_require__(/*! ../../../base/client */ "./src/javascript/app/base/client.js");
-var displayNotification = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js").displayNotification;
+var Header = __webpack_require__(/*! ../../../base/header */ "./src/javascript/app/base/header.js");
 var BinarySocket = __webpack_require__(/*! ../../../base/socket */ "./src/javascript/app/base/socket.js");
 var CompressImage = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").compressImg;
 var ConvertToBase64 = __webpack_require__(/*! ../../../../_common/image_utility */ "./src/javascript/_common/image_utility.js").convertToBase64;
@@ -28189,12 +28185,9 @@ var Authenticate = function () {
     };
 
     var showSuccess = function showSuccess() {
-        var msg = localize('We are reviewing your documents. For more details [_1]contact us[_2].', ['<a href="' + Url.urlFor('contact') + '">', '</a>']);
-
-        BinarySocket.send({ get_account_status: 1 }).then(function () {
-            displayNotification(msg, false, 'document_under_review');
+        BinarySocket.send({ get_account_status: 1 }, { forced: true }).then(function () {
+            Header.displayAccountStatus();
         });
-
         setTimeout(function () {
             removeButtonLoading();
             $button.setVisibility(0);
@@ -36211,7 +36204,8 @@ var ViewPopup = function () {
                 e.stopPropagation();
                 is_sell_clicked = true;
                 sellSetVisibility(false);
-                BinarySocket.send({ sell: contract_id, price: contract.bid_price }).then(function (response) {
+                var bid_price_number = parseFloat(contract.bid_price.replace(/,/g, '')); // API request should not have comma
+                BinarySocket.send({ sell: contract_id, price: bid_price_number }).then(function (response) {
                     responseSell(response);
                 });
             });
@@ -36257,7 +36251,8 @@ var ViewPopup = function () {
         $container.find('#errMsg').setVisibility(0);
         sellSetVisibility(false);
         if (is_sell_clicked) {
-            containerSetText('contract_sell_message', localize('You have sold this contract at [_1] [_2]', [contract.currency, response.sell.sold_for]) + '\n                <br />\n                ' + localize('Your transaction reference number is [_1]', response.sell.transaction_id));
+            var formatted_sell_price = formatMoney(contract.currency, response.sell.sold_for, true);
+            containerSetText('contract_sell_message', localize('You have sold this contract at [_1] [_2]', [contract.currency, formatted_sell_price]) + '\n                <br />\n                ' + localize('Your transaction reference number is [_1]', response.sell.transaction_id));
         }
         getContract('no-subscribe');
     };
