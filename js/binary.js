@@ -33358,6 +33358,7 @@ var MetaTrader = function () {
                             var parent_action = /password/.test(action) ? 'manage_password' : 'cashier';
                             MetaTraderUI.loadAction(action === 'revoke_mam' ? action : parent_action);
                             MetaTraderUI.enableButton(action, response);
+                            MetaTraderUI.refreshAction();
                         }
                         if (typeof actions_info[action].success_msg === 'function') {
                             var success_msg = actions_info[action].success_msg(response, acc_type);
@@ -33372,17 +33373,15 @@ var MetaTrader = function () {
                             actions_info[action].onSuccess(response, MetaTraderUI.$form());
                         }
                         BinarySocket.send({ mt5_login_list: 1 }).then(function (response_login_list) {
-                            allAccountsResponseHandler(response_login_list);
                             MetaTraderUI.refreshAction();
+                            allAccountsResponseHandler(response_login_list);
                             MetaTraderUI.setAccountType(acc_type, true);
-
-                            if (!accounts_info[acc_type].info) {
-                                MetaTraderUI.loadAction(null, acc_type);
-                            }
 
                             if (/^(revoke_mam|new_account_mam)/.test(action)) {
                                 MetaTraderUI.showHideMAM(acc_type);
                             }
+
+                            MetaTraderUI.loadAction(null, acc_type);
                         });
                     }
                 });
@@ -33701,7 +33700,7 @@ var MetaTraderUI = function () {
     };
 
     var refreshAction = function refreshAction() {
-        current_action_ui = '';
+        current_action_ui = null;
     };
 
     var loadAction = function loadAction(action, acc_type) {
