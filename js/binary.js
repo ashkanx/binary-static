@@ -10672,6 +10672,7 @@ var Client = __webpack_require__(/*! ./client */ "./src/javascript/app/base/clie
 var BinarySocket = __webpack_require__(/*! ./socket */ "./src/javascript/app/base/socket.js");
 var showHidePulser = __webpack_require__(/*! ../common/account_opening */ "./src/javascript/app/common/account_opening.js").showHidePulser;
 var MetaTrader = __webpack_require__(/*! ../pages/user/metatrader/metatrader */ "./src/javascript/app/pages/user/metatrader/metatrader.js");
+var getLandingCompanyValue = __webpack_require__(/*! ../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js").getLandingCompanyValue;
 var GTM = __webpack_require__(/*! ../../_common/base/gtm */ "./src/javascript/_common/base/gtm.js");
 var Login = __webpack_require__(/*! ../../_common/base/login */ "./src/javascript/_common/base/login.js");
 var SocketCache = __webpack_require__(/*! ../../_common/base/socket_cache */ "./src/javascript/_common/base/socket_cache.js");
@@ -10935,8 +10936,11 @@ var Header = function () {
             var get_account_status = void 0,
                 status = void 0;
             var is_svg = Client.get('landing_company_shortcode') === 'svg';
-            var necessary_withdrawal_fields = is_svg ? State.getResponse('landing_company.financial_company.requirements.withdrawal') : [];
-            var necessary_signup_fields = is_svg ? State.getResponse('landing_company.financial_company.requirements.signup').map(function (field) {
+            var loginid = Client.get('loginid');
+            var landing_company = State.getResponse('landing_company');
+            var requirements = getLandingCompanyValue(loginid, landing_company, 'requirements');
+            var necessary_withdrawal_fields = is_svg ? requirements.withdrawal : [];
+            var necessary_signup_fields = is_svg ? requirements.signup.map(function (field) {
                 return field === 'residence' ? 'country' : field;
             }) : [];
 
@@ -30272,6 +30276,7 @@ var Header = __webpack_require__(/*! ../../../../base/header */ "./src/javascrip
 var BinarySocket = __webpack_require__(/*! ../../../../base/socket */ "./src/javascript/app/base/socket.js");
 var FormManager = __webpack_require__(/*! ../../../../common/form_manager */ "./src/javascript/app/common/form_manager.js");
 var DatePicker = __webpack_require__(/*! ../../../../components/date_picker */ "./src/javascript/app/components/date_picker.js");
+var ClientBase = __webpack_require__(/*! ../../../../../_common/base/client_base */ "./src/javascript/_common/base/client_base.js");
 var CommonFunctions = __webpack_require__(/*! ../../../../../_common/common_functions */ "./src/javascript/_common/common_functions.js");
 var Geocoder = __webpack_require__(/*! ../../../../../_common/geocoder */ "./src/javascript/_common/geocoder.js");
 var localize = __webpack_require__(/*! ../../../../../_common/localize */ "./src/javascript/_common/localize.js").localize;
@@ -30337,8 +30342,9 @@ var PersonalDetails = function () {
     var populateChangeableFields = function populateChangeableFields() {
         if (!has_changeable_fields) return;
 
-        var landing_companies = State.getResponse('landing_company');
-        var changeable = landing_companies.financial_company.changeable_fields;
+        var loginid = Client.get('loginid');
+        var landing_company = State.getResponse('landing_company');
+        var changeable = ClientBase.getLandingCompanyValue(loginid, landing_company, 'changeable_fields');
         if (changeable && changeable.only_before_auth) {
             changeable_fields = changeable_fields.concat(changeable.only_before_auth);
         }
@@ -32727,10 +32733,25 @@ var MetaTraderConfig = function () {
             var $new_account_financial_authenticate_msg = $('#new_account_financial_authenticate_msg');
             $new_account_financial_authenticate_msg.setVisibility(0);
             var is_virtual = Client.get('is_virtual');
+            var is_demo = accounts_info[acc_type].is_demo;
 
             if (!Client.get('currency')) {
                 resolve($messages.find('#msg_set_currency').html());
-            } else if (is_virtual && !accounts_info[acc_type].is_demo) {
+            } else if (is_demo) {
+                if (Client.get('residence') === 'gb') {
+                    BinarySocket.wait('get_account_status').then(function (response) {
+                        if (!/age_verification/.test(response.get_account_status.status)) {
+                            $message.find('#msg_metatrader_account').setVisibility(1);
+                            $message.find('.authenticate').setVisibility(1);
+                            resolve($message.html());
+                        }
+
+                        resolve();
+                    });
+                } else {
+                    resolve();
+                }
+            } else if (is_virtual) {
                 // virtual clients can only open demo MT accounts
                 resolve(needsRealMessage());
             } else {
@@ -32748,12 +32769,23 @@ var MetaTraderConfig = function () {
 
                     var has_financial_account = Client.hasAccountType('financial', 1);
                     var is_maltainvest = State.getResponse('landing_company.mt_financial_company.' + getMTFinancialAccountType(acc_type) + '.shortcode') === 'maltainvest';
-                    var is_financial = accounts_info[acc_type].account_type === 'financial';
                     var is_demo_financial = accounts_info[acc_type].account_type === 'demo' && accounts_info[acc_type].mt5_account_type; // is not demo vol account
+                    var is_financial = accounts_info[acc_type].account_type === 'financial';
 
                     if (is_maltainvest && (is_financial || is_demo_financial) && !has_financial_account) {
                         $message.find('.maltainvest').setVisibility(1);
-                        resolveWithMessage();
+
+                        if (Client.get('residence') === 'gb') {
+                            BinarySocket.wait('get_account_status').then(function (response) {
+                                if (!/age_verification/.test(response.get_account_status.status)) {
+                                    $message.find('.authenticate').setVisibility(1);
+                                }
+
+                                resolveWithMessage();
+                            });
+                        } else {
+                            resolveWithMessage();
+                        }
                     }
 
                     var response_get_settings = State.getResponse('get_settings');
@@ -32778,6 +32810,10 @@ var MetaTraderConfig = function () {
                                 showCitizenshipMessage();
                                 is_ok = false;
                             }
+                            if (Client.get('residence') === 'gb' && !/age_verification/.test(response_get_account_status.status)) {
+                                $message.find('.authenticate').setVisibility(1);
+                                is_ok = false;
+                            }
                             if (is_ok && !isAuthenticated()) {
                                 $new_account_financial_authenticate_msg.setVisibility(1);
                             }
@@ -32797,11 +32833,13 @@ var MetaTraderConfig = function () {
                                 showCitizenshipMessage();
                                 _is_ok = false;
                             }
+                            if (Client.get('residence') === 'gb' && !/age_verification/.test(response_get_account_status.status)) {
+                                $message.find('.authenticate').setVisibility(1);
+                                _is_ok = false;
+                            }
 
                             if (_is_ok) resolve();else resolveWithMessage();
                         });
-                    } else {
-                        resolve();
                     }
                 });
             }
@@ -33920,7 +33958,7 @@ var MetaTraderUI = function () {
             updateAccountTypesUI(selected_acc_type);
             _$form.find('#view_1 #btn_next').addClass('button-disabled');
             _$form.find('#view_1 .step-2').setVisibility(1);
-            displayMessage('#new_account_msg', selected_acc_type === 'real' && Client.get('is_virtual') ? MetaTraderConfig.needsRealMessage() : '', true);
+            displayMessage('#new_account_msg', (selected_acc_type === 'demo' && Client.get('residence') === 'gb' || selected_acc_type === 'real') && Client.get('is_virtual') ? MetaTraderConfig.needsRealMessage() : '', true);
             _$form.find('#new_account_no_deposit_bonus_msg').setVisibility(0);
         } else {
             var new_acc_type = newAccountGetType();
@@ -33939,7 +33977,7 @@ var MetaTraderUI = function () {
         Object.keys(accounts_info).filter(function (acc_type) {
             return acc_type.indexOf(type) === 0;
         }).forEach(function (acc_type) {
-            var class_name = type === 'real' && Client.get('is_virtual') ? 'disabled' : '';
+            var class_name = (type === 'demo' && Client.get('residence') === 'gb' || type === 'real') && Client.get('is_virtual') ? 'disabled' : '';
             if (accounts_info[acc_type].info) {
                 class_name = 'existed';
             }
