@@ -9725,21 +9725,23 @@ var BinaryLoader = function () {
             loadHandler('get-started');
         }
 
-        ContentVisibility.init();
+        // Make sure content is properly loaded or visible before scrolling to anchor.
+        ContentVisibility.init().then(function () {
+            BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
+                GTM.pushDataLayer({ event: 'page_load' }); // we need website_status.clients_country
 
-        BinarySocket.wait('authorize', 'website_status', 'landing_company').then(function () {
-            GTM.pushDataLayer({ event: 'page_load' }); // we need website_status.clients_country
+                // first time load.
+                var last_image = $('#content img').last();
+                if (last_image) {
+                    last_image.on('load', function () {
+                        ScrollToAnchor.init();
+                    });
+                }
 
-            // first time load.
-            var last_image = $('#content img').last();
-            if (last_image) {
-                last_image.on('load', function () {
-                    ScrollToAnchor.init();
-                });
-            }
-
-            ScrollToAnchor.init();
+                ScrollToAnchor.init();
+            });
         });
+
         if (active_script) {
             BinarySocket.setOnReconnect(active_script.onReconnect);
         }
@@ -13126,44 +13128,48 @@ var ContentVisibility = function () {
     var init = function init() {
         var arr_mt5fin_shortcodes = void 0;
 
-        BinarySocket.wait('authorize', 'landing_company', 'website_status').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
-            var current_landing_company_shortcode, mt_financial_company, mt_gaming_company, mt_landing_company, is_eligible_mt5;
-            return regeneratorRuntime.wrap(function _callee$(_context) {
-                while (1) {
-                    switch (_context.prev = _context.next) {
-                        case 0:
-                            current_landing_company_shortcode = State.getResponse('authorize.landing_company_name') || 'default';
-                            mt_financial_company = State.getResponse('landing_company.mt_financial_company');
-                            mt_gaming_company = State.getResponse('landing_company.mt_gaming_company');
+        return new Promise(function (resolve) {
+            BinarySocket.wait('authorize', 'landing_company', 'website_status').then(_asyncToGenerator( /*#__PURE__*/regeneratorRuntime.mark(function _callee() {
+                var current_landing_company_shortcode, mt_financial_company, mt_gaming_company, mt_landing_company, is_eligible_mt5;
+                return regeneratorRuntime.wrap(function _callee$(_context) {
+                    while (1) {
+                        switch (_context.prev = _context.next) {
+                            case 0:
+                                current_landing_company_shortcode = State.getResponse('authorize.landing_company_name') || 'default';
+                                mt_financial_company = State.getResponse('landing_company.mt_financial_company');
+                                mt_gaming_company = State.getResponse('landing_company.mt_gaming_company');
 
-                            // Check if mt_financial_company is offered, if not found, switch to mt_gaming_company
+                                // Check if mt_financial_company is offered, if not found, switch to mt_gaming_company
 
-                            mt_landing_company = mt_financial_company || mt_gaming_company;
+                                mt_landing_company = mt_financial_company || mt_gaming_company;
 
-                            // Check mt_financial_company by account type, since we are offering different landing companies for standard and advanced
+                                // Check mt_financial_company by account type, since we are offering different landing companies for standard and advanced
 
-                            arr_mt5fin_shortcodes = mt_landing_company ? Object.keys(mt_landing_company).map(function (key) {
-                                return mt_landing_company[key].shortcode;
-                            }) : [];
+                                arr_mt5fin_shortcodes = mt_landing_company ? Object.keys(mt_landing_company).map(function (key) {
+                                    return mt_landing_company[key].shortcode;
+                                }) : [];
 
-                            _context.next = 7;
-                            return MetaTrader.isEligible();
+                                _context.next = 7;
+                                return MetaTrader.isEligible();
 
-                        case 7:
-                            is_eligible_mt5 = _context.sent;
+                            case 7:
+                                is_eligible_mt5 = _context.sent;
 
 
-                            controlVisibility(current_landing_company_shortcode, is_eligible_mt5,
-                            // We then pass the list of found mt5fin company shortcodes as an array
-                            arr_mt5fin_shortcodes);
+                                controlVisibility(current_landing_company_shortcode, is_eligible_mt5,
+                                // We then pass the list of found mt5fin company shortcodes as an array
+                                arr_mt5fin_shortcodes);
 
-                        case 9:
-                        case 'end':
-                            return _context.stop();
+                                resolve();
+
+                            case 10:
+                            case 'end':
+                                return _context.stop();
+                        }
                     }
-                }
-            }, _callee, undefined);
-        })));
+                }, _callee, undefined);
+            })));
+        });
     };
 
     var generateParsingErrorMessage = function generateParsingErrorMessage(reason, attr_str) {
@@ -15384,7 +15390,15 @@ var Cashier = function () {
                         }
                     });
                 }
-                $(isCryptocurrency(currency) ? '.crypto_currency' : '.normal_currency').setVisibility(1);
+
+                if (isCryptocurrency(currency)) {
+                    $('.crypto_currency').setVisibility(1);
+
+                    var previous_href = $('#view_payment_methods').attr('href');
+                    $('#view_payment_methods').attr('href', previous_href.concat('?anchor=cryptocurrency'));
+                } else {
+                    $('.normal_currency').setVisibility(1);
+                }
             });
         }
         showContent();
@@ -23988,7 +24002,7 @@ var Purchase = function () {
                             if (!Client.hasAccountType('real') && Client.get('is_virtual')) {
                                 message = localize('Please complete the [_1]Real Account form[_2] to verify your age as required by the [_3]UK Gambling[_4] Commission (UKGC).', ['<a href=\'' + urlFor('new_account/realws') + '\'>', '</a>', '<strong>', '</strong>']);
                             } else if (Client.hasAccountType('real') && /^virtual|iom$/i.test(Client.get('landing_company_shortcode'))) {
-                                message = localize('The system failed to verify your identity. Please check your email for details and the next steps.');
+                                message = localize('Account access is temporarily limited. Please check your inbox for more details.');
                             } else {
                                 message = error.message;
                             }
