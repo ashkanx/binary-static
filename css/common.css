@@ -202,8 +202,7 @@ fieldset {
   position: relative;
   border: 1px solid #dedede;
   padding: 5px;
-  margin-bottom: 10px;
-  word-break: break-word; }
+  margin-bottom: 10px; }
   fieldset legend {
     color: #44484c;
     padding: 0 0.8em;
@@ -266,6 +265,7 @@ fieldset {
     margin: 0; }
 
 .error-msg {
+  width: 100%;
   text-align: left;
   margin-top: 5px; }
 
@@ -613,8 +613,7 @@ ul.bullet.gr-row > li {
         margin-bottom: -1px;
         border-bottom: 1px solid #dedede; }
         #content .light .tab-menu-wrap ul.tm-ul li.tm-li, #content .light .tab-menu-wrap ul.tm-ul li.tm-li a {
-          color: #2a3052;
-          text-transform: initial; }
+          color: #2a3052; }
         #content .light .tab-menu-wrap ul.tm-ul li.tm-li > a, #content .light .tab-menu-wrap ul.tm-ul li.tm-li > span {
           display: block;
           padding: 0 20px; }
